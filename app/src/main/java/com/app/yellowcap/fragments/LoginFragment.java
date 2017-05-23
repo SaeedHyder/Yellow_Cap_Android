@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
 
 import butterknife.BindView;
@@ -20,8 +21,11 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 
 
     Unbinder unbinder;
-    @BindView(R.id.loginButton)
+    @BindView(R.id.btn_login)
     Button loginButton;
+
+    @BindView(R.id.txtForgotPass)
+    AnyTextView txtForgotPass;
 
     public static LoginFragment newInstance() {
         return new LoginFragment();
@@ -38,6 +42,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 
     private void setListeners() {
         loginButton.setOnClickListener(this);
+        txtForgotPass.setOnClickListener(this);
     }
 
     @Override
@@ -59,10 +64,14 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
     public void onClick(View v) {
         // TODO Auto-generated method stub
         switch (v.getId()) {
-            case R.id.loginButton:
+            case R.id.btn_login:
                 prefHelper.setLoginStatus(true);
                 getDockActivity().addDockableFragment(HomeFragment.newInstance(), "HomeFragmnet");
                 break;
+
+            case R.id.txtForgotPass:
+                final DialogFragment successPopUp = DialogFragment.newInstance();
+                successPopUp.show(getDockActivity().getSupportFragmentManager(), "forgotPasswordPopUp");
         }
     }
 

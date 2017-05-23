@@ -102,7 +102,7 @@ public class MainActivity extends DockActivity implements OnClickListener {
 
     public void initFragment() {
         if (prefHelper.isLogin()) {
-            addDockableFragment(HomeFragment.newInstance(), "HomeFragment");
+            addDockableFragment(LoginFragment.newInstance(), "HomeFragment");
         } else {
             addDockableFragment(LoginFragment.newInstance(), "LoginFragment");
         }

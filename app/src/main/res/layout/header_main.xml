@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/header_layout"
     android:layout_width="fill_parent"
-    android:layout_height="@dimen/x50"
-    android:background="@color/red">
+    android:layout_height="@dimen/x50">
 
 
     <ImageView
@@ -26,7 +25,7 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:text="Template"
-        android:textColor="@color/white"
+        android:textColor="@color/gray"
         android:textSize="@dimen/x22"
         app:typeface="OpenSans-Regular.ttf" />
 

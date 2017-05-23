@@ -85,5 +85,32 @@
          aining Lorem Ipsum passages, and more recently with desktop publishing so
          ftware like Aldus PageMaker including versions of Lorem Ipsum.</string>
     <string name="this_is_login_fragment">This is Login Fragment</string>
+    <string name="email">Email</string>
+    <string name="new_jobs">New Jobs</string>
+    <string name="order_history">Order History</string>
+    <string name="notifications">Notifications</string>
+    <string name="logout">Logout</string>
+    <string name="completedjob">Completed Job</string>
+    <string name="in_progress">In Progress</string>
+    <string name="no_result_found">No Result Found</string>
+    <string name="job">Job:</string>
+    <string name="job_completed">Job Completed:</string>
+    <string name="client_name">Client Name:</string>
+    <string name="job_title">Job Title:</string>
+    <string name="earning_cod">Earning (COD):</string>
+    <string name="rating">Rating:</string>
+    <string name="my_profile">My Profile</string>
+    <string name="email_id">Email Id</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="registration_type">Registration Type</string>
+    <string name="Registration_Date">Registration Date</string>
+    <string name="Customer_Name">Customer Name:</string>
+    <string name="Estimated_Quote">Estimated Quote:</string>
+    <string name="Service">Service:</string>
+    <string name="address">Address:</string>
+    <string name="description">Description:</string>
+    <string name="preferred_date_time">Preferred Date/Time:</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
 
 </resources>

@@ -41,4 +41,11 @@
     <color name="blue_chat">#4896CA</color>
     <color name="sidemenu">#62A6D8</color>
 
+    <color name="yellow">#FCC739</color>
+    <color name="darkYellow">#F9B83A</color>
+
+    <color name="gray">#6D6D6C</color>
+    <color name="lightgray">#515151</color>
+    <color name="lightBlack">#424242</color>
+
 </resources>

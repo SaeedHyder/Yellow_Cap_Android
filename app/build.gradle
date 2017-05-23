@@ -51,4 +51,7 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.daimajia.slider:library:1.1.5@aar'
+    compile 'com.squareup.picasso:picasso:2.3.2'
+    compile 'com.nineoldandroids:library:2.4.0'
 }
