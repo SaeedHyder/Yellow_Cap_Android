@@ -8,10 +8,14 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.andreabaccega.formedittextvalidator.Validator;
@@ -40,7 +44,7 @@ public abstract class BaseFragment extends Fragment {
 	protected GPSTracker mGpsTracker;
 
 	protected static DockActivity myDockActivity;
-	
+
 	@Override
 	public void onCreate( Bundle savedInstanceState ) {
 		super.onCreate( savedInstanceState );
@@ -55,7 +59,14 @@ public abstract class BaseFragment extends Fragment {
 
 		myDockActivity = getDockActivity();
 	}
-	
+
+	@Nullable
+	@Override
+	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+	 return inflater.inflate(getLayout(), container, false);
+	}
+	protected abstract int getLayout();
 	@Override
 	public void onResume() {
 		super.onResume();

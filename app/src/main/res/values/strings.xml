@@ -85,5 +85,29 @@
          aining Lorem Ipsum passages, and more recently with desktop publishing so
          ftware like Aldus PageMaker including versions of Lorem Ipsum.</string>
     <string name="this_is_login_fragment">This is Login Fragment</string>
+    <string name="job_posted">Job Posted : 02-05-17</string>
+    <string name="select_job_type">Select Job Type</string>
+    <string name="selected_jobs">Selected Jobs</string>
+    <string name="additional_job">Additional Job</string>
+    <string name="addtional_job_description">Add your Addtional job\'s description here</string>
+    <string name="address">Address</string>
+    <string name="dummyAddress">795 Dubai Marina,UAE</string>
+    <string name="dummydate">02-02-17</string>
+    <string name="preferred_date">Preferred Date</string>
+    <string name="preferred_time">Preferred Time</string>
+    <string name="dummytime">15:25</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="payment_method">Payment Mode</string>
+    <string name="cc">Credit Card</string>
+    <string name="cc_number">Credit Card Number</string>
+    <string name="expiration_date">Expiration Date</string>
+    <string name="cvv">CVV</string>
+    <string name="name_appearing_on_card">Name Appering on the Card</string>
+    <string name="cod">Cash on Delivery</string>
+    <string name="request_a_quote">Request a Quote</string>
+    <string name="gps_question">Location is Disabled.Do you want to enable it</string>
+    <string name="gps_yes">Yes</string>
+    <string name="gps_no">No</string>
 
 </resources>

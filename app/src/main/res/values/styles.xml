@@ -25,5 +25,12 @@
 
         <item name="android:windowNoTitle">true</item>
     </style>
+    <!--App Styles-->
+    <style name="form_edttext_fields_style" parent="@android:style/Widget.EditText">
+        <item name="android:textSize">@dimen/x10</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@null</item>
+
+    </style>
 
 </resources>

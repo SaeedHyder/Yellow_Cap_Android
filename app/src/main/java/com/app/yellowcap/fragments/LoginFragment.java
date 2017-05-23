@@ -47,12 +47,11 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
         titleBar.hideTitleBar();
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
-        return inflater.inflate(R.layout.fragment_login, container, false);
 
+
+    @Override
+    protected int getLayout() {
+        return R.layout.fragment_login;
     }
 
     @Override
@@ -61,7 +60,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
         switch (v.getId()) {
             case R.id.loginButton:
                 prefHelper.setLoginStatus(true);
-                getDockActivity().addDockableFragment(HomeFragment.newInstance(), "HomeFragmnet");
+                getDockActivity().addDockableFragment(RequestServiceFragment.newInstance(), "HomeFragmnet");
                 break;
         }
     }

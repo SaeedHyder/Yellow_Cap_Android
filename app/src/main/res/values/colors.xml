@@ -31,9 +31,10 @@
     <!-- App specific colors -->
     <color name="forgot_pass_color">#BB4000</color>
     <color name="notification_date_color">#D15801</color>
-    <color name="text_color">#654F76</color>
+    <!--<color name="text_color">#654F76</color>-->
     
-    
+    <color name="job_posted_background">#606060</color>
+    <color name="text_color">#fcc739</color>
     <color name="color_rbtn">#0E8593</color>
     <color name="holo_blue">#FF33B5E5</color>
     <color name="progress_start">#B31025</color>
