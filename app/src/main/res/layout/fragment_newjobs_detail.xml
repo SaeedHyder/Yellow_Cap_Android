@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:orientation="vertical"
+        android:background="@drawable/detail">
+
+        <com.daimajia.slider.library.SliderLayout
+            android:id="@+id/imageSlider"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/plumber1"
+            custom:auto_cycle="true"
+            custom:indicator_visibility="visible"
+            custom:pager_animation="Accordion"
+            custom:pager_animation_span="1100" />
+
+
+        <com.daimajia.slider.library.Indicators.PagerIndicator
+            android:id="@+id/pagerIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/x25"
+            android:gravity="center"
+            custom:selected_color="@color/yellow"
+            custom:selected_height="@dimen/x20"
+            custom:selected_padding_left="@dimen/x15"
+            custom:selected_padding_right="@dimen/x15"
+            custom:selected_width="@dimen/x20"
+            custom:shape="oval"
+            custom:unselected_color="@color/tab_indicator_unselected"
+            custom:unselected_height="@dimen/x15"
+            custom:unselected_padding_left="@dimen/x10"
+            custom:unselected_padding_right="@dimen/x10"
+            custom:unselected_width="@dimen/x15"
+
+            />
+
+
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/ll_JobDetail"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_marginTop="@dimen/x10"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_job"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x5"
+            android:orientation="horizontal">
+
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/lightBlack"
+                android:text="@string/job"
+                android:textSize="@dimen/x14"
+                android:textStyle="bold"
+                android:layout_marginRight="@dimen/x3"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:id="@+id/txt_jobName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Repairing of Water Pumps"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/x14"
+                app:typeface="Roboto-Regular.ttf" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_CustomerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x5"
+            android:orientation="horizontal">
+
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/lightBlack"
+                android:text="@string/Customer_Name"
+                android:textSize="@dimen/x14"
+                android:textStyle="bold"
+                android:layout_marginRight="@dimen/x3"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:id="@+id/txt_customerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Al Nisa"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/x14"
+                app:typeface="Roboto-Regular.ttf"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_EstimatedQuote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x5"
+            android:orientation="horizontal">
+
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/lightBlack"
+                android:text="@string/Estimated_Quote"
+                android:textSize="@dimen/x14"
+                android:textStyle="bold"
+                android:layout_marginRight="@dimen/x3"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:id="@+id/txt_estimatedQuote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Between AED 120 to 150 - COD"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/x14"
+                app:typeface="Roboto-Regular.ttf"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_service"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x5"
+            android:orientation="horizontal">
+
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/lightBlack"
+                android:text="@string/Service"
+                android:textSize="@dimen/x14"
+                android:textStyle="bold"
+                android:layout_marginRight="@dimen/x3"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:id="@+id/txt_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Service Only"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/x14"
+                app:typeface="Roboto-Regular.ttf"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_Address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x5"
+            android:orientation="horizontal">
+
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/lightBlack"
+                android:text="@string/address"
+                android:textSize="@dimen/x14"
+                android:textStyle="bold"
+                android:layout_marginRight="@dimen/x3"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:id="@+id/txt_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dubai Marine,Near Marina"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/x14"
+                app:typeface="Roboto-Regular.ttf"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x5"
+            android:orientation="horizontal">
+
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/lightBlack"
+                android:text="@string/description"
+                android:layout_marginBottom="@dimen/x5"
+                android:textSize="@dimen/x14"
+                android:textStyle="bold"
+                android:layout_marginRight="@dimen/x3"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:id="@+id/txt_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I Need plumbing services as soons as possible."
+                android:textColor="@color/gray"
+                android:textSize="@dimen/x14"
+                app:typeface="Roboto-Regular.ttf"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_preferred_dateTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x5"
+            android:orientation="horizontal">
+
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:id="@+id/anyTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/x3"
+                android:text="@string/preferred_date_time"
+                android:textColor="@color/lightBlack"
+                android:textSize="@dimen/x14"
+                android:textStyle="bold"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:id="@+id/txt_preferred_dateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="22 Feb 2017 02:30 PM"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/x14"
+                app:typeface="Roboto-Regular.ttf"/>
+
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/x30"
+        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginRight="@dimen/x20"
+        android:layout_weight="0.1"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_accept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/x3"
+            android:background="@color/yellow"
+            android:text="@string/accept"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btn_reject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/x3"
+            android:background="@color/lightBlack"
+            android:text="@string/reject"
+            android:textColor="@color/white" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
+

@@ -36,6 +36,7 @@ import com.app.yellowcap.ui.adapters.RecyclerViewAdapterImages;
 import com.app.yellowcap.ui.viewbinder.SelectedJobBinder;
 import com.app.yellowcap.ui.views.AnyEditTextView;
 import com.app.yellowcap.ui.views.AnyTextView;
+import com.app.yellowcap.ui.views.TitleBar;
 import com.google.android.gms.location.places.Place;
 import com.jota.autocompletelocation.AutoCompleteLocation;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -74,14 +75,6 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     RecyclerView addimages;
     @BindView(R.id.btn_cc)
     Button btnCc;
-    @BindView(R.id.edt_cc_number)
-    AnyEditTextView edtCcNumber;
-    @BindView(R.id.edt_cc_expiredate)
-    AnyTextView edtCcExpiredate;
-    @BindView(R.id.edt_cc_cvv)
-    AnyEditTextView edtCcCvv;
-    @BindView(R.id.edt_cc_name)
-    AnyEditTextView edtCcName;
     @BindView(R.id.btn_cod)
     Button btnCod;
     @BindView(R.id.btn_request)
@@ -92,8 +85,6 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     ImageView imgGps;
     @BindView(R.id.img_cc_check)
     ImageView imgCcCheck;
-    @BindView(R.id.cc_container)
-    LinearLayout ccContainer;
     @BindView(R.id.img_cod_check)
     ImageView imgCodCheck;
     private RecyclerViewAdapterImages mAdapter;
@@ -236,13 +227,13 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 CameraHelper.uploadMedia(getMainActivity());
                 break;
             case R.id.btn_cc:
-                ccContainer.setVisibility(View.VISIBLE);
                 imgCcCheck.setVisibility(View.VISIBLE);
                 imgCodCheck.setVisibility(View.GONE);
+                getDockActivity().addDockableFragment(CreditCardFragment.newInstance(),"CreditCardFragment");
                 break;
 
             case R.id.btn_cod:
-                ccContainer.setVisibility(View.GONE);
+
                 imgCcCheck.setVisibility(View.GONE);
                 imgCodCheck.setVisibility(View.VISIBLE);
                 break;
@@ -256,6 +247,15 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 break;
         }
     }
+
+    @Override
+    public void setTitleBar(TitleBar titleBar) {
+        super.setTitleBar(titleBar);
+        titleBar.hideButtons();
+        titleBar.showBackButton();
+        titleBar.setSubHeading("Request Service");
+    }
+
     private void initTimePicker(final TextView textView){
         Calendar calendar = Calendar.getInstance();
         final TimePickerHelper timePicker = new TimePickerHelper();

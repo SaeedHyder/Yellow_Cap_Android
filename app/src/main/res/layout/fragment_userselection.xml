@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg">
+    >
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -23,26 +25,62 @@
 </RelativeLayout>
 
   </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
         android:orientation="horizontal"
+        android:layout_marginTop="@dimen/x30"
+        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginRight="@dimen/x20"
+        android:layout_centerVertical="true"
 
 
        >
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/usercontainer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@drawable/box"
-
-
+            android:background="@drawable/box_backgrounds"
+            android:layout_weight="1"
             >
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/x80"
+                android:layout_height="@dimen/x80"
+                android:src="@drawable/user"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/x20"
              />
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom|center_horizontal"
+                android:maxLines="1"
+                android:paddingTop="@dimen/x5"
+                android:text="@string/user"
+                android:textColor="@color/general_color"
+                android:textSize="@dimen/x20"
+                android:textStyle="normal"
+                app:typeface="Roboto-Regular.ttf" />
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top|center_horizontal"
+                android:maxLines="2"
+                android:paddingBottom="@dimen/x10"
+                android:text="@string/user_message"
+                android:textColor="@color/general_color"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginRight="@dimen/x10"
+                android:textSize="@dimen/x15"
+                android:textStyle="normal"
+                app:typeface="Roboto-Regular.ttf" />
            <!-- <ImageView
                 android:layout_width="@dimen/x70"
                 android:layout_height="@dimen/x70"
@@ -50,11 +88,62 @@
                 android:layout_gravity="center_horizontal"/>-->
 
         </LinearLayout>
+
+
         <LinearLayout
+            android:id="@+id/techniciancontainer"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/box_backgrounds"
             android:layout_weight="1"
-            android:layout_height="wrap_content">
+            >
+            <ImageView
+                android:layout_width="@dimen/x80"
+                android:layout_height="@dimen/x80"
+                android:src="@drawable/technician"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/x20"
+                />
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom|center_horizontal"
+                android:maxLines="1"
+                android:paddingTop="@dimen/x5"
+                android:text="@string/technician"
+                android:textColor="@color/general_color"
+                android:textSize="@dimen/x20"
+                android:textStyle="normal"
+                app:typeface="Roboto-Regular.ttf" />
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top|center_horizontal"
+                android:maxLines="2"
+                android:paddingBottom="@dimen/x10"
+                android:text="@string/wants_to_provide_services"
+                android:textColor="@color/general_color"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginRight="@dimen/x10"
+                android:textSize="@dimen/x15"
+                android:textStyle="normal"
+                app:typeface="Roboto-Regular.ttf" />
+            <!-- <ImageView
+                 android:layout_width="@dimen/x70"
+                 android:layout_height="@dimen/x70"
+                 android:src="@drawable/user"
+                 android:layout_gravity="center_horizontal"/>-->
 
         </LinearLayout>
     </LinearLayout>
+        <View
+            android:layout_width="@dimen/x2"
+            android:layout_height="@dimen/x125"
+            android:paddingTop="@dimen/x30"
+            android:background="@color/job_posted_background"
+            android:layout_centerInParent="true"
+            />
+
+    </RelativeLayout>
 </LinearLayout>
