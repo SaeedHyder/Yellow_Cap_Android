@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="20dp"
     android:gravity="center"
     android:layout_gravity="center"
-    android:background="@color/white"
+    android:background="@drawable/roundshapelayout"
     android:orientation="vertical">
     <LinearLayout
         android:id="@+id/textLayout"
@@ -42,42 +41,43 @@
             app:typeface="Roboto-Regular.ttf" />
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/textLayout"
+        >
+
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_centerHorizontal="true"
-            android:layout_alignBottom="@+id/textLayout"
-            >
-
-            <Button
-                android:id="@+id/btn_ok"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@drawable/button"
-                android:textColor="@color/white"
-                android:textSize="@dimen/x16"
-                android:text="ok"
-                android:layout_weight="1"
-                />
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:alpha="0.6"
-                android:background="@drawable/line" />
-            <Button
-                android:id="@+id/btn_cancle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_right"
-                android:textColor="@color/white"
-                android:textSize="@dimen/x16"
-                android:text="cancle"
-                android:layout_weight="1"
-                />
-
-        </LinearLayout>
+            android:background="@drawable/button"
+            android:textColor="@color/white"
+            android:textSize="@dimen/x16"
+            android:text="ok"
+            android:layout_weight="1"
+            />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:alpha="0.6"
+            android:background="@drawable/line" />
+        <Button
+            android:id="@+id/btn_cancle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_right"
+            android:textColor="@color/white"
+            android:textSize="@dimen/x16"
+            android:text="cancle"
+            android:layout_weight="1"
+            />
 
     </LinearLayout>
 

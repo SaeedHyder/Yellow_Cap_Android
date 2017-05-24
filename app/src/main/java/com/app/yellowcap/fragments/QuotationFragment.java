@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
 
@@ -19,11 +20,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static com.app.yellowcap.R.id.btn_reject;
+
 /**
  * Created by saeedhyder on 5/24/2017.
  */
 
-public class QuotationFragment extends BaseFragment {
+public class QuotationFragment extends BaseFragment implements View.OnClickListener {
 
     @BindView(R.id.logo)
     ImageView logo;
@@ -55,7 +58,7 @@ public class QuotationFragment extends BaseFragment {
     LinearLayout llEstimatedQuote;
     @BindView(R.id.btn_accept)
     Button btnAccept;
-    @BindView(R.id.btn_reject)
+    @BindView(btn_reject)
     Button btnReject;
     @BindView(R.id.ll_buttons)
     LinearLayout llButtons;
@@ -92,7 +95,12 @@ public class QuotationFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setListners();
         setTextStyle();
+    }
+
+    private void setListners() {
+        btnReject.setOnClickListener(this);
     }
 
     private void setTextStyle() {
@@ -102,6 +110,26 @@ public class QuotationFragment extends BaseFragment {
         txtUserAddressHeading.setTypeface(null, Typeface.BOLD);
         txtQuotationValidHeading.setTypeface(null, Typeface.BOLD);
         txtEstimatedQuoteHeading.setTypeface(null, Typeface.BOLD);
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_reject:
+                final DialogHelper cancelJobDialog = new DialogHelper(getDockActivity());
+                cancelJobDialog.initCancelQuotationDialog(R.layout.cancle_quatation_dialog, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        cancelJobDialog.hideDialog();
+                    }
+                });
+                cancelJobDialog.showDialog();
+
+                break;
+
+        }
+
     }
 
     @Override
@@ -127,4 +155,5 @@ public class QuotationFragment extends BaseFragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
 }

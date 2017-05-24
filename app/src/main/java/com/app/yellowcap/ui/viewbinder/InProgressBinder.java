@@ -12,6 +12,7 @@ import com.app.yellowcap.R;
 import com.app.yellowcap.activities.DockActivity;
 import com.app.yellowcap.entities.InProgressEnt;
 import com.app.yellowcap.fragments.EditJobTechFragment;
+import com.app.yellowcap.fragments.HomeFragment;
 import com.app.yellowcap.fragments.NewJobsFragment;
 import com.app.yellowcap.interfaces.CallUser;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
@@ -63,6 +64,12 @@ public class InProgressBinder extends ViewBinder<InProgressEnt> {
             @Override
             public void onClick(View v) {
                 context.addDockableFragment(EditJobTechFragment.newInstance(), "EditJobTechFragment");
+            }
+        });
+        viewHolder.btn_markAsComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.addDockableFragment(HomeFragment.newInstance(), "HomeFragment");
             }
         });
 
