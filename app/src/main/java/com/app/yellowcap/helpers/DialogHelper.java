@@ -2,6 +2,8 @@ package com.app.yellowcap.helpers;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -23,6 +25,7 @@ public class DialogHelper {
     }
     public Dialog initForgotPasswordDialog(int layoutID ,View.OnClickListener onclicklistener) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         this.dialog.setContentView(layoutID);
         Button closeButton =(Button) dialog.findViewById(R.id.btn_close);
         closeButton.setOnClickListener(onclicklistener);
@@ -30,6 +33,7 @@ public class DialogHelper {
     }
     public Dialog initJobRefusalDialog(int layoutID ,View.OnClickListener onclicklistener) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         this.dialog.setContentView(layoutID);
         Button closeButton =(Button) dialog.findViewById(R.id.btn_submit);
         closeButton.setOnClickListener(onclicklistener);
@@ -37,6 +41,7 @@ public class DialogHelper {
     }
     public Dialog initCancelQuotationDialog(int layoutID ,View.OnClickListener onclicklistener) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         this.dialog.setContentView(layoutID);
         Button closeButton =(Button) dialog.findViewById(R.id.btn_submit);
         closeButton.setOnClickListener(onclicklistener);
@@ -44,6 +49,7 @@ public class DialogHelper {
     }
     public Dialog initCancelJobDialog(int layoutID , View.OnClickListener onokclicklistener ,View.OnClickListener oncancelclicklistener) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         this.dialog.setContentView(layoutID);
         Button okbutton =(Button) dialog.findViewById(R.id.btn_ok);
         okbutton.setOnClickListener(onokclicklistener);
@@ -53,6 +59,7 @@ public class DialogHelper {
     }
     public Dialog initRequestSendDialog(int layoutID ,View.OnClickListener onclicklistener) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         this.dialog.setContentView(layoutID);
         Button closeButton =(Button) dialog.findViewById(R.id.btn_close);
         closeButton.setOnClickListener(onclicklistener);
@@ -60,6 +67,7 @@ public class DialogHelper {
     }
     public Dialog initJobDetailDialog(int layoutID ,View.OnClickListener onclicklistener) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         this.dialog.setContentView(layoutID);
         Button closeButton =(Button) dialog.findViewById(R.id.btn_close);
         closeButton.setOnClickListener(onclicklistener);
@@ -67,6 +75,7 @@ public class DialogHelper {
     }
     public Dialog initRatingDialog(int layoutID ,View.OnClickListener onclicklistener) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         this.dialog.setContentView(layoutID);
         Button closeButton =(Button) dialog.findViewById(R.id.btn_close);
         closeButton.setOnClickListener(onclicklistener);

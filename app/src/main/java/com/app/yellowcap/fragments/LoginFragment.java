@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.ui.views.AnyEditTextView;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
@@ -78,8 +79,16 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
                 break;
 
             case R.id.txtForgotPass:
-                final DialogFragment successPopUp = DialogFragment.newInstance();
-                successPopUp.show(getDockActivity().getSupportFragmentManager(), "forgotPasswordPopUp");
+                final DialogHelper forgetDialog = new DialogHelper(getDockActivity());
+                forgetDialog.initForgotPasswordDialog(R.layout.forgot_password_dialog, new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        forgetDialog.hideDialog();
+                    }
+                });
+                forgetDialog.showDialog();
+                break;
+
         }
     }
 

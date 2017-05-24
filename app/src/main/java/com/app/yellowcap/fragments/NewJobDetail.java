@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -32,7 +33,7 @@ import static com.app.yellowcap.R.id.txt;
  * Created by saeedhyder on 5/23/2017.
  */
 
-public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
+public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener ,View.OnClickListener{
 
     @BindView(R.id.imageSlider)
     SliderLayout imageSlider;
@@ -114,9 +115,14 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        setListners();
         setImageGallery();
         setTextStyle();
 
+    }
+
+    private void setListners() {
+        btnReject.setOnClickListener(this);
     }
 
     private void setTextStyle() {
@@ -189,6 +195,28 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
     }
 
     @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.btn_reject:
+
+                final DialogHelper RefusalDialog = new DialogHelper(getDockActivity());
+                RefusalDialog.initJobRefusalDialog(R.layout.job_refusal_dialog, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        RefusalDialog.hideDialog();
+                    }
+                });
+                RefusalDialog.showDialog();
+
+                break;
+
+
+        }
+
+    }
+
+    @Override
     public void setTitleBar(TitleBar titleBar) {
         super.setTitleBar(titleBar);
         getDockActivity().releaseDrawer();
@@ -204,4 +232,6 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
         super.onDestroyView();
         unbinder.unbind();
     }
+
+
 }

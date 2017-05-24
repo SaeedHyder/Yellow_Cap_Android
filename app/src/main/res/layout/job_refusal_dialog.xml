@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="20dp"
     android:gravity="center"
     android:layout_gravity="center"
-    android:background="@color/white"
+    android:background="@drawable/roundshapelayout"
     android:orientation="vertical">
     <LinearLayout
         android:id="@+id/textLayout"
@@ -69,27 +68,28 @@
             android:alpha="0.6"
             android:background="@drawable/text" />
 
-        <LinearLayout
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/x5"
+        android:layout_alignBottom="@+id/textLayout"
+        >
+
+        <Button
+            android:id="@+id/btn_submit"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/x5"
-            android:layout_alignBottom="@+id/textLayout"
-            >
-
-            <Button
-                android:id="@+id/btn_submit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/two_round_button"
-                android:textColor="@color/white"
-                android:layout_marginTop="@dimen/x10"
-                android:textSize="@dimen/x16"
-                android:text="Submit"
-                />
-
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:background="@drawable/two_round_button"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/x10"
+            android:textSize="@dimen/x16"
+            android:text="Submit"
+            />
 
     </LinearLayout>
 
