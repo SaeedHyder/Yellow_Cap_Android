@@ -67,6 +67,8 @@ public class DialogHelper {
         closeButton.setOnClickListener(onclicklistener);
         return this.dialog;
     }
+
+    
     public Dialog initJobDetailDialog(int layoutID , View.OnClickListener onclicklistener, String title, String person_name,
                                       View.OnClickListener arriveclickListener, View.OnClickListener completeclickListener) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
