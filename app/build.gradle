@@ -52,6 +52,10 @@ dependencies {
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
 
+    //Slider
+    compile 'com.squareup.picasso:picasso:2.3.2'
+    compile 'com.nineoldandroids:library:2.4.0'
+
     //Multi Dex
     compile 'com.android.support:multidex:1.0.1'
     //RecyclerView

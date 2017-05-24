@@ -44,6 +44,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
         View view = inflater.inflate(R.layout.fragment_newjobs_detail, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
+        
     }
 
     @Override
