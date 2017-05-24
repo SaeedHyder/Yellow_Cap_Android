@@ -4,13 +4,13 @@ package com.app.yellowcap.entities;
  * Created by saeedhyder on 5/22/2017.
  */
 
-public class NewJobItem {
+public class NewJobEnt {
 
     private String logo;
     private String notification;
     private String arrow;
 
-    public NewJobItem(String logo, String notification, String arrow){
+    public NewJobEnt(String logo, String notification, String arrow){
         setLogo(logo);
         setNotification(notification);
         setArrow(arrow);

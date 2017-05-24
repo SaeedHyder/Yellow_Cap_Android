@@ -1,21 +1,20 @@
-package com.app.yellowcap.ui.viewbinders.abstracts;
+package com.app.yellowcap.ui.viewbinder;
 
 import android.app.Activity;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.app.yellowcap.R;
-import com.app.yellowcap.entities.NewJobItem;
+import com.app.yellowcap.entities.NewJobEnt;
+import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by saeedhyder on 5/22/2017.
  */
 
-public class NewJobsitemBinder  extends ViewBinder<NewJobItem> {
+public class NewJobsitemBinder  extends ViewBinder<NewJobEnt> {
 
     private ImageLoader imageLoader;
 
@@ -32,7 +31,7 @@ public class NewJobsitemBinder  extends ViewBinder<NewJobItem> {
     }
 
     @Override
-    public void bindView(NewJobItem entity, int position, int grpPosition, View view, Activity activity) {
+    public void bindView(NewJobEnt entity, int position, int grpPosition, View view, Activity activity) {
 
     }
 

@@ -23,14 +23,13 @@
         android:layout_weight="0.01"
         android:orientation="vertical">
 
-
         <com.app.yellowcap.ui.views.AnyEditTextView
             android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/x20"
             android:layout_marginRight="@dimen/x20"
-            android:drawableLeft="@drawable/email"
+          android:drawableLeft="@drawable/email"
             android:drawablePadding="@dimen/x10"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
@@ -42,6 +41,7 @@
             android:background="@android:color/transparent"
             app:typeface="Roboto-Regular.ttf" />
 
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/x1"
@@ -51,6 +51,8 @@
             android:layout_marginTop="@dimen/x10"
             android:alpha="0.6"
             android:background="@drawable/text" />
+
+
 
         <com.app.yellowcap.ui.views.AnyEditTextView
             android:id="@+id/edtPassword"

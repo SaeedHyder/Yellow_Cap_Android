@@ -24,6 +24,7 @@ public class SelectedJobBinder extends ViewBinder<String> {
         this.onDeleteImage = onDeleteImage;
     }
 
+
     @Override
     public BaseViewHolder createViewHolder(View view) {
         return new SelectedJobsViewHolder(view);

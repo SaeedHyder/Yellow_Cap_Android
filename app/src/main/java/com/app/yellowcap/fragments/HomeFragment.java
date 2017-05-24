@@ -108,7 +108,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         titleBar.showNotificationButton(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getDockActivity().addDockableFragment(NewJobsFragment.newInstance(), "NewJobsFragment");
+                getDockActivity().addDockableFragment(TechNotificationsFragment.newInstance(), "TechNotificationsFragment");
             }
         });
         titleBar.setSubHeading("Home");
@@ -137,7 +137,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 break;
 
             case ll_notification:
-                getDockActivity().addDockableFragment(NewJobsFragment.newInstance(), "NewJobsFragment");
+                getDockActivity().addDockableFragment(TechNotificationsFragment.newInstance(), "TechNotificationsFragment");
                 break;
 
             case ll_profile:

@@ -74,6 +74,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
         titleBar.showNotificationButton(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getDockActivity().addDockableFragment(UserNotificationsFragment.newInstance(), "UserNotificationsFragment");
 
             }
         });
@@ -123,7 +124,8 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
                 addRequestServiceFragment("move");
                 break;
             case R.id.ll_custom:
-                addRequestServiceFragment("custom");
+              //  addRequestServiceFragment("custom");
+                getDockActivity().addDockableFragment(QuotationFragment.newInstance(), "QuotationFragment");
                 break;
         }
     }

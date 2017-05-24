@@ -8,11 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.app.yellowcap.R;
-import com.app.yellowcap.entities.CompletedJobsItem;
-import com.app.yellowcap.entities.NewJobItem;
+import com.app.yellowcap.entities.CompletedJobsEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
-import com.app.yellowcap.ui.viewbinders.abstracts.CompletedJobsBinder;
+import com.app.yellowcap.ui.viewbinder.CompletedJobsBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 
 import java.util.ArrayList;
@@ -20,8 +19,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-
-import static com.app.yellowcap.R.id.lv_NewJobs;
 
 /**
  * Created by saeedhyder on 5/22/2017.
@@ -35,9 +32,9 @@ public class CompletedJobsFragment extends BaseFragment {
     ListView CompletedJobsListView;
     Unbinder unbinder;
 
-    private ArrayListAdapter<CompletedJobsItem> adapter;
+    private ArrayListAdapter<CompletedJobsEnt> adapter;
 
-    private ArrayList<CompletedJobsItem> userCollection = new ArrayList<>();
+    private ArrayList<CompletedJobsEnt> userCollection = new ArrayList<>();
 
     public static CompletedJobsFragment newInstance() {
 
@@ -48,7 +45,7 @@ public class CompletedJobsFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        adapter = new ArrayListAdapter<CompletedJobsItem>(getDockActivity(), new CompletedJobsBinder());
+        adapter = new ArrayListAdapter<CompletedJobsEnt>(getDockActivity(), new CompletedJobsBinder());
     }
 
     @Nullable
@@ -73,15 +70,15 @@ public class CompletedJobsFragment extends BaseFragment {
 
     private void setCompletedJobsData() {
 
-        userCollection.add(new CompletedJobsItem("02","23-3-17","Al Musa","Plumbing","5","AED 55.00"));
-        userCollection.add(new CompletedJobsItem("02","23-3-17","Al Musa","Plumbing","5","AED 55.00"));
-        userCollection.add(new CompletedJobsItem("02","23-3-17","Al Musa","Plumbing","5","AED 55.00"));
+        userCollection.add(new CompletedJobsEnt("02","23-3-17","Al Musa","Plumbing","5","AED 55.00"));
+        userCollection.add(new CompletedJobsEnt("02","23-3-17","Al Musa","Plumbing","5","AED 55.00"));
+        userCollection.add(new CompletedJobsEnt("02","23-3-17","Al Musa","Plumbing","5","AED 55.00"));
 
 
         bindData(userCollection);
     }
 
-    private void bindData(ArrayList<CompletedJobsItem> userCollection) {
+    private void bindData(ArrayList<CompletedJobsEnt> userCollection) {
 
         adapter.clearList();
         CompletedJobsListView.setAdapter(adapter);

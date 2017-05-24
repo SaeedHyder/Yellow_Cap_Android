@@ -10,9 +10,9 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.2"
-        android:orientation="vertical"
-        android:background="@drawable/detail">
+        android:layout_weight="0.14"
+        android:background="@drawable/detail"
+        android:orientation="vertical">
 
         <com.daimajia.slider.library.SliderLayout
             android:id="@+id/imageSlider"
@@ -48,7 +48,6 @@
             />
 
 
-
     </LinearLayout>
 
     <ScrollView
@@ -72,6 +71,7 @@
             android:orientation="horizontal">
 
             <com.app.yellowcap.ui.views.AnyTextView
+                android:id="@+id/txt_jobNameHeading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/lightBlack"
@@ -101,6 +101,7 @@
             android:orientation="horizontal">
 
             <com.app.yellowcap.ui.views.AnyTextView
+                android:id="@+id/txt_customerNameHeading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/lightBlack"
@@ -130,6 +131,7 @@
             android:orientation="horizontal">
 
             <com.app.yellowcap.ui.views.AnyTextView
+                android:id="@+id/txt_estimatedQuoteHeading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/lightBlack"
@@ -159,6 +161,7 @@
             android:orientation="horizontal">
 
             <com.app.yellowcap.ui.views.AnyTextView
+                android:id="@+id/txt_serviceHeading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/lightBlack"
@@ -188,6 +191,7 @@
             android:orientation="horizontal">
 
             <com.app.yellowcap.ui.views.AnyTextView
+                android:id="@+id/txt_AddressHeading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/lightBlack"
@@ -217,6 +221,7 @@
             android:orientation="horizontal">
 
             <com.app.yellowcap.ui.views.AnyTextView
+                android:id="@+id/txt_descriptionHeading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/lightBlack"
@@ -247,7 +252,7 @@
             android:orientation="horizontal">
 
             <com.app.yellowcap.ui.views.AnyTextView
-                android:id="@+id/anyTextView"
+                android:id="@+id/txt_preferred_dateTimeHeading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/x3"
@@ -277,12 +282,12 @@
         android:id="@+id/ll_buttons"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="@dimen/x40"
+        android:layout_marginBottom="@dimen/x10"
         android:layout_marginLeft="@dimen/x10"
         android:layout_marginRight="@dimen/x10"
         android:layout_weight="0.1"
         android:gravity="bottom"
+        android:paddingBottom="@dimen/x5"
         android:orientation="horizontal">
 
         <Button
@@ -292,6 +297,7 @@
             android:layout_weight="1"
             android:background="@drawable/button_background"
             android:layout_marginRight="@dimen/x3"
+            android:layout_marginBottom="@dimen/x10"
             android:text="@string/accept"
             android:textColor="@color/white" />
 
@@ -299,6 +305,7 @@
             android:id="@+id/btn_reject"
             android:layout_width="0dp"
             android:layout_height="@dimen/x40"
+            android:layout_marginBottom="@dimen/x10"
             android:layout_weight="1"
             android:layout_marginLeft="@dimen/x3"
             android:background="@drawable/button_blackbackground"

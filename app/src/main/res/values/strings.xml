@@ -168,6 +168,22 @@
     <string name="cc_name_error">Enter Name on Credit Card Number</string>
     <string name="khalid_howladar">Khalid Howladar</string>
     <string name="khalidhowladar_sample_com">khalidhowladar@sample.com</string>
+    <string name="Job_Posted">Job Posted:</string>
+    <string name="call">Call</string>
+    <string name="add_job">Add Job</string>
+    <string name="mark_as_completed">Mark as Completed</string>
+    <string name="job_description">Job Description</string>
+    <string name="Total">Total</string>
+    <string name="aed">AED</string>
+    <string name="Notifications">Notifications</string>
+    <string name="New_Jobs">New Jobs</string>
+    <string name="job_number">Job Number:</string>
+    <string name="Job_Title">Job Title:</string>
+    <string name="payment_mode">Payment Mode:</string>
+    <string name="User_Address">User Address:</string>
+    <string name="quotation_valid_till">Quotation Valid Till:</string>
+    <string name="estimated_quote">Estimated Quote:</string>
+    <string name="Electrical">Electrical</string>
 
 
 </resources>

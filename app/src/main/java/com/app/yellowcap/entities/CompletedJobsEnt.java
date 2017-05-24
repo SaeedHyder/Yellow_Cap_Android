@@ -6,7 +6,7 @@ import com.app.yellowcap.ui.views.AnyTextView;
  * Created by saeedhyder on 5/22/2017.
  */
 
-public class CompletedJobsItem {
+public class CompletedJobsEnt {
 
     private String Job;
     private String jobCompleted;
@@ -15,7 +15,7 @@ public class CompletedJobsItem {
     private String rating;
     private String Earning;
 
-    public CompletedJobsItem(String Job,String jobCompleted,String ClientName,String JobTitle,String rating,String Earning){
+    public CompletedJobsEnt(String Job, String jobCompleted, String ClientName, String JobTitle, String rating, String Earning){
 
         setJob(Job);
         setJobCompleted(jobCompleted);
