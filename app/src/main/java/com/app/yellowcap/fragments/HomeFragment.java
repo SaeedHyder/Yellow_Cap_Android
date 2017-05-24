@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 import static com.app.yellowcap.R.id.ll_history;
+import static com.app.yellowcap.R.id.ll_logout;
 import static com.app.yellowcap.R.id.ll_notification;
 import static com.app.yellowcap.R.id.ll_profile;
 
@@ -95,6 +96,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         llHistory.setOnClickListener(this);
         llNotification.setOnClickListener(this);
         llProfile.setOnClickListener(this);
+        llLogout.setOnClickListener(this);
     }
 
 
@@ -140,6 +142,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
             case ll_profile:
                 getDockActivity().addDockableFragment(ProfileFragment.newInstance(), "ProfileFragment");
+                break;
+
+            case ll_logout:
+                prefHelper.setLoginStatus(false);
+                getDockActivity().addDockableFragment(UserSelectionFragment.newInstance(), "ProfileFragment");
                 break;
 
 

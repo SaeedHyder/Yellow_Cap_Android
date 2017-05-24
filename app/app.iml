@@ -132,10 +132,10 @@
     <orderEntry type="library" exported="" name="support-compat-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-gcm-10.0.0" level="project" />
     <orderEntry type="library" exported="" name="firebase-analytics-10.0.0" level="project" />
+    <orderEntry type="library" exported="" name="picasso-2.5.2" level="project" />
     <orderEntry type="library" exported="" name="play-services-ads-lite-10.0.0" level="project" />
     <orderEntry type="library" exported="" name="firebase-auth-10.0.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-tasks-10.0.0" level="project" />
-    <orderEntry type="library" exported="" name="picasso-2.3.2" level="project" />
     <orderEntry type="library" exported="" name="play-services-base-10.0.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-identity-10.0.0" level="project" />
     <orderEntry type="library" exported="" name="support-core-ui-25.3.1" level="project" />
@@ -178,5 +178,7 @@
     <orderEntry type="library" exported="" name="animated-vector-drawable-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="android-form-edittext-1.2.1" level="project" />
     <orderEntry type="module" module-name="commons-lang3-3.1" exported="" />
+    <orderEntry type="module" module-name="library" exported="" />
+    <orderEntry type="library" exported="" name="library-unspecified" level="project" />
   </component>
 </module>

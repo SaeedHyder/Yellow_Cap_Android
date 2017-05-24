@@ -44,8 +44,8 @@ public class SideMenuFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binddata();
-        madapter = new ArrayListAdapter<NavigationEnt>(getDockActivity(),new NavigationItemBinder(getDockActivity()));
+
+        madapter = new ArrayListAdapter<NavigationEnt>(getDockActivity(),navigationItemList,new NavigationItemBinder(getDockActivity()));
     }
 
 
