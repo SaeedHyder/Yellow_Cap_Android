@@ -32,7 +32,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/x150"
         android:weightSum="2"
         android:orientation="horizontal"
         android:layout_marginTop="@dimen/x30"
@@ -45,17 +45,17 @@
         <LinearLayout
             android:id="@+id/usercontainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="@drawable/box_backgrounds"
             android:layout_weight="1"
             >
             <ImageView
-                android:layout_width="@dimen/x80"
-                android:layout_height="@dimen/x80"
+                android:layout_width="@dimen/x60"
+                android:layout_height="@dimen/x60"
                 android:src="@drawable/user"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/x20"
+                android:layout_marginTop="@dimen/x15"
              />
             <com.app.yellowcap.ui.views.AnyTextView
                 android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                 android:paddingTop="@dimen/x5"
                 android:text="@string/user"
                 android:textColor="@color/general_color"
-                android:textSize="@dimen/x20"
+                android:textSize="20sp"
                 android:textStyle="normal"
                 app:typeface="Roboto-Regular.ttf" />
             <com.app.yellowcap.ui.views.AnyTextView
@@ -78,7 +78,7 @@
                 android:textColor="@color/general_color"
                 android:layout_marginLeft="@dimen/x10"
                 android:layout_marginRight="@dimen/x10"
-                android:textSize="@dimen/x15"
+                android:textSize="12sp"
                 android:textStyle="normal"
                 app:typeface="Roboto-Regular.ttf" />
            <!-- <ImageView
@@ -93,17 +93,17 @@
         <LinearLayout
             android:id="@+id/techniciancontainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="@drawable/box_backgrounds"
             android:layout_weight="1"
             >
             <ImageView
-                android:layout_width="@dimen/x80"
-                android:layout_height="@dimen/x80"
+                android:layout_width="@dimen/x60"
+                android:layout_height="@dimen/x60"
                 android:src="@drawable/technician"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/x20"
+                android:layout_marginTop="@dimen/x15"
                 />
             <com.app.yellowcap.ui.views.AnyTextView
                 android:layout_width="match_parent"
@@ -113,7 +113,7 @@
                 android:paddingTop="@dimen/x5"
                 android:text="@string/technician"
                 android:textColor="@color/general_color"
-                android:textSize="@dimen/x20"
+                android:textSize="20sp"
                 android:textStyle="normal"
                 app:typeface="Roboto-Regular.ttf" />
             <com.app.yellowcap.ui.views.AnyTextView
@@ -126,7 +126,7 @@
                 android:textColor="@color/general_color"
                 android:layout_marginLeft="@dimen/x10"
                 android:layout_marginRight="@dimen/x10"
-                android:textSize="@dimen/x15"
+                android:textSize="12sp"
                 android:textStyle="normal"
                 app:typeface="Roboto-Regular.ttf" />
             <!-- <ImageView

@@ -9,19 +9,17 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.4">
+        android:layout_height="@dimen/x200"
+        android:background="@drawable/border_rect">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/border_rect" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/x25"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/CircularImageSharePop"
@@ -41,7 +39,7 @@
                 android:paddingTop="@dimen/x10"
                 android:text="@string/khalid_howladar"
                 android:textColor="@color/black"
-                android:textSize="@dimen/x20"
+                android:textSize="20sp"
                 android:textStyle="normal"
                 app:typeface="Roboto-Regular.ttf" />
 
@@ -55,7 +53,7 @@
                 android:paddingTop="@dimen/x5"
                 android:text="@string/khalidhowladar_sample_com"
                 android:textColor="@color/black"
-                android:textSize="@dimen/x15"
+                android:textSize="15sp"
                 android:textStyle="normal"
                 app:typeface="Roboto-Regular.ttf" />
         </LinearLayout>
@@ -63,8 +61,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.6"
+        android:layout_height="match_parent"
+
         android:orientation="vertical">
 
        <ListView

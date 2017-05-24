@@ -9,7 +9,7 @@
         android:id="@+id/ll_item_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/x20"
+        android:layout_marginLeft="@dimen/x10"
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/img_selected"
@@ -20,11 +20,16 @@
             android:visibility="gone" />
         <ImageView
             android:id="@+id/img_unselected"
-            android:layout_width="@dimen/x50"
-            android:layout_height="@dimen/x50"
+            android:layout_width="@dimen/x35"
+            android:layout_height="@dimen/x35"
             android:src="@drawable/home"
 
             android:layout_centerVertical="true"/>
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/x10">
+
         <com.app.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_home"
             android:layout_width="match_parent"
@@ -34,11 +39,21 @@
             android:paddingTop="@dimen/x10"
             android:paddingLeft="@dimen/x10"
             android:text="@string/home"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/x25"
+            android:textColor="@color/black"
+            android:textSize="15sp"
             android:textStyle="normal"
             app:typeface="Roboto-Regular.ttf"
-            android:layout_toEndOf="@+id/img_logo" />
+            android:layout_toStartOf="@+id/imgNotificationCount" />
+        <ImageView
+            android:id="@+id/imgNotificationCount"
+            android:layout_width="@dimen/x30"
+            android:layout_height="@dimen/x30"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:foregroundGravity="top"
+            android:scaleType="centerInside"
+            android:visibility="gone"/>
+      </RelativeLayout>
     </LinearLayout>
 
     <View
@@ -48,7 +63,7 @@
         android:layout_marginBottom="@dimen/x3"
         android:layout_marginLeft="@dimen/x10"
         android:layout_marginRight="@dimen/x10"
-        android:layout_marginTop="@dimen/x10"
+
         android:alpha="0.6"
         android:background="@drawable/text"/>
 </LinearLayout>
