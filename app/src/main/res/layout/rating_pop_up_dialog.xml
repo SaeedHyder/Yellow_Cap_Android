@@ -65,7 +65,7 @@
             android:weightSum="2">
 
             <com.app.yellowcap.ui.views.AnyEditTextView
-                android:id="@+id/txt1"
+                android:id="@+id/txt_tip"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
