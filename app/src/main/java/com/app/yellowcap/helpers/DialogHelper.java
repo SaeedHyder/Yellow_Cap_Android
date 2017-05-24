@@ -68,7 +68,7 @@ public class DialogHelper {
         return this.dialog;
     }
 
-    
+
     public Dialog initJobDetailDialog(int layoutID , View.OnClickListener onclicklistener, String title, String person_name,
                                       View.OnClickListener arriveclickListener, View.OnClickListener completeclickListener) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -86,9 +86,9 @@ public class DialogHelper {
         complete.setOnClickListener(completeclickListener);
         return this.dialog;
     }
-    public void setTimeinText(String time,int ID){
-        AnyTextView timetextview = (AnyTextView)dialog.findViewById(ID);
-        timetextview.setText(time);
+    public AnyTextView getTimeTextview(int ID){
+        return  (AnyTextView)dialog.findViewById(ID);
+
     }
     public Dialog initRatingDialog(int layoutID ,View.OnClickListener onclicklistener,String title,String message) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
