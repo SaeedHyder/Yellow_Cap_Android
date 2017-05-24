@@ -278,30 +278,30 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="@dimen/x30"
-        android:layout_marginLeft="@dimen/x20"
-        android:layout_marginRight="@dimen/x20"
+        android:layout_marginBottom="@dimen/x40"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginRight="@dimen/x10"
         android:layout_weight="0.1"
         android:gravity="bottom"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn_accept"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/x40"
             android:layout_weight="1"
+            android:background="@drawable/button_background"
             android:layout_marginRight="@dimen/x3"
-            android:background="@color/yellow"
             android:text="@string/accept"
             android:textColor="@color/white" />
 
         <Button
             android:id="@+id/btn_reject"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/x40"
             android:layout_weight="1"
             android:layout_marginLeft="@dimen/x3"
-            android:background="@color/lightBlack"
+            android:background="@drawable/button_blackbackground"
             android:text="@string/reject"
             android:textColor="@color/white" />
 

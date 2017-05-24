@@ -32,6 +32,7 @@ import com.app.yellowcap.fragments.HomeFragment;
 import com.app.yellowcap.fragments.LoginFragment;
 import com.app.yellowcap.fragments.RequestServiceFragment;
 import com.app.yellowcap.fragments.SideMenuFragment;
+import com.app.yellowcap.fragments.UserHomeFragment;
 import com.app.yellowcap.fragments.UserSelectionFragment;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.helpers.ScreenHelper;
@@ -161,9 +162,15 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
 
     public void initFragment() {
         if (prefHelper.isLogin()) {
-            addDockableFragment(RequestServiceFragment.newInstance(), "HomeFragment");
+            if (prefHelper.getUserType().equals("user")){
+                addDockableFragment(UserHomeFragment.newInstance(), "HomeFragment");
+            }
+            else{
+                addDockableFragment(HomeFragment.newInstance(), "HomeFragment");
+            }
+
         } else {
-            addDockableFragment(LoginFragment.newInstance(), "UserSelectionFragement");
+            addDockableFragment(UserSelectionFragment.newInstance(), "UserSelectionFragement");
         }
     }
 
