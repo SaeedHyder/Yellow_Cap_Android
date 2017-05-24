@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_job"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginRight="@dimen/x20"
+        android:layout_marginTop="@dimen/x20"
+        android:layout_marginBottom="@dimen/x3"
+        android:orientation="horizontal">
+
+
+    <com.app.yellowcap.ui.views.AnyTextView
+        android:id="@+id/txt_jobNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/job"
+        android:layout_marginRight="@dimen/x8"
+        android:textColor="@color/lightBlack"
+        android:textSize="@dimen/x15"
+        app:typeface="Roboto-Regular.ttf"/>
+
+        <com.app.yellowcap.ui.views.AnyTextView
+            android:id="@+id/txt_jobNoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="01"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/x15"
+            app:typeface="Roboto-Regular.ttf"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_jobCompleted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginRight="@dimen/x20"
+        android:layout_marginBottom="@dimen/x3"
+        android:orientation="horizontal">
+
+
+        <com.app.yellowcap.ui.views.AnyTextView
+            android:id="@+id/txt_jobCompleted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/job_completed"
+            android:layout_marginRight="@dimen/x8"
+            android:textColor="@color/lightBlack"
+            android:textSize="@dimen/x15"
+            app:typeface="Roboto-Regular.ttf"/>
+
+        <com.app.yellowcap.ui.views.AnyTextView
+            android:id="@+id/txt_jobCompletedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="23-3-17"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/x15"
+            app:typeface="Roboto-Regular.ttf"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_clientName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginRight="@dimen/x20"
+        android:layout_marginBottom="@dimen/x3"
+        android:orientation="horizontal">
+
+
+        <com.app.yellowcap.ui.views.AnyTextView
+            android:id="@+id/txt_ClientName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/client_name"
+            android:layout_marginRight="@dimen/x8"
+            android:textColor="@color/lightBlack"
+            android:textSize="@dimen/x15"
+            app:typeface="Roboto-Regular.ttf"/>
+
+        <com.app.yellowcap.ui.views.AnyTextView
+            android:id="@+id/txt_clientNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Al Musa"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/x15"
+            app:typeface="Roboto-Regular.ttf"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_JobTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginRight="@dimen/x20"
+        android:layout_marginBottom="@dimen/x3"
+        android:orientation="horizontal">
+
+
+        <com.app.yellowcap.ui.views.AnyTextView
+            android:id="@+id/txt_JobTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/job_title"
+            android:layout_marginRight="@dimen/x8"
+            android:textColor="@color/lightBlack"
+            android:textSize="@dimen/x15"
+            app:typeface="Roboto-Regular.ttf"/>
+
+        <com.app.yellowcap.ui.views.AnyTextView
+            android:id="@+id/txt_JobTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Plumber"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/x15"
+            app:typeface="Roboto-Regular.ttf"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_Rating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginRight="@dimen/x20"
+        android:layout_marginBottom="@dimen/x3"
+        android:orientation="horizontal">
+
+
+        <com.app.yellowcap.ui.views.AnyTextView
+            android:id="@+id/txt_Rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rating"
+            android:layout_marginRight="@dimen/x8"
+            android:textColor="@color/lightBlack"
+            android:textSize="@dimen/x15"
+            app:typeface="Roboto-Regular.ttf"/>
+
+        <com.app.yellowcap.ui.views.CustomRatingBar
+            android:id="@+id/rbAddRating"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/x12"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginRight="@dimen/x10"
+            android:visibility="visible"
+            app:maxStars="5"
+            app:starOff="@drawable/star1"
+            app:starOn="@drawable/star2"
+            app:starPadding="@dimen/x2"
+            app:stars="3" />
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_Earning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginRight="@dimen/x20"
+        android:layout_marginBottom="@dimen/x3"
+        android:orientation="horizontal">
+
+
+        <com.app.yellowcap.ui.views.AnyTextView
+            android:id="@+id/txt_Earning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/earning_cod"
+            android:layout_marginRight="@dimen/x8"
+            android:textColor="@color/lightBlack"
+            android:textSize="@dimen/x15"
+            app:typeface="Roboto-Regular.ttf"/>
+
+        <com.app.yellowcap.ui.views.AnyTextView
+            android:id="@+id/txt_EarningText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AED 55.00"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/x15"
+            app:typeface="Roboto-Regular.ttf"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/txt_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:layout_marginBottom="@dimen/x3"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_marginTop="@dimen/x10"
+        android:alpha="0.6"
+        android:background="@drawable/seperator"/>
+
+</LinearLayout>
