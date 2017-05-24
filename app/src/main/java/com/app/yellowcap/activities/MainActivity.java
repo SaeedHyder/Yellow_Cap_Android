@@ -266,7 +266,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         }
     }
 
-    
+
     public void takePicture() {
         askPermission();
         chooserType = ChooserType.REQUEST_CAPTURE_PICTURE;
