@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_item_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x20"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/img_selected"
+            android:layout_width="@dimen/x50"
+            android:layout_height="@dimen/x50"
+            android:src="@drawable/home_yellow"
+            android:layout_centerVertical="true"
+            android:visibility="gone" />
+        <ImageView
+            android:id="@+id/img_unselected"
+            android:layout_width="@dimen/x50"
+            android:layout_height="@dimen/x50"
+            android:src="@drawable/home"
+
+            android:layout_centerVertical="true"/>
+        <com.app.yellowcap.ui.views.AnyTextView
+            android:id="@+id/txt_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:paddingBottom="@dimen/x10"
+            android:paddingTop="@dimen/x10"
+            android:paddingLeft="@dimen/x10"
+            android:text="@string/home"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/x25"
+            android:textStyle="normal"
+            app:typeface="Roboto-Regular.ttf"
+            android:layout_toEndOf="@+id/img_logo" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/txt_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:layout_marginBottom="@dimen/x3"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_marginTop="@dimen/x10"
+        android:alpha="0.6"
+        android:background="@drawable/text"/>
+</LinearLayout>

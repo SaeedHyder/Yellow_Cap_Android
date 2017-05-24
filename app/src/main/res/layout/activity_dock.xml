@@ -48,7 +48,7 @@
         android:id="@+id/sideMneuFragmentContainer"
         android:layout_width="@dimen/x300"
         android:layout_height="match_parent"
-        android:layout_gravity="right"
+        android:layout_gravity="left"
         android:choiceMode="singleChoice"
 
         android:dividerHeight="1dp" />

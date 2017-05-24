@@ -67,14 +67,19 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     }
 
-    @Nullable
+
     @Override
+    protected int getLayout() {
+        return R.layout.fragment_home;
+    }
+        @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
 
         unbinder = ButterKnife.bind(this, view);
         return view;
+
     }
 
     @Override
@@ -98,7 +103,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         super.setTitleBar(titleBar);
         getDockActivity().releaseDrawer();
         titleBar.hideButtons();
-        titleBar.showNotificationButton();
+        titleBar.showNotificationButton(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDockActivity().addDockableFragment(NewJobsFragment.newInstance(), "NewJobsFragment");
+            }
+        });
         titleBar.setSubHeading("Home");
 
     }

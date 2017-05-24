@@ -32,6 +32,11 @@ public class ProfileFragment extends BaseFragment {
     }
 
     @Override
+    protected int getLayout() {
+        return R.layout.fragment_technicianprofile;
+    }
+
+    @Override
     public void setTitleBar(TitleBar titleBar) {
         super.setTitleBar(titleBar);
         getDockActivity().releaseDrawer();

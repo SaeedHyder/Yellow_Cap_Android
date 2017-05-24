@@ -43,6 +43,11 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
     }
 
     @Override
+    protected int getLayout() {
+        return R.layout.fragment_orderhistory;
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 

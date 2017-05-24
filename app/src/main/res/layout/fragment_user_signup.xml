@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/scrollview_bigdaddy"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:orientation="vertical">
 
     <ImageView
@@ -25,15 +25,16 @@
 
 
         <com.app.yellowcap.ui.views.AnyEditTextView
-            android:id="@+id/edtEmail"
+            android:id="@+id/edtname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/x20"
             android:layout_marginRight="@dimen/x20"
-            android:drawableLeft="@drawable/email"
+            android:drawableLeft="@drawable/profile"
             android:drawablePadding="@dimen/x10"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"
+            android:hint="@string/enter_full_name"
+            android:inputType="text"
+            android:maxLines="1"
             android:maxLength="50"
             android:singleLine="true"
             android:textColor="@color/dark_grey"
@@ -53,15 +54,15 @@
             android:background="@drawable/text" />
 
         <com.app.yellowcap.ui.views.AnyEditTextView
-            android:id="@+id/edtPassword"
+            android:id="@+id/edtnumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/x20"
             android:layout_marginRight="@dimen/x20"
-            android:drawableLeft="@drawable/lock"
+            android:drawableLeft="@drawable/phone"
             android:drawablePadding="@dimen/x10"
-            android:hint="@string/password"
-            android:inputType="textPassword"
+            android:hint="@string/phone_number"
+            android:inputType="number"
             android:maxLength="50"
             android:singleLine="true"
             android:textColor="@color/dark_grey"
@@ -80,18 +81,7 @@
             android:alpha="0.6"
             android:background="@drawable/text" />
 
-        <com.app.yellowcap.ui.views.AnyTextView
-            android:id="@+id/txtForgotPass"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginRight="@dimen/x15"
-            android:alpha="0.7"
-            android:gravity="center"
-            android:text="@string/forgot_password"
-            android:textColor="@color/dark_grey"
-            android:textSize="@dimen/x12"
-            app:typeface="Roboto-Regular.ttf" />
+
 
     </LinearLayout>
 
@@ -102,7 +92,7 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btn_login"
+            android:id="@+id/btn_signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/x15"
@@ -110,7 +100,7 @@
             android:textColor="@color/white"
             android:layout_marginLeft="@dimen/x40"
             android:layout_marginRight="@dimen/x40"
-            android:text="Login" />
+            android:text="@string/sign_up" />
 
     </LinearLayout>
 

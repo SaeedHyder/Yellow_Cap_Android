@@ -57,6 +57,11 @@ public class NewJobsFragment extends BaseFragment {
     }
 
     @Override
+    protected int getLayout() {
+        return R.layout.fragment_newjobs;
+    }
+
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 

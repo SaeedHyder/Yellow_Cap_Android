@@ -85,6 +85,30 @@
          aining Lorem Ipsum passages, and more recently with desktop publishing so
          ftware like Aldus PageMaker including versions of Lorem Ipsum.</string>
     <string name="this_is_login_fragment">This is Login Fragment</string>
+    <string name="job_posted">Job Posted : 02-05-17</string>
+    <string name="select_job_type">Select Job Type</string>
+    <string name="selected_jobs">Selected Jobs</string>
+    <string name="additional_job">Additional Job</string>
+    <string name="addtional_job_description">Add your Addtional job\'s description here</string>
+
+    <string name="dummyAddress">795 Dubai Marina,UAE</string>
+    <string name="dummydate">02-02-17</string>
+    <string name="preferred_date">Preferred Date</string>
+    <string name="preferred_time">Preferred Time</string>
+    <string name="dummytime">15:25</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="payment_method">Payment Mode</string>
+    <string name="cc">Credit Card</string>
+    <string name="cc_number">Credit Card Number</string>
+    <string name="expiration_date">Expiration Date</string>
+    <string name="cvv">CVV</string>
+    <string name="name_appearing_on_card">Name Appering on the Card</string>
+    <string name="cod">Cash on Delivery</string>
+    <string name="request_a_quote">Request a Quote</string>
+    <string name="gps_question">Location is Disabled.Do you want to enable it</string>
+    <string name="gps_yes">Yes</string>
+    <string name="gps_no">No</string>
     <string name="email">Email</string>
     <string name="new_jobs">New Jobs</string>
     <string name="order_history">Order History</string>
@@ -94,6 +118,8 @@
     <string name="in_progress">In Progress</string>
     <string name="no_result_found">No Result Found</string>
     <string name="job">Job:</string>
+    <string name="my_job">My Jobs</string>
+    <string name="about_app">About App</string>
     <string name="job_completed">Job Completed:</string>
     <string name="client_name">Client Name:</string>
     <string name="job_title">Job Title:</string>
@@ -112,5 +138,36 @@
     <string name="preferred_date_time">Preferred Date/Time:</string>
     <string name="accept">Accept</string>
     <string name="reject">Reject</string>
+    <string name="user">User</string>
+    <string name="user_message">Want to use the Services</string>
+    <string name="technician">Technician</string>
+    <string name="wants_to_provide_services">Wants to provide Services</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="enter_full_name">Enter Full Name</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="valid_number">Enter Valid Number</string>
+    <string name="enter_number">Enter Number</string>
+    <string name="submit">Submit</string>
+    <string name="incorrect_code">inCorrect Code</string>
+    <string name="success">Success</string>
+    <string name="i_have_read_the_term_and_conditions">I have read the term and conditions</string>
+    <string name="valid_email">Enter Valid Email</string>
+    <string name="valid_password">Enter valid Password</string>
+    <string name="ac">AC</string>
+    <string name="electrical">Electrical</string>
+    <string name="plumbing">Plumbing</string>
+    <string name="furniture_fixture_assembly"><![CDATA[Furniture Fixture & Assembly]]></string>
+    <string name="pest_control">Pest Control</string>
+    <string name="cleaning">Cleaning</string>
+    <string name="move_in_move_out">Move in / Move out</string>
+    <string name="customs_jobs">Customs Jobs</string>
+    <string name="update">Update</string>
+    <string name="enter_cc_number">Enter Credit Card Number</string>
+    <string name="expiredate_error">Enter Credit Card Expire Date</string>
+    <string name="cvv_error">Enter CVV Number</string>
+    <string name="cc_name_error">Enter Name on Credit Card Number</string>
+    <string name="khalid_howladar">Khalid Howladar</string>
+    <string name="khalidhowladar_sample_com">khalidhowladar@sample.com</string>
+
 
 </resources>

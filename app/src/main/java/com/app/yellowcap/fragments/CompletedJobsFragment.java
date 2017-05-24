@@ -60,6 +60,11 @@ public class CompletedJobsFragment extends BaseFragment {
     }
 
     @Override
+    protected int getLayout() {
+        return R.layout.fragment_completedjobs;
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 

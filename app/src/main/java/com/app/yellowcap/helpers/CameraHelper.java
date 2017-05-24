@@ -15,6 +15,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.widget.ImageView;
 
+import com.app.yellowcap.activities.MainActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class CameraHelper {
@@ -91,6 +92,27 @@ public class CameraHelper {
 		fragment.startActivityForResult(pictureActionIntent, CAMERA_REQUEST);
 
 	}
+	public static void uploadMedia(final
+								   MainActivity activity) {
+		AlertDialog.Builder imageDialog=new AlertDialog.Builder(activity);
+		imageDialog.setTitle("Select Image");
+		imageDialog.setMessage("How do you want to set your photo?");
+		imageDialog.setPositiveButton("Camera", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				activity.takePicture();
+			}
+		});
+		imageDialog.setNegativeButton("Gallery", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				activity.chooseImage();
+			}
+		});
+
+		imageDialog.show();
+	}
+
 
 	public static File retrievePicture(int requestCode, int resultCode,
 			Intent data, Activity activity) {

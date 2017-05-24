@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:orientation="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/job_posted_background">
+
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_jobposted"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/x10"
+                android:paddingTop="@dimen/x10"
+                android:text="@string/job_posted"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x15"
+                android:textStyle="normal"
+                app:typeface="Roboto-Regular.ttf" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/x20"
+            android:orientation="vertical">
+
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:id="@+id/txt_jobtype"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/x10"
+                android:paddingTop="@dimen/x10"
+                android:text="@string/select_job_type"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/x15"
+                android:textStyle="normal"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <Spinner
+                android:id="@+id/spn_jobtype"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x40"
+                android:layout_marginBottom="@dimen/x5" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginBottom="@dimen/x5"
+                android:background="@drawable/line" />
+
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:id="@+id/txt_jobdescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/x10"
+                android:paddingTop="@dimen/x10"
+                android:text="@string/select_job_type"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/x15"
+                android:textStyle="normal"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <Spinner
+                android:id="@+id/spn_jobdescription"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x40"
+                android:layout_marginBottom="@dimen/x5" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginBottom="@dimen/x5"
+                android:background="@drawable/line" />
+
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:id="@+id/txt_jobselected"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/x10"
+                android:paddingTop="@dimen/x10"
+                android:text="@string/selected_jobs"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/x15"
+                android:textStyle="normal"
+                app:typeface="Roboto-Regular.ttf" />
+
+
+            <ListView
+                android:id="@+id/listView_jobselected"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:id="@+id/txt_jobadditional"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/x10"
+                android:paddingTop="@dimen/x10"
+                android:text="@string/additional_job"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/x15"
+                android:textStyle="normal"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <com.app.yellowcap.ui.views.AnyEditTextView
+                style="@style/form_edttext_fields_style"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x100"
+                android:background="@drawable/square_border"
+                android:ems="10"
+                android:gravity="top"
+                android:hint="@string/addtional_job_description"
+                android:imeOptions="actionDone"
+                android:inputType="textMultiLine"
+                android:maxHeight="@dimen/x100"
+                android:padding="@dimen/x10"
+                android:scrollbars="vertical"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:id="@+id/txt_joblocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/x10"
+                android:paddingTop="@dimen/x10"
+                android:text="@string/address"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/x15"
+                android:textStyle="normal"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/img_location_autocomplete"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/location" />
+
+                <com.jota.autocompletelocation.AutoCompleteLocation
+                    android:id="@+id/edt_locationgps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/img_location_autocomplete"
+                    android:layout_toRightOf="@+id/img_location_autocomplete"
+                    android:layout_toLeftOf="@+id/img_gps"
+                    android:layout_toStartOf="@+id/img_gps"
+                    android:background="@null"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    app:background_layout="@null"
+                    app:hint_text="@string/dummyAddress" />
+
+                <ImageView
+                    android:id="@+id/img_gps"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/location" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginBottom="@dimen/x5"
+                android:background="@drawable/line" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/img_location_image"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/location"
+                    android:visibility="invisible" />
+
+                <com.app.yellowcap.ui.views.AnyEditTextView
+                    android:id="@+id/edt_locationspecific"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x35"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/x10"
+                    android:layout_toRightOf="@+id/img_location_image"
+                    android:background="@null"
+                    android:drawablePadding="@dimen/x10"
+                    android:hint="@string/dummyAddress"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    app:typeface="Roboto-Regular.ttf" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginBottom="@dimen/x5"
+                android:background="@drawable/line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x10"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.app.yellowcap.ui.views.AnyTextView
+                        android:id="@+id/txt_jobpreferedDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:paddingBottom="@dimen/x10"
+                        android:paddingTop="@dimen/x10"
+                        android:text="@string/preferred_date"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/x15"
+                        android:textStyle="normal"
+                        app:typeface="Roboto-Regular.ttf" />
+
+                    <com.app.yellowcap.ui.views.AnyTextView
+                        android:id="@+id/btn_preferreddate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/calendar"
+                        android:drawablePadding="@dimen/x10"
+                        android:ems="10"
+                        android:gravity="bottom"
+                        android:padding="@dimen/x10"
+                        android:text="@string/dummydate"
+                        android:textSize="@dimen/x15"
+                        app:typeface="Roboto-Regular.ttf"
+
+                        />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/x2"
+                        android:layout_marginBottom="@dimen/x5"
+                        android:background="@drawable/line" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.app.yellowcap.ui.views.AnyTextView
+                        android:id="@+id/txt_jobpreferedtime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:paddingBottom="@dimen/x10"
+                        android:paddingTop="@dimen/x10"
+                        android:text="@string/preferred_time"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/x15"
+                        android:textStyle="normal"
+                        app:typeface="Roboto-Regular.ttf" />
+
+                    <com.app.yellowcap.ui.views.AnyTextView
+                        android:id="@+id/btn_preferredtime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/calendar"
+                        android:drawablePadding="@dimen/x10"
+                        android:ems="10"
+                        android:gravity="bottom"
+                        android:padding="@dimen/x10"
+                        android:text="@string/dummytime"
+                        android:textSize="@dimen/x15"
+                        app:typeface="Roboto-Regular.ttf" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/x1"
+                        android:layout_marginBottom="@dimen/x5"
+                        android:background="@drawable/line" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x80"
+                android:layout_marginBottom="@dimen/x10"
+                android:layout_marginTop="@dimen/x20"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/btn_addimage"
+                    android:layout_width="@dimen/x80"
+                    android:layout_height="@dimen/x80"
+                    android:background="@drawable/box_backgrounds"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/x40"
+                        android:layout_height="@dimen/x40"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/user" />
+
+                    <com.app.yellowcap.ui.views.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top|center_horizontal"
+                        android:maxLines="1"
+                        android:paddingBottom="@dimen/x10"
+                        android:paddingTop="@dimen/x5"
+                        android:text="@string/add_photo"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/x15"
+                        android:textStyle="normal"
+                        app:typeface="Roboto-Regular.ttf" />
+                </LinearLayout>
+              <!--  <include layout="@layout/horizontal_images_items"/>-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/addimages"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/x10"
+                    android:orientation="horizontal"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    />
+
+            </LinearLayout>
+
+            <com.app.yellowcap.ui.views.AnyTextView
+                android:id="@+id/txt_jobpaymentmethod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/x10"
+                android:paddingTop="@dimen/x10"
+                android:text="@string/payment_method"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/x15"
+                android:textStyle="normal"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/img_cc_check"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/tick"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/btn_cc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/img_cc_check"
+                    android:layout_toStartOf="@+id/img_cc_check"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/card"
+                    android:drawablePadding="@dimen/x10"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/cc"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/x10" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginBottom="@dimen/x5"
+                android:background="@drawable/line" />
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/img_cod_check"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/tick"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/btn_cod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/img_cod_check"
+                    android:layout_toStartOf="@+id/img_cod_check"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/card"
+                    android:drawablePadding="@dimen/x10"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/cod"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/x10" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginBottom="@dimen/x5"
+                android:background="@drawable/line" />
+
+            <Button
+                android:id="@+id/btn_request"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x10"
+                android:background="@drawable/button_background"
+                android:drawablePadding="@dimen/x10"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/request_a_quote"
+
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x20" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
