@@ -60,7 +60,7 @@ public class UserNotificationsFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         setNotificationData();
-        //  NotificationItemListner();
+          NotificationItemListner();
 
     }
 
@@ -70,7 +70,7 @@ public class UserNotificationsFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                getDockActivity().addDockableFragment(NewJobDetail.newInstance(), "NewJobDetail");
+                getDockActivity().addDockableFragment(QuotationFragment.newInstance(), "QuotationFragment");
             }
         });
 

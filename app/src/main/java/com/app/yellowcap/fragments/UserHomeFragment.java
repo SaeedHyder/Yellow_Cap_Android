@@ -124,8 +124,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
                 addRequestServiceFragment("move");
                 break;
             case R.id.ll_custom:
-              //  addRequestServiceFragment("custom");
-                getDockActivity().addDockableFragment(QuotationFragment.newInstance(), "QuotationFragment");
+                addRequestServiceFragment("custom");
                 break;
         }
     }
