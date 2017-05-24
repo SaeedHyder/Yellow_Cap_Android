@@ -45,7 +45,7 @@ public class SideMenuFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        madapter = new ArrayListAdapter<NavigationEnt>(getDockActivity(),navigationItemList,new NavigationItemBinder(getDockActivity()));
+        madapter = new ArrayListAdapter<NavigationEnt>(getDockActivity(),new NavigationItemBinder(getDockActivity()));
     }
 
 
@@ -59,6 +59,7 @@ public class SideMenuFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setlistItemClickListener();
+        binddata();
 
     }
 
@@ -66,12 +67,30 @@ public class SideMenuFragment extends BaseFragment {
         navListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                madapter.notifyDataSetChanged();
+               /* madapter.notifyDataSetChanged();
                 AnyTextView textview = (AnyTextView)view.findViewById(R.id.txt_home);
                 textview.setTextColor(getResources().getColor(R.color.text_color));
                 ImageView img = (ImageView)view.findViewById(R.id.img_unselected);
                 NavigationEnt entity = (NavigationEnt)madapter.getItem(position);
-                img.setImageResource(entity.getSelectedDrawable());
+                img.setImageResource(entity.getSelectedDrawable());*/
+
+              if (navigationItemList.get(position).equals(getString(R.string.home))){
+                  getDockActivity().addDockableFragment(UserHomeFragment.newInstance(),"UserHomeFragment");
+              }
+              else  if (navigationItemList.get(position).equals(getString(R.string.notifications))){
+                  //getDockActivity().addDockableFragment(UserHomeFragment.newInstance(),"UserHomeFragment");
+              }
+              else  if (navigationItemList.get(position).equals(getString(R.string.my_job))){
+                  //getDockActivity().addDockableFragment(UserHomeFragment.newInstance(),"UserHomeFragment");
+              }
+              else  if (navigationItemList.get(position).equals(getString(R.string.profile))){
+                  getDockActivity().addDockableFragment(UserProfileFragment.newInstance(),"UserHomeFragment");
+              }
+              else  if (navigationItemList.get(position).equals(getString(R.string.about_app))){
+                  getDockActivity().addDockableFragment(AboutAppFragment.newInstance(),"UserHomeFragment");
+              }
+
+
 
             }
         });

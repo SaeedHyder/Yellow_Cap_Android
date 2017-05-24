@@ -10,6 +10,8 @@ import com.app.yellowcap.activities.DockActivity;
 import com.app.yellowcap.entities.NavigationEnt;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
+import com.app.yellowcap.ui.views.BadgeHelper;
+import com.google.android.gms.plus.model.people.Person;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,10 +22,11 @@ import butterknife.ButterKnife;
 
 public class NavigationItemBinder extends ViewBinder<NavigationEnt> {
     DockActivity activity;
-
+    BadgeHelper badgeHelper;
     public NavigationItemBinder(DockActivity activity) {
         super(R.layout.row_item_nav);
         this.activity = activity;
+
     }
 
     @Override
@@ -34,8 +37,22 @@ public class NavigationItemBinder extends ViewBinder<NavigationEnt> {
     @Override
     public void bindView(NavigationEnt entity, int position, int grpPosition, View view, Activity activity) {
         NavViewHolder viewHolder = (NavViewHolder)view.getTag();
-        viewHolder.txtHome.setText(entity.getItem_text());
-        viewHolder.imgUnselected.setImageResource(entity.getUnselectedDrawable());
+        badgeHelper = new BadgeHelper(viewHolder.imgNotificationCount, (DockActivity) activity);
+        if  (entity.getItem_text().equals(activity.getString(R.string.home))){
+            viewHolder.txtHome.setText(entity.getItem_text());
+            viewHolder.imgUnselected.setImageResource(entity.getSelectedDrawable());
+            viewHolder.txtHome.setTextColor(activity.getResources().getColor(R.color.text_color));
+            badgeHelper.hideBadge();
+        }else {
+            viewHolder.txtHome.setText(entity.getItem_text());
+            viewHolder.imgUnselected.setImageResource(entity.getUnselectedDrawable());
+            if (entity.getItem_text().equals(activity.getString(R.string.notifications))) {
+
+                badgeHelper.initBadge(activity);
+                badgeHelper.addtoBadge(3);
+                badgeHelper.showBadge();
+            }
+        }
 
     }
 
@@ -50,7 +67,8 @@ public class NavigationItemBinder extends ViewBinder<NavigationEnt> {
         View txtLine;
        @BindView(R.id.ll_item_container)
        LinearLayout container;
-
+       @BindView(R.id.imgNotificationCount)
+       ImageView imgNotificationCount;
         NavViewHolder(View view) {
             ButterKnife.bind(this, view);
         }

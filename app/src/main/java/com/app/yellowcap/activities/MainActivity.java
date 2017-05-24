@@ -114,7 +114,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
 
         if (savedInstanceState == null)
             initFragment();
-            askPermission();
+
     }
 
     private void askPermission() {
@@ -163,8 +163,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
     public void initFragment() {
         if (prefHelper.isLogin()) {
             if (prefHelper.getUserType().equals("user")){
-                addDockableFragment(UserHomeFragment.newInstance(), "HomeFragment");
-            }
+                addDockableFragment(UserHomeFragment.newInstance(), "HomeFragment");            }
             else{
                 addDockableFragment(HomeFragment.newInstance(), "HomeFragment");
             }
@@ -248,6 +247,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         UIHelper.showLongToastInCenter(this, "Coming Soon");
     }
     public void chooseImage() {
+        askPermission();
         chooserType = ChooserType.REQUEST_PICK_PICTURE;
         imageChooserManager = new ImageChooserManager(this,
                 ChooserType.REQUEST_PICK_PICTURE, true);
@@ -267,6 +267,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
     }
 
     public void takePicture() {
+        askPermission();
         chooserType = ChooserType.REQUEST_CAPTURE_PICTURE;
         imageChooserManager = new ImageChooserManager(this,
                 ChooserType.REQUEST_CAPTURE_PICTURE, true);

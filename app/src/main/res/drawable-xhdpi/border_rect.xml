@@ -13,15 +13,9 @@
     </gradient>
 
     <!-- Specify a dark green border -->
-    <stroke
-        android:width="5dp"
-        android:color="#b7b6b6" />
+
 
     <!-- Specify the margins that all content inside the drawable must adhere to -->
-    <padding
-        android:left="30dp"
-        android:right="30dp"
-        android:top="30dp"
-        android:bottom="30dp" />
+
 
 </shape>
