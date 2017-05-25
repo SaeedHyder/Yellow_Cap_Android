@@ -235,6 +235,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
             case R.id.btn_cod:
 
+                
                 imgCcCheck.setVisibility(View.GONE);
                 imgCodCheck.setVisibility(View.VISIBLE);
                 break;
