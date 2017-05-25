@@ -192,7 +192,6 @@
     <orderEntry type="library" exported="" name="android-form-edittext-1.2.1" level="project" />
     <orderEntry type="module" module-name="commons-lang3-3.1" exported="" />
     <orderEntry type="module" module-name="library" exported="" />
-    <orderEntry type="library" exported="" name="android-android-25" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-22.1.1" level="project" />
     <orderEntry type="library" exported="" name="support-v4-22.1.1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.1.1" level="project" />

@@ -88,7 +88,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
                 break;
             case R.id.img_gps:
                 if (getMainActivity().statusCheck()){
-                    edtLocationgps.setText(getMainActivity().getMyCurrentLocation().getAddress());
+                    getMainActivity().getMyCurrentLocation().getAddress();
                 }
                 break;
             case R.id.btn_editcard:

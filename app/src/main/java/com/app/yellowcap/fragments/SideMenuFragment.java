@@ -74,20 +74,20 @@ public class SideMenuFragment extends BaseFragment {
                 NavigationEnt entity = (NavigationEnt)madapter.getItem(position);
                 img.setImageResource(entity.getSelectedDrawable());*/
 
-              if (navigationItemList.get(position).equals(getString(R.string.home))){
+              if (navigationItemList.get(position).getItem_text().equals(getString(R.string.home))){
                   getDockActivity().addDockableFragment(UserHomeFragment.newInstance(),"UserHomeFragment");
               }
-              else  if (navigationItemList.get(position).equals(getString(R.string.notifications))){
+              else  if (navigationItemList.get(position).getItem_text().equals(getString(R.string.notifications))){
                   //getDockActivity().addDockableFragment(UserHomeFragment.newInstance(),"UserHomeFragment");
               }
-              else  if (navigationItemList.get(position).equals(getString(R.string.my_job))){
-                  //getDockActivity().addDockableFragment(UserHomeFragment.newInstance(),"UserHomeFragment");
+              else  if (navigationItemList.get(position).getItem_text().equals(getString(R.string.my_job))){
+                  getDockActivity().addDockableFragment(UserJobsFragment.newInstance(),"UserjobsFragment");
               }
-              else  if (navigationItemList.get(position).equals(getString(R.string.profile))){
-                  getDockActivity().addDockableFragment(UserProfileFragment.newInstance(),"UserHomeFragment");
+              else  if (navigationItemList.get(position).getItem_text().equals(getString(R.string.profile))){
+                  getDockActivity().addDockableFragment(UserProfileFragment.newInstance(),"UserProfileFragment");
               }
-              else  if (navigationItemList.get(position).equals(getString(R.string.about_app))){
-                  getDockActivity().addDockableFragment(AboutAppFragment.newInstance(),"UserHomeFragment");
+              else  if (navigationItemList.get(position).getItem_text().equals(getString(R.string.about_app))){
+                  getDockActivity().addDockableFragment(AboutAppFragment.newInstance(),"UserAboutFragment");
               }
 
 

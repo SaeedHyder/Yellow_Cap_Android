@@ -76,6 +76,8 @@
     <string name="you_paid">YOU PAID</string>
     <string name="tap_to_rate">TAP A STAR TO RATE DRIVER</string>
     <string name="contact_address">Columbus College of Arts, New York</string>
+    <string name="dummy_desciption">lorem ipsum dolor sit amet, comsectetur adipiscing elit,sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua</string>
     <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and types
         etting industry. Lorem Ipsum has been the industrys standard dummy text ever sinc
         e the 1500s, when an unknown printer took a galley of type and scrambled it t
@@ -205,9 +207,20 @@
     <string name="close">Close</string>
     <string name="forgot_password_dialog">Forgot Password</string>
     <string name="please_contact_al_musa_sub_admin_nfor_password_retrieval">Please contact Al-Musa (Sub admin)\nfor password retrieval</string>
+
     <string name="expected_time_of_job_completion">Expected Time of Job Completion</string>
     <string name="earning">Earning:</string>
     <string name="Total_Earning">Total Earning:</string>
+
+    <string name="call_technician">Call Technician</string>
+    <string name="cancel_job">Cancel Job</string>
+    <string name="technician_number">Technician Number:</string>
+    <string name="dummy_number">+97 XXX XXX XXX</string>
+    <string name="amount_quoted">Amount Quoted:</string>
+    <string name="technician_name">Technician Name:</string>
+    <string name="dummy_name">Al Musa</string>
+    <string name="technician_rating">Technician Rating</string>
+    <string name="amount_paid">Amount Paid</string>
 
 
 </resources>
