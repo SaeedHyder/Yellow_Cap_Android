@@ -6,16 +6,17 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@color/white"
+    android:background="@drawable/roundshapelayout"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="20dp">
+   >
 
     <LinearLayout
         android:id="@+id/textLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:padding="@dimen/x12"
         android:orientation="vertical">
 
 
@@ -61,25 +62,26 @@
             app:typeface="Roboto-Regular.ttf" />
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignBottom="@+id/textLayout"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/x5"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/btn_close"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/two_round_button"
-                android:text="@string/close"
-                android:textColor="@color/white"
-                android:textSize="@dimen/x16" />
-
-        </LinearLayout>
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/textLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/x5"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_close"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/two_round_button"
+            android:text="@string/close"
+            android:textColor="@color/white"
+            android:textSize="@dimen/x16" />
+
+    </LinearLayout>
+
 
 </LinearLayout>

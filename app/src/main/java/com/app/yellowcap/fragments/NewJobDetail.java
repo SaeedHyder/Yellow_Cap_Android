@@ -1,17 +1,22 @@
 package com.app.yellowcap.fragments;
 
+import android.app.TimePickerDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.helpers.DialogHelper;
+import com.app.yellowcap.helpers.TimePickerHelper;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -22,12 +27,15 @@ import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static com.app.yellowcap.R.id.btn_accept;
 import static com.app.yellowcap.R.id.txt;
+import static com.app.yellowcap.R.id.txt_arrval_time;
 
 /**
  * Created by saeedhyder on 5/23/2017.
@@ -86,7 +94,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
     LinearLayout llPreferredDateTime;
     @BindView(R.id.ll_JobDetail)
     LinearLayout llJobDetail;
-    @BindView(R.id.btn_accept)
+    @BindView(btn_accept)
     Button btnAccept;
     @BindView(R.id.btn_reject)
     Button btnReject;
@@ -123,6 +131,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
 
     private void setListners() {
         btnReject.setOnClickListener(this);
+        btnAccept.setOnClickListener(this);
     }
 
     private void setTextStyle() {
@@ -194,10 +203,45 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
 
     }
 
+    private void initTimePicker(final TextView textView){
+        Calendar calendar = Calendar.getInstance();
+        final TimePickerHelper timePicker = new TimePickerHelper();
+        timePicker.initTimeDialog(getDockActivity(),calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                textView.setText(timePicker.getTime(hourOfDay,minute));
+            }
+        }, DateFormat.is24HourFormat(getMainActivity()));
+
+        timePicker.showTime();
+    }
+
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case btn_accept:
+
+                final DialogHelper JobDetailDialog = new DialogHelper(getDockActivity());
+                JobDetailDialog.initJobDetailDialog(R.layout.new_job_detail_dialog, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        JobDetailDialog.hideDialog();
+                    }
+                }, "Sink Broken", "Mohammad Ali", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        initTimePicker(JobDetailDialog.getTimeTextview(R.id.txt_arrval_time));
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        initTimePicker(JobDetailDialog.getTimeTextview(R.id.txt_complete_time));
+                    }
+                });
+                JobDetailDialog.showDialog();
+                break;
+
             case R.id.btn_reject:
 
                 final DialogHelper RefusalDialog = new DialogHelper(getDockActivity());

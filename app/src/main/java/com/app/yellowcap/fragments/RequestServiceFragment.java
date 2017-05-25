@@ -29,6 +29,7 @@ import com.app.yellowcap.activities.MainActivity;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.helpers.CameraHelper;
 import com.app.yellowcap.helpers.DatePickerHelper;
+import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.helpers.TimePickerHelper;
 import com.app.yellowcap.interfaces.onDeleteImage;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
@@ -238,6 +239,14 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 imgCodCheck.setVisibility(View.VISIBLE);
                 break;
             case R.id.btn_request:
+                final DialogHelper RequestSend = new DialogHelper(getDockActivity());
+                RequestSend.initRequestSendDialog(R.layout.request_send_dialog, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        RequestSend.hideDialog();
+                    }
+                });
+                RequestSend.showDialog();
                 break;
             case R.id.img_gps:
                 if (getMainActivity().statusCheck()){
