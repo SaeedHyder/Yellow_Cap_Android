@@ -205,7 +205,9 @@
     <string name="close">Close</string>
     <string name="forgot_password_dialog">Forgot Password</string>
     <string name="please_contact_al_musa_sub_admin_nfor_password_retrieval">Please contact Al-Musa (Sub admin)\nfor password retrieval</string>
-
+    <string name="expected_time_of_job_completion">Expected Time of Job Completion</string>
+    <string name="earning">Earning:</string>
+    <string name="Total_Earning">Total Earning:</string>
 
 
 </resources>

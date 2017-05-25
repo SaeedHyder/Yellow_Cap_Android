@@ -48,7 +48,7 @@
 
                 <com.app.yellowcap.ui.views.AnyTextView
                     android:id="@+id/ratename"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="@string/requested_by"
@@ -63,10 +63,10 @@
                     android:id="@+id/txt_personname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x4"
                     android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
                     android:alpha="0.7"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:layout_weight="1"
                     android:text="@string/muhammad_ali"
                     android:textColor="@color/dark_grey"
@@ -96,10 +96,8 @@
                 android:layout_marginRight="@dimen/x15"
                 android:gravity="center"
                 android:text="@string/expected_time_of_arrival"
-                android:textColor="@color/grey"
+                android:textColor="@color/gray"
                 android:textSize="15sp"
-                android:alpha="0.7"
-                android:textStyle="bold"
                 app:typeface="Roboto-Regular.ttf" />
 
             <View
@@ -115,21 +113,18 @@
             <com.app.yellowcap.ui.views.AnyTextView
                 android:id="@+id/txt_complete_time"
                 android:layout_width="wrap_content"
+                android:layout_marginBottom="@dimen/x10"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/x5"
-                android:layout_marginBottom="@dimen/x10"
                 android:layout_marginLeft="@dimen/x15"
                 android:layout_marginRight="@dimen/x15"
                 android:gravity="center"
-
-                android:hint="Expected Time of Job Completion"
-                android:textColor="@color/grey"
+                android:textColor="@color/gray"
+                android:hint="@string/expected_time_of_job_completion"
                 android:textSize="15sp"
-                android:alpha="0.7"
-                android:textStyle="bold"
-                app:typeface="Roboto-Regular.ttf" />
+                app:typeface="Roboto-Regular.ttf"/>
 
 
 

@@ -30,7 +30,22 @@
         android:layout_weight="1"
         android:layout_height="match_parent">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/box_top"
+            android:text="Iam a..."
+            android:textAlignment="center"
+            android:textStyle="italic"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/x18"
+            android:textColor="@color/lightBlack"
+            android:layout_above="@+id/view"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/x7" />
+
     <LinearLayout
+        android:id="@+id/ll_selection"
         android:layout_width="match_parent"
         android:layout_height="@dimen/x150"
         android:weightSum="2"
@@ -42,21 +57,22 @@
 
 
        >
+
         <LinearLayout
             android:id="@+id/usercontainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@drawable/box_backgrounds"
             android:layout_weight="1"
-            >
+            android:background="@drawable/box_backgrounds"
+            android:orientation="vertical">
+
             <ImageView
                 android:layout_width="@dimen/x60"
                 android:layout_height="@dimen/x60"
-                android:src="@drawable/user"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/x15"
-             />
+                android:src="@drawable/user" />
+
             <com.app.yellowcap.ui.views.AnyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,20 +84,21 @@
                 android:textSize="20sp"
                 android:textStyle="normal"
                 app:typeface="Roboto-Regular.ttf" />
+
             <com.app.yellowcap.ui.views.AnyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginRight="@dimen/x10"
                 android:gravity="top|center_horizontal"
                 android:maxLines="2"
                 android:paddingBottom="@dimen/x10"
                 android:text="@string/user_message"
                 android:textColor="@color/general_color"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginRight="@dimen/x10"
                 android:textSize="12sp"
                 android:textStyle="normal"
                 app:typeface="Roboto-Regular.ttf" />
-           <!-- <ImageView
+            <!-- <ImageView
                 android:layout_width="@dimen/x70"
                 android:layout_height="@dimen/x70"
                 android:src="@drawable/user"
@@ -94,17 +111,17 @@
             android:id="@+id/techniciancontainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@drawable/box_backgrounds"
             android:layout_weight="1"
-            >
+            android:background="@drawable/box_backgrounds"
+            android:orientation="vertical">
+
             <ImageView
                 android:layout_width="@dimen/x60"
                 android:layout_height="@dimen/x60"
-                android:src="@drawable/technician"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/x15"
-                />
+                android:src="@drawable/technician" />
+
             <com.app.yellowcap.ui.views.AnyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -116,16 +133,17 @@
                 android:textSize="20sp"
                 android:textStyle="normal"
                 app:typeface="Roboto-Regular.ttf" />
+
             <com.app.yellowcap.ui.views.AnyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginRight="@dimen/x10"
                 android:gravity="top|center_horizontal"
                 android:maxLines="2"
                 android:paddingBottom="@dimen/x10"
                 android:text="@string/wants_to_provide_services"
                 android:textColor="@color/general_color"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginRight="@dimen/x10"
                 android:textSize="12sp"
                 android:textStyle="normal"
                 app:typeface="Roboto-Regular.ttf" />
@@ -138,12 +156,13 @@
         </LinearLayout>
     </LinearLayout>
         <View
+            android:id="@+id/view"
             android:layout_width="@dimen/x2"
-            android:layout_height="@dimen/x125"
-            android:paddingTop="@dimen/x30"
+            android:layout_height="@dimen/x120"
+            android:paddingTop= "@dimen/x30"
             android:background="@color/job_posted_background"
             android:layout_centerInParent="true"
-            />
+           />
 
     </RelativeLayout>
 </LinearLayout>
