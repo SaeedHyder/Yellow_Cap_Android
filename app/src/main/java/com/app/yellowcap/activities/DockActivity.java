@@ -57,7 +57,21 @@ public abstract class DockActivity extends AppCompatActivity implements
         super.onResume();
     }
 
-    public void addDockableFragment(BaseFragment frag) {
+   /* public void replaceDockableFragment(BaseFragment frag) {
+
+        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction();
+
+        transaction.replace(getDockFrameLayoutId(), frag);
+        transaction
+                .addToBackStack(
+                        getSupportFragmentManager().getBackStackEntryCount() == 0 ? KEY_FRAG_FIRST
+                                : null).commit();
+
+
+    }*/
+
+    public void replaceDockableFragment(BaseFragment frag, String Tag) {
 
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction();
@@ -71,21 +85,7 @@ public abstract class DockActivity extends AppCompatActivity implements
 
     }
 
-    public void addDockableFragment(BaseFragment frag, String Tag) {
-
-        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager()
-                .beginTransaction();
-
-        transaction.replace(getDockFrameLayoutId(), frag);
-        transaction
-                .addToBackStack(
-                        getSupportFragmentManager().getBackStackEntryCount() == 0 ? KEY_FRAG_FIRST
-                                : null).commit();
-
-
-    }
-
-    public void addDockableFragment(BaseFragment frag, boolean isAnimate) {
+    public void addDockableFragment(BaseFragment frag, String tag) {
 
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction();
@@ -97,7 +97,7 @@ public abstract class DockActivity extends AppCompatActivity implements
         // // R.anim.push_left_out );
         // }
 
-        transaction.replace(getDockFrameLayoutId(), frag);
+        transaction.add(getDockFrameLayoutId(), frag);
         transaction
                 .addToBackStack(
                         getSupportFragmentManager().getBackStackEntryCount() == 0 ? KEY_FRAG_FIRST

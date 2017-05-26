@@ -118,7 +118,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         titleBar.showsaveButton(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getDockActivity().addDockableFragment(OrderHistoryFragment.newInstance(), "OrderHistoryFragment");
+                getDockActivity().replaceDockableFragment(OrderHistoryFragment.newInstance(), "OrderHistoryFragment");
             }
         });
         titleBar.showBackButton();

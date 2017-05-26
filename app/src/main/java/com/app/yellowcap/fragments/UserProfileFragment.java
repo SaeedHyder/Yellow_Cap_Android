@@ -13,7 +13,6 @@ import com.app.yellowcap.R;
 import com.app.yellowcap.entities.LocationModel;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.ui.views.AnyEditTextView;
-import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
 import com.google.android.gms.location.places.Place;
 import com.jota.autocompletelocation.AutoCompleteLocation;
@@ -114,11 +113,11 @@ private void getLocation(AutoCompleteTextView textView){
                getLocation(edtLocationgps);
                 break;
             case R.id.btn_editcard:
-                getDockActivity().addDockableFragment(CreditCardFragment.newInstance(), "CreditCardFargment");
+                getDockActivity().replaceDockableFragment(CreditCardFragment.newInstance(), "CreditCardFargment");
                 break;
             case R.id.btn_submit:
                 if (validate()) {
-                    getDockActivity().addDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
+                    getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
                 }
                 break;
         }

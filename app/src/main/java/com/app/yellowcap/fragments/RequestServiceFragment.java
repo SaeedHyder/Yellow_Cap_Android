@@ -58,7 +58,7 @@ import butterknife.Unbinder;
  * Created on 5/22/2017.
  */
 
-public class RequestServiceFragment extends BaseFragment implements View.OnClickListener, onCreditCardClick, MainActivity.ImageSetter, onDeleteImage, AutoCompleteLocation.AutoCompleteLocationListener {
+public class RequestServiceFragment extends BaseFragment implements View.OnClickListener, MainActivity.ImageSetter, onDeleteImage, AutoCompleteLocation.AutoCompleteLocationListener {
     @BindView(R.id.spn_jobtype)
     Spinner spnJobtype;
     @BindView(R.id.spn_jobdescription)
@@ -97,7 +97,9 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     private String jobtype;
     private String paymentType = "";
 
-    private boolean isFromBack = false;
+
+    private String preferreddate = "preferreddate";
+    private String preferredtime = "preferredtime";
 
     public static RequestServiceFragment newInstance() {
         return new RequestServiceFragment();
@@ -130,7 +132,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        selectedJobs = new ArrayList<>();
+
         selectedJobsadapter = new ArrayListAdapter<String>(getDockActivity(), new SelectedJobBinder(this));
     }
 
@@ -145,6 +147,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     }
 
     private void initListViewAdapter() {
+        selectedJobs = new ArrayList<>();
         selectedJobs.add("Total Electricity Failure/Break down");
         selectedJobs.add("No Electricity in some Room");
         selectedJobs.add("Repair Ac");
@@ -171,10 +174,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         initJobTypeSpinner();
         initJobDescriptionSpinner();
 
-        if (isFromBack) {
-            paymentType = "cc";
-            setCCCheck();
-        }
+
     }
 
     private void setDataInAdapter(ArrayList<String> ImageArray) {
@@ -264,7 +264,8 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         edtLocationgps.setAutoCompleteTextListener(this);
         imgGps.setOnClickListener(this);
     }
-    private void getLocation(AutoCompleteTextView textView){
+
+    private void getLocation(AutoCompleteTextView textView) {
         if (getMainActivity().statusCheck()) {
             LocationModel locationModel = getMainActivity().getMyCurrentLocation();
             if (locationModel != null)
@@ -274,6 +275,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             }
         }
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -287,10 +289,9 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 CameraHelper.uploadMedia(getMainActivity());
                 break;
             case R.id.btn_cc:
-
+                paymentType = "cc";
                 setCCCheck();
                 CreditCardFragment fragment = CreditCardFragment.newInstance();
-                fragment.setOnCreditCardClick(this);
                 getDockActivity().addDockableFragment(fragment, "CreditCardFragment");
                 break;
 
@@ -305,9 +306,10 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                         @Override
                         public void onClick(View v) {
                             RequestSend.hideDialog();
-                            getDockActivity().addDockableFragment(UserHomeFragment.newInstance(),"UserHomeFragment");
+                            getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
                         }
                     });
+                    RequestSend.setCancelable(false);
                     RequestSend.showDialog();
                 }
 
@@ -422,6 +424,23 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(preferreddate, btnPreferreddate.getText().toString());
+        outState.putString(preferredtime, btnPreferredtime.getText().toString());
+
+    }
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState !=null){
+            btnPreferredtime.setText(savedInstanceState.getString(preferredtime));
+            btnPreferreddate.setText(savedInstanceState.getString(preferreddate));
+        }
+
+    }
+
     private void refreshListview() {
         selectedJobsadapter.clearList();
         listViewJobselected.setAdapter(selectedJobsadapter);
@@ -460,13 +479,8 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
     @Override
     public void onItemSelected(Place selectedPlace) {
-
+        System.out.println(selectedPlace);
     }
 
-    @Override
-    public void onBack() {
-        //setCCCheck();
 
-        isFromBack = true;
-    }
 }

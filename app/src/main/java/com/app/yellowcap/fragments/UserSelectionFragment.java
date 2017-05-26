@@ -80,11 +80,11 @@ public class UserSelectionFragment extends BaseFragment implements View.OnClickL
         switch (v.getId()){
             case R.id.usercontainer:
                 prefHelper.setUserType("user");
-                getDockActivity().addDockableFragment(UserSignupFragment.newInstance(),"UserSignUp Fragment");
+                getDockActivity().replaceDockableFragment(UserSignupFragment.newInstance(),"UserSignUp Fragment");
                 break;
             case R.id.techniciancontainer:
                 prefHelper.setUserType("technician");
-                getDockActivity().addDockableFragment(LoginFragment.newInstance(),"Login Fragment");
+                getDockActivity().replaceDockableFragment(LoginFragment.newInstance(),"Login Fragment");
                 break;
         }
     }

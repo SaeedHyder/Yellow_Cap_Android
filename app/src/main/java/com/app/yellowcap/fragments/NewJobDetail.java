@@ -1,5 +1,6 @@
 package com.app.yellowcap.fragments;
 
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -253,7 +254,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
             case btn_accept:
 
                 final DialogHelper JobDetailDialog = new DialogHelper(getDockActivity());
-                JobDetailDialog.initJobDetailDialog(R.layout.new_job_detail_dialog, new View.OnClickListener() {
+              Dialog dialog = JobDetailDialog.initJobDetailDialog(R.layout.new_job_detail_dialog, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (arriveTime != null && completeTime != null) {
@@ -264,7 +265,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                                 UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.complete_time_error));
                             } else {
                                 JobDetailDialog.hideDialog();
-                                getDockActivity().addDockableFragment(HomeFragment.newInstance(), "HomeFragment");
+                                getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
                             }
                         }
 
@@ -282,9 +283,12 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                         initTimePicker(completeTime);
                     }
                 });
+
                 arriveTime = JobDetailDialog.getTimeTextview(R.id.txt_arrval_time);
                 completeTime = JobDetailDialog.getTimeTextview(R.id.txt_complete_time);
+                JobDetailDialog.setCancelable(true);
                 JobDetailDialog.showDialog();
+
                 break;
 
             case R.id.btn_reject:
@@ -294,9 +298,10 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                     @Override
                     public void onClick(View v) {
                         RefusalDialog.hideDialog();
-                        getDockActivity().addDockableFragment(HomeFragment.newInstance(), "HomeFragment");
+                        getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
                     }
                 });
+                RefusalDialog.setCancelable(false);
                 RefusalDialog.showDialog();
 
                 break;

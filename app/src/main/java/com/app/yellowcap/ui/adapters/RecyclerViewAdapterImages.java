@@ -71,7 +71,7 @@ public class RecyclerViewAdapterImages extends RecyclerView.Adapter<RecyclerView
         holder.delete_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //context.addDockableFragment(ChatFragment.newInstance(), "Chat Fragment");
+                //context.replaceDockableFragment(ChatFragment.newInstance(), "Chat Fragment");
               onDeleteImage.onDelete(position);
             }
         });
