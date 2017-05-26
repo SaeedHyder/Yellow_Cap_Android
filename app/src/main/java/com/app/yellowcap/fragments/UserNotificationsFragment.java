@@ -11,7 +11,6 @@ import com.app.yellowcap.R;
 import com.app.yellowcap.entities.NewJobEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
-import com.app.yellowcap.ui.viewbinder.TechNotificationitemBinder;
 import com.app.yellowcap.ui.viewbinder.UserNotificationitemBinder;
 import com.app.yellowcap.ui.views.TitleBar;
 
@@ -31,7 +30,7 @@ public class UserNotificationsFragment extends BaseFragment {
     Unbinder unbinder;
 
     private ArrayListAdapter<NewJobEnt> adapter;
-    private ArrayList<NewJobEnt> userCollection = new ArrayList<>();
+    private ArrayList<NewJobEnt> userCollection ;
 
     public static UserNotificationsFragment newInstance() {
         return new UserNotificationsFragment();
@@ -70,14 +69,14 @@ public class UserNotificationsFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                getDockActivity().addDockableFragment(QuotationFragment.newInstance(), "QuotationFragment");
+                getDockActivity().replaceDockableFragment(QuotationFragment.newInstance(), "QuotationFragment");
             }
         });
 
     }
 
     private void setNotificationData() {
-
+        userCollection = new ArrayList<>();
         userCollection.add(new NewJobEnt("drawable://" + R.drawable.itemlogo, "Failure In Ac Unit", "drawable://" + R.drawable.next));
         userCollection.add(new NewJobEnt("drawable://" + R.drawable.itemlogo, "Failure In Ac Unit", "drawable://" + R.drawable.next));
         userCollection.add(new NewJobEnt("drawable://" + R.drawable.itemlogo, "Failure In Ac Unit", "drawable://" + R.drawable.next));

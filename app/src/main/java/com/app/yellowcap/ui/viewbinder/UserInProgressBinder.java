@@ -9,8 +9,6 @@ import com.app.yellowcap.R;
 import com.app.yellowcap.activities.DockActivity;
 import com.app.yellowcap.entities.UserInProgressEnt;
 import com.app.yellowcap.fragments.RequestServiceFragment;
-import com.app.yellowcap.fragments.UserHomeFragment;
-import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.interfaces.CallUser;
 import com.app.yellowcap.interfaces.onCancelJobListner;
@@ -55,7 +53,7 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
         viewHolder.ivEditBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.addDockableFragment(RequestServiceFragment.newInstance(), "RequestServiceFragment");
+                context.replaceDockableFragment(RequestServiceFragment.newInstance(), "RequestServiceFragment");
             }
         });
         viewHolder.btnCancelJob.setOnClickListener(new View.OnClickListener() {

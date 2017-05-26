@@ -12,8 +12,6 @@ import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.ui.views.AnyEditTextView;
 import com.app.yellowcap.ui.views.TitleBar;
 
-import org.apache.commons.lang3.StringUtils;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -73,7 +71,7 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
         switch (v.getId()){
             case R.id.btn_signup:
                 if (isvalidated()){
-                    getDockActivity().addDockableFragment(EntryCodeFragment.newInstance(),"EntryCodeFragment");
+                    getDockActivity().replaceDockableFragment(EntryCodeFragment.newInstance(),"EntryCodeFragment");
                 }
                 break;
         }

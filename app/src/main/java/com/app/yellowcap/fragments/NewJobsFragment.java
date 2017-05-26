@@ -76,7 +76,7 @@ public class NewJobsFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                getDockActivity().addDockableFragment(NewJobDetail.newInstance(), "NewJobDetail");
+                getDockActivity().replaceDockableFragment(NewJobDetail.newInstance(), "NewJobDetail");
             }
         });
 

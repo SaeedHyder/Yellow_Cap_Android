@@ -58,7 +58,7 @@ public class TermAndConditionFragment extends BaseFragment {
                 if (isChecked){
                     prefHelper.setLoginStatus(true);
                     getDockActivity().popBackStackTillEntry(0);
-                    getDockActivity().addDockableFragment(UserHomeFragment.newInstance(),"User Home Fragment");
+                    getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(),"User Home Fragment");
                 }
             }
         });

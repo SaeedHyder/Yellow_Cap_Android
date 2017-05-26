@@ -124,15 +124,16 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
                     public void onClick(View v) {
                         cancelJobDialog.hideDialog();
                         getMainActivity().popBackStackTillEntry(1);
-                        getDockActivity().addDockableFragment(UserHomeFragment.newInstance(), "UserJobsFragment");
+                        getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(), "UserJobsFragment");
                     }
                 });
+                cancelJobDialog.setCancelable(true);
                 cancelJobDialog.showDialog();
 
                 break;
             case R.id.btn_accept:
                 getMainActivity().popBackStackTillEntry(1);
-                getDockActivity().addDockableFragment(UserJobsFragment.newInstance(), "UserJobsFragment");
+                getDockActivity().replaceDockableFragment(UserJobsFragment.newInstance(), "UserJobsFragment");
                 break;
 
         }

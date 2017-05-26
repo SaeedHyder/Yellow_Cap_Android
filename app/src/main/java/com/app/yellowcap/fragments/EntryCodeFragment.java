@@ -68,7 +68,7 @@ public class EntryCodeFragment extends BaseFragment implements View.OnClickListe
         switch (v.getId()){
             case R.id.btn_submit_code:
                 if (isValidate){
-                    getDockActivity().addDockableFragment(TermAndConditionFragment.newInstance(),"Terms And conditon Fragment");
+                    getDockActivity().replaceDockableFragment(TermAndConditionFragment.newInstance(),"Terms And conditon Fragment");
                 }
                 else {
                     UIHelper.showShortToastInCenter(getDockActivity(),getString(R.string.incorrect_code));

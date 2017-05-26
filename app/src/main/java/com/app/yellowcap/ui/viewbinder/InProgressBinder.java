@@ -1,9 +1,7 @@
 package com.app.yellowcap.ui.viewbinder;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,11 +11,9 @@ import com.app.yellowcap.activities.DockActivity;
 import com.app.yellowcap.entities.InProgressEnt;
 import com.app.yellowcap.fragments.EditJobTechFragment;
 import com.app.yellowcap.fragments.HomeFragment;
-import com.app.yellowcap.fragments.NewJobsFragment;
 import com.app.yellowcap.interfaces.CallUser;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
-import com.app.yellowcap.ui.views.CustomRatingBar;
 
 /**
  * Created by saeedhyder on 5/24/2017.
@@ -56,20 +52,20 @@ public class InProgressBinder extends ViewBinder<InProgressEnt> {
         viewHolder.iv_editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.addDockableFragment(EditJobTechFragment.newInstance(), "EditJobTechFragment");
+                context.replaceDockableFragment(EditJobTechFragment.newInstance(), "EditJobTechFragment");
             }
         });
 
         viewHolder.btn_addJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.addDockableFragment(EditJobTechFragment.newInstance(), "EditJobTechFragment");
+                context.replaceDockableFragment(EditJobTechFragment.newInstance(), "EditJobTechFragment");
             }
         });
         viewHolder.btn_markAsComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.addDockableFragment(HomeFragment.newInstance(), "HomeFragment");
+                context.replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
             }
         });
 
