@@ -43,6 +43,7 @@ public class AboutAppFragment extends BaseFragment {
     @Override
     public void setTitleBar(TitleBar titleBar) {
         super.setTitleBar(titleBar);
+        getDockActivity().lockDrawer();
         titleBar.hideButtons();
         titleBar.setSubHeading(getString(R.string.about_app));
         titleBar.showBackButton();

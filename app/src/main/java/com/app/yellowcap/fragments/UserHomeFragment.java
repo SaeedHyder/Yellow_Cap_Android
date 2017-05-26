@@ -69,7 +69,8 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void setTitleBar(TitleBar titleBar) {
         super.setTitleBar(titleBar);
-        titleBar.setSubHeading("Home");
+        getDockActivity().releaseDrawer();
+
         titleBar.hideButtons();
         titleBar.showNotificationButton(new View.OnClickListener() {
             @Override
@@ -79,7 +80,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
             }
         });
         titleBar.showMenuButton();
-
+        titleBar.setSubHeading(getString(R.string.home));
     }
 
     @Override

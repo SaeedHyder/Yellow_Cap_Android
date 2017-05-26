@@ -96,7 +96,7 @@ public class UserNotificationsFragment extends BaseFragment {
     @Override
     public void setTitleBar(TitleBar titleBar) {
         super.setTitleBar(titleBar);
-        getDockActivity().releaseDrawer();
+        getDockActivity().lockDrawer();
         titleBar.hideButtons();
         titleBar.showBackButton();
         titleBar.setSubHeading(getString(R.string.Notifications));

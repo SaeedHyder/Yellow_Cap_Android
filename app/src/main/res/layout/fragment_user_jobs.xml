@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/x20"
+        android:layout_marginBottom="@dimen/x14"
         android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -66,7 +67,7 @@
                 android:gravity="center_horizontal"
                 android:text="02"
                 android:textSize="@dimen/x30"
-                android:textColor="@color/gray"
+                android:textColor="@color/yellow"
                 app:typeface="Roboto-Regular.ttf"
                 />
 
@@ -85,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x9"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:src="@drawable/selected"/>
 
         </LinearLayout>
@@ -109,7 +110,7 @@
                 android:gravity="center_horizontal"
                 android:text="15"
                 android:textSize="@dimen/x30"
-                android:textColor="@color/yellow"
+                android:textColor="@color/gray"
                 app:typeface="Roboto-Regular.ttf"
                 />
             <com.app.yellowcap.ui.views.AnyTextView
@@ -128,7 +129,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x9"
-                android:src="@drawable/selected"/>
+                android:src="@drawable/selected"
+                android:visibility="gone"/>
 
         </LinearLayout>
 

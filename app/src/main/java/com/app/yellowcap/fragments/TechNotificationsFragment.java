@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.app.yellowcap.R;
 import com.app.yellowcap.entities.NewJobEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.viewbinder.NewJobsitemBinder;
 import com.app.yellowcap.ui.viewbinder.TechNotificationitemBinder;
@@ -63,7 +64,7 @@ public class TechNotificationsFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         setNotificationData();
-      //  NotificationItemListner();
+       NotificationItemListner();
 
     }
 
@@ -72,8 +73,8 @@ public class TechNotificationsFragment extends BaseFragment {
         lvTechNotification.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                getDockActivity().addDockableFragment(NewJobDetail.newInstance(), "NewJobDetail");
+                UIHelper.showShortToastInCenter(getDockActivity(),"Will be implemented in beta version");
+              /*  getDockActivity().addDockableFragment(NewJobDetail.newInstance(), "NewJobDetail");*/
             }
         });
 
@@ -99,7 +100,7 @@ public class TechNotificationsFragment extends BaseFragment {
     @Override
     public void setTitleBar(TitleBar titleBar) {
         super.setTitleBar(titleBar);
-        getDockActivity().releaseDrawer();
+        getDockActivity().lockDrawer();
         titleBar.hideButtons();
         titleBar.showBackButton();
         titleBar.setSubHeading(getString(R.string.Notifications));

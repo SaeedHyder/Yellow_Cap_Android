@@ -13,6 +13,7 @@ import com.app.yellowcap.fragments.UserHomeFragment;
 import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.interfaces.CallUser;
+import com.app.yellowcap.interfaces.onCancelJobListner;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 
@@ -26,11 +27,12 @@ import butterknife.ButterKnife;
 public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
     DockActivity context;
     CallUser callUser;
-
-    public UserInProgressBinder(CallUser callUser, DockActivity context) {
+    onCancelJobListner onCancelJobListner;
+    public UserInProgressBinder(CallUser callUser, DockActivity context, onCancelJobListner onCancelJobListner) {
         super(R.layout.row_item_user_inprogress);
         this.callUser = callUser;
         this.context = context;
+        this.onCancelJobListner = onCancelJobListner;
     }
 
     @Override
@@ -39,7 +41,7 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
     }
 
     @Override
-    public void bindView(final UserInProgressEnt entity, int position, int grpPosition, View view, Activity activity) {
+    public void bindView(final UserInProgressEnt entity, final int position, int grpPosition, View view, Activity activity) {
         InProgressViewHolder viewHolder = (InProgressViewHolder) view.getTag();
         viewHolder.txtTechNameText.setText(entity.getName());
         viewHolder.txtJobTitleText.setText(entity.getTitle());
@@ -59,19 +61,8 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
         viewHolder.btnCancelJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final DialogHelper dialogHelper = new DialogHelper(context);
-                dialogHelper.initCancelJobDialog(R.layout.cancle_job_dialog, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        context.addDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
-                        dialogHelper.hideDialog();
-                    }
-                }, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialogHelper.hideDialog();
-                    }
-                });
+                onCancelJobListner.onCancelJob(position);
+
             }
         });
         viewHolder.btnCallUser.setOnClickListener(new View.OnClickListener() {

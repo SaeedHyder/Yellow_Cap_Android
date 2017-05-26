@@ -159,6 +159,7 @@
             android:layout_marginRight="@dimen/x10"
             android:visibility="visible"
             app:maxStars="5"
+            android:isIndicator="true"
             app:starOff="@drawable/star1"
             app:starOn="@drawable/star2"
             app:starPadding="@dimen/x2"

@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="20dp"
     android:gravity="center"
     android:layout_gravity="center"
-    android:background="@color/white"
+    android:background="@drawable/roundshapelayout"
     android:orientation="vertical">
     <LinearLayout
         android:id="@+id/textLayout"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/x300"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
+        android:padding="@dimen/x10"
         android:orientation="vertical">
 
         <com.app.yellowcap.ui.views.AnyTextView
@@ -76,6 +75,7 @@
                 android:text="@string/tip_techinecian"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/x12"
+                android:maxLength="5"
                 android:textStyle="normal"
                 app:typeface="Roboto-Regular.ttf" />
 
@@ -165,26 +165,26 @@
         </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignBottom="@+id/textLayout"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/x5"
-            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btn_close"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/two_round_button"
-                android:text="Submit"
-                android:textColor="@color/white"
-                android:textSize="@dimen/x16" />
-
-        </LinearLayout>
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/textLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/x5"
+        android:orientation="vertical">
 
+        <Button
+            android:id="@+id/btn_close"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/two_round_button"
+            android:text="Submit"
+            android:textColor="@color/white"
+            android:textSize="@dimen/x16" />
+
+    </LinearLayout>
 
 </LinearLayout>

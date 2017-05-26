@@ -14,6 +14,7 @@ import com.app.yellowcap.R;
 import com.app.yellowcap.entities.UserComleteJobsEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.ui.views.AnyTextView;
+import com.app.yellowcap.ui.views.TitleBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -86,6 +87,16 @@ public class UserJobsFragment extends BaseFragment implements View.OnClickListen
                                 : null).commit();
 
     }
+
+    @Override
+    public void setTitleBar(TitleBar titleBar) {
+        super.setTitleBar(titleBar);
+        titleBar.hideButtons();
+        titleBar.showBackButton();
+        getDockActivity().lockDrawer();
+        titleBar.setSubHeading(getString(R.string.jobs));
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

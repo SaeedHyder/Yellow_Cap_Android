@@ -78,7 +78,7 @@ public class SideMenuFragment extends BaseFragment {
                   getDockActivity().addDockableFragment(UserHomeFragment.newInstance(),"UserHomeFragment");
               }
               else  if (navigationItemList.get(position).getItem_text().equals(getString(R.string.notifications))){
-                  //getDockActivity().addDockableFragment(UserHomeFragment.newInstance(),"UserHomeFragment");
+                  getDockActivity().addDockableFragment(UserNotificationsFragment.newInstance(),"UserHomeFragment");
               }
               else  if (navigationItemList.get(position).getItem_text().equals(getString(R.string.my_job))){
                   getDockActivity().addDockableFragment(UserJobsFragment.newInstance(),"UserjobsFragment");

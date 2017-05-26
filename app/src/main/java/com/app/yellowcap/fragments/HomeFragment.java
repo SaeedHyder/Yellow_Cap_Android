@@ -103,7 +103,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void setTitleBar(TitleBar titleBar) {
         super.setTitleBar(titleBar);
-        getDockActivity().releaseDrawer();
+        getDockActivity().lockDrawer();
         titleBar.hideButtons();
         titleBar.showNotificationButton(new View.OnClickListener() {
             @Override
@@ -111,7 +111,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 getDockActivity().addDockableFragment(TechNotificationsFragment.newInstance(), "TechNotificationsFragment");
             }
         });
-        titleBar.setSubHeading("Home");
+        titleBar.setSubHeading(getString(R.string.home));
 
     }
 
@@ -146,7 +146,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
             case ll_logout:
                 prefHelper.setLoginStatus(false);
-                getDockActivity().addDockableFragment(UserSelectionFragment.newInstance(), "ProfileFragment");
+               getDockActivity().addDockableFragment(UserSelectionFragment.newInstance(), "ProfileFragment");
                 break;
 
 

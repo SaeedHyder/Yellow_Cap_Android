@@ -757,5 +757,26 @@ public class DateHelper {
 
 	    return differenceSeconds;
 	}
+	boolean isTimeAfter(Date startTime, Date endTime) {
+		if (endTime.before(startTime)) { //Same way you can check with after() method also.
+			return false;
+		} else {
+			return true;
+		}
+	}
 
+	public static boolean isTimeAfter(int starthour, int starmin, int endhour, int endmin) {
+		if (starthour > endhour) { //Same way you can check with after() method also.
+			return false;
+		} else {
+
+			if (starmin > endmin) {
+				return false;
+			}else{
+				return true;
+			}
+
+
+		}
+	}
 }

@@ -46,8 +46,8 @@
                 android:background="@android:color/transparent"
                 android:drawablePadding="@dimen/x10"
                 android:hint="@string/enter_full_name"
-                android:inputType="text"
                 android:imeOptions="actionNext"
+                android:inputType="text"
                 android:maxLength="50"
                 android:maxLines="1"
                 android:singleLine="true"
@@ -89,10 +89,10 @@
                 android:layout_marginRight="@dimen/x20"
                 android:layout_toEndOf="@+id/img_email"
                 android:layout_toRightOf="@+id/img_email"
-                android:imeOptions="actionNext"
                 android:background="@android:color/transparent"
                 android:drawablePadding="@dimen/x10"
                 android:hint="@string/email"
+                android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:maxLength="50"
                 android:singleLine="true"
@@ -122,25 +122,25 @@
                 android:layout_width="@dimen/x20"
                 android:layout_height="@dimen/x20"
                 android:layout_centerVertical="true"
-                android:src="@drawable/location" />
+                android:src="@drawable/location_address" />
 
             <com.jota.autocompletelocation.AutoCompleteLocation
                 android:id="@+id/edt_locationgps"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginRight="@dimen/x20"
                 android:layout_toEndOf="@+id/img_location_autocomplete"
                 android:layout_toLeftOf="@+id/img_gps"
                 android:layout_toRightOf="@+id/img_location_autocomplete"
                 android:layout_toStartOf="@+id/img_gps"
-                android:background="@null"
-                android:imeOptions="actionNext"
+                android:background="@android:color/transparent"
                 android:gravity="start"
+                android:imeOptions="actionNext"
                 android:maxLines="1"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginRight="@dimen/x20"
                 android:singleLine="true"
                 android:textSize="@dimen/x14"
-                app:background_layout="@null"
+                app:background_layout="@android:color/transparent"
                 app:hint_text="@string/address_1" />
 
             <ImageView
@@ -150,7 +150,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/location" />
+                android:src="@drawable/gps" />
         </RelativeLayout>
 
         <View
@@ -181,13 +181,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x35"
                 android:layout_alignParentTop="true"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
                 android:layout_toRightOf="@+id/img_location_image"
                 android:background="@null"
                 android:drawablePadding="@dimen/x10"
                 android:hint="@string/address_2"
                 android:imeOptions="actionDone"
-                android:layout_marginLeft="@dimen/x20"
-                android:layout_marginRight="@dimen/x20"
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textSize="@dimen/x14"

@@ -77,10 +77,10 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
     @Override
     public void setTitleBar(TitleBar titleBar) {
         super.setTitleBar(titleBar);
-        getDockActivity().releaseDrawer();
+        getDockActivity().lockDrawer();
         titleBar.hideButtons();
         titleBar.showBackButton();
-        titleBar.setSubHeading("Jobs");
+        titleBar.setSubHeading(getString(R.string.jobs));
 
     }
 

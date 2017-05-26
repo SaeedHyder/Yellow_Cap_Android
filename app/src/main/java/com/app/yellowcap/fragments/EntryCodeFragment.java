@@ -82,24 +82,27 @@ public class EntryCodeFragment extends BaseFragment implements View.OnClickListe
         titleBar.hideTitleBar();
     }
     private void initPinEnrty() {
-        txtPinEntry.setOnPinEnteredListener(new PinEntryEditText.OnPinEnteredListener() {
-            @Override
-            public void onPinEntered(CharSequence str) {
-                if (str.toString().equals("1234")) {
-                   // txtPinEntry.setText(null);
-                    isValidate = true;
-                } else {
-                    txtPinEntry.setError(true);
-                    isValidate = false;
+        if (txtPinEntry != null) {
+            txtPinEntry.setOnPinEnteredListener(new PinEntryEditText.OnPinEnteredListener() {
+                @Override
+                public void onPinEntered(CharSequence str) {
+                    if (str.toString().equals("1234")) {
+                        // txtPinEntry.setText(null);
+                        isValidate = true;
+                    } else {
+                        txtPinEntry.setError(true);
+                        isValidate = false;
 
-                    txtPinEntry.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            txtPinEntry.setText(null);
-                        }
-                    }, 1000);
+                        txtPinEntry.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (txtPinEntry != null)
+                                    txtPinEntry.setText(null);
+                            }
+                        }, 1000);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }

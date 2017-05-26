@@ -9,7 +9,7 @@
     android:orientation="vertical">
     <LinearLayout
         android:id="@+id/textLayout"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/x300"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/app_icon"
+            android:layout_marginTop="@dimen/x10"
             android:layout_marginBottom="@dimen/x15"
             />
 
@@ -53,6 +54,7 @@
             android:layout_marginTop="@dimen/x10"
             android:gravity="center"
             android:background="@null"
+            android:maxLength="125"
             android:paddingLeft="@dimen/x10"
             android:paddingRight="@dimen/x10"
             android:hint="@string/enter_your_message_here"

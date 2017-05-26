@@ -15,8 +15,10 @@ import android.widget.TimePicker;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.helpers.DateHelper;
 import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.helpers.TimePickerHelper;
+import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -26,22 +28,22 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 import static com.app.yellowcap.R.id.btn_accept;
-import static com.app.yellowcap.R.id.txt;
-import static com.app.yellowcap.R.id.txt_arrval_time;
 
 /**
  * Created by saeedhyder on 5/23/2017.
  */
 
-public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener ,View.OnClickListener{
+public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener, View.OnClickListener {
 
     @BindView(R.id.imageSlider)
     SliderLayout imageSlider;
@@ -100,6 +102,8 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
     Button btnReject;
     @BindView(R.id.ll_buttons)
     LinearLayout llButtons;
+    private AnyTextView arriveTime;
+    private AnyTextView completeTime;
 
     public static NewJobDetail newInstance() {
         return new NewJobDetail();
@@ -203,18 +207,44 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
 
     }
 
-    private void initTimePicker(final TextView textView){
+    private void initTimePicker(final TextView textView) {
         Calendar calendar = Calendar.getInstance();
         final TimePickerHelper timePicker = new TimePickerHelper();
-        timePicker.initTimeDialog(getDockActivity(),calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),new TimePickerDialog.OnTimeSetListener() {
+        timePicker.initTimeDialog(getDockActivity(), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                textView.setText(timePicker.getTime(hourOfDay,minute));
+                try {
+                    if (arriveTime != null) {
+                        if (arriveTime.getId() == textView.getId()) {
+                            Date date = new Date();
+                            if (!DateHelper.isTimeAfter(date.getHours(), date.getMinutes(), hourOfDay, minute)) {
+                                UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.less_time_error));
+                            } else {
+                                textView.setText(timePicker.getTime(hourOfDay, minute));
+                            }
+                        }
+                     else {
+                        if (!arriveTime.getText().toString().isEmpty()) {
+                            SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm a");
+                                Date date = parseFormat.parse(arriveTime.getText().toString());
+                                if (!DateHelper.isTimeAfter(date.getHours(), date.getMinutes(), hourOfDay, minute)) {
+                                    UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.time_error));
+                                } else {
+                                    textView.setText(timePicker.getTime(hourOfDay, minute));
+                                }
+                        } else {
+                            UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.arrive_time_error));
+                        }
+                    }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }, DateFormat.is24HourFormat(getMainActivity()));
-
         timePicker.showTime();
     }
+
 
     @Override
     public void onClick(View v) {
@@ -226,19 +256,34 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                 JobDetailDialog.initJobDetailDialog(R.layout.new_job_detail_dialog, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        JobDetailDialog.hideDialog();
+                        if (arriveTime != null && completeTime != null) {
+                            if (arriveTime.getText().toString().isEmpty()) {
+                                UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.arrive_time_error));
+
+                            } else if (completeTime.getText().toString().isEmpty()) {
+                                UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.complete_time_error));
+                            } else {
+                                JobDetailDialog.hideDialog();
+                                getDockActivity().addDockableFragment(HomeFragment.newInstance(), "HomeFragment");
+                            }
+                        }
+
                     }
                 }, "Sink Broken", "Mohammad Ali", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        initTimePicker(JobDetailDialog.getTimeTextview(R.id.txt_arrval_time));
+
+                        initTimePicker(arriveTime);
                     }
                 }, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        initTimePicker(JobDetailDialog.getTimeTextview(R.id.txt_complete_time));
+
+                        initTimePicker(completeTime);
                     }
                 });
+                arriveTime = JobDetailDialog.getTimeTextview(R.id.txt_arrval_time);
+                completeTime = JobDetailDialog.getTimeTextview(R.id.txt_complete_time);
                 JobDetailDialog.showDialog();
                 break;
 
@@ -249,6 +294,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                     @Override
                     public void onClick(View v) {
                         RefusalDialog.hideDialog();
+                        getDockActivity().addDockableFragment(HomeFragment.newInstance(), "HomeFragment");
                     }
                 });
                 RefusalDialog.showDialog();
@@ -263,10 +309,10 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
     @Override
     public void setTitleBar(TitleBar titleBar) {
         super.setTitleBar(titleBar);
-        getDockActivity().releaseDrawer();
+        getDockActivity().lockDrawer();
         titleBar.hideButtons();
         titleBar.showBackButton();
-        titleBar.setSubHeading("Plumbing");
+        titleBar.setSubHeading(getString(R.string.plumbing));
 
     }
 

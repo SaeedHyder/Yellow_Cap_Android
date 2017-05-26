@@ -70,6 +70,9 @@ public abstract class BaseFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		if (prefHelper.getUserType().equals("technician")){
+			getDockActivity().lockDrawer();
+		}
 		setTitleBar( ((MainActivity) getDockActivity()).titleBar );
 	}
 	
