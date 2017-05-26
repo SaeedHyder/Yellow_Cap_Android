@@ -45,6 +45,7 @@ public class TermAndConditionFragment extends BaseFragment {
         super.setTitleBar(titleBar);
         titleBar.hideButtons();
         titleBar.showBackButton();
+        titleBar.setSubHeading(getString(R.string.terms_conditons));
     }
 
     @Override

@@ -95,6 +95,10 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
             edtnumber.setError(getString(R.string.enter_number));
             return false;
         }
+        else if (edtnumber.getText().toString().length()<10||edtnumber.getText().toString().length()>12){
+            edtnumber.setError(getString(R.string.enter_valid_number_error));
+            return false;
+        }
         else {
             return true;
         }

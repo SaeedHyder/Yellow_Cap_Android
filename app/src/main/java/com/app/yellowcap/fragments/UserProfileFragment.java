@@ -5,13 +5,16 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.app.yellowcap.R;
+import com.app.yellowcap.entities.LocationModel;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
-import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.AnyEditTextView;
+import com.app.yellowcap.ui.views.AnyTextView;
+import com.app.yellowcap.ui.views.TitleBar;
 import com.google.android.gms.location.places.Place;
 import com.jota.autocompletelocation.AutoCompleteLocation;
 
@@ -30,7 +33,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     @BindView(R.id.edtname)
     AnyEditTextView edtname;
     @BindView(R.id.edtnumber)
-    AnyEditTextView edtnumber;
+    AnyEditTextView edtemail;
     @BindView(R.id.edt_locationgps)
     AutoCompleteLocation edtLocationgps;
     @BindView(R.id.img_gps)
@@ -64,6 +67,10 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setlistener();
+        edtname.setText("Khalid Howladar");
+        edtemail.setText("khalidhowladar@sample.com");
+        edtLocationgps.setText(getString(R.string.dummyAddress));
+        edtLocationspecific.setText(getString(R.string.dummyAddress));
     }
 
     private void setlistener() {
@@ -75,28 +82,60 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     }
 
     @Override
+    public void setTitleBar(TitleBar titleBar) {
+        super.setTitleBar(titleBar);
+        titleBar.hideButtons();
+        getDockActivity().lockDrawer();
+        titleBar.showBackButton();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
-
+private void getLocation(AutoCompleteTextView textView){
+    if (getMainActivity().statusCheck()) {
+        LocationModel locationModel = getMainActivity().getMyCurrentLocation();
+        if (locationModel != null)
+            textView.setText(locationModel.getAddress());
+        else {
+            getLocation(edtLocationgps);
+        }
+    }
+}
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.CircularImageSharePop:
                 break;
             case R.id.img_gps:
-                if (getMainActivity().statusCheck()){
-                    getMainActivity().getMyCurrentLocation().getAddress();
-                }
+               getLocation(edtLocationgps);
                 break;
             case R.id.btn_editcard:
-                getDockActivity().addDockableFragment(CreditCardFragment.newInstance(),"CreditCardFargment");
+                getDockActivity().addDockableFragment(CreditCardFragment.newInstance(), "CreditCardFargment");
                 break;
             case R.id.btn_submit:
-                UIHelper.showShortToastInCenter(getDockActivity(),"Profile Update SuccessFull");
+                if (validate()) {
+                    getDockActivity().addDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
+                }
                 break;
+        }
+    }
+
+    private boolean validate() {
+        if (edtname.getText().toString().isEmpty()) {
+            edtname.setError(getString(R.string.empty_name_error));
+            return false;
+        } else if (edtemail.getText().toString().isEmpty()) {
+            edtname.setError(getString(R.string.empty_email_error));
+            return false;
+        } else if (edtLocationgps.getText().toString().isEmpty()) {
+            edtLocationgps.setError(getString(R.string.address_empty_error));
+            return false;
+        } else {
+            return true;
         }
     }
 

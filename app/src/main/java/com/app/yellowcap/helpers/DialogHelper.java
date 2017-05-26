@@ -111,6 +111,8 @@ public class DialogHelper {
         return  editTextView.getText().toString();
     }
     public void showDialog(){
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
     public void hideDialog(){

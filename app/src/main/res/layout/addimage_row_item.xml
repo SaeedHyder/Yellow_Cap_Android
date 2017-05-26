@@ -18,8 +18,7 @@
         android:id="@+id/delete_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/cross"
-        android:background="@color/off_white"
+        android:src="@drawable/cross_img"
         android:layout_alignParentRight="true"/>
 </RelativeLayout>
 </LinearLayout>

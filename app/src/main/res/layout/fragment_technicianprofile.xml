@@ -7,7 +7,7 @@
 
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_marginTop="@dimen/x25">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -21,17 +21,16 @@
     <LinearLayout
         android:id="@+id/ll_profileDetail"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/x45"
         android:layout_marginLeft="@dimen/x10"
         android:layout_marginRight="@dimen/x10"
         android:layout_marginBottom="@dimen/x10"
         android:background="@drawable/box_technicain"
+
         android:orientation="vertical">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+
 
         <LinearLayout
             android:id="@+id/ll_profileItems"
@@ -52,7 +51,7 @@
                 android:textSize="@dimen/x12"
                 app:typeface="Roboto-Regular.ttf" />
 
-            <com.app.yellowcap.ui.views.AnyEditTextView
+            <com.app.yellowcap.ui.views.AnyTextView
                 android:id="@+id/edtFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -91,7 +90,7 @@
                 android:textSize="@dimen/x12"
                 app:typeface="Roboto-Regular.ttf" />
 
-            <com.app.yellowcap.ui.views.AnyEditTextView
+            <com.app.yellowcap.ui.views.AnyTextView
                 android:id="@+id/edtLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -130,7 +129,7 @@
                 android:textSize="@dimen/x12"
                 app:typeface="Roboto-Regular.ttf" />
 
-            <com.app.yellowcap.ui.views.AnyEditTextView
+            <com.app.yellowcap.ui.views.AnyTextView
                 android:id="@+id/edtEmailId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -169,7 +168,7 @@
                 android:textSize="@dimen/x12"
                 app:typeface="Roboto-Regular.ttf" />
 
-            <com.app.yellowcap.ui.views.AnyEditTextView
+            <com.app.yellowcap.ui.views.AnyTextView
                 android:id="@+id/edtPhoneNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -208,7 +207,7 @@
                 android:textSize="@dimen/x12"
                 app:typeface="Roboto-Regular.ttf" />
 
-            <com.app.yellowcap.ui.views.AnyEditTextView
+            <com.app.yellowcap.ui.views.AnyTextView
                 android:id="@+id/edtRegistrationType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -247,7 +246,7 @@
                 android:textSize="@dimen/x12"
                 app:typeface="Roboto-Regular.ttf" />
 
-            <com.app.yellowcap.ui.views.AnyEditTextView
+            <com.app.yellowcap.ui.views.AnyTextView
                 android:id="@+id/edtRegDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -277,7 +276,7 @@
 
 
         </LinearLayout>
-        </ScrollView>
+
 
 
     </LinearLayout>

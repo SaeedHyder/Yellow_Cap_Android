@@ -1,7 +1,6 @@
 package com.app.yellowcap.fragments;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -26,11 +26,15 @@ import android.widget.TimePicker;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.activities.MainActivity;
+import com.app.yellowcap.entities.LocationModel;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.helpers.CameraHelper;
+import com.app.yellowcap.helpers.DateHelper;
 import com.app.yellowcap.helpers.DatePickerHelper;
 import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.helpers.TimePickerHelper;
+import com.app.yellowcap.helpers.UIHelper;
+import com.app.yellowcap.interfaces.onCreditCardClick;
 import com.app.yellowcap.interfaces.onDeleteImage;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.adapters.RecyclerViewAdapterImages;
@@ -40,11 +44,10 @@ import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
 import com.google.android.gms.location.places.Place;
 import com.jota.autocompletelocation.AutoCompleteLocation;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -55,7 +58,7 @@ import butterknife.Unbinder;
  * Created on 5/22/2017.
  */
 
-public class RequestServiceFragment extends BaseFragment implements View.OnClickListener, MainActivity.ImageSetter, onDeleteImage, AutoCompleteLocation.AutoCompleteLocationListener {
+public class RequestServiceFragment extends BaseFragment implements View.OnClickListener, onCreditCardClick, MainActivity.ImageSetter, onDeleteImage, AutoCompleteLocation.AutoCompleteLocationListener {
     @BindView(R.id.spn_jobtype)
     Spinner spnJobtype;
     @BindView(R.id.spn_jobdescription)
@@ -89,21 +92,55 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     @BindView(R.id.img_cod_check)
     ImageView imgCodCheck;
     private RecyclerViewAdapterImages mAdapter;
-    private ArrayList<String> selectedJobs = new ArrayList<>();
+    private ArrayList<String> selectedJobs;
     private ArrayListAdapter<String> selectedJobsadapter;
     private String jobtype;
+    private String paymentType = "";
+
+    private boolean isFromBack = false;
 
     public static RequestServiceFragment newInstance() {
         return new RequestServiceFragment();
     }
 
-    @Nullable
+    /**** Method for Setting the Height of the ListView dynamically.
+     **** Hack to fix the issue of not showing all the items of the ListView
+     **** when placed inside a ScrollView  ****/
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null)
+            return;
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0)
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        selectedJobs = new ArrayList<>();
+        selectedJobsadapter = new ArrayListAdapter<String>(getDockActivity(), new SelectedJobBinder(this));
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_request_service, container, false);
-        initListViewAdapter();
         unbinder = ButterKnife.bind(this, view);
+
+
         return view;
     }
 
@@ -112,8 +149,16 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         selectedJobs.add("No Electricity in some Room");
         selectedJobs.add("Repair Ac");
         selectedJobs.add("Ac Not Working");
-        selectedJobsadapter = new ArrayListAdapter<String>(getDockActivity(), selectedJobs, new SelectedJobBinder(this));
 
+        bindview(selectedJobs);
+    }
+
+    private void bindview(ArrayList<String> jobs) {
+        selectedJobsadapter.clearList();
+        listViewJobselected.setAdapter(selectedJobsadapter);
+        selectedJobsadapter.addAll(jobs);
+        selectedJobsadapter.notifyDataSetChanged();
+        setListViewHeightBasedOnChildren(listViewJobselected);
     }
 
     @Override
@@ -121,10 +166,15 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         super.onViewCreated(view, savedInstanceState);
         setListener();
         setDataInAdapter(images);
-        listViewJobselected.setAdapter(selectedJobsadapter);
+        initListViewAdapter();
         setListViewHeightBasedOnChildren(listViewJobselected);
         initJobTypeSpinner();
         initJobDescriptionSpinner();
+
+        if (isFromBack) {
+            paymentType = "cc";
+            setCCCheck();
+        }
     }
 
     private void setDataInAdapter(ArrayList<String> ImageArray) {
@@ -144,11 +194,11 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         return R.layout.fragment_request_service;
     }
 
-    @Override
+    /*@Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
+    }*/
 
     private void initJobTypeSpinner() {
         final List<String> jobtypearraylist = new ArrayList<String>();
@@ -214,7 +264,16 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         edtLocationgps.setAutoCompleteTextListener(this);
         imgGps.setOnClickListener(this);
     }
-
+    private void getLocation(AutoCompleteTextView textView){
+        if (getMainActivity().statusCheck()) {
+            LocationModel locationModel = getMainActivity().getMyCurrentLocation();
+            if (locationModel != null)
+                textView.setText(locationModel.getAddress());
+            else {
+                getLocation(edtLocationgps);
+            }
+        }
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -228,56 +287,102 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 CameraHelper.uploadMedia(getMainActivity());
                 break;
             case R.id.btn_cc:
-                imgCcCheck.setVisibility(View.VISIBLE);
-                imgCodCheck.setVisibility(View.GONE);
-                getDockActivity().addDockableFragment(CreditCardFragment.newInstance(),"CreditCardFragment");
+
+                setCCCheck();
+                CreditCardFragment fragment = CreditCardFragment.newInstance();
+                fragment.setOnCreditCardClick(this);
+                getDockActivity().addDockableFragment(fragment, "CreditCardFragment");
                 break;
 
             case R.id.btn_cod:
-
-                imgCcCheck.setVisibility(View.GONE);
-                imgCodCheck.setVisibility(View.VISIBLE);
+                paymentType = "cod";
+                setCODCheck();
                 break;
             case R.id.btn_request:
-                final DialogHelper RequestSend = new DialogHelper(getDockActivity());
-                RequestSend.initRequestSendDialog(R.layout.request_send_dialog, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        RequestSend.hideDialog();
-                    }
-                });
-                RequestSend.showDialog();
-                break;
-            case R.id.img_gps:
-                if (getMainActivity().statusCheck()){
-                    edtLocationgps.setText(getMainActivity().getMyCurrentLocation().getAddress());
+                if (validate()) {
+                    final DialogHelper RequestSend = new DialogHelper(getDockActivity());
+                    RequestSend.initRequestSendDialog(R.layout.request_send_dialog, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            RequestSend.hideDialog();
+                            getDockActivity().addDockableFragment(UserHomeFragment.newInstance(),"UserHomeFragment");
+                        }
+                    });
+                    RequestSend.showDialog();
                 }
 
                 break;
+            case R.id.img_gps:
+               /* if (getMainActivity().statusCheck()) {
+                    LocationModel locationModel = getMainActivity().getMyCurrentLocation();
+                    if (locationModel != null)
+                        edtLocationgps.setText(locationModel.getAddress());
+                }*/
+                getLocation(edtLocationgps);
+
+                break;
+        }
+    }
+
+    private void setCCCheck() {
+
+        imgCcCheck.invalidate();
+        imgCcCheck.setVisibility(View.VISIBLE);
+        imgCodCheck.setVisibility(View.GONE);
+    }
+
+    private void setCODCheck() {
+        imgCcCheck.setVisibility(View.GONE);
+        imgCodCheck.setVisibility(View.VISIBLE);
+    }
+
+    private boolean validate() {
+        if (edtLocationgps.getText().toString().isEmpty()) {
+            edtLocationgps.setError("Enter Address");
+            return false;
+        } else if (btnPreferreddate.getText().toString().isEmpty()) {
+            UIHelper.showShortToastInCenter(getDockActivity(), "Select Date");
+            return false;
+        } else if (btnPreferredtime.getText().toString().isEmpty()) {
+            UIHelper.showShortToastInCenter(getDockActivity(), "Select Time");
+            return false;
+        } else if (paymentType.isEmpty()) {
+            UIHelper.showShortToastInCenter(getDockActivity(), "Select Payment Type");
+            return false;
+        } else {
+            return true;
         }
     }
 
     @Override
     public void setTitleBar(TitleBar titleBar) {
         super.setTitleBar(titleBar);
+        getDockActivity().lockDrawer();
         titleBar.hideButtons();
         titleBar.showBackButton();
-        titleBar.setSubHeading("Request Service");
+        titleBar.setSubHeading(getString(R.string.request_setvice));
     }
 
-    private void initTimePicker(final TextView textView){
+    private void initTimePicker(final TextView textView) {
         Calendar calendar = Calendar.getInstance();
         final TimePickerHelper timePicker = new TimePickerHelper();
-        timePicker.initTimeDialog(getDockActivity(),calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),new TimePickerDialog.OnTimeSetListener() {
+        timePicker.initTimeDialog(getDockActivity(), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                textView.setText(timePicker.getTime(hourOfDay,minute));
+                Date date = new Date();
+                if (!DateHelper.isTimeAfter(date.getHours(), date.getMinutes(), hourOfDay, minute)) {
+                    UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.less_time_error));
+                } else {
+                    textView.setText(timePicker.getTime(hourOfDay, minute));
+                }
+
             }
-        },DateFormat.is24HourFormat(getMainActivity()));
+        }, DateFormat.is24HourFormat(getMainActivity()));
 
         timePicker.showTime();
     }
-    private void initDatePicker(final TextView textView){
+
+    private void initDatePicker(final TextView textView) {
         Calendar calendar = Calendar.getInstance();
         final DatePickerHelper datePickerHelper = new DatePickerHelper();
         datePickerHelper.initDateDialog(
@@ -288,12 +393,26 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 , new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        textView.setText(datePickerHelper.getStringDate(year,month,dayOfMonth));
+                        Date date = new Date();
+                        Calendar c = Calendar.getInstance();
+                        c.set(Calendar.YEAR, year);
+                        c.set(Calendar.MONTH, month);
+                        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+// and get that as a Date
+                        Date dateSpecified = c.getTime();
+                        if (dateSpecified.before(date)) {
+                            UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.date_before_error));
+                        } else {
+                            textView.setText(datePickerHelper.getStringDate(year, month, dayOfMonth));
+                        }
+
                     }
-                },"PreferredDate");
+                }, "PreferredDate");
 
         datePickerHelper.showDate();
     }
+
     @Override
     public void setImage(String imagePath) {
         if (imagePath != null) {
@@ -301,30 +420,6 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             mAdapter.notifyItemInserted(images.size() - 1);
             mAdapter.notifyDataSetChanged();
         }
-    }
-
-    /**** Method for Setting the Height of the ListView dynamically.
-     **** Hack to fix the issue of not showing all the items of the ListView
-     **** when placed inside a ScrollView  ****/
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null)
-            return;
-
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, listView);
-            if (i == 0)
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += view.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
     }
 
     private void refreshListview() {
@@ -354,7 +449,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
     @Override
     public void OnDeleteJobs(int position) {
-        selectedJobs.remove(position);
+       /* selectedJobs.remove(position);*/
         // refreshListview();
     }
 
@@ -366,5 +461,12 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     @Override
     public void onItemSelected(Place selectedPlace) {
 
+    }
+
+    @Override
+    public void onBack() {
+        //setCCCheck();
+
+        isFromBack = true;
     }
 }

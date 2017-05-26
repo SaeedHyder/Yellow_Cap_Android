@@ -221,6 +221,24 @@
     <string name="dummy_name">Al Musa</string>
     <string name="technician_rating">Technician Rating</string>
     <string name="amount_paid">Amount Paid</string>
+    <string name="iam_a">Iam a...</string>
+    <string name="time_error">You cannot Select complete time before Start time</string>
+    <string name="arrive_time_error">Enter Arrive Time</string>
+    <string name="complete_time_error">Enter Complete Time</string>
+    <string name="less_time_error">You cannot Select Less then Current Time</string>
+    <string name="enter_valid_number_error">Enter Valid Number</string>
+    <string name="date_before_error">Selected Date is Before Current Date</string>
+    <string name="cc_valid_error">Enter Valid Credit Card Number</string>
+    <string name="user_profile">User Profile</string>
+    <string name="jobs">Jobs</string>
+    <string name="terms_conditons">Terms and Conditions</string>
+    <string name="request_setvice">Request Service</string>
+    <string name="edit_job">Edit Job</string>
+    <string name="add_payment">Add Payment</string>
+    <string name="internet_not_connected">Internet is not Connected</string>
+    <string name="empty_name_error">User Name can not be empty</string>
+    <string name="empty_email_error">User Email can not be empty</string>
+    <string name="address_empty_error">Address can not be empty</string>
 
 
 </resources>

@@ -126,7 +126,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/technician_number"
-            android:layout_marginRight="@dimen/x8"
+            android:layout_marginRight="@dimen/x4"
             android:textColor="@color/lightBlack"
             android:textSize="@dimen/x15"
             android:textStyle="bold"
@@ -138,7 +138,7 @@
             android:layout_height="wrap_content"
             android:text="@string/dummy_number"
             android:textColor="@color/gray"
-            android:maxLength="15"
+            android:maxLength="16"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
 

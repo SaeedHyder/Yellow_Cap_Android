@@ -17,6 +17,7 @@ import com.app.yellowcap.interfaces.onDeleteImage;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.viewbinder.SelectedJobBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
+import com.app.yellowcap.ui.views.TitleBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,10 +69,9 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
     @BindView(R.id.ll_TotalPrice)
     LinearLayout llTotalPrice;
     Unbinder unbinder;
-
+    ArrayList<String> images = new ArrayList<>();
     private ArrayList<String> selectedJobs = new ArrayList<>();
     private ArrayListAdapter<String> selectedJobsadapter;
-    ArrayList<String> images = new ArrayList<>();
     private String jobtype;
 
     public static EditJobTechFragment newInstance() {
@@ -108,6 +108,21 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         setListViewHeightBasedOnChildren(listViewJobselected);
         initJobTypeSpinner();
         initJobDescriptionSpinner();
+    }
+
+    @Override
+    public void setTitleBar(TitleBar titleBar) {
+        super.setTitleBar(titleBar);
+        titleBar.hideButtons();
+        getDockActivity().lockDrawer();
+        titleBar.showsaveButton(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDockActivity().addDockableFragment(OrderHistoryFragment.newInstance(), "OrderHistoryFragment");
+            }
+        });
+        titleBar.showBackButton();
+        titleBar.setSubHeading(getString(R.string.edit_job));
     }
 
     private void initJobTypeSpinner() {

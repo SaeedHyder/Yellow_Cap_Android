@@ -13,11 +13,14 @@ import android.widget.TextView;
 import com.app.yellowcap.R;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.helpers.DatePickerHelper;
+import com.app.yellowcap.helpers.UIHelper;
+import com.app.yellowcap.interfaces.onCreditCardClick;
 import com.app.yellowcap.ui.views.AnyEditTextView;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +43,15 @@ public class CreditCardFragment extends BaseFragment implements View.OnClickList
     Button btnupdate;
     Unbinder unbinder;
 
+    public com.app.yellowcap.interfaces.onCreditCardClick getOnCreditCardClick() {
+        return onCreditCardClick;
+    }
+
+    public void setOnCreditCardClick(com.app.yellowcap.interfaces.onCreditCardClick onCreditCardClick) {
+        this.onCreditCardClick = onCreditCardClick;
+    }
+
+    onCreditCardClick onCreditCardClick;
     public static CreditCardFragment newInstance() {
         return new CreditCardFragment();
     }
@@ -79,7 +91,10 @@ public class CreditCardFragment extends BaseFragment implements View.OnClickList
         switch (v.getId()){
             case R.id.btn_update:
                 if (validate()){
-                    getMainActivity().onBackPressed();
+                    if (onCreditCardClick !=null){
+                        onCreditCardClick.onBack();
+                    }
+                    getDockActivity().popFragment();
                 }
                 break;
             case R.id.edt_cc_expiredate:
@@ -93,7 +108,7 @@ public class CreditCardFragment extends BaseFragment implements View.OnClickList
         super.setTitleBar(titleBar);
         titleBar.hideButtons();
         titleBar.showBackButton();
-        titleBar.setSubHeading("Add Payment");
+        titleBar.setSubHeading(getString(R.string.add_payment));
     }
 
     private void initDatePicker(final TextView textView){
@@ -107,7 +122,19 @@ public class CreditCardFragment extends BaseFragment implements View.OnClickList
                 , new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        textView.setText(datePickerHelper.getStringDate(year,month,dayOfMonth));
+                        Date date = new Date();
+                        Calendar c = Calendar.getInstance();
+                        c.set(Calendar.YEAR, year);
+                        c.set(Calendar.MONTH, month);
+                        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+// and get that as a Date
+                        Date dateSpecified = c.getTime();
+                        if (dateSpecified.before(date)) {
+                            UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.date_before_error));
+                        } else {
+                            textView.setText(datePickerHelper.getStringDate(year, month, dayOfMonth));
+                        }
                     }
                 },"PreferredDate");
 
@@ -117,6 +144,9 @@ public class CreditCardFragment extends BaseFragment implements View.OnClickList
         if (edtCcNumber.getText().toString().isEmpty()){
             edtCcNumber.setError(getString(R.string.enter_cc_number));
         return false;
+        }else if (edtCcNumber.getText().toString().length()<16){
+            edtCcNumber.setError(getString(R.string.cc_valid_error));
+            return false;
         }
         else if (edtCcExpiredate.getText().toString().isEmpty()){
             edtCcExpiredate.setError(getString(R.string.expiredate_error));

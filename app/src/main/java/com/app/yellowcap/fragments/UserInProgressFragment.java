@@ -13,7 +13,9 @@ import com.app.yellowcap.R;
 import com.app.yellowcap.entities.InProgressEnt;
 import com.app.yellowcap.entities.UserInProgressEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.interfaces.CallUser;
+import com.app.yellowcap.interfaces.onCancelJobListner;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.viewbinder.InProgressBinder;
 import com.app.yellowcap.ui.viewbinder.UserInProgressBinder;
@@ -29,7 +31,7 @@ import butterknife.Unbinder;
  * Created on 5/24/2017.
  */
 
-public class UserInProgressFragment extends BaseFragment implements CallUser {
+public class UserInProgressFragment extends BaseFragment implements CallUser,onCancelJobListner {
     public static UserInProgressFragment newInstance(){return new UserInProgressFragment();}
 
     @Override
@@ -49,7 +51,7 @@ public class UserInProgressFragment extends BaseFragment implements CallUser {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new ArrayListAdapter<UserInProgressEnt>(getDockActivity(), new UserInProgressBinder(this,getDockActivity()));
+        adapter = new ArrayListAdapter<UserInProgressEnt>(getDockActivity(), new UserInProgressBinder(this,getDockActivity(),this));
     }
 
     @Override
@@ -97,5 +99,23 @@ public class UserInProgressFragment extends BaseFragment implements CallUser {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:0123456789"));
         startActivity(intent);
+    }
+
+    @Override
+    public void onCancelJob(int position) {
+        final DialogHelper dialogHelper = new DialogHelper(getDockActivity());
+        dialogHelper.initCancelJobDialog(R.layout.cancle_job_dialog, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDockActivity().addDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
+                dialogHelper.hideDialog();
+            }
+        }, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogHelper.hideDialog();
+            }
+        });
+        dialogHelper.showDialog();
     }
 }

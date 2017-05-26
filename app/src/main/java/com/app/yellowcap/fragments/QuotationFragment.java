@@ -101,6 +101,7 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
 
     private void setListners() {
         btnReject.setOnClickListener(this);
+        btnAccept.setOnClickListener(this);
     }
 
     private void setTextStyle() {
@@ -122,10 +123,16 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
                     @Override
                     public void onClick(View v) {
                         cancelJobDialog.hideDialog();
+                        getMainActivity().popBackStackTillEntry(1);
+                        getDockActivity().addDockableFragment(UserHomeFragment.newInstance(), "UserJobsFragment");
                     }
                 });
                 cancelJobDialog.showDialog();
 
+                break;
+            case R.id.btn_accept:
+                getMainActivity().popBackStackTillEntry(1);
+                getDockActivity().addDockableFragment(UserJobsFragment.newInstance(), "UserJobsFragment");
                 break;
 
         }
@@ -135,7 +142,7 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void setTitleBar(TitleBar titleBar) {
         super.setTitleBar(titleBar);
-        getDockActivity().releaseDrawer();
+        getDockActivity().lockDrawer();
         titleBar.hideButtons();
         titleBar.showBackButton();
         titleBar.setSubHeading(getString(R.string.Electrical));

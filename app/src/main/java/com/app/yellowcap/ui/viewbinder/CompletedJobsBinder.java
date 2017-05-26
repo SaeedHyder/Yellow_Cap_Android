@@ -2,6 +2,7 @@ package com.app.yellowcap.ui.viewbinder;
 
 import android.app.Activity;
 import android.graphics.Typeface;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.app.yellowcap.R;
@@ -29,7 +30,15 @@ public class CompletedJobsBinder extends ViewBinder<CompletedJobsEnt> {
 
     @Override
     public void bindView(CompletedJobsEnt entity, int position, int grpPosition, View view, Activity activity) {
-        CompletedJobsBinder.ViewHolder viewHolder = (CompletedJobsBinder.ViewHolder) view.getTag();
+        final CompletedJobsBinder.ViewHolder viewHolder = (CompletedJobsBinder.ViewHolder) view.getTag();
+       ;
+        viewHolder.rbAddRating.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                viewHolder. rbAddRating.setFocusable(false);
+                return true;
+            }
+        });
 
         setTextStyle(viewHolder);
 
