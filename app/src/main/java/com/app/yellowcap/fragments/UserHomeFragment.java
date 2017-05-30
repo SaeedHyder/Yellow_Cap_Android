@@ -79,7 +79,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
             }
         });
         titleBar.showMenuButton();
-        titleBar.setSubHeading(getString(R.string.request_setvice));
+        titleBar.setSubHeading(getString(R.string.requesr_service_home));
     }
 
     @Override

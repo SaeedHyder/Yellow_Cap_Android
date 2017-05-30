@@ -92,7 +92,7 @@ public class EntryCodeFragment extends BaseFragment implements View.OnClickListe
                     } else {
                         txtPinEntry.setError(true);
                         isValidate = false;
-
+                        UIHelper.showShortToastInCenter(getDockActivity(),getString(R.string.incorrect_code));
                         txtPinEntry.postDelayed(new Runnable() {
                             @Override
                             public void run() {

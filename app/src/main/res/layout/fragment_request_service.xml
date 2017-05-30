@@ -347,7 +347,7 @@
                         android:paddingTop="@dimen/x5"
                         android:text="@string/add_photo"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/x15"
+                        android:textSize="@dimen/x14"
                         android:textStyle="normal"
                         app:typeface="Roboto-Regular.ttf" />
                 </LinearLayout>

@@ -267,7 +267,7 @@
                 android:id="@+id/txt_preferred_dateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="22 Feb 2017 02:30 PM"
+                android:text="@string/_22_feb_2017_02_30_pm"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/x14"
                 app:typeface="Roboto-Regular.ttf"/>
@@ -300,6 +300,7 @@
             android:layout_marginRight="@dimen/x3"
             android:layout_marginBottom="@dimen/x10"
             android:text="@string/accept"
+            android:textAllCaps="false"
             android:textColor="@color/white" />
 
         <Button
@@ -309,6 +310,7 @@
             android:layout_marginBottom="@dimen/x10"
             android:layout_weight="1"
             android:layout_marginLeft="@dimen/x3"
+            android:textAllCaps="false"
             android:background="@drawable/button_blackbackground"
             android:text="@string/reject"
             android:textColor="@color/white" />

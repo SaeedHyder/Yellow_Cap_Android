@@ -127,7 +127,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        txtPreferredDateTime.setText("22 Feb 2017"+"    "+"  02:30 PM");
         setListners();
         setImageGallery();
         setTextStyle();

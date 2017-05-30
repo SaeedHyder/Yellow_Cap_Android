@@ -31,7 +31,7 @@ public class NewJobsFragment extends BaseFragment {
     ListView lv_NewJobs;
 
     private ArrayListAdapter<NewJobEnt> adapter;
-    private ArrayList<NewJobEnt> userCollection = new ArrayList<>();
+    private ArrayList<NewJobEnt> userCollection ;
 
     Unbinder unbinder;
 
@@ -83,7 +83,7 @@ public class NewJobsFragment extends BaseFragment {
     }
 
     private void setNotificationData() {
-
+        userCollection = new ArrayList<>();
         userCollection.add(new NewJobEnt("drawable://" + R.drawable.itemlogo, "Failure In Ac Unit", "drawable://" + R.drawable.next));
         userCollection.add(new NewJobEnt("drawable://" + R.drawable.itemlogo, "Failure In Ac Unit", "drawable://" + R.drawable.next));
         userCollection.add(new NewJobEnt("drawable://" + R.drawable.itemlogo, "Failure In Ac Unit", "drawable://" + R.drawable.next));

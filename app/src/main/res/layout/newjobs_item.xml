@@ -29,7 +29,7 @@
         android:layout_weight="0.8"
         android:layout_gravity="center"
         android:layout_marginLeft="@dimen/x10"
-        android:text="No Electricity in same rooms"
+        android:text="No Electricity in some rooms"
         android:textSize="@dimen/x14"
         android:textColor="@color/gray"
         app:typeface="Roboto-Regular.ttf"/>

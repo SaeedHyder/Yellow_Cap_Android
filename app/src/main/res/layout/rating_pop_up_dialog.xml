@@ -75,7 +75,6 @@
                 android:text="@string/tip_techinecian"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/x12"
-                android:maxLength="5"
                 android:textStyle="normal"
                 app:typeface="Roboto-Regular.ttf" />
 
@@ -182,6 +181,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/two_round_button"
             android:text="Submit"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/x16" />
 

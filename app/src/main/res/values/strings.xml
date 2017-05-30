@@ -91,7 +91,7 @@
     <string name="select_job_type">Select Job Type</string>
     <string name="selected_jobs">Selected Jobs</string>
     <string name="additional_job">Additional Job</string>
-    <string name="addtional_job_description">Add your Addtional job\'s description here</string>
+    <string name="addtional_job_description">Write your Addtional job\'s description here</string>
 
     <string name="dummyAddress">795 Dubai Marina,UAE</string>
     <string name="dummydate">02-02-17</string>
@@ -99,13 +99,13 @@
     <string name="preferred_time">Preferred Time</string>
     <string name="dummytime">15:25</string>
     <string name="take_photo">Take Photo</string>
-    <string name="add_photo">Add Photo</string>
+    <string name="add_photo">Add Photos</string>
     <string name="payment_method">Payment Mode</string>
     <string name="cc">Credit Card</string>
     <string name="cc_number">Credit Card Number</string>
     <string name="expiration_date">Expiration Date</string>
     <string name="cvv">CVV</string>
-    <string name="name_appearing_on_card">Name Appering on the Card</string>
+    <string name="name_appearing_on_card">Name Appearing on the Card</string>
     <string name="cod">Cash on Delivery</string>
     <string name="request_a_quote">Request a Quote</string>
     <string name="gps_question">Location is Disabled.Do you want to enable it</string>
@@ -150,7 +150,7 @@
     <string name="valid_number">Enter Valid Number</string>
     <string name="enter_number">Enter Number</string>
     <string name="submit">Submit</string>
-    <string name="incorrect_code">inCorrect Code</string>
+    <string name="incorrect_code">Incorrect Code</string>
     <string name="success">Success</string>
     <string name="i_have_read_the_term_and_conditions">I have read the term and conditions</string>
     <string name="valid_email">Enter Valid Email</string>
@@ -195,15 +195,15 @@
     <string name="enter_your_message_here">Enter your message here</string>
     <string name="we_d_love_to_here_from_you">We\'d love to here from you</string>
     <string name="sink_broken">Sink Broken</string>
-    <string name="requested_by">Requested By:</string>
-    <string name="muhammad_ali">Muhammad Ali</string>
+    <string name="requested_by">Requested by:</string>
+    <string name="muhammad_ali"> Muhammad Ali</string>
     <string name="expected_time_of_arrival">Expected Time of Arrival</string>
     <string name="ac_not_cooling_well">Ac not cooling well</string>
     <string name="write_feedback_here">write feedback here...</string>
     <string name="rate_techinecian">Rate Techinecian</string>
     <string name="tip_techinecian">Tip Techinecian</string>
     <string name="aed">AED</string>
-    <string name="we_have_recive_your_request_will_touch_shorthly">"we have recive your request\n and will touch shorthly"</string>
+    <string name="we_have_recive_your_request_will_touch_shorthly">"\"We have received your request\n and will be in  touch shorthly\""</string>
     <string name="close">Close</string>
     <string name="forgot_password_dialog">Forgot Password</string>
     <string name="please_contact_al_musa_sub_admin_nfor_password_retrieval">Please contact Al-Musa (Sub admin)\nfor password retrieval</string>
@@ -222,23 +222,29 @@
     <string name="technician_rating">Technician Rating</string>
     <string name="amount_paid">Amount Paid</string>
     <string name="iam_a">Iam a...</string>
-    <string name="time_error">You cannot Select complete time before Start time</string>
+    <string name="time_error">Please Select complete time after Arrive time</string>
     <string name="arrive_time_error">Enter Arrive Time</string>
     <string name="complete_time_error">Enter Complete Time</string>
-    <string name="less_time_error">You cannot Select Less then Current Time</string>
+    <string name="less_time_error">Please Select Arrive time after Current Time</string>
     <string name="enter_valid_number_error">Enter Valid Number</string>
     <string name="date_before_error">Selected Date is Before Current Date</string>
     <string name="cc_valid_error">Enter Valid Credit Card Number</string>
     <string name="user_profile">User Profile</string>
     <string name="jobs">Jobs</string>
     <string name="terms_conditons">Terms and Conditions</string>
-    <string name="request_setvice">Request Service</string>
+    <string name="request_setvice">Request For Service</string>
     <string name="edit_job">Edit Job</string>
     <string name="add_payment">Add Payment</string>
     <string name="internet_not_connected">Internet is not Connected</string>
     <string name="empty_name_error">User Name can not be empty</string>
     <string name="empty_email_error">User Email can not be empty</string>
     <string name="address_empty_error">Address can not be empty</string>
+    <string name="thank_you">Thank You</string>
+    <string name="requesr_service_home">Request Service</string>
+    <string name="please_enter_the_reason_for_nrefusing_job">Please Enter the Reason for  Refusing Job</string>
+    <string name="ok">OK</string>
+    <string name="cancle">Cancle</string>
+    <string name="_22_feb_2017_02_30_pm">22 Feb 2017 &#032;&#032;&#032;&#032;02:30 PM</string>
 
 
 </resources>

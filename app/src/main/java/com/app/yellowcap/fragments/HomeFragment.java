@@ -144,6 +144,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 break;
 
             case ll_logout:
+                getDockActivity().popBackStackTillEntry(0);
                 prefHelper.setLoginStatus(false);
                getDockActivity().replaceDockableFragment(UserSelectionFragment.newInstance(), "ProfileFragment");
                 break;
