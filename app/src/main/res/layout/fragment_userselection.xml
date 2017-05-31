@@ -82,7 +82,7 @@
                 android:maxLines="1"
                 android:paddingTop="@dimen/x5"
                 android:text="@string/user"
-                android:textColor="@color/general_color"
+                android:textColor="@color/UserSelecttextcolor"
                 android:textSize="20sp"
                 android:textStyle="normal"
                 app:typeface="Roboto-Regular.ttf" />
@@ -96,7 +96,7 @@
                 android:maxLines="2"
                 android:paddingBottom="@dimen/x10"
                 android:text="@string/user_message"
-                android:textColor="@color/general_color"
+                android:textColor="@color/UserSelecttextcolor"
                 android:textSize="12sp"
                 android:textStyle="normal"
                 app:typeface="Roboto-Regular.ttf" />
@@ -131,7 +131,7 @@
                 android:maxLines="1"
                 android:paddingTop="@dimen/x5"
                 android:text="@string/technician"
-                android:textColor="@color/general_color"
+                android:textColor="@color/UserSelecttextcolor"
                 android:textSize="20sp"
                 android:textStyle="normal"
                 app:typeface="Roboto-Regular.ttf" />
@@ -145,7 +145,7 @@
                 android:maxLines="2"
                 android:paddingBottom="@dimen/x10"
                 android:text="@string/wants_to_provide_services"
-                android:textColor="@color/general_color"
+                android:textColor="@color/UserSelecttextcolor"
                 android:textSize="12sp"
                 android:textStyle="normal"
                 app:typeface="Roboto-Regular.ttf" />

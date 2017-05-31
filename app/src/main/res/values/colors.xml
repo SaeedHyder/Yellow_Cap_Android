@@ -48,5 +48,5 @@
     <color name="gray">#6D6D6C</color>
     <color name="lightgray">#515151</color>
     <color name="lightBlack">#424242</color>
-
+<color name="UserSelecttextcolor">#4e412d</color>
 </resources>
