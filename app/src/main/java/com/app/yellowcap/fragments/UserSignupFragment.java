@@ -2,21 +2,28 @@ package com.app.yellowcap.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.app.yellowcap.R;
+import com.app.yellowcap.entities.ResponseWrapper;
+import com.app.yellowcap.entities.UserEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.global.AppConstants;
+import com.app.yellowcap.helpers.TokenUpdater;
+import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.AnyEditTextView;
 import com.app.yellowcap.ui.views.TitleBar;
-
-import org.apache.commons.lang3.StringUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created on 5/23/2017.
@@ -27,7 +34,6 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
     AnyEditTextView edtname;
     @BindView(R.id.edtnumber)
     AnyEditTextView edtnumber;
-
 
 
     @BindView(R.id.btn_signup)
@@ -70,14 +76,47 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_signup:
-                if (isvalidated()){
-                    getDockActivity().addDockableFragment(EntryCodeFragment.newInstance(),"EntryCodeFragment");
+                if (isvalidated()) {
+                    registerUser();
+
                 }
                 break;
         }
     }
+
+    private void registerUser() {
+        Call<ResponseWrapper<UserEnt>> call = webService.registerUser(edtname.getText().toString()
+                , edtnumber.getText().toString());
+        call.enqueue(new Callback<ResponseWrapper<UserEnt>>() {
+            @Override
+            public void onResponse(Call<ResponseWrapper<UserEnt>> call, Response<ResponseWrapper<UserEnt>> response) {
+                if (response.body().getResponse().equals("2000")) {
+                    prefHelper.putUser(response.body().getResult());
+                    prefHelper.setUserType("user");
+                    prefHelper.setUsrId(String.valueOf(response.body().getResult().getId()));
+                    prefHelper.setUsrName(response.body().getResult().getFullName());
+                    prefHelper.setPhonenumber(response.body().getResult().getPhoneNo());
+                    TokenUpdater.getInstance().UpdateToken(getDockActivity(),
+                            prefHelper.getUserId(),
+                            AppConstants.Device_Type,
+                            prefHelper.getFirebase_TOKEN());
+                    getDockActivity().replaceDockableFragment(EntryCodeFragment.newInstance(),"EntryCodeFragment");
+                }
+                else{
+                    UIHelper.showShortToastInCenter(getDockActivity(),response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWrapper<UserEnt>> call, Throwable t) {
+                Log.e("UserSignupFragment", t.toString());
+                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+            }
+        });
+    }
+
     @Override
     public void setTitleBar(TitleBar titleBar) {
         // TODO Auto-generated method stub
@@ -87,19 +126,16 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
 
 
     private boolean isvalidated() {
-        if (edtname.getText().toString().isEmpty()){
+        if (edtname.getText().toString().isEmpty()) {
             edtname.setError(getString(R.string.enter_name));
             return false;
-        }
-       else if (edtnumber.getText().toString().isEmpty()){
+        } else if (edtnumber.getText().toString().isEmpty()) {
             edtnumber.setError(getString(R.string.enter_number));
             return false;
-        }
-        else if (edtnumber.getText().toString().length()<10||edtnumber.getText().toString().length()>12){
+        } else if (edtnumber.getText().toString().length() < 13) {
             edtnumber.setError(getString(R.string.enter_valid_number_error));
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }

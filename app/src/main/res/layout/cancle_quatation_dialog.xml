@@ -85,6 +85,7 @@
             android:textColor="@color/white"
             android:layout_marginTop="@dimen/x10"
             android:textSize="@dimen/x16"
+            android:textAllCaps="false"
             android:text="Submit"
             />
 

@@ -32,9 +32,9 @@
             android:id="@+id/txt_thankYou"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:text="@string/thank_you"
             android:gravity="center_horizontal"
-            android:text="Thank you"
+
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -73,6 +73,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/two_round_button"
             android:text="@string/close"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/x16" />
 

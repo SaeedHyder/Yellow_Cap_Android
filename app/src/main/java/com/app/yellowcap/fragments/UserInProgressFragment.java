@@ -10,14 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.app.yellowcap.R;
-import com.app.yellowcap.entities.InProgressEnt;
 import com.app.yellowcap.entities.UserInProgressEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.interfaces.CallUser;
 import com.app.yellowcap.interfaces.onCancelJobListner;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
-import com.app.yellowcap.ui.viewbinder.InProgressBinder;
 import com.app.yellowcap.ui.viewbinder.UserInProgressBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 
@@ -107,7 +105,7 @@ public class UserInProgressFragment extends BaseFragment implements CallUser,onC
         dialogHelper.initCancelJobDialog(R.layout.cancle_job_dialog, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getDockActivity().addDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
+                getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
                 dialogHelper.hideDialog();
             }
         }, new View.OnClickListener() {
@@ -116,6 +114,7 @@ public class UserInProgressFragment extends BaseFragment implements CallUser,onC
                 dialogHelper.hideDialog();
             }
         });
+        dialogHelper.setCancelable(false);
         dialogHelper.showDialog();
     }
 }

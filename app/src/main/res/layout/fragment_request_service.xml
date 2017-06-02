@@ -271,7 +271,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/x2"
+                        android:layout_height="@dimen/x1"
                         android:layout_marginBottom="@dimen/x5"
                         android:background="@drawable/line" />
                 </LinearLayout>
@@ -347,7 +347,7 @@
                         android:paddingTop="@dimen/x5"
                         android:text="@string/add_photo"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/x15"
+                        android:textSize="@dimen/x14"
                         android:textStyle="normal"
                         app:typeface="Roboto-Regular.ttf" />
                 </LinearLayout>

@@ -43,15 +43,7 @@ public class CreditCardFragment extends BaseFragment implements View.OnClickList
     Button btnupdate;
     Unbinder unbinder;
 
-    public com.app.yellowcap.interfaces.onCreditCardClick getOnCreditCardClick() {
-        return onCreditCardClick;
-    }
 
-    public void setOnCreditCardClick(com.app.yellowcap.interfaces.onCreditCardClick onCreditCardClick) {
-        this.onCreditCardClick = onCreditCardClick;
-    }
-
-    onCreditCardClick onCreditCardClick;
     public static CreditCardFragment newInstance() {
         return new CreditCardFragment();
     }
@@ -91,9 +83,6 @@ public class CreditCardFragment extends BaseFragment implements View.OnClickList
         switch (v.getId()){
             case R.id.btn_update:
                 if (validate()){
-                    if (onCreditCardClick !=null){
-                        onCreditCardClick.onBack();
-                    }
                     getDockActivity().popFragment();
                 }
                 break;

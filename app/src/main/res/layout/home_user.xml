@@ -42,16 +42,15 @@
                 android:layout_height="@dimen/x110"
                 android:layout_marginBottom="@dimen/x5"
                 android:layout_marginRight="@dimen/x5"
+                android:padding="@dimen/x15"
                 android:layout_weight="1"
                 android:background="@color/yellow"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="@dimen/x50"
-                    android:layout_height="0dp"
+                    android:layout_height="@dimen/x50"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/x6"
-                    android:layout_weight="1"
                     android:src="@drawable/ac" />
 
                 <com.app.yellowcap.ui.views.AnyTextView
@@ -60,6 +59,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="0.4"
                     android:text="@string/ac"
+                    android:paddingTop="@dimen/x5"
                     android:textColor="@color/black"
                     android:textSize="@dimen/x14"
                     app:typeface="Roboto-Regular.ttf" />
@@ -71,15 +71,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x110"
                 android:layout_weight="1"
+                android:padding="@dimen/x15"
                 android:background="@color/yellow"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="@dimen/x50"
-                    android:layout_height="0dp"
+                    android:layout_height="@dimen/x50"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/x6"
-                    android:layout_weight="1"
+
+
                     android:src="@drawable/electrical" />
 
                 <com.app.yellowcap.ui.views.AnyTextView
@@ -88,6 +89,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="0.4"
                     android:text="@string/electrical"
+                    android:paddingTop="@dimen/x5"
                     android:textColor="@color/black"
                     android:textSize="@dimen/x14"
                     app:typeface="Roboto-Regular.ttf" />
@@ -100,15 +102,15 @@
                 android:layout_marginBottom="@dimen/x5"
                 android:layout_marginLeft="@dimen/x5"
                 android:layout_weight="1"
+                android:padding="@dimen/x15"
                 android:background="@color/yellow"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="@dimen/x50"
-                    android:layout_height="0dp"
+                    android:layout_height="@dimen/x50"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/x6"
-                    android:layout_weight="1"
+
                     android:src="@drawable/plumbing" />
 
                 <com.app.yellowcap.ui.views.AnyTextView
@@ -117,6 +119,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="0.4"
                     android:text="@string/plumbing"
+                    android:paddingTop="@dimen/x5"
                     android:textColor="@color/black"
                     android:textSize="@dimen/x14"
                     app:typeface="Roboto-Regular.ttf" />
@@ -144,15 +147,15 @@
                 android:layout_marginBottom="@dimen/x5"
                 android:layout_marginRight="@dimen/x5"
                 android:layout_weight="1"
+                android:paddingTop="@dimen/x15"
+
                 android:background="@color/yellow"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="@dimen/x50"
-                    android:layout_height="0dp"
+                    android:layout_height="@dimen/x50"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/x6"
-                    android:layout_weight="1"
                     android:src="@drawable/furniture"
                     />
 
@@ -161,9 +164,10 @@
                     android:layout_height="0dp"
                     android:layout_gravity="center"
                     android:layout_weight="0.4"
+                    android:paddingTop="@dimen/x5"
                     android:text="@string/furniture_fixture_assembly"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/x12"
+                    android:textSize="11sp"
                     android:gravity="center_horizontal"
                     app:typeface="Roboto-Regular.ttf"
                     android:layout_marginBottom="@dimen/x5"/>
@@ -175,15 +179,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x110"
                 android:layout_weight="1"
+                android:paddingTop="@dimen/x15"
                 android:background="@color/yellow"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="@dimen/x50"
-                    android:layout_height="0dp"
+                    android:layout_height="@dimen/x50"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/x6"
-                    android:layout_weight="1"
                     android:src="@drawable/pest" />
 
                 <com.app.yellowcap.ui.views.AnyTextView
@@ -194,6 +197,7 @@
                     android:text="@string/pest_control"
                     android:textColor="@color/black"
                     android:textSize="@dimen/x14"
+                    android:paddingTop="@dimen/x5"
                     app:typeface="Roboto-Regular.ttf" />
             </LinearLayout>
 
@@ -204,15 +208,14 @@
                 android:layout_marginBottom="@dimen/x5"
                 android:layout_marginLeft="@dimen/x5"
                 android:layout_weight="1"
+                android:padding="@dimen/x15"
                 android:background="@color/yellow"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="@dimen/x50"
-                    android:layout_height="0dp"
+                    android:layout_height="@dimen/x50"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/x6"
-                    android:layout_weight="1"
                     android:src="@drawable/cleaning" />
 
                 <com.app.yellowcap.ui.views.AnyTextView
@@ -221,6 +224,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="0.4"
                     android:text="@string/cleaning"
+                    android:paddingTop="@dimen/x5"
                     android:textColor="@color/black"
                     android:textSize="@dimen/x14"
                     app:typeface="Roboto-Regular.ttf" />
@@ -247,15 +251,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x110"
                 android:layout_weight="1"
+                android:padding="@dimen/x15"
                 android:background="@color/yellow"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="@dimen/x50"
-                    android:layout_height="0dp"
+                    android:layout_height="@dimen/x50"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/x6"
-                    android:layout_weight="1"
                     android:src="@drawable/move" />
 
                 <com.app.yellowcap.ui.views.AnyTextView
@@ -266,6 +269,7 @@
                     android:text="@string/move_in_move_out"
                     android:textColor="@color/black"
                     android:textSize="@dimen/x14"
+                    android:paddingTop="@dimen/x5"
                     app:typeface="Roboto-Regular.ttf" />
             </LinearLayout>
 
@@ -276,15 +280,14 @@
                 android:layout_marginBottom="@dimen/x5"
                 android:layout_marginLeft="@dimen/x5"
                 android:layout_weight="1"
+                android:padding="@dimen/x15"
                 android:background="@color/yellow"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="@dimen/x50"
-                    android:layout_height="0dp"
+                    android:layout_height="@dimen/x50"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/x6"
-                    android:layout_weight="1"
                     android:src="@drawable/custom" />
 
                 <com.app.yellowcap.ui.views.AnyTextView
@@ -295,6 +298,7 @@
                     android:text="@string/customs_jobs"
                     android:textColor="@color/black"
                     android:textSize="@dimen/x14"
+                    android:paddingTop="@dimen/x5"
                     app:typeface="Roboto-Regular.ttf" />
 
             </LinearLayout>

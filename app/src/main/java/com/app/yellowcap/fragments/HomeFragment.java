@@ -1,7 +1,6 @@
 package com.app.yellowcap.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,7 +107,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         titleBar.showNotificationButton(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getDockActivity().addDockableFragment(TechNotificationsFragment.newInstance(), "TechNotificationsFragment");
+                getDockActivity().replaceDockableFragment(TechNotificationsFragment.newInstance(), "TechNotificationsFragment");
             }
         });
         titleBar.setSubHeading(getString(R.string.home));
@@ -129,24 +128,25 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.ll_newJobs:
-                getDockActivity().addDockableFragment(NewJobsFragment.newInstance(), "NewJobsFragment");
+                getDockActivity().replaceDockableFragment(NewJobsFragment.newInstance(), "NewJobsFragment");
                 break;
 
             case R.id.ll_history:
-                getDockActivity().addDockableFragment(OrderHistoryFragment.newInstance(), "OrderHistoryFragment");
+                getDockActivity().replaceDockableFragment(OrderHistoryFragment.newInstance(), "OrderHistoryFragment");
                 break;
 
             case ll_notification:
-                getDockActivity().addDockableFragment(TechNotificationsFragment.newInstance(), "TechNotificationsFragment");
+                getDockActivity().replaceDockableFragment(TechNotificationsFragment.newInstance(), "TechNotificationsFragment");
                 break;
 
             case ll_profile:
-                getDockActivity().addDockableFragment(ProfileFragment.newInstance(), "ProfileFragment");
+                getDockActivity().replaceDockableFragment(ProfileFragment.newInstance(), "ProfileFragment");
                 break;
 
             case ll_logout:
+                getDockActivity().popBackStackTillEntry(0);
                 prefHelper.setLoginStatus(false);
-               getDockActivity().addDockableFragment(UserSelectionFragment.newInstance(), "ProfileFragment");
+               getDockActivity().replaceDockableFragment(UserSelectionFragment.newInstance(), "ProfileFragment");
                 break;
 
 

@@ -2,6 +2,7 @@ package com.app.yellowcap.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,24 +11,37 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.app.yellowcap.R;
+import com.app.yellowcap.activities.MainActivity;
 import com.app.yellowcap.entities.LocationModel;
+import com.app.yellowcap.entities.RegistrationResultEnt;
+import com.app.yellowcap.entities.ResponseWrapper;
+import com.app.yellowcap.entities.UserEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.global.AppConstants;
+import com.app.yellowcap.helpers.CameraHelper;
+import com.app.yellowcap.helpers.TokenUpdater;
+import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.AnyEditTextView;
-import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
 import com.google.android.gms.location.places.Place;
 import com.jota.autocompletelocation.AutoCompleteLocation;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created on 5/24/2017.
  */
 
-public class UserProfileFragment extends BaseFragment implements View.OnClickListener, AutoCompleteLocation.AutoCompleteLocationListener {
+public class UserProfileFragment extends BaseFragment implements View.OnClickListener, AutoCompleteLocation.AutoCompleteLocationListener,MainActivity.ImageSetter {
     @BindView(R.id.CircularImageSharePop)
     CircleImageView CircularImageSharePop;
     @BindView(R.id.edtname)
@@ -45,7 +59,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     @BindView(R.id.btn_submit)
     Button btnsubmit;
     Unbinder unbinder;
-
+    public File profilePic;
     public static UserProfileFragment newInstance() {
         return new UserProfileFragment();
     }
@@ -67,10 +81,40 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setlistener();
-        edtname.setText("Khalid Howladar");
-        edtemail.setText("khalidhowladar@sample.com");
-        edtLocationgps.setText(getString(R.string.dummyAddress));
-        edtLocationspecific.setText(getString(R.string.dummyAddress));
+        getUserProfile();
+
+    }
+
+    private void getUserProfile() {
+        Call<ResponseWrapper<RegistrationResultEnt>> call= webService.getUserProfile(prefHelper.getUserId());
+        call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
+            @Override
+            public void onResponse(Call<ResponseWrapper<RegistrationResultEnt>> call, Response<ResponseWrapper<RegistrationResultEnt>> response) {
+                if (response.body().getResponse().equals("2000")) {
+                    setProfileData(response.body().getResult());
+                } else {
+
+                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
+                Log.e("EntryCodeFragment", t.toString());
+                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+            }
+        });
+    }
+
+    private void setProfileData(RegistrationResultEnt result) {
+        prefHelper.putRegistrationResult(result);
+        ImageLoader.getInstance().displayImage(
+                result.getProfilePicture(), CircularImageSharePop);
+        edtname.setText(result.getFullName());
+        edtemail.setText(result.getEmail());
+        edtLocationgps.setText(result.getAddress());
+        edtLocationspecific.setText(result.getFullAddress());
+
     }
 
     private void setlistener() {
@@ -109,23 +153,48 @@ private void getLocation(AutoCompleteTextView textView){
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.CircularImageSharePop:
+                CameraHelper.uploadMedia(getMainActivity());
                 break;
             case R.id.img_gps:
                getLocation(edtLocationgps);
                 break;
             case R.id.btn_editcard:
-                getDockActivity().addDockableFragment(CreditCardFragment.newInstance(), "CreditCardFargment");
+                getDockActivity().replaceDockableFragment(CreditCardFragment.newInstance(), "CreditCardFargment");
                 break;
             case R.id.btn_submit:
                 if (validate()) {
-                    getDockActivity().addDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
+                    updateProfile();
                 }
                 break;
         }
     }
 
+    private void updateProfile() {
+        Call<ResponseWrapper<RegistrationResultEnt>> call = webService.updateProfile(prefHelper.getUserId(),edtname.getText().toString(),
+                edtemail.getText().toString(),edtLocationgps.getText().toString(),edtLocationspecific.getText().toString(),profilePic);
+        call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
+            @Override
+            public void onResponse(Call<ResponseWrapper<RegistrationResultEnt>> call, Response<ResponseWrapper<RegistrationResultEnt>> response) {
+                if (response.body().getResponse().equals("2000")) {
+                    getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
+                } else {
+                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
+                Log.e("EntryCodeFragment", t.toString());
+                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+            }
+        });
+    }
+
     private boolean validate() {
-        if (edtname.getText().toString().isEmpty()) {
+        if(profilePic == null){
+            UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.profile_pic_error));
+            return false;
+        }else if (edtname.getText().toString().isEmpty()) {
             edtname.setError(getString(R.string.empty_name_error));
             return false;
         } else if (edtemail.getText().toString().isEmpty()) {
@@ -134,7 +203,10 @@ private void getLocation(AutoCompleteTextView textView){
         } else if (edtLocationgps.getText().toString().isEmpty()) {
             edtLocationgps.setError(getString(R.string.address_empty_error));
             return false;
-        } else {
+        }else if (edtLocationspecific.getText().toString().isEmpty()) {
+             edtLocationspecific.setError(getString(R.string.address_empty_error));
+             return false;
+         } else {
             return true;
         }
     }
@@ -146,6 +218,25 @@ private void getLocation(AutoCompleteTextView textView){
 
     @Override
     public void onItemSelected(Place selectedPlace) {
+
+    }
+
+    @Override
+    public void setImage(String imagePath) {
+        if (imagePath != null) {
+            profilePic = new File(imagePath);
+            ImageLoader.getInstance().displayImage(
+                    "file:///" +imagePath, CircularImageSharePop);
+        }
+    }
+
+    @Override
+    public void setFilePath(String filePath) {
+
+    }
+
+    @Override
+    public void setVideo(String videoPath) {
 
     }
 }

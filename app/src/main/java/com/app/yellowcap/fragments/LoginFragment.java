@@ -74,7 +74,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
                 if (isvalidate()) {
                     prefHelper.setLoginStatus(true);
                     getDockActivity().popBackStackTillEntry(0);
-                    getDockActivity().addDockableFragment(HomeFragment.newInstance(), "HomeFragmnet");
+                    getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragmnet");
                 }
                 break;
 
@@ -86,6 +86,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
                         forgetDialog.hideDialog();
                     }
                 });
+                forgetDialog.setCancelable(false);
                 forgetDialog.showDialog();
                 break;
 

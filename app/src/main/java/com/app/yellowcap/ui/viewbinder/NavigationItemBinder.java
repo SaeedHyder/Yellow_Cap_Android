@@ -45,6 +45,7 @@ public class NavigationItemBinder extends ViewBinder<NavigationEnt> {
             badgeHelper.hideBadge();
         }else {
             viewHolder.txtHome.setText(entity.getItem_text());
+            viewHolder.txtHome.setTextColor(activity.getResources().getColor(R.color.black));
             viewHolder.imgUnselected.setImageResource(entity.getUnselectedDrawable());
             badgeHelper.hideBadge();
             if (entity.getItem_text().equals(activity.getString(R.string.notifications))) {

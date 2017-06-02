@@ -13,7 +13,6 @@ import com.app.yellowcap.ui.views.TitleBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -75,12 +74,12 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
         titleBar.showNotificationButton(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getDockActivity().addDockableFragment(UserNotificationsFragment.newInstance(), "UserNotificationsFragment");
+                getDockActivity().replaceDockableFragment(UserNotificationsFragment.newInstance(), "UserNotificationsFragment");
 
             }
         });
         titleBar.showMenuButton();
-        titleBar.setSubHeading(getString(R.string.home));
+        titleBar.setSubHeading(getString(R.string.requesr_service_home));
     }
 
     @Override
@@ -98,7 +97,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
     }
 
     private void addRequestServiceFragment(String type){
-        getDockActivity().addDockableFragment(RequestServiceFragment.newInstance(),"RequestServiceFragment");
+        getDockActivity().replaceDockableFragment(RequestServiceFragment.newInstance(),"RequestServiceFragment");
     }
     @Override
     public void onClick(View v) {

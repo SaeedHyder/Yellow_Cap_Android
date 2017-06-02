@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/ll_header"
@@ -18,11 +18,10 @@
         android:id="@+id/iv_logo"
         android:layout_width="@dimen/x250"
         android:layout_height="0dp"
-        android:layout_weight="0.4"
-        android:layout_marginTop="@dimen/x15"
-        android:src="@drawable/logo"
         android:layout_gravity="center"
-        />
+        android:layout_marginTop="@dimen/x15"
+        android:layout_weight="0.4"
+        android:src="@drawable/logo" />
 
     <LinearLayout
         android:id="@+id/ll_ItemsParent"
@@ -45,15 +44,14 @@
                 android:layout_marginRight="@dimen/x2"
                 android:layout_weight="1"
                 android:background="@color/yellow"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/x15">
 
                 <ImageView
                     android:id="@+id/iv_profile"
                     android:layout_width="@dimen/x50"
-                    android:layout_height="0dp"
+                    android:layout_height="@dimen/x50"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/x6"
-                    android:layout_weight="1"
                     android:src="@drawable/technician" />
 
                 <com.app.yellowcap.ui.views.AnyTextView
@@ -61,6 +59,7 @@
                     android:layout_height="0dp"
                     android:layout_gravity="center"
                     android:layout_weight="0.4"
+                    android:paddingTop="@dimen/x5"
                     android:text="@string/profile"
                     android:textColor="@color/black"
                     android:textSize="@dimen/x14"
@@ -72,18 +71,17 @@
                 android:id="@+id/ll_newJobs"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x110"
-                android:layout_weight="1"
                 android:layout_marginLeft="@dimen/x2"
+                android:layout_weight="1"
                 android:background="@color/yellow"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/x15">
 
                 <ImageView
                     android:id="@+id/iv_newJobs"
                     android:layout_width="@dimen/x50"
-                    android:layout_height="0dp"
+                    android:layout_height="@dimen/x50"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/x6"
-                    android:layout_weight="1"
                     android:src="@drawable/jobs_technician" />
 
                 <com.app.yellowcap.ui.views.AnyTextView
@@ -91,6 +89,7 @@
                     android:layout_height="0dp"
                     android:layout_gravity="center"
                     android:layout_weight="0.4"
+                    android:paddingTop="@dimen/x5"
                     android:text="@string/new_jobs"
                     android:textColor="@color/black"
                     android:textSize="@dimen/x14"
@@ -114,15 +113,14 @@
                 android:layout_marginRight="@dimen/x2"
                 android:layout_weight="1"
                 android:background="@color/yellow"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/x15">
 
                 <ImageView
                     android:id="@+id/iv_history"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
+                    android:layout_width="@dimen/x50"
+                    android:layout_height="@dimen/x50"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/x6"
-                    android:layout_weight="1"
                     android:src="@drawable/history" />
 
                 <com.app.yellowcap.ui.views.AnyTextView
@@ -130,6 +128,7 @@
                     android:layout_height="0dp"
                     android:layout_gravity="center"
                     android:layout_weight="0.4"
+                    android:paddingTop="@dimen/x5"
                     android:text="@string/order_history"
                     android:textColor="@color/black"
                     android:textSize="@dimen/x14"
@@ -141,18 +140,18 @@
                 android:id="@+id/ll_notification"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x110"
-                android:layout_weight="1"
                 android:layout_marginLeft="@dimen/x2"
+                android:layout_weight="1"
                 android:background="@color/yellow"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/x15">
 
                 <ImageView
                     android:id="@+id/iv_notification"
                     android:layout_width="@dimen/x50"
-                    android:layout_height="0dp"
+                    android:layout_height="@dimen/x50"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/x6"
-                    android:layout_weight="1"
+
                     android:src="@drawable/notification_technician" />
 
                 <com.app.yellowcap.ui.views.AnyTextView
@@ -160,6 +159,7 @@
                     android:layout_height="0dp"
                     android:layout_gravity="center"
                     android:layout_weight="0.4"
+                    android:paddingTop="@dimen/x5"
                     android:text="@string/notifications"
                     android:textColor="@color/black"
                     android:textSize="@dimen/x14"
@@ -181,15 +181,15 @@
                 android:layout_height="@dimen/x100"
                 android:layout_weight="1"
                 android:background="@color/yellow"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/x15">
 
                 <ImageView
                     android:id="@+id/iv_logout"
                     android:layout_width="@dimen/x50"
-                    android:layout_height="0dp"
+                    android:layout_height="@dimen/x50"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/x6"
-                    android:layout_weight="1"
+
                     android:src="@drawable/logout_technician" />
 
                 <com.app.yellowcap.ui.views.AnyTextView
@@ -198,6 +198,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="0.4"
                     android:text="@string/logout"
+
                     android:textColor="@color/black"
                     android:textSize="@dimen/x14"
                     app:typeface="Roboto-Regular.ttf" />

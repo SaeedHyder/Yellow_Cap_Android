@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "876857879277",
+    "firebase_url": "https://yellowcap-168510.firebaseio.com",
+    "project_id": "yellowcap-168510",
+    "storage_bucket": "yellowcap-168510.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876857879277:android:52d07d6f844117f9",
+        "android_client_info": {
+          "package_name": "com.app.yellowcap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "876857879277-2dktqnm8hlrtmdbj0fjh2gvru3g52j5h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.yellowcap",
+            "certificate_hash": "151f8c777c9f6f3d03c193f33c8a389955d58c02"
+          }
+        },
+        {
+          "client_id": "876857879277-7fqvg4o7531fonh6a46e8rfv85m0qen0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6V-kVHXQarfg6PhzOKdXr_R9yWL8RCjQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "876857879277-7fqvg4o7531fonh6a46e8rfv85m0qen0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

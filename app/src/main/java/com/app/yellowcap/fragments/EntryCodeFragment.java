@@ -2,13 +2,18 @@ package com.app.yellowcap.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.app.yellowcap.R;
+import com.app.yellowcap.entities.RegistrationResultEnt;
+import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.global.AppConstants;
+import com.app.yellowcap.helpers.TokenUpdater;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.PinEntryEditText;
 import com.app.yellowcap.ui.views.TitleBar;
@@ -16,6 +21,9 @@ import com.app.yellowcap.ui.views.TitleBar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created on 5/23/2017.
@@ -26,8 +34,9 @@ public class EntryCodeFragment extends BaseFragment implements View.OnClickListe
     PinEntryEditText txtPinEntry;
     @BindView(R.id.btn_submit_code)
     Button btnSubmitCode;
-    private Boolean isValidate = false;
     Unbinder unbinder;
+    private Boolean isValidate = false;
+    private String pinCode = "";
 
     public static EntryCodeFragment newInstance() {
         return new EntryCodeFragment();
@@ -42,7 +51,7 @@ public class EntryCodeFragment extends BaseFragment implements View.OnClickListe
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setlistener();
-        initPinEnrty();
+        // initPinEnrty();
     }
 
     private void setlistener() {
@@ -65,22 +74,54 @@ public class EntryCodeFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_submit_code:
-                if (isValidate){
-                    getDockActivity().addDockableFragment(TermAndConditionFragment.newInstance(),"Terms And conditon Fragment");
-                }
-                else {
-                    UIHelper.showShortToastInCenter(getDockActivity(),getString(R.string.incorrect_code));
-                }
+                verifyCode();
                 break;
         }
     }
+
+    private void verifyCode() {
+
+        if (!(txtPinEntry.getText().toString().equals("") && txtPinEntry.getText().toString().length() < 4)) {
+            Call<ResponseWrapper<RegistrationResultEnt>> call = webService.verifyCode(prefHelper.getUserId(),
+                    txtPinEntry.getText().toString());
+            call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
+                @Override
+                public void onResponse(Call<ResponseWrapper<RegistrationResultEnt>> call, Response<ResponseWrapper<RegistrationResultEnt>> response) {
+                    if (response.body().getResponse().equals("2000")) {
+                        TokenUpdater.getInstance().UpdateToken(getDockActivity(),
+                                prefHelper.getUserId(),
+                                AppConstants.Device_Type,
+                                prefHelper.getFirebase_TOKEN());
+                        prefHelper.setLoginStatus(true);
+                        getDockActivity().popBackStackTillEntry(0);
+                        prefHelper.putRegistrationResult(response.body().getResult());
+                        getDockActivity().replaceDockableFragment(TermAndConditionFragment.newInstance(), "Terms And conditon Fragment");
+                    } else {
+                        txtPinEntry.setText(null);
+                        UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
+                    Log.e("EntryCodeFragment", t.toString());
+                    UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                }
+            });
+        } else {
+            UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.valid_code_error));
+        }
+
+    }
+
     @Override
     public void setTitleBar(TitleBar titleBar) {
         super.setTitleBar(titleBar);
         titleBar.hideTitleBar();
     }
+
     private void initPinEnrty() {
         if (txtPinEntry != null) {
             txtPinEntry.setOnPinEnteredListener(new PinEntryEditText.OnPinEnteredListener() {
@@ -92,7 +133,7 @@ public class EntryCodeFragment extends BaseFragment implements View.OnClickListe
                     } else {
                         txtPinEntry.setError(true);
                         isValidate = false;
-
+                        UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.incorrect_code));
                         txtPinEntry.postDelayed(new Runnable() {
                             @Override
                             public void run() {

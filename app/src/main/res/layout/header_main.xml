@@ -28,7 +28,7 @@
         android:text="Template"
         android:textColor="@color/job_posted_background"
         android:textSize="@dimen/x22"
-        app:typeface="OpenSans-Regular.ttf" />
+        app:typeface="Roboto-Regular.ttf" />
 
 
     <ImageView

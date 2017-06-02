@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -26,13 +27,10 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.entities.LocationModel;
 import com.app.yellowcap.fragments.HomeFragment;
-import com.app.yellowcap.fragments.LoginFragment;
-import com.app.yellowcap.fragments.RequestServiceFragment;
 import com.app.yellowcap.fragments.SideMenuFragment;
 import com.app.yellowcap.fragments.UserHomeFragment;
 import com.app.yellowcap.fragments.UserSelectionFragment;
@@ -43,10 +41,8 @@ import com.app.yellowcap.ui.views.TitleBar;
 import com.kbeanie.imagechooser.api.ChooserType;
 import com.kbeanie.imagechooser.api.ChosenImage;
 import com.kbeanie.imagechooser.api.ChosenImages;
-import com.kbeanie.imagechooser.api.FileChooserManager;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
 import com.kbeanie.imagechooser.api.ImageChooserManager;
-import com.kbeanie.imagechooser.api.VideoChooserManager;
 
 import java.io.IOException;
 import java.util.List;
@@ -163,17 +159,40 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
 
 
     public void initFragment() {
+
+
+        getSupportFragmentManager().addOnBackStackChangedListener(getListener());
+
         if (prefHelper.isLogin()) {
             if (prefHelper.getUserType().equals("user")){
-                addDockableFragment(UserHomeFragment.newInstance(), "HomeFragment");            }
+                replaceDockableFragment(UserHomeFragment.newInstance(), "HomeFragment");            }
             else{
-                addDockableFragment(HomeFragment.newInstance(), "HomeFragment");
+                replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
             }
 
         } else {
-            addDockableFragment(UserSelectionFragment.newInstance(), "UserSelectionFragement");
+            replaceDockableFragment(UserSelectionFragment.newInstance(), "UserSelectionFragement");
         }
     }
+
+    private FragmentManager.OnBackStackChangedListener getListener() {
+        FragmentManager.OnBackStackChangedListener result = new FragmentManager.OnBackStackChangedListener() {
+            public void onBackStackChanged() {
+                FragmentManager manager = getSupportFragmentManager();
+
+                if (manager != null) {
+                    BaseFragment currFrag = (BaseFragment) manager.findFragmentById(getDockFrameLayoutId());
+                    if (currFrag != null) {
+                        currFrag.fragmentResume();
+                    }
+                }
+            }
+        };
+
+        return result;
+    }
+
+
 
     @Override
     public void onLoadingStarted() {

@@ -33,7 +33,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:text="Please Enter the Reason for \nRefusing job"
+            android:text="@string/please_enter_the_reason_for_nrefusing_job"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:alpha="0.8"
@@ -90,6 +90,7 @@
             android:textColor="@color/white"
             android:layout_marginTop="@dimen/x10"
             android:textSize="@dimen/x16"
+            android:textAllCaps="false"
             android:text="Submit"
             />
 

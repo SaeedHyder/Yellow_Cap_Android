@@ -20,6 +20,10 @@ import com.app.yellowcap.helpers.BasePreferenceHelper;
 import com.app.yellowcap.interfaces.LoadingListener;
 import com.app.yellowcap.ui.dialogs.DialogFactory;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 
 /**
  * This class is marked abstract so that it can pair with Dockable Fragments
@@ -57,7 +61,21 @@ public abstract class DockActivity extends AppCompatActivity implements
         super.onResume();
     }
 
-    public void addDockableFragment(BaseFragment frag) {
+   /* public void replaceDockableFragment(BaseFragment frag) {
+
+        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction();
+
+        transaction.replace(getDockFrameLayoutId(), frag);
+        transaction
+                .addToBackStack(
+                        getSupportFragmentManager().getBackStackEntryCount() == 0 ? KEY_FRAG_FIRST
+                                : null).commit();
+
+
+    }*/
+
+    public void replaceDockableFragment(BaseFragment frag, String Tag) {
 
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction();
@@ -70,22 +88,27 @@ public abstract class DockActivity extends AppCompatActivity implements
 
 
     }
+    public String getDate(String OurDate)
+    {
+        try
+        {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date value = formatter.parse(OurDate);
 
-    public void addDockableFragment(BaseFragment frag, String Tag) {
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //this format changeable
+            dateFormatter.setTimeZone(TimeZone.getDefault());
+            OurDate = dateFormatter.format(value);
 
-        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager()
-                .beginTransaction();
-
-        transaction.replace(getDockFrameLayoutId(), frag);
-        transaction
-                .addToBackStack(
-                        getSupportFragmentManager().getBackStackEntryCount() == 0 ? KEY_FRAG_FIRST
-                                : null).commit();
-
-
+            //Log.d("OurDate", OurDate);
+        }
+        catch (Exception e)
+        {
+            OurDate = "00-00-0000 00:00";
+        }
+        return OurDate;
     }
-
-    public void addDockableFragment(BaseFragment frag, boolean isAnimate) {
+    public void addDockableFragment(BaseFragment frag, String tag) {
 
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction();
@@ -97,7 +120,7 @@ public abstract class DockActivity extends AppCompatActivity implements
         // // R.anim.push_left_out );
         // }
 
-        transaction.replace(getDockFrameLayoutId(), frag);
+        transaction.add(getDockFrameLayoutId(), frag);
         transaction
                 .addToBackStack(
                         getSupportFragmentManager().getBackStackEntryCount() == 0 ? KEY_FRAG_FIRST
