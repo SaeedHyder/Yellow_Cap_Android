@@ -22,11 +22,13 @@ import com.andreabaccega.formedittextvalidator.Validator;
 import com.app.yellowcap.R;
 import com.app.yellowcap.activities.DockActivity;
 import com.app.yellowcap.activities.MainActivity;
+import com.app.yellowcap.global.WebServiceConstants;
 import com.app.yellowcap.helpers.BasePreferenceHelper;
 import com.app.yellowcap.helpers.GPSTracker;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.interfaces.LoadingListener;
 import com.app.yellowcap.retrofit.WebService;
+import com.app.yellowcap.retrofit.WebServiceFactory;
 import com.app.yellowcap.ui.views.AnyEditTextView;
 import com.app.yellowcap.ui.views.TitleBar;
 
@@ -87,7 +89,7 @@ public abstract class BaseFragment extends Fragment {
         mGpsTracker = new GPSTracker(getDockActivity());
 
         if (webService == null) {
-            //webService = WebServiceFactory.getWebServiceInstanceWithCustomInterceptor(getDockActivity(),"End Point");
+            webService = WebServiceFactory.getWebServiceInstanceWithCustomInterceptor(getDockActivity(), WebServiceConstants.SERVICE_URL);
         }
 
         myDockActivity = getDockActivity();

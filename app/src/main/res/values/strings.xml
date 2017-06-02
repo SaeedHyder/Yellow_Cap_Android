@@ -245,6 +245,9 @@
     <string name="ok">OK</string>
     <string name="cancle">Cancle</string>
     <string name="_22_feb_2017_02_30_pm">22 Feb 2017 &#032;&#032;&#032;&#032;02:30 PM</string>
+    <string name="App_Name">Yellow Cap</string>
+    <string name="valid_code_error">Enter Valid Code</string>
+    <string name="profile_pic_error">Select Profile Picture</string>
 
 
 </resources>

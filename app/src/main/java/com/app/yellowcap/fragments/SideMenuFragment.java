@@ -1,6 +1,7 @@
 package com.app.yellowcap.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +10,15 @@ import android.widget.ListView;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.entities.NavigationEnt;
+import com.app.yellowcap.entities.RegistrationResultEnt;
+import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.viewbinder.NavigationItemBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 
@@ -21,6 +26,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SideMenuFragment extends BaseFragment {
 
@@ -59,9 +67,37 @@ public class SideMenuFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         setlistItemClickListener();
         binddata();
+        getUserProfile();
 
     }
+    private void getUserProfile() {
+        Call<ResponseWrapper<RegistrationResultEnt>> call= webService.getUserProfile(prefHelper.getUserId());
+        call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
+            @Override
+            public void onResponse(Call<ResponseWrapper<RegistrationResultEnt>> call, Response<ResponseWrapper<RegistrationResultEnt>> response) {
+                if (response.body().getResponse().equals("2000")) {
+                    setProfileData(response.body().getResult());
+                } else {
 
+                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
+                Log.e("EntryCodeFragment", t.toString());
+                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+            }
+        });
+    }
+    private void setProfileData(RegistrationResultEnt result) {
+        prefHelper.putRegistrationResult(result);
+        ImageLoader.getInstance().displayImage(
+                result.getProfilePicture(), CircularImageSharePop);
+        txtUserName.setText(result.getFullName());
+        txtUseremail.setText(result.getEmail());
+
+    }
     private void setlistItemClickListener() {
         navListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
