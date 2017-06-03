@@ -8,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ import android.widget.TimePicker;
 import com.app.yellowcap.R;
 import com.app.yellowcap.activities.MainActivity;
 import com.app.yellowcap.entities.LocationModel;
+import com.app.yellowcap.entities.ResponseWrapper;
+import com.app.yellowcap.entities.ServiceEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.helpers.CameraHelper;
 import com.app.yellowcap.helpers.DateHelper;
@@ -34,7 +37,6 @@ import com.app.yellowcap.helpers.DatePickerHelper;
 import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.helpers.TimePickerHelper;
 import com.app.yellowcap.helpers.UIHelper;
-import com.app.yellowcap.interfaces.onCreditCardClick;
 import com.app.yellowcap.interfaces.onDeleteImage;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.adapters.RecyclerViewAdapterImages;
@@ -43,6 +45,7 @@ import com.app.yellowcap.ui.views.AnyEditTextView;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
 import com.google.android.gms.location.places.Place;
+import com.google.gson.Gson;
 import com.jota.autocompletelocation.AutoCompleteLocation;
 
 import java.util.ArrayList;
@@ -53,12 +56,16 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created on 5/22/2017.
  */
 
 public class RequestServiceFragment extends BaseFragment implements View.OnClickListener, MainActivity.ImageSetter, onDeleteImage, AutoCompleteLocation.AutoCompleteLocationListener {
+    public static String TYPE = "TYPE";
     @BindView(R.id.spn_jobtype)
     Spinner spnJobtype;
     @BindView(R.id.spn_jobdescription)
@@ -92,16 +99,27 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     @BindView(R.id.img_cod_check)
     ImageView imgCodCheck;
     private RecyclerViewAdapterImages mAdapter;
-    private ArrayList<String> selectedJobs;
-    private ArrayListAdapter<String> selectedJobsadapter;
-    private String jobtype;
+    private ArrayList<ServiceEnt> selectedJobs;
+    private ArrayListAdapter<ServiceEnt> selectedJobsadapter;
+    private ServiceEnt jobtype;
     private String paymentType = "";
+    private ServiceEnt homeSelectedService;
+    private ArrayList<ServiceEnt> jobcollection;
+    private ArrayList<ServiceEnt> jobChildcollection;
 
 
     private String preferreddate = "preferreddate";
     private String preferredtime = "preferredtime";
 
     public static RequestServiceFragment newInstance() {
+        return new RequestServiceFragment();
+    }
+
+    public static RequestServiceFragment newInstance(ServiceEnt type) {
+        Bundle args = new Bundle();
+        args.putString(TYPE, new Gson().toJson(type));
+        RequestServiceFragment fragment = new RequestServiceFragment();
+        fragment.setArguments(args);
         return new RequestServiceFragment();
     }
 
@@ -132,8 +150,13 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        selectedJobsadapter = new ArrayListAdapter<String>(getDockActivity(), new SelectedJobBinder(this));
+        if (getArguments() != null) {
+            TYPE = getArguments().getString(TYPE);
+            String jsonString = getArguments().getString(TYPE);
+            if (jsonString != null)
+                homeSelectedService = new Gson().fromJson(jsonString, ServiceEnt.class);
+        }
+        selectedJobsadapter = new ArrayListAdapter<ServiceEnt>(getDockActivity(), new SelectedJobBinder(this));
     }
 
     @Override
@@ -147,16 +170,16 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     }
 
     private void initListViewAdapter() {
-        selectedJobs = new ArrayList<>();
+      /*  selectedJobs = new ArrayList<>();
         selectedJobs.add("Total Electricity Failure/Break down");
         selectedJobs.add("No Electricity in some Room");
         selectedJobs.add("Repair Ac");
-        selectedJobs.add("Ac Not Working");
+        selectedJobs.add("Ac Not Working");*/
 
-        bindview(selectedJobs);
+        bindSelectedJobview(selectedJobs);
     }
 
-    private void bindview(ArrayList<String> jobs) {
+    private void bindSelectedJobview(ArrayList<ServiceEnt> jobs) {
         selectedJobsadapter.clearList();
         listViewJobselected.setAdapter(selectedJobsadapter);
         selectedJobsadapter.addAll(jobs);
@@ -169,10 +192,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         super.onViewCreated(view, savedInstanceState);
         setListener();
         setDataInAdapter(images);
-        initListViewAdapter();
-        setListViewHeightBasedOnChildren(listViewJobselected);
-        initJobTypeSpinner();
-        initJobDescriptionSpinner();
+        initJobTypeSpinner(TYPE);
 
 
     }
@@ -200,50 +220,109 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         unbinder.unbind();
     }*/
 
-    private void initJobTypeSpinner() {
-        final List<String> jobtypearraylist = new ArrayList<String>();
-        jobtypearraylist.add("Electrical");
-        jobtypearraylist.add("Plumbing");
-        jobtypearraylist.add("AC");
-        jobtypearraylist.add("Furniture Fixture");
-        jobtypearraylist.add("Pest Control");
-        jobtypearraylist.add("Cleaning");
-        jobtypearraylist.add("Move in/Move Out");
+    private void initJobTypeSpinner(String type) {
+        jobcollection = new ArrayList<>();
+        Call<ResponseWrapper<ArrayList<ServiceEnt>>> call = webService.getHomeServices();
+        call.enqueue(new Callback<ResponseWrapper<ArrayList<ServiceEnt>>>() {
+            @Override
+            public void onResponse(Call<ResponseWrapper<ArrayList<ServiceEnt>>> call, Response<ResponseWrapper<ArrayList<ServiceEnt>>> response) {
+                if (response.body().getResponse().equals("2000")) {
+                    jobcollection.clear();
+                    jobcollection.addAll(response.body().getResult());
+                    setJobtypeSpinner();
+
+                } else {
+                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWrapper<ArrayList<ServiceEnt>>> call, Throwable t) {
+                Log.e("TermAndCondition", t.toString());
+                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+            }
+        });
+
+
+    }
+
+    private void setJobtypeSpinner() {
+        final ArrayList<String> jobtypearraylist = new ArrayList<String>();
+        for (ServiceEnt item : jobcollection
+                ) {
+            jobtypearraylist.add(item.getTitle());
+        }
+
 
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, jobtypearraylist);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnJobtype.setAdapter(categoryAdapter);
+        if (homeSelectedService != null && jobcollection.size() > 0) {
+            if (jobcollection.contains(homeSelectedService)) {
+                spnJobtype.setSelection(jobcollection.indexOf(homeSelectedService));
+                jobtype = jobcollection.get(jobcollection.indexOf(homeSelectedService));
+                initJobDescriptionSpinner(jobtype);
+            } else {
+                spnJobtype.setSelection(0);
+                jobtype = jobcollection.get(0);
+                initJobDescriptionSpinner(jobtype);
+            }
+        }
+
         spnJobtype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                jobtype = jobtypearraylist.get(position);
+                jobtype = jobcollection.get(position);
+                initJobDescriptionSpinner(jobtype);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                initJobDescriptionSpinner(jobtype);
             }
         });
     }
 
-    private void initJobDescriptionSpinner() {
+    private void initJobDescriptionSpinner(ServiceEnt selectedService) {
+        if (selectedService != null) {
+            jobChildcollection = new ArrayList<>();
+            Call<ResponseWrapper<ArrayList<ServiceEnt>>> call = webService.getchildServices(String.valueOf(selectedService.getId()));
+            call.enqueue(new Callback<ResponseWrapper<ArrayList<ServiceEnt>>>() {
+                @Override
+                public void onResponse(Call<ResponseWrapper<ArrayList<ServiceEnt>>> call, Response<ResponseWrapper<ArrayList<ServiceEnt>>> response) {
+                    if (response.body().getResponse().equals("2000")) {
+                        jobChildcollection.clear();
+                        jobChildcollection.addAll(response.body().getResult());
+                        setJobDescriptionSpinner();
+                    } else {
+                        UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseWrapper<ArrayList<ServiceEnt>>> call, Throwable t) {
+                    Log.e("TermAndCondition", t.toString());
+                    UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                }
+            });
+
+        }
+    }
+
+    private void setJobDescriptionSpinner() {
         final ArrayList<String> jobdescriptionarraylist = new ArrayList<String>();
-        jobdescriptionarraylist.add("Total Electricity Failure/Break down");
-        jobdescriptionarraylist.add("No Electricity in some Room");
-        jobdescriptionarraylist.add("Repair Ac");
-        jobdescriptionarraylist.add("Ac Not Working");
-        jobdescriptionarraylist.add("Move out to different city");
-        jobdescriptionarraylist.add("Fix Furniture");
-        jobdescriptionarraylist.add("Clean Lawn");
+        for (ServiceEnt item : jobChildcollection
+                ) {
+            jobdescriptionarraylist.add(item.getTitle());
+        }
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, jobdescriptionarraylist);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnJobdescription.setAdapter(categoryAdapter);
         spnJobdescription.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //jobtype = jobdescriptionarraylist.get(position);
-                //selectedJobs.add(jobdescriptionarraylist.get(position));
-                // refreshListview();
+           //     selectedJobs.add(jobChildcollection.get(position));
+               // bindSelectedJobview(selectedJobs);
             }
 
             @Override
@@ -431,10 +510,11 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         outState.putString(preferredtime, btnPreferredtime.getText().toString());
 
     }
+
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        if (savedInstanceState !=null){
+        if (savedInstanceState != null) {
             btnPreferredtime.setText(savedInstanceState.getString(preferredtime));
             btnPreferreddate.setText(savedInstanceState.getString(preferreddate));
         }

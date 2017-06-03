@@ -28,11 +28,14 @@
         android:layout_marginTop="@dimen/x20"
         android:layout_weight="0.6"
         android:orientation="vertical">
-    <android.support.v7.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/filter_subtypes"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+
+        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/filter_subtypes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="3"
+            android:horizontalSpacing="@dimen/x5"
+            android:verticalSpacing="@dimen/x5"/>
 </LinearLayout>
 </LinearLayout>
     <!--

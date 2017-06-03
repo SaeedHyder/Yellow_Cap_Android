@@ -63,4 +63,6 @@ public interface WebService {
     Call<ResponseWrapper<ArrayList<NotificationEnt>>> getNotification(@Query("user_id")String userID);
     @GET("allservice")
     Call<ResponseWrapper<ArrayList<ServiceEnt>>> getHomeServices();
+    @GET("servicechild")
+    Call<ResponseWrapper<ArrayList<ServiceEnt>>>getchildServices(@Query("parent_id")String parent_id);
 }

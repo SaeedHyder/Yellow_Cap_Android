@@ -12,8 +12,10 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.app.yellowcap.R;
+import com.app.yellowcap.entities.ServiceEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.interfaces.onDeleteImage;
+import com.app.yellowcap.retrofit.entities.ServiceDate;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.viewbinder.SelectedJobBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
@@ -70,8 +72,8 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
     LinearLayout llTotalPrice;
     Unbinder unbinder;
     ArrayList<String> images = new ArrayList<>();
-    private ArrayList<String> selectedJobs = new ArrayList<>();
-    private ArrayListAdapter<String> selectedJobsadapter;
+    private ArrayList<ServiceEnt> selectedJobs = new ArrayList<>();
+    private ArrayListAdapter<ServiceEnt> selectedJobsadapter;
     private String jobtype;
 
     public static EditJobTechFragment newInstance() {
@@ -93,11 +95,11 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
     }
 
     private void initListViewAdapter() {
-        selectedJobs.add("Total Electricity Failure/Break down");
+        /*selectedJobs.add("Total Electricity Failure/Break down");
         selectedJobs.add("No Electricity in some Room");
         selectedJobs.add("Repair Ac");
-        selectedJobs.add("Ac Not Working");
-        selectedJobsadapter = new ArrayListAdapter<String>(getDockActivity(), selectedJobs, new SelectedJobBinder(this));
+        selectedJobs.add("Ac Not Working");*/
+        selectedJobsadapter = new ArrayListAdapter<ServiceEnt>(getDockActivity(), selectedJobs, new SelectedJobBinder(this));
 
     }
 
