@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.entities.NewJobEnt;
+import com.app.yellowcap.entities.NotificationEnt;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -14,7 +15,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * Created by saeedhyder on 5/24/2017.
  */
 
-public class TechNotificationitemBinder extends ViewBinder<NewJobEnt>{
+public class TechNotificationitemBinder extends ViewBinder<NotificationEnt>{
 
     private ImageLoader imageLoader;
 
@@ -31,10 +32,19 @@ public class TechNotificationitemBinder extends ViewBinder<NewJobEnt>{
     }
 
     @Override
-    public void bindView(NewJobEnt entity, int position, int grpPosition, View view, Activity activity) {
+    public void bindView(final NotificationEnt entity, int position, int grpPosition, View view, Activity activity) {
 
         TechNotificationitemBinder.ViewHolder viewHolder = (TechNotificationitemBinder.ViewHolder) view.getTag();
-
+        viewHolder.txt_jobNotification.setText(entity.getMessage());
+        viewHolder.iv_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (entity.getActionType()){
+                    case "job":
+                        break;
+                }
+            }
+        });
     }
 
     public static class ViewHolder extends BaseViewHolder {

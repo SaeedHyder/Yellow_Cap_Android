@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.app.yellowcap.R;
+import com.app.yellowcap.entities.ServiceEnt;
 import com.app.yellowcap.interfaces.onDeleteImage;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
@@ -16,7 +17,7 @@ import butterknife.ButterKnife;
  * Created on 5/23/2017.
  */
 
-public class SelectedJobBinder extends ViewBinder<String> {
+public class SelectedJobBinder extends ViewBinder<ServiceEnt> {
     private onDeleteImage onDeleteImage;
 
     public SelectedJobBinder(onDeleteImage onDeleteImage) {
@@ -31,9 +32,9 @@ public class SelectedJobBinder extends ViewBinder<String> {
     }
 
     @Override
-    public void bindView(String entity, final int position, int grpPosition, View view, Activity activity) {
+    public void bindView(ServiceEnt entity, final int position, int grpPosition, View view, Activity activity) {
         SelectedJobsViewHolder viewHolder = (SelectedJobsViewHolder)view.getTag();
-        viewHolder.txtJobselectedtext.setText(entity);
+        viewHolder.txtJobselectedtext.setText(entity.getTitle());
         viewHolder.deleteText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

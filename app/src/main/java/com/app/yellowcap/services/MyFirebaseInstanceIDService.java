@@ -9,6 +9,7 @@ import com.app.yellowcap.helpers.BasePreferenceHelper;
 import com.app.yellowcap.helpers.TokenUpdater;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.google.firebase.messaging.RemoteMessage;
 
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
@@ -38,6 +39,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         Log.e(TAG, "sendRegistrationToServer: " + token);
         TokenUpdater.getInstance().UpdateToken(getApplicationContext(),preferenceHelper.getUserId(),"android",token);
     }
+
 
     private void storeRegIdInPref(String token) {
 

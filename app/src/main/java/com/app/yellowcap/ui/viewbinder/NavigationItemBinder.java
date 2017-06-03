@@ -51,7 +51,7 @@ public class NavigationItemBinder extends ViewBinder<NavigationEnt> {
             if (entity.getItem_text().equals(activity.getString(R.string.notifications))) {
 
                 badgeHelper.initBadge(activity);
-                badgeHelper.addtoBadge(3);
+                badgeHelper.addtoBadge(entity.getNotificationCount());
                 badgeHelper.showBadge();
             }
         }

@@ -151,7 +151,13 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
 
         drawerLayout.closeDrawers();
     }
-
+    public void refreshSideMenu(){
+        sideMenuFragment = SideMenuFragment.newInstance();
+        FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction();
+        transaction.remove(sideMenuFragment).commit();
+        settingSideMenu();
+    }
     private int getSideMenuFrameLayoutId() {
         return R.id.sideMneuFragmentContainer;
 
@@ -268,7 +274,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         UIHelper.showLongToastInCenter(this, "Coming Soon");
     }
     public void chooseImage() {
-        askPermission();
+        //askPermission();
         chooserType = ChooserType.REQUEST_PICK_PICTURE;
         imageChooserManager = new ImageChooserManager(this,
                 ChooserType.REQUEST_PICK_PICTURE, true);
@@ -289,7 +295,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
 
 
     public void takePicture() {
-        askPermission();
+        //askPermission();
         chooserType = ChooserType.REQUEST_CAPTURE_PICTURE;
         imageChooserManager = new ImageChooserManager(this,
                 ChooserType.REQUEST_CAPTURE_PICTURE, true);

@@ -2,44 +2,73 @@ package com.app.yellowcap.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.AdapterView;
+import android.widget.GridView;
 
 import com.app.yellowcap.R;
+import com.app.yellowcap.entities.ResponseWrapper;
+import com.app.yellowcap.entities.ServiceEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.helpers.UIHelper;
+import com.app.yellowcap.ui.adapters.ArrayListAdapter;
+import com.app.yellowcap.ui.adapters.HomeServiceAdapter;
+import com.app.yellowcap.ui.viewbinder.HomeServiceBinder;
 import com.app.yellowcap.ui.views.TitleBar;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created on 5/23/2017.
  */
 
-public class UserHomeFragment extends BaseFragment implements View.OnClickListener{
-    @BindView(R.id.ll_ac)
-    LinearLayout llAc;
-    @BindView(R.id.ll_electrical)
-    LinearLayout llElectrical;
-    @BindView(R.id.ll_plumbing)
-    LinearLayout llPlumbing;
-    @BindView(R.id.ll_furniture)
-    LinearLayout llFurniture;
-    @BindView(R.id.ll_pest)
-    LinearLayout llPest;
-    @BindView(R.id.ll_cleaning)
-    LinearLayout llCleaning;
-    @BindView(R.id.ll_move)
-    LinearLayout llMove;
-    @BindView(R.id.ll_custom)
-    LinearLayout llCustom;
+public class UserHomeFragment extends BaseFragment implements View.OnClickListener {
+    /* @BindView(R.id.ll_ac)
+     LinearLayout llAc;
+     @BindView(R.id.ll_electrical)
+     LinearLayout llElectrical;
+     @BindView(R.id.ll_plumbing)
+     LinearLayout llPlumbing;
+     @BindView(R.id.ll_furniture)
+     LinearLayout llFurniture;
+     @BindView(R.id.ll_pest)
+     LinearLayout llPest;
+     @BindView(R.id.ll_cleaning)
+     LinearLayout llCleaning;
+     @BindView(R.id.ll_move)
+     LinearLayout llMove;
+     @BindView(R.id.ll_custom)
+     LinearLayout llCustom;*/
     Unbinder unbinder;
+    @BindView(R.id.filter_subtypes)
+    GridView filterSubtypes;
+    private ArrayList<ServiceEnt> userservices;
+    private HomeServiceAdapter madapter;
+    private ArrayListAdapter<ServiceEnt>mServiceAdapter;
+    private int TOTAL_CELLS_PER_ROW = 3;
 
     public static UserHomeFragment newInstance() {
         return new UserHomeFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mServiceAdapter = new ArrayListAdapter<ServiceEnt>(getDockActivity(),new HomeServiceBinder(getDockActivity()));
+
     }
 
     @Override
@@ -50,17 +79,64 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        loadingStarted();
         setListener();
+        gethomeData();
+
     }
-    private void setListener(){
-        llAc.setOnClickListener(this);
+
+    private void gethomeData() {
+        Call<ResponseWrapper<ArrayList<ServiceEnt>>> call = webService.getHomeServices();
+        call.enqueue(new Callback<ResponseWrapper<ArrayList<ServiceEnt>>>() {
+            @Override
+            public void onResponse(Call<ResponseWrapper<ArrayList<ServiceEnt>>> call, Response<ResponseWrapper<ArrayList<ServiceEnt>>> response) {
+                loadingFinished();
+                if (response.body().getResponse().equals("2000")) {
+                    bindData(response.body().getResult());
+                } else {
+                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWrapper<ArrayList<ServiceEnt>>> call, Throwable t) {
+                loadingFinished();
+                Log.e("TermAndCondition", t.toString());
+                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+            }
+        });
+    }
+
+    private void bindData(ArrayList<ServiceEnt> result) {
+        userservices = new ArrayList<>();
+        userservices.addAll(result);
+        bindview(userservices);
+    }
+
+    private void bindview(ArrayList<ServiceEnt> userservices) {
+        mServiceAdapter.clearList();
+        filterSubtypes.setAdapter(mServiceAdapter);
+        mServiceAdapter.addAll(userservices);
+        mServiceAdapter.notifyDataSetChanged();
+    }
+
+
+
+    private void setListener() {
+        filterSubtypes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                addRequestServiceFragment(userservices.get(position).getTitle());
+            }
+        });
+      /*  llAc.setOnClickListener(this);
         llCleaning.setOnClickListener(this);
         llCustom.setOnClickListener(this);
         llElectrical.setOnClickListener(this);
         llFurniture.setOnClickListener(this);
         llMove.setOnClickListener(this);
         llPest.setOnClickListener(this);
-        llPlumbing.setOnClickListener(this);
+        llPlumbing.setOnClickListener(this);*/
 
 
     }
@@ -96,13 +172,14 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
         unbinder.unbind();
     }
 
-    private void addRequestServiceFragment(String type){
-        getDockActivity().replaceDockableFragment(RequestServiceFragment.newInstance(),"RequestServiceFragment");
+    private void addRequestServiceFragment(String type) {
+        getDockActivity().replaceDockableFragment(RequestServiceFragment.newInstance(), "RequestServiceFragment");
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_ac:
+          /*  case R.id.ll_ac:
                 addRequestServiceFragment("ac");
                 break;
             case R.id.ll_electrical:
@@ -125,7 +202,41 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
                 break;
             case R.id.ll_custom:
                 addRequestServiceFragment("custom");
-                break;
+                break;*/
         }
     }
 }
+/* private void bindviewRecyler(final ArrayList<ServiceEnt> userservices) {
+        final GridLayoutManager mng_layout = new GridLayoutManager(getDockActivity(), TOTAL_CELLS_PER_ROW*//*In your case 4*//*);
+        madapter = new HomeServiceAdapter(getDockActivity(), userservices);
+        mng_layout.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                int remainder = userservices.size() % TOTAL_CELLS_PER_ROW;
+                int secondlastposition = -1;
+                int lastposition = userservices.size() - remainder;
+                if (remainder !=0) {
+                    if (remainder > 1) {
+                        secondlastposition = userservices.size() - remainder - 1;
+                    }
+                    if (lastposition == position) {
+                        return remainder;
+                    } else if (secondlastposition == position) {
+                        return remainder - 1;
+                    } else {
+                        return 1;
+                    }
+                }else {
+                    return 1;
+                }
+
+            }
+        });
+        madapter.notifyDataSetChanged();
+        filterSubtypes.setLayoutManager(mng_layout);
+        filterSubtypes.setItemAnimator(new DefaultItemAnimator());
+        filterSubtypes.setAdapter(madapter);
+
+        madapter.notifyDataSetChanged();
+
+    }*/
