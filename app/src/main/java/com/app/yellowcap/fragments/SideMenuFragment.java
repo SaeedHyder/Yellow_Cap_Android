@@ -18,7 +18,9 @@ import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.viewbinder.NavigationItemBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
+import com.bumptech.glide.Glide;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -70,30 +72,40 @@ public class SideMenuFragment extends BaseFragment {
         getUserProfile();
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
     private void getUserProfile() {
-        Call<ResponseWrapper<RegistrationResultEnt>> call= webService.getUserProfile(prefHelper.getUserId());
-        call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
-            @Override
-            public void onResponse(Call<ResponseWrapper<RegistrationResultEnt>> call, Response<ResponseWrapper<RegistrationResultEnt>> response) {
-                if (response.body().getResponse().equals("2000")) {
-                    setProfileData(response.body().getResult());
-                } else {
+        if (prefHelper.isLogin()&&prefHelper.getUserType().equals("user")) {
+            Call<ResponseWrapper<RegistrationResultEnt>> call = webService.getUserProfile(prefHelper.getUserId());
+            call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
+                @Override
+                public void onResponse(Call<ResponseWrapper<RegistrationResultEnt>> call, Response<ResponseWrapper<RegistrationResultEnt>> response) {
+                    if (response.body().getResponse().equals("2000")) {
+                        setProfileData(response.body().getResult());
+                    } else {
 
-                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                        UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
-                Log.e("EntryCodeFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
-            }
-        });
+                @Override
+                public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
+                    Log.e("EntryCodeFragment", t.toString());
+                    UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                }
+            });
+        }
     }
     private void setProfileData(RegistrationResultEnt result) {
         prefHelper.putRegistrationResult(result);
-        ImageLoader.getInstance().displayImage(
-                result.getProfilePicture(), CircularImageSharePop);
+        Picasso.with(getDockActivity()).load(result.getProfileImage()).
+               placeholder(R.drawable.profileimage).into(CircularImageSharePop);
+
         txtUserName.setText(result.getFullName());
         txtUseremail.setText(result.getEmail());
 

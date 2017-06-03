@@ -1,6 +1,7 @@
 package com.app.yellowcap.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +10,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.app.yellowcap.R;
+import com.app.yellowcap.entities.RegistrationResultEnt;
+import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.helpers.DialogHelper;
+import com.app.yellowcap.helpers.TokenUpdater;
+import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.AnyEditTextView;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
@@ -18,6 +24,9 @@ import com.app.yellowcap.ui.views.TitleBar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class LoginFragment extends BaseFragment implements OnClickListener {
@@ -72,9 +81,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
         switch (v.getId()) {
             case R.id.btn_login:
                 if (isvalidate()) {
-                    prefHelper.setLoginStatus(true);
-                    getDockActivity().popBackStackTillEntry(0);
-                    getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragmnet");
+                    loginTechnician();
                 }
                 break;
 
@@ -92,7 +99,37 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 
         }
     }
+    private void loginTechnician(){
+        Call<ResponseWrapper<RegistrationResultEnt>> call = webService.loginTechnician(edtEmail.getText().toString(),
+                edtPassword.getText().toString());
+        call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
+            @Override
+            public void onResponse(Call<ResponseWrapper<RegistrationResultEnt>> call, Response<ResponseWrapper<RegistrationResultEnt>> response) {
+                if (response.body().getResponse().equals("2000")) {
+                    prefHelper.setUserType("technician");
+                    prefHelper.setUsrId(String.valueOf(response.body().getResult().getId()));
+                    prefHelper.setUsrName(response.body().getResult().getFullName());
+                    prefHelper.setPhonenumber(response.body().getResult().getPhoneNo());
+                    TokenUpdater.getInstance().UpdateToken(getDockActivity(),
+                            prefHelper.getUserId(),
+                            AppConstants.Device_Type,
+                            prefHelper.getFirebase_TOKEN());
+                    prefHelper.setLoginStatus(true);
+                    getDockActivity().popBackStackTillEntry(0);
+                    getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragmnet");
+                }
+                else{
+                    UIHelper.showShortToastInCenter(getDockActivity(),response.body().getMessage());
+                }
+            }
 
+            @Override
+            public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
+                Log.e("UserSignupFragment", t.toString());
+                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+            }
+        });
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/ll_ac"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x110"
+      android:layout_margin="@dimen/x5"
+        android:padding="@dimen/x15"
+        android:layout_weight="1"
+        android:background="@color/yellow"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/x50"
+            android:layout_height="@dimen/x50"
+            android:layout_gravity="center"
+            android:src="@drawable/ac" />
+
+        <com.app.yellowcap.ui.views.AnyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:text="@string/ac"
+            android:paddingTop="@dimen/x5"
+            android:textColor="@color/black"
+            android:textSize="@dimen/x14"
+            app:typeface="Roboto-Regular.ttf" />
+
+    </LinearLayout>
+</LinearLayout>

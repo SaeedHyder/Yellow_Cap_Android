@@ -1,6 +1,7 @@
 package com.app.yellowcap.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +9,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.app.yellowcap.R;
-import com.app.yellowcap.entities.NewJobEnt;
+import com.app.yellowcap.entities.NotificationEnt;
+import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.viewbinder.UserNotificationitemBinder;
+import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
 
 import java.util.ArrayList;
@@ -19,6 +23,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by saeedhyder on 5/24/2017.
@@ -27,18 +34,21 @@ import butterknife.Unbinder;
 public class UserNotificationsFragment extends BaseFragment {
     @BindView(R.id.lv_UserNotification)
     ListView lvUserNotification;
+    @BindView(R.id.txt_no_data)
+    AnyTextView txtNoData;
     Unbinder unbinder;
 
-    private ArrayListAdapter<NewJobEnt> adapter;
-    private ArrayList<NewJobEnt> userCollection ;
+    private ArrayListAdapter<NotificationEnt> adapter;
+    private ArrayList<NotificationEnt> userCollection;
 
     public static UserNotificationsFragment newInstance() {
         return new UserNotificationsFragment();
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new ArrayListAdapter<NewJobEnt>(getDockActivity(), new UserNotificationitemBinder());
+        adapter = new ArrayListAdapter<NotificationEnt>(getDockActivity(), new UserNotificationitemBinder());
     }
 
     @Override
@@ -57,10 +67,45 @@ public class UserNotificationsFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        loadingStarted();
+        getNotification();
+        NotificationItemListner();
 
-        setNotificationData();
-          NotificationItemListner();
+    }
 
+    private void getNotification() {
+        Call<ResponseWrapper<ArrayList<NotificationEnt>>> call = webService.getNotification(prefHelper.getUserId());
+        call.enqueue(new Callback<ResponseWrapper<ArrayList<NotificationEnt>>>() {
+            @Override
+            public void onResponse(Call<ResponseWrapper<ArrayList<NotificationEnt>>> call, Response<ResponseWrapper<ArrayList<NotificationEnt>>> response) {
+                loadingFinished();
+                if (response.body().getResponse().equals("2000")) {
+                    setNotificationData(response.body().getResult());
+                } else {
+                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWrapper<ArrayList<NotificationEnt>>> call, Throwable t) {
+                loadingFinished();
+                Log.e("UserSignupFragment", t.toString());
+                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+            }
+        });
+    }
+
+    private void setNotificationData(ArrayList<NotificationEnt> result) {
+        userCollection = new ArrayList<>();
+        if (result.size() <= 0) {
+            txtNoData.setVisibility(View.VISIBLE);
+            lvUserNotification.setVisibility(View.GONE);
+        } else {
+            txtNoData.setVisibility(View.GONE);
+            lvUserNotification.setVisibility(View.VISIBLE);
+        }
+        userCollection.addAll(result);
+        bindData(userCollection);
     }
 
     private void NotificationItemListner() {
@@ -75,16 +120,8 @@ public class UserNotificationsFragment extends BaseFragment {
 
     }
 
-    private void setNotificationData() {
-        userCollection = new ArrayList<>();
-        userCollection.add(new NewJobEnt("drawable://" + R.drawable.itemlogo, "Failure In Ac Unit", "drawable://" + R.drawable.next));
-        userCollection.add(new NewJobEnt("drawable://" + R.drawable.itemlogo, "Failure In Ac Unit", "drawable://" + R.drawable.next));
-        userCollection.add(new NewJobEnt("drawable://" + R.drawable.itemlogo, "Failure In Ac Unit", "drawable://" + R.drawable.next));
 
-        bindData(userCollection);
-    }
-
-    private void bindData(ArrayList<NewJobEnt> userCollection) {
+    private void bindData(ArrayList<NotificationEnt> userCollection) {
 
         adapter.clearList();
         lvUserNotification.setAdapter(adapter);

@@ -2,10 +2,10 @@ package com.app.yellowcap.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
@@ -19,24 +19,26 @@ import butterknife.Unbinder;
  * Created on 5/23/2017.
  */
 
-public class UserHomeFragment extends BaseFragment implements View.OnClickListener{
-    @BindView(R.id.ll_ac)
-    LinearLayout llAc;
-    @BindView(R.id.ll_electrical)
-    LinearLayout llElectrical;
-    @BindView(R.id.ll_plumbing)
-    LinearLayout llPlumbing;
-    @BindView(R.id.ll_furniture)
-    LinearLayout llFurniture;
-    @BindView(R.id.ll_pest)
-    LinearLayout llPest;
-    @BindView(R.id.ll_cleaning)
-    LinearLayout llCleaning;
-    @BindView(R.id.ll_move)
-    LinearLayout llMove;
-    @BindView(R.id.ll_custom)
-    LinearLayout llCustom;
+public class UserHomeFragment extends BaseFragment implements View.OnClickListener {
+    /* @BindView(R.id.ll_ac)
+     LinearLayout llAc;
+     @BindView(R.id.ll_electrical)
+     LinearLayout llElectrical;
+     @BindView(R.id.ll_plumbing)
+     LinearLayout llPlumbing;
+     @BindView(R.id.ll_furniture)
+     LinearLayout llFurniture;
+     @BindView(R.id.ll_pest)
+     LinearLayout llPest;
+     @BindView(R.id.ll_cleaning)
+     LinearLayout llCleaning;
+     @BindView(R.id.ll_move)
+     LinearLayout llMove;
+     @BindView(R.id.ll_custom)
+     LinearLayout llCustom;*/
     Unbinder unbinder;
+    @BindView(R.id.filter_subtypes)
+    RecyclerView filterSubtypes;
 
     public static UserHomeFragment newInstance() {
         return new UserHomeFragment();
@@ -51,16 +53,18 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setListener();
+
     }
-    private void setListener(){
-        llAc.setOnClickListener(this);
+
+    private void setListener() {
+      /*  llAc.setOnClickListener(this);
         llCleaning.setOnClickListener(this);
         llCustom.setOnClickListener(this);
         llElectrical.setOnClickListener(this);
         llFurniture.setOnClickListener(this);
         llMove.setOnClickListener(this);
         llPest.setOnClickListener(this);
-        llPlumbing.setOnClickListener(this);
+        llPlumbing.setOnClickListener(this);*/
 
 
     }
@@ -96,9 +100,10 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
         unbinder.unbind();
     }
 
-    private void addRequestServiceFragment(String type){
-        getDockActivity().replaceDockableFragment(RequestServiceFragment.newInstance(),"RequestServiceFragment");
+    private void addRequestServiceFragment(String type) {
+        getDockActivity().replaceDockableFragment(RequestServiceFragment.newInstance(), "RequestServiceFragment");
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
