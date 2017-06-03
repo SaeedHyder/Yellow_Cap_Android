@@ -294,6 +294,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                         jobChildcollection.clear();
                         jobChildcollection.addAll(response.body().getResult());
                         setJobDescriptionSpinner();
+                        
                     } else {
                         UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
                     }
