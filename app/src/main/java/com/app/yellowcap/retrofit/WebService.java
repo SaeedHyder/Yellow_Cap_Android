@@ -4,6 +4,7 @@ package com.app.yellowcap.retrofit;
 import com.app.yellowcap.entities.NotificationEnt;
 import com.app.yellowcap.entities.RegistrationResultEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
+import com.app.yellowcap.entities.ServiceEnt;
 import com.app.yellowcap.entities.StaticPageEnt;
 import com.app.yellowcap.entities.UserEnt;
 
@@ -60,4 +61,6 @@ public interface WebService {
 
     @GET("notification/getnotifications")
     Call<ResponseWrapper<ArrayList<NotificationEnt>>> getNotification(@Query("user_id")String userID);
+    @GET("allservice")
+    Call<ResponseWrapper<ArrayList<ServiceEnt>>> getHomeServices();
 }
