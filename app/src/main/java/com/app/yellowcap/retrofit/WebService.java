@@ -3,10 +3,12 @@ package com.app.yellowcap.retrofit;
 
 import com.app.yellowcap.entities.NotificationEnt;
 import com.app.yellowcap.entities.RegistrationResultEnt;
+import com.app.yellowcap.entities.RequestEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.ServiceEnt;
 import com.app.yellowcap.entities.StaticPageEnt;
 import com.app.yellowcap.entities.UserEnt;
+import com.app.yellowcap.entities.UserInProgressEnt;
 
 import java.util.ArrayList;
 
@@ -24,7 +26,7 @@ import retrofit2.http.Query;
 public interface WebService {
     @FormUrlEncoded
     @POST("user/register")
-    Call<ResponseWrapper<UserEnt>> registerUser(@Field("full_name") String userName,
+    Call<ResponseWrapper<RegistrationResultEnt>> registerUser(@Field("full_name") String userName,
                                                 @Field("phone_no") String UserPhone);
 
     @FormUrlEncoded
@@ -60,9 +62,51 @@ public interface WebService {
                                                                  @Field("password") String password);
 
     @GET("notification/getnotifications")
-    Call<ResponseWrapper<ArrayList<NotificationEnt>>> getNotification(@Query("user_id")String userID);
+    Call<ResponseWrapper<ArrayList<NotificationEnt>>> getNotification(@Query("user_id") String userID);
+
     @GET("allservice")
     Call<ResponseWrapper<ArrayList<ServiceEnt>>> getHomeServices();
+
     @GET("servicechild")
-    Call<ResponseWrapper<ArrayList<ServiceEnt>>>getchildServices(@Query("parent_id")String parent_id);
+    Call<ResponseWrapper<ArrayList<ServiceEnt>>> getchildServices(@Query("parent_id") String parent_id);
+
+    @Multipart
+    @POST("request/create")
+    Call<ResponseWrapper<RequestEnt>> createRequest(@Part("user_id") RequestBody userID,
+                                                    @Part("service_id") RequestBody service_id,
+                                                    @Part("services_ids") RequestBody services_ids,
+                                                    @Part("discription") RequestBody discription,
+                                                    @Part("address") RequestBody address,
+                                                    @Part("full_address") RequestBody full_address,
+                                                    @Part("date") RequestBody date,
+                                                    @Part("time") RequestBody time,
+                                                    @Part("payment_type") RequestBody payment_type,
+                                                    @Part("status") RequestBody status,
+                                                    @Part ArrayList<MultipartBody.Part> images
+
+    );
+    @GET("request/userinprogress")
+    Call<ResponseWrapper<ArrayList<UserInProgressEnt>>>getUserInprogress(@Query("user_id")String userID);
+    @Multipart
+    @POST("request/editbyuser")
+    Call<ResponseWrapper<RequestEnt>> editUserRequest(@Part("user_id") RequestBody userID,
+                                                      @Part("request_id") RequestBody request_id,
+                                                    @Part("service_id") RequestBody service_id,
+                                                    @Part("services_ids") RequestBody services_ids,
+                                                    @Part("discription") RequestBody discription,
+                                                    @Part("address") RequestBody address,
+                                                    @Part("full_address") RequestBody full_address,
+                                                    @Part("date") RequestBody date,
+                                                    @Part("time") RequestBody time,
+                                                    @Part("payment_type") RequestBody payment_type,
+                                                    @Part("status") RequestBody status,
+                                                    @Part ArrayList<MultipartBody.Part> images
+
+    );
+    @FormUrlEncoded
+    @POST("request/status")
+    Call<ResponseWrapper<RequestEnt>> changeStatus(@Field("user_id")String userID,
+                                                   @Field("request_id")Integer RequestID,
+                                                   @Field("message")String message,
+                                                   @Field("status")Integer Status);
 }

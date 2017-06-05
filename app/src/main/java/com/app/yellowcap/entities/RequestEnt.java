@@ -1,6 +1,5 @@
 package com.app.yellowcap.entities;
 
-import com.app.yellowcap.fragments.RequestServiceFragment;
 import com.app.yellowcap.helpers.DateHelper;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -8,10 +7,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created on 5/24/2017.
+ * Created on 6/5/2017.
  */
 
-public class UserInProgressEnt {
+public class RequestEnt {
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -51,6 +50,9 @@ public class UserInProgressEnt {
     @SerializedName("user_id")
     @Expose
     private Integer userId;
+    @SerializedName("technician_id")
+    @Expose
+    private Integer technicianId;
     @SerializedName("message")
     @Expose
     private String message;
@@ -60,18 +62,6 @@ public class UserInProgressEnt {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
-    @SerializedName("assign_technician")
-    @Expose
-    private List<RegistrationResultEnt> assignTechnician = null;
-    @SerializedName("service_detail")
-    @Expose
-    private ServiceEnt serviceDetail;
-    @SerializedName("servics_list")
-    @Expose
-    private List<ServiceEnt> servicsList = null;
-    @SerializedName("image_detail")
-    @Expose
-    private List<ImageDetailEnt> imageDetail = null;
 
     public Integer getId() {
         return id;
@@ -118,7 +108,7 @@ public class UserInProgressEnt {
     }
 
     public void setDate(String date) {
-        this.date = DateHelper.getLocalTimeDate(date);
+        this.date = date;
     }
 
     public String getTime() {
@@ -126,7 +116,7 @@ public class UserInProgressEnt {
     }
 
     public void setTime(String time) {
-        this.time = DateHelper.getLocalTimeDate(time);
+        this.time = time;
     }
 
     public String getPaymentType() {
@@ -177,6 +167,14 @@ public class UserInProgressEnt {
         this.userId = userId;
     }
 
+    public Integer getTechnicianId() {
+        return technicianId;
+    }
+
+    public void setTechnicianId(Integer technicianId) {
+        this.technicianId = technicianId;
+    }
+
     public String getMessage() {
         return message;
     }
@@ -190,7 +188,7 @@ public class UserInProgressEnt {
     }
 
     public void setCreatedAt(String createdAt) {
-        this.createdAt = DateHelper.getLocalTimeDate(createdAt);
+        this.createdAt = DateHelper.getLocalTimeDate (createdAt);
     }
 
     public String getUpdatedAt() {
@@ -198,15 +196,7 @@ public class UserInProgressEnt {
     }
 
     public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = DateHelper.getLocalTimeDate(updatedAt);
-    }
-
-    public List<RegistrationResultEnt> getAssignTechnician() {
-        return assignTechnician;
-    }
-
-    public void setAssignTechnician(List<RegistrationResultEnt> assignTechnician) {
-        this.assignTechnician = assignTechnician;
+        this.updatedAt = DateHelper.getLocalTimeDate (updatedAt);
     }
 
     public ServiceEnt getServiceDetail() {
@@ -217,14 +207,6 @@ public class UserInProgressEnt {
         this.serviceDetail = serviceDetail;
     }
 
-    public List<ServiceEnt> getServicsList() {
-        return servicsList;
-    }
-
-    public void setServicsList(List<ServiceEnt> servicsList) {
-        this.servicsList = servicsList;
-    }
-
     public List<ImageDetailEnt> getImageDetail() {
         return imageDetail;
     }
@@ -233,5 +215,10 @@ public class UserInProgressEnt {
         this.imageDetail = imageDetail;
     }
 
-
+    @SerializedName("service_detail")
+    @Expose
+    private ServiceEnt serviceDetail;
+    @SerializedName("image_detail")
+    @Expose
+    private List<ImageDetailEnt> imageDetail = null;
 }

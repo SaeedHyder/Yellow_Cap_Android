@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.app.yellowcap.R;
+import com.app.yellowcap.entities.RegistrationResultEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.UserEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
@@ -87,13 +88,13 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
     }
 
     private void registerUser() {
-        Call<ResponseWrapper<UserEnt>> call = webService.registerUser(edtname.getText().toString()
+        Call<ResponseWrapper<RegistrationResultEnt>> call = webService.registerUser(edtname.getText().toString()
                 , edtnumber.getText().toString());
-        call.enqueue(new Callback<ResponseWrapper<UserEnt>>() {
+        call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
             @Override
-            public void onResponse(Call<ResponseWrapper<UserEnt>> call, Response<ResponseWrapper<UserEnt>> response) {
+            public void onResponse(Call<ResponseWrapper<RegistrationResultEnt>> call, Response<ResponseWrapper<RegistrationResultEnt>> response) {
                 if (response.body().getResponse().equals("2000")) {
-                    prefHelper.putUser(response.body().getResult());
+                    prefHelper.putRegistrationResult(response.body().getResult());
                     prefHelper.setUserType("user");
                     prefHelper.setUsrId(String.valueOf(response.body().getResult().getId()));
                     prefHelper.setUsrName(response.body().getResult().getFullName());
@@ -110,7 +111,7 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
             }
 
             @Override
-            public void onFailure(Call<ResponseWrapper<UserEnt>> call, Throwable t) {
+            public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
                 Log.e("UserSignupFragment", t.toString());
                 UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }

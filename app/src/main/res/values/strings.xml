@@ -187,7 +187,7 @@
     <string name="quotation_valid_till">Quotation Valid Till:</string>
     <string name="estimated_quote">Estimated Quote:</string>
     <string name="Electrical">Electrical</string>
-<string name="no_data">No Data to Show</string>
+    <string name="no_data">No Data to Show</string>
     <string name="address_2">Address 2</string>
     <string name="address_1">Address 1</string>
     <string name="edit_card">Edit Card</string>
@@ -248,6 +248,8 @@
     <string name="App_Name">Yellow Cap</string>
     <string name="valid_code_error">Enter Valid Code</string>
     <string name="profile_pic_error">Select Profile Picture</string>
+    <string name="imagelimit_error">You have Reached the limit of 5 Images</string>
+    <string name="job_posted_label">Job Posted : </string>
 
 
 </resources>

@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -101,7 +102,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void onFailure(Call<ResponseWrapper<ArrayList<ServiceEnt>>> call, Throwable t) {
                 loadingFinished();
-                Log.e("TermAndCondition", t.toString());
+                Log.e("UserHome", t.toString());
                 UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
@@ -118,6 +119,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
         filterSubtypes.setAdapter(mServiceAdapter);
         mServiceAdapter.addAll(userservices);
         mServiceAdapter.notifyDataSetChanged();
+
     }
 
 
@@ -126,7 +128,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
         filterSubtypes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                addRequestServiceFragment(userservices.get(position).getTitle());
+                addRequestServiceFragment(userservices.get(position));
             }
         });
       /*  llAc.setOnClickListener(this);
@@ -172,8 +174,8 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
         unbinder.unbind();
     }
 
-    private void addRequestServiceFragment(String type) {
-        getDockActivity().replaceDockableFragment(RequestServiceFragment.newInstance(), "RequestServiceFragment");
+    private void addRequestServiceFragment(ServiceEnt type) {
+        getDockActivity().replaceDockableFragment(RequestServiceFragment.newInstance(type,null), "RequestServiceFragment");
     }
 
     @Override
