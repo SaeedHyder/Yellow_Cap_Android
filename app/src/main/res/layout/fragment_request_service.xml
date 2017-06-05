@@ -19,6 +19,7 @@
             android:background="@color/job_posted_background">
 
             <com.app.yellowcap.ui.views.AnyTextView
+                android:id="@+id/txt_job_posted"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txt_jobposted"
@@ -123,6 +124,7 @@
 
             <com.app.yellowcap.ui.views.AnyEditTextView
                 style="@style/form_edttext_fields_style"
+                android:id="@+id/edt_addtional_job"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x100"
                 android:background="@drawable/square_border"

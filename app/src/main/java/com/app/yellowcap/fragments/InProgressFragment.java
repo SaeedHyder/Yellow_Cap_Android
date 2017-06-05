@@ -96,7 +96,7 @@ public class InProgressFragment extends BaseFragment implements CallUser{
     }
 
     @Override
-    public void CallOnUserNumber() {
+    public void CallOnUserNumber(String number) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:0123456789"));
         startActivity(intent);

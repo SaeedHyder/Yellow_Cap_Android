@@ -6,5 +6,5 @@ package com.app.yellowcap.interfaces;
 
 public interface CallUser {
 
-    void CallOnUserNumber();
+    void CallOnUserNumber(String number);
 }

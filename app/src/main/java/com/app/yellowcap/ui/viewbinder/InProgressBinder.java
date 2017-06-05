@@ -45,7 +45,7 @@ public class InProgressBinder extends ViewBinder<InProgressEnt> {
         viewHolder.btn_callUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callUser.CallOnUserNumber();
+                callUser.CallOnUserNumber("00000");
             }
         });
 
