@@ -8,7 +8,11 @@ import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.ServiceEnt;
 import com.app.yellowcap.entities.StaticPageEnt;
 import com.app.yellowcap.entities.UserEnt;
+
 import com.app.yellowcap.entities.UserInProgressEnt;
+
+import com.app.yellowcap.entities.countEnt;
+
 
 import java.util.ArrayList;
 
@@ -21,6 +25,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface WebService {
@@ -109,4 +114,10 @@ public interface WebService {
                                                    @Field("request_id")Integer RequestID,
                                                    @Field("message")String message,
                                                    @Field("status")Integer Status);
+
+
+    @GET("notification/count/{user_id}")
+    Call<ResponseWrapper<countEnt>> getNotificationCount(
+            @Path("user_id") String user_id);
+
 }

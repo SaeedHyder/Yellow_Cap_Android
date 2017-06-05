@@ -9,6 +9,7 @@ import com.app.yellowcap.R;
 import com.app.yellowcap.activities.MainActivity;
 import com.app.yellowcap.entities.ResponseWrapper;
 
+import com.app.yellowcap.entities.countEnt;
 import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.global.WebServiceConstants;
 import com.app.yellowcap.helpers.BasePreferenceHelper;
@@ -51,7 +52,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             try {
               /*  JSONObject json = new JSONObject(remoteMessage.getData().toString());
                 Log.e(TAG, "DATA: " + json);*/
-              //  handleDataMessage(remoteMessage);
+               handleDataMessage(remoteMessage);
             } catch (Exception e) {
                 Log.e(TAG, "Exception: " + e.getMessage());
             }
@@ -73,13 +74,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
-    /*private void handleDataMessage(final RemoteMessage messageBody) {
-
-
+    private void handleDataMessage(final RemoteMessage messageBody) {
 
 
             webservice = WebServiceFactory.getWebServiceInstanceWithCustomInterceptor(getApplicationContext(),
-                    WebServiceConstants.SERVICE_BASE_URL);
+                    WebServiceConstants.SERVICE_URL);
             preferenceHelper = new BasePreferenceHelper(getApplicationContext());
             Call<ResponseWrapper<countEnt>> callback = webservice.getNotificationCount(preferenceHelper.getUserId());
             callback.enqueue(new Callback<ResponseWrapper<countEnt>>() {
@@ -122,7 +121,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
     }
-*/
+
     private void SendNotification(int count, JSONObject json) {
 
     }
