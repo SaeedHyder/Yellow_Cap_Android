@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 import com.app.yellowcap.R;
 import com.app.yellowcap.activities.DockActivity;
 import com.app.yellowcap.entities.NavigationEnt;
+import com.app.yellowcap.fragments.SideMenuFragment;
+import com.app.yellowcap.interfaces.UpdateNotificationsCount;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.BadgeHelper;
@@ -20,12 +22,18 @@ import butterknife.ButterKnife;
  * Created on 5/24/2017.
  */
 
-public class NavigationItemBinder extends ViewBinder<NavigationEnt> {
+public class NavigationItemBinder extends ViewBinder<NavigationEnt> implements UpdateNotificationsCount{
     DockActivity activity;
     BadgeHelper badgeHelper;
-    public NavigationItemBinder(DockActivity activity) {
+    UpdateNotificationsCount count;
+    ImageView countView;
+
+
+    public NavigationItemBinder(DockActivity activity,  SideMenuFragment fragment) {
         super(R.layout.row_item_nav);
         this.activity = activity;
+
+        fragment.setInterface(this);
 
     }
 
@@ -49,16 +57,24 @@ public class NavigationItemBinder extends ViewBinder<NavigationEnt> {
             viewHolder.imgUnselected.setImageResource(entity.getUnselectedDrawable());
             badgeHelper.hideBadge();
             if (entity.getItem_text().equals(activity.getString(R.string.notifications))) {
-
                 badgeHelper.initBadge(activity);
                 badgeHelper.addtoBadge(entity.getNotificationCount());
                 badgeHelper.showBadge();
             }
         }
+       //count.updateCount(entity.getNotificationCount(),position);
+
+
 
     }
 
-   public static class NavViewHolder extends BaseViewHolder {
+    @Override
+    public void updateCount(int count) {
+        badgeHelper.addtoBadge(count);
+        badgeHelper.getImgNotificationCounter().invalidate();
+    }
+
+    public static class NavViewHolder extends BaseViewHolder {
         @BindView(R.id.img_selected)
         ImageView imgSelected;
         @BindView(R.id.img_unselected)

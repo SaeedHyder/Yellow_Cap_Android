@@ -21,12 +21,11 @@ import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.helpers.TokenUpdater;
 import com.app.yellowcap.helpers.UIHelper;
+import com.app.yellowcap.interfaces.UpdateNotificationsCount;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.viewbinder.NavigationItemBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
-import com.bumptech.glide.Glide;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -39,7 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SideMenuFragment extends BaseFragment {
+public class SideMenuFragment extends BaseFragment  {
 
     @BindView(R.id.CircularImageSharePop)
     CircleImageView CircularImageSharePop;
@@ -53,8 +52,10 @@ public class SideMenuFragment extends BaseFragment {
     protected BroadcastReceiver broadcastReceiver;
     public boolean isNotificationTap = false;
     int notificationCount;
+    UpdateNotificationsCount updateNotificationsCount;
     private ArrayList<NavigationEnt> navigationItemList = new ArrayList<>();
     private ArrayListAdapter<NavigationEnt> madapter;
+
     public static SideMenuFragment newInstance() {
         return new SideMenuFragment();
 
@@ -64,9 +65,8 @@ public class SideMenuFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        madapter = new ArrayListAdapter<NavigationEnt>(getDockActivity(),new NavigationItemBinder(getDockActivity()));
+        madapter = new ArrayListAdapter<NavigationEnt>(getDockActivity(), new NavigationItemBinder(getDockActivity(), this));
     }
-
 
 
     @Override
@@ -82,6 +82,10 @@ public class SideMenuFragment extends BaseFragment {
         getUserProfile();
         onNotificationReceived();
 
+    }
+
+    public void setInterface(UpdateNotificationsCount notificationsCount) {
+        updateNotificationsCount = notificationsCount;
     }
 
     @Override
@@ -118,7 +122,9 @@ public class SideMenuFragment extends BaseFragment {
                 } else if (intent.getAction().equals(AppConstants.PUSH_NOTIFICATION)) {
                     // new push notification is received
                     isNotificationTap = true;
-                    showCountOnNotificationReceived();
+                    notificationCount = prefHelper.getBadgeCount();
+                    updateNotificationsCount.updateCount(notificationCount);
+
                     System.out.println(prefHelper.getFirebase_TOKEN());
 
 
@@ -127,15 +133,9 @@ public class SideMenuFragment extends BaseFragment {
         };
     }
 
-    private void showCountOnNotificationReceived() {
-        notificationCount=prefHelper.getBadgeCount();
-       // titleBar.showBadge();
-      //  titleBar.addtoBadge();
-       // titleBar.getImgNotificationCounter().invalidate();
-    }
 
     private void getUserProfile() {
-        if (prefHelper.isLogin()&&prefHelper.getUserType().equals("user")) {
+        if (prefHelper.isLogin() && prefHelper.getUserType().equals("user")) {
             Call<ResponseWrapper<RegistrationResultEnt>> call = webService.getUserProfile(prefHelper.getUserId());
             call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
                 @Override
@@ -156,15 +156,17 @@ public class SideMenuFragment extends BaseFragment {
             });
         }
     }
+
     private void setProfileData(RegistrationResultEnt result) {
         prefHelper.putRegistrationResult(result);
         Picasso.with(getDockActivity()).load(result.getProfileImage()).
-               placeholder(R.drawable.profileimage).into(CircularImageSharePop);
+                placeholder(R.drawable.profileimage).into(CircularImageSharePop);
 
         txtUserName.setText(result.getFullName());
         txtUseremail.setText(result.getEmail());
 
     }
+
     private void setlistItemClickListener() {
         navListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -176,29 +178,22 @@ public class SideMenuFragment extends BaseFragment {
                 NavigationEnt entity = (NavigationEnt)madapter.getItem(position);
                 img.setImageResource(entity.getSelectedDrawable());*/
 
-              if (navigationItemList.get(position).getItem_text().equals(getString(R.string.home))){
-                  getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(),"UserHomeFragment");
-              }
-              else  if (navigationItemList.get(position).getItem_text().equals(getString(R.string.notifications))){
-                  getDockActivity().replaceDockableFragment(UserNotificationsFragment.newInstance(),"UserHomeFragment");
-              }
-              else  if (navigationItemList.get(position).getItem_text().equals(getString(R.string.my_job))){
-                  getDockActivity().replaceDockableFragment(UserJobsFragment.newInstance(),"UserjobsFragment");
-              }
-              else  if (navigationItemList.get(position).getItem_text().equals(getString(R.string.profile))){
-                  getDockActivity().replaceDockableFragment(UserProfileFragment.newInstance(),"UserProfileFragment");
-              }
-              else  if (navigationItemList.get(position).getItem_text().equals(getString(R.string.about_app))){
-                  getDockActivity().replaceDockableFragment(AboutAppFragment.newInstance(),"UserAboutFragment");
-              }
-
+                if (navigationItemList.get(position).getItem_text().equals(getString(R.string.home))) {
+                    getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
+                } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.notifications))) {
+                    getDockActivity().replaceDockableFragment(UserNotificationsFragment.newInstance(), "UserHomeFragment");
+                } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.my_job))) {
+                    getDockActivity().replaceDockableFragment(UserJobsFragment.newInstance(), "UserjobsFragment");
+                } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.profile))) {
+                    getDockActivity().replaceDockableFragment(UserProfileFragment.newInstance(), "UserProfileFragment");
+                } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.about_app))) {
+                    getDockActivity().replaceDockableFragment(AboutAppFragment.newInstance(), "UserAboutFragment");
+                }
 
 
             }
         });
     }
-
-
 
 
     @Override
@@ -215,20 +210,22 @@ public class SideMenuFragment extends BaseFragment {
     }
 
     private void binddata() {
-        navigationItemList.add(new NavigationEnt(R.drawable.home_yellow,R.drawable.home,getString(R.string.home)));
-        navigationItemList.add(new NavigationEnt(R.drawable.profile_yellow,R.drawable.profile,getString(R.string.profile)));
-        navigationItemList.add(new NavigationEnt(R.drawable.notification_yellow,R.drawable.notification,
-                getString(R.string.notifications),notificationCount));
-        navigationItemList.add(new NavigationEnt(R.drawable.jobs_yellow,R.drawable.jobs,getString(R.string.my_job)));
-        navigationItemList.add(new NavigationEnt(R.drawable.about_yellow,R.drawable.about,getString(R.string.about_app)));
+        navigationItemList.add(new NavigationEnt(R.drawable.home_yellow, R.drawable.home, getString(R.string.home)));
+        navigationItemList.add(new NavigationEnt(R.drawable.profile_yellow, R.drawable.profile, getString(R.string.profile)));
+        navigationItemList.add(new NavigationEnt(R.drawable.notification_yellow, R.drawable.notification,
+                getString(R.string.notifications), notificationCount));
+        navigationItemList.add(new NavigationEnt(R.drawable.jobs_yellow, R.drawable.jobs, getString(R.string.my_job)));
+        navigationItemList.add(new NavigationEnt(R.drawable.about_yellow, R.drawable.about, getString(R.string.about_app)));
         bindview();
     }
-    private void bindview(){
+
+    private void bindview() {
         madapter.clearList();
         navListview.setAdapter(madapter);
         madapter.addAll(navigationItemList);
         madapter.notifyDataSetChanged();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
@@ -236,4 +233,22 @@ public class SideMenuFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
+
+   /* @Override
+    public void updateCount(int count, int position) {
+
+        if (notificationCount != count) {
+
+            NavigationEnt updatedItem = (NavigationEnt) madapter.getItem(position);
+            updatedItem.setNotificationCount(notificationCount);
+
+            navigationItemList.remove(position);
+            navigationItemList.add(position, updatedItem);
+            madapter.clearList();
+            madapter.addAll(navigationItemList);
+            madapter.notifyDataSetChanged();
+
+        }
+
+    }*/
 }

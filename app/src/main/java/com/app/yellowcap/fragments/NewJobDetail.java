@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.app.yellowcap.R;
+import com.app.yellowcap.entities.JobRequestEnt;
+import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.helpers.DateHelper;
 import com.app.yellowcap.helpers.DialogHelper;
@@ -37,6 +40,9 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.app.yellowcap.R.id.btn_accept;
 
@@ -264,10 +270,12 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                             } else if (completeTime.getText().toString().isEmpty()) {
                                 UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.complete_time_error));
                             } else {
-                                JobDetailDialog.hideDialog();
-                                getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
+                                jobAccept(arriveTime,completeTime,JobDetailDialog);
+
                             }
                         }
+
+
 
                     }
                 }, "Sink Broken", "Mohammad Ali", new View.OnClickListener() {
@@ -297,8 +305,9 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                 RefusalDialog.initJobRefusalDialog(R.layout.job_refusal_dialog, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        RefusalDialog.hideDialog();
-                        getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
+                        jobReject(RefusalDialog.getEditText(R.id.ed_msg),RefusalDialog);
+
+                        //RefusalDialog.hideDialog();
                     }
                 });
                 RefusalDialog.setCancelable(false);
@@ -308,6 +317,64 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
 
 
         }
+
+    }
+
+    private void jobReject(String reason, final DialogHelper refusalDialog) {
+
+        if(!reason.equals("")){
+        getDockActivity().onLoadingStarted();
+        Call<ResponseWrapper<JobRequestEnt>> call= webService.rejectJob(2, 33,43,2,reason);
+        call.enqueue(new Callback<ResponseWrapper<JobRequestEnt>>() {
+            @Override
+            public void onResponse(Call<ResponseWrapper<JobRequestEnt>> call, Response<ResponseWrapper<JobRequestEnt>> response) {
+                getDockActivity().onLoadingFinished();
+                if (response.body().getResponse().equals("2000")) {
+                    refusalDialog.hideDialog();
+                    getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
+
+                } else {
+                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWrapper<JobRequestEnt>> call, Throwable t) {
+                getDockActivity().onLoadingFinished();
+                Log.e("EntryCodeFragment", t.toString());
+                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+            }
+        });}
+        else
+        {
+            UIHelper.showShortToastInCenter(getDockActivity(),"Enter the Reason");
+        }
+
+    }
+
+    private void jobAccept(AnyTextView arriveTime, AnyTextView completeTime, final DialogHelper jobDetailDialog) {
+        getDockActivity().onLoadingStarted();
+        Call<ResponseWrapper<JobRequestEnt>> call= webService.acceptJob(2, 33,43,1,arriveTime.getText().toString(),completeTime.getText().toString());
+        call.enqueue(new Callback<ResponseWrapper<JobRequestEnt>>() {
+            @Override
+            public void onResponse(Call<ResponseWrapper<JobRequestEnt>> call, Response<ResponseWrapper<JobRequestEnt>> response) {
+                getDockActivity().onLoadingFinished();
+                if (response.body().getResponse().equals("2000")) {
+                    jobDetailDialog.hideDialog();
+                    getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
+                } else {
+                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWrapper<JobRequestEnt>> call, Throwable t) {
+                getDockActivity().onLoadingFinished();
+                Log.e("EntryCodeFragment", t.toString());
+                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+            }
+        });
+
 
     }
 

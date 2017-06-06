@@ -1,14 +1,15 @@
 package com.app.yellowcap.retrofit;
 
 
+import com.app.yellowcap.entities.JobRequestEnt;
 import com.app.yellowcap.entities.NotificationEnt;
 import com.app.yellowcap.entities.RegistrationResultEnt;
 import com.app.yellowcap.entities.RequestEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.ServiceEnt;
 import com.app.yellowcap.entities.StaticPageEnt;
-import com.app.yellowcap.entities.UserEnt;
 
+import com.app.yellowcap.entities.UserComleteJobsEnt;
 import com.app.yellowcap.entities.UserInProgressEnt;
 
 import com.app.yellowcap.entities.countEnt;
@@ -92,6 +93,9 @@ public interface WebService {
     );
     @GET("request/userinprogress")
     Call<ResponseWrapper<ArrayList<UserInProgressEnt>>>getUserInprogress(@Query("user_id")String userID);
+
+    @GET("request/usercompletejob")
+    Call<ResponseWrapper<ArrayList<UserComleteJobsEnt>>>getUserCompleted(@Query("user_id")String userID);
     @Multipart
     @POST("request/editbyuser")
     Call<ResponseWrapper<RequestEnt>> editUserRequest(@Part("user_id") RequestBody userID,
@@ -115,6 +119,25 @@ public interface WebService {
                                                    @Field("message")String message,
                                                    @Field("status")Integer Status);
 
+
+
+    @FormUrlEncoded
+    @POST(" request/technicianrequeststatus")
+    Call<ResponseWrapper<JobRequestEnt>> acceptJob(@Field("assign_id")Integer assign_id,
+                                                   @Field("technician_id")Integer technician_id,
+                                                   @Field("request_id")Integer request_id,
+                                                   @Field("status")Integer status,
+                                                   @Field("arrival_time")String arrival_time,
+                                                   @Field("completion_time")String completion_time);
+
+    @FormUrlEncoded
+    @POST(" request/technicianrequeststatus")
+    Call<ResponseWrapper<JobRequestEnt>> rejectJob(@Field("assign_id")Integer assign_id,
+                                                   @Field("technician_id")Integer technician_id,
+                                                   @Field("request_id")Integer request_id,
+                                                   @Field("status")Integer status,
+                                                   @Field("message")String message
+                                                  );
 
     @GET("notification/count/{user_id}")
     Call<ResponseWrapper<countEnt>> getNotificationCount(
