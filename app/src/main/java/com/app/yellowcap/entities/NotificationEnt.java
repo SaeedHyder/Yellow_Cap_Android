@@ -26,15 +26,38 @@ public class NotificationEnt {
     @SerializedName("action_id")
     @Expose
     private Integer actionId;
+    @SerializedName("state")
+    @Expose
+    private Integer state;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
+
     @SerializedName("reciever_detail")
     @Expose
     private RegistrationResultEnt recieverDetail;
+    @SerializedName("request_detail")
+    @Expose
+    private RequestEnt requestDetail;
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public RequestEnt getRequestDetail() {
+        return requestDetail;
+    }
+
+    public void setRequestDetail(RequestEnt requestDetail) {
+        this.requestDetail = requestDetail;
+    }
 
     public Integer getId() {
         return id;

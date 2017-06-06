@@ -38,6 +38,16 @@ public class AppConstants {
     public static  int NOTIFICATION_ID = 100;
     public static final int NOTIFICATION_ID_BIG_IMAGE = 101;
 
+    public static final int CREATE_REQUEST = 0;
+    public static final int ACCEPT_QUOTATION = 2;
+    public static final int CANCEL_QUOTATION = 3;
+    public static final int CANCEL_JOB = 4;
+    public static final int COMPLETE_JOB = 6;
+    public static final int TECH_ACCEPT_JOB = 1;
+    public static final int TECH_REJECT_JOB = 2;
+
+
+
 
 
 }

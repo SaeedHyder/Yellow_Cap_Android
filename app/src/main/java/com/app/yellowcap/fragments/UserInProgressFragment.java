@@ -15,6 +15,7 @@ import com.app.yellowcap.entities.RequestEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.UserInProgressEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.interfaces.CallUser;
@@ -155,7 +156,7 @@ public class UserInProgressFragment extends BaseFragment implements CallUser, on
     }
 
     private void cancelJob(Integer requestID) {
-        Call<ResponseWrapper<RequestEnt>> call= webService.changeStatus(prefHelper.getUserId(),requestID,"",3);
+        Call<ResponseWrapper<RequestEnt>> call= webService.changeStatus(prefHelper.getUserId(),requestID,"", AppConstants.CANCEL_JOB);
         call.enqueue(new Callback<ResponseWrapper<RequestEnt>>() {
             @Override
             public void onResponse(Call<ResponseWrapper<RequestEnt>> call, Response<ResponseWrapper<RequestEnt>> response) {
