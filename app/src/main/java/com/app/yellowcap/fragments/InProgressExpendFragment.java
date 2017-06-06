@@ -98,11 +98,13 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
         listDataChild = new HashMap<>();
         collectionGroup.add(new InProgressParentEnt("02","23-3-17","Al Musa","Plumbing","AED 55.00","Dubai Marina,NearMarina"));
         collectionGroup.add(new InProgressParentEnt("02","23-3-17","Al Musa","Plumbing","AED 55.00","Dubai Marina,NearMarina"));
+        collectionGroup.add(new InProgressParentEnt("02","23-3-17","Al Musa","Plumbing","AED 55.00","Dubai Marina,NearMarina"));
+        collectionGroup.add(new InProgressParentEnt("02","23-3-17","Al Musa","Plumbing","AED 55.00","Dubai Marina,NearMarina"));
         collectionChild.add(new InProgressChildEnt("Your order is successfully made "+"\n"+"and the details have been stored.","AED 110","AED 200"));
             listDataChild.put(collectionGroup.get(0), collectionChild1);
             listDataChild.put(collectionGroup.get(1), collectionChild);
-             listDataChild.put(collectionGroup.get(0), collectionChild1);
-          listDataChild.put(collectionGroup.get(1), collectionChild);
+             listDataChild.put(collectionGroup.get(2), collectionChild1);
+          listDataChild.put(collectionGroup.get(3), collectionChild);
 
         bindData();
     }
