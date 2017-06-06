@@ -50,6 +50,7 @@ public class RequestEnt {
     @SerializedName("user_id")
     @Expose
     private Integer userId;
+    
     @SerializedName("technician_id")
     @Expose
     private Integer technicianId;
