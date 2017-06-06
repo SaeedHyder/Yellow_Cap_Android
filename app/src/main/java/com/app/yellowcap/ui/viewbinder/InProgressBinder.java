@@ -12,6 +12,7 @@ import com.app.yellowcap.entities.InProgressEnt;
 import com.app.yellowcap.fragments.EditJobTechFragment;
 import com.app.yellowcap.fragments.HomeFragment;
 import com.app.yellowcap.interfaces.CallUser;
+import com.app.yellowcap.interfaces.MarkAsComplete;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 
@@ -23,11 +24,13 @@ public class InProgressBinder extends ViewBinder<InProgressEnt> {
 
     DockActivity context;
     CallUser callUser;
+    MarkAsComplete complete;
 
-    public InProgressBinder(CallUser callUser, DockActivity context) {
+    public InProgressBinder(CallUser callUser, DockActivity context,MarkAsComplete complete) {
         super(R.layout.inprogress_item);
         this.callUser=callUser;
         this.context=context;
+        this.complete=complete;
     }
 
     @Override
@@ -65,6 +68,7 @@ public class InProgressBinder extends ViewBinder<InProgressEnt> {
         viewHolder.btn_markAsComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                complete.markAsComplete();
                 context.replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
             }
         });
