@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.interfaces.SetOrderCounts;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
 
@@ -25,7 +26,7 @@ import static com.app.yellowcap.activities.DockActivity.KEY_FRAG_FIRST;
  * Created by saeedhyder on 5/22/2017.
  */
 
-public class OrderHistoryFragment extends BaseFragment implements View.OnClickListener {
+public class OrderHistoryFragment extends BaseFragment implements View.OnClickListener ,SetOrderCounts {
 
     @BindView(R.id.ll_listView)
     LinearLayout llListView;
@@ -42,6 +43,9 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
     AnyTextView txtJobCount;
     @BindView(R.id.txt_InProgressCount)
     AnyTextView txtInProgressCount;
+    @BindView(R.id.mainFrame)
+    LinearLayout mainFrame;
+
 
     public static OrderHistoryFragment newInstance() {
         return new OrderHistoryFragment();
@@ -64,6 +68,7 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mainFrame.setVisibility(View.GONE);
         setListners();
         ReplaceListViewFragment(CompletedJobsFragment.newInstance());
     }
@@ -106,8 +111,23 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
 
     }
 
-    private void ReplaceListViewFragment(BaseFragment frag) {
+    private void ReplaceListViewFragment(CompletedJobsFragment frag) {
 
+        frag.setOrderCounts(this);
+        FragmentTransaction transaction = getChildFragmentManager()
+                .beginTransaction();
+
+        transaction.replace(R.id.ll_listView, frag);
+        transaction
+                .addToBackStack(
+                        getChildFragmentManager().getBackStackEntryCount() == 0 ? KEY_FRAG_FIRST
+                                : null).commit();
+
+    }
+
+    private void ReplaceListViewFragment(InProgressExpendFragment frag) {
+
+        frag.setOrderCounts(this);
         FragmentTransaction transaction = getChildFragmentManager()
                 .beginTransaction();
 
@@ -123,5 +143,16 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void setcompleteCount(int count) {
+        txtJobCount.setText(String.valueOf(count));
+        mainFrame.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setInprogressCount(int count) {
+        txtInProgressCount.setText(String.valueOf(count));
     }
 }

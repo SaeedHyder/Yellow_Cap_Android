@@ -19,6 +19,7 @@ import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.interfaces.CallUser;
 import com.app.yellowcap.interfaces.MarkAsComplete;
+import com.app.yellowcap.interfaces.SetOrderCounts;
 import com.app.yellowcap.ui.ArrayListExpandableAdapter;
 import com.app.yellowcap.ui.viewbinder.InprogressExpandBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
@@ -43,6 +44,7 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
     @BindView(R.id.elv_inprogress)
     ExpandableListView elvInprogress;
     Unbinder unbinder;
+    SetOrderCounts orderCounts;
 
     private ArrayListExpandableAdapter<InProgressParentEnt, InProgressChildEnt> adapter;
     private ArrayList<InProgressParentEnt> collectionGroup;
@@ -53,6 +55,14 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
 
     public static InProgressExpendFragment newInstance() {
         return new InProgressExpendFragment();
+    }
+
+    public SetOrderCounts getOrderCounts() {
+        return orderCounts;
+    }
+
+    public void setOrderCounts(SetOrderCounts orderCounts) {
+        this.orderCounts = orderCounts;
     }
 
 
@@ -106,6 +116,7 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
             listDataChild.put(collectionGroup.get(1), collectionChild);
              listDataChild.put(collectionGroup.get(2), collectionChild1);
           listDataChild.put(collectionGroup.get(3), collectionChild);
+        orderCounts.setInprogressCount(collectionGroup.size());
 
         bindData();
     }

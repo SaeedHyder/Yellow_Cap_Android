@@ -14,6 +14,7 @@ import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.TechInProgressEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.helpers.UIHelper;
+import com.app.yellowcap.interfaces.SetOrderCounts;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.viewbinder.CompletedJobsBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
@@ -40,6 +41,7 @@ public class CompletedJobsFragment extends BaseFragment {
     @BindView(R.id.CompletedJobs_ListView)
     ListView CompletedJobsListView;
     Unbinder unbinder;
+    SetOrderCounts orderCounts;
 
     private ArrayListAdapter<TechInProgressEnt> adapter;
 
@@ -55,6 +57,14 @@ public class CompletedJobsFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
 
         adapter = new ArrayListAdapter<TechInProgressEnt>(getDockActivity(), new CompletedJobsBinder());
+    }
+
+    public SetOrderCounts getOrderCounts() {
+        return orderCounts;
+    }
+
+    public void setOrderCounts(SetOrderCounts orderCounts) {
+        this.orderCounts = orderCounts;
     }
 
     @Nullable
@@ -108,6 +118,7 @@ public class CompletedJobsFragment extends BaseFragment {
         userCollection.add(new CompletedJobsEnt("02","23-3-17","Al Musa","Plumbing","5","AED 55.00"));
         userCollection.add(new CompletedJobsEnt("02","23-3-17","Al Musa","Plumbing","5","AED 55.00"));*/
         userCollection = new ArrayList<>();
+        orderCounts.setcompleteCount(result.size());
 
        /* if(result.size()<0)
         {

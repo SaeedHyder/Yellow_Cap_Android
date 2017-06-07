@@ -144,6 +144,13 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<InProgressP
             }
         });
 
+        childViewHolder.ivEditJobBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.replaceDockableFragment(EditJobTechFragment.newInstance(), "EditJobTechFragment");
+            }
+        });
+
         setTextStyleChild(childViewHolder);
 
 

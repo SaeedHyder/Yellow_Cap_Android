@@ -127,9 +127,9 @@ public interface WebService {
 
     @FormUrlEncoded
     @POST(" request/technicianrequeststatus")
-    Call<ResponseWrapper<JobRequestEnt>> acceptJob(@Field("assign_id") String assign_id,
-                                                   @Field("technician_id") String technician_id,
-                                                   @Field("request_id") String request_id,
+    Call<ResponseWrapper<JobRequestEnt>> acceptJob(@Field("assign_id") Integer assign_id,
+                                                   @Field("technician_id") Integer technician_id,
+                                                   @Field("request_id") Integer request_id,
                                                    @Field("status") Integer status,
                                                    @Field("arrival_time") String arrival_time,
                                                    @Field("completion_time") String completion_time);
@@ -142,14 +142,6 @@ public interface WebService {
                                                    @Field("status")Integer status,
                                                    @Field("message")String message
                                                   );
-
-    @POST(" request/technicianrequeststatus")
-    Call<ResponseWrapper<JobRequestEnt>> rejectJob(@Field("assign_id") String assign_id,
-                                                   @Field("technician_id") String technician_id,
-                                                   @Field("request_id") String request_id,
-                                                   @Field("status") Integer status,
-                                                   @Field("message") String message
-    );
 
 
     @FormUrlEncoded
