@@ -1,15 +1,28 @@
 package com.app.yellowcap.ui.viewbinder;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.app.yellowcap.R;
-import com.app.yellowcap.entities.NewJobEnt;
+import com.app.yellowcap.activities.DockActivity;
 import com.app.yellowcap.entities.NotificationEnt;
+import com.app.yellowcap.entities.ResponseWrapper;
+import com.app.yellowcap.fragments.QuotationFragment;
+import com.app.yellowcap.fragments.UserHomeFragment;
+import com.app.yellowcap.fragments.UserJobsFragment;
+import com.app.yellowcap.helpers.BasePreferenceHelper;
+import com.app.yellowcap.helpers.DialogHelper;
+import com.app.yellowcap.helpers.UIHelper;
+import com.app.yellowcap.retrofit.WebService;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by saeedhyder on 5/24/2017.
@@ -17,11 +30,16 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
 
+    private WebService service;
     private ImageLoader imageLoader;
+    private DockActivity dockActivity;
+    private BasePreferenceHelper prefhelper;
 
-    public UserNotificationitemBinder() {
+    public UserNotificationitemBinder(DockActivity activity, WebService webservice, BasePreferenceHelper prefhelper) {
         super(R.layout.newjobs_item);
-
+        this.dockActivity = activity;
+        this.service = webservice;
+        this.prefhelper = prefhelper;
         imageLoader = ImageLoader.getInstance();
     }
 
@@ -39,10 +57,56 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
         viewHolder.iv_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (entity.getActionType()){
-                    case "job":
+                switch (entity.getActionType()) {
+                    case "Job":
+                        dockActivity.replaceDockableFragment(UserJobsFragment.newInstance(), "UserJobsFragment");
+                        break;
+                    case "Quotation":
+                        dockActivity.replaceDockableFragment(QuotationFragment.newInstance(entity), "QuotationFragment");
+                        break;
+                    case "feedback":
+                        openRatingPopup(entity);
                         break;
                 }
+            }
+        });
+    }
+
+    private void openRatingPopup(final NotificationEnt entity) {
+        final DialogHelper dialogHelper = new DialogHelper(dockActivity);
+        dialogHelper.initRatingDialog(R.layout.rating_pop_up_dialog, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              //  dialogHelper.hideDialog();
+                submitFeedback(entity,dialogHelper);
+            }
+        }, entity.getRequestDetail().getServiceDetail().getTitle(), entity.getRequestDetail().getMessage());
+        dialogHelper.setCancelable(true);
+        dialogHelper.showDialog();
+    }
+
+    private void submitFeedback(NotificationEnt ent, final DialogHelper helper) {
+        Call<ResponseWrapper> call =  service.sendFeedback(prefhelper.getUserId(),
+                String.valueOf(ent.getRequestDetail().getId()),
+               String.valueOf( ent.getRequestDetail().getTechnicianId()),
+                String.valueOf(helper.getRating(R.id.rbAddRating)),
+                helper.getEditText(R.id.txt_feedback),
+                helper.getEditText(R.id.txt_tip));
+        call.enqueue(new Callback<ResponseWrapper>() {
+            @Override
+            public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
+                helper.hideDialog();
+                if (response.body().getResponse().equals("2000")) {
+                   dockActivity.replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
+                } else {
+                    UIHelper.showShortToastInCenter(dockActivity, response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWrapper> call, Throwable t) {
+                Log.e("EntryCodeFragment", t.toString());
+                UIHelper.showShortToastInCenter(dockActivity, t.toString());
             }
         });
     }
@@ -54,9 +118,9 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
         private ImageView iv_next;
 
         public ViewHolder(View view) {
-            iv_Notificationlogo= (ImageView) view.findViewById(R.id.iv_Notificationlogo);
+            iv_Notificationlogo = (ImageView) view.findViewById(R.id.iv_Notificationlogo);
             txt_jobNotification = (AnyTextView) view.findViewById(R.id.txt_jobNotification);
-            iv_next=(ImageView)view.findViewById(R.id.iv_next);
+            iv_next = (ImageView) view.findViewById(R.id.iv_next);
         }
     }
 }

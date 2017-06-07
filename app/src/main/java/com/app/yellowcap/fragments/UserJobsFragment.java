@@ -11,10 +11,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.app.yellowcap.R;
-import com.app.yellowcap.entities.UserComleteJobsEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.interfaces.SetOrderCounts;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +28,7 @@ import static com.app.yellowcap.activities.DockActivity.KEY_FRAG_FIRST;
  * Created on 5/24/2017.
  */
 
-public class UserJobsFragment extends BaseFragment implements View.OnClickListener {
+public class UserJobsFragment extends BaseFragment implements View.OnClickListener, SetOrderCounts {
     @BindView(R.id.ll_listView)
     LinearLayout llListView;
     @BindView(R.id.ll_CompletedJobs)
@@ -43,9 +44,15 @@ public class UserJobsFragment extends BaseFragment implements View.OnClickListen
     @BindView(R.id.txt_InProgressCount)
     AnyTextView txtInProgressCount;
     Unbinder unbinder;
+    @BindView(R.id.CircularImageSharePop)
+    CircleImageView CircularImageSharePop;
+    @BindView(R.id.txt_userName)
+    AnyTextView txtUserName;
+
     public static UserJobsFragment newInstance() {
         return new UserJobsFragment();
     }
+
     @Override
     protected int getLayout() {
         return R.layout.fragment_user_jobs;
@@ -56,7 +63,17 @@ public class UserJobsFragment extends BaseFragment implements View.OnClickListen
         super.onViewCreated(view, savedInstanceState);
         setListners();
         ReplaceListViewFragment(UserInProgressFragment.newInstance());
+        setProfileData();
+        setInprogressCount(0);
+        setcompleteCount(0);
     }
+
+    private void setProfileData() {
+        Picasso.with(getDockActivity()).load(prefHelper.getRegistrationResult().getProfileImage()).into(CircularImageSharePop);
+        txtUserName.setText(prefHelper.getRegistrationResult().getFullName());
+    }
+
+
     private void setListners() {
         llInProgess.setOnClickListener(this);
         llCompletedJobs.setOnClickListener(this);
@@ -75,8 +92,21 @@ public class UserJobsFragment extends BaseFragment implements View.OnClickListen
         super.onDestroyView();
         unbinder.unbind();
     }
-    private void ReplaceListViewFragment(BaseFragment frag) {
 
+    private void ReplaceListViewFragment(UserCompleteJobsFragment frag) {
+        frag.setOrderCounts(this);
+        FragmentTransaction transaction = getChildFragmentManager()
+                .beginTransaction();
+
+        transaction.replace(R.id.ll_listView, frag);
+        transaction
+                .addToBackStack(
+                        getChildFragmentManager().getBackStackEntryCount() == 0 ? KEY_FRAG_FIRST
+                                : null).commit();
+
+    }
+    private void ReplaceListViewFragment(UserInProgressFragment frag) {
+        frag.setOrderCounts(this);
         FragmentTransaction transaction = getChildFragmentManager()
                 .beginTransaction();
 
@@ -97,6 +127,7 @@ public class UserJobsFragment extends BaseFragment implements View.OnClickListen
         titleBar.setSubHeading(getString(R.string.jobs));
     }
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -105,7 +136,7 @@ public class UserJobsFragment extends BaseFragment implements View.OnClickListen
                 selectedArrowInProgress.setVisibility(View.GONE);
                 txtJobCount.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.yellow));
                 txtInProgressCount.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.gray));
-                ReplaceListViewFragment(UserCompleteJobs.newInstance());
+                ReplaceListViewFragment(UserCompleteJobsFragment.newInstance());
                 break;
 
             case R.id.ll_InProgess:
@@ -116,5 +147,15 @@ public class UserJobsFragment extends BaseFragment implements View.OnClickListen
                 ReplaceListViewFragment(UserInProgressFragment.newInstance());
                 break;
         }
+    }
+
+    @Override
+    public void setcompleteCount(int count) {
+        txtJobCount.setText(String.valueOf(count));
+    }
+
+    @Override
+    public void setInprogressCount(int count) {
+        txtInProgressCount.setText(String.valueOf(count));
     }
 }

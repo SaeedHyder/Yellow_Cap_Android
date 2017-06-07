@@ -13,6 +13,7 @@ import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.UserComleteJobsEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.helpers.UIHelper;
+import com.app.yellowcap.interfaces.SetOrderCounts;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.viewbinder.UserCompleteJobsBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
@@ -30,17 +31,26 @@ import retrofit2.Response;
  * Created on 5/24/2017.
  */
 
-public class UserCompleteJobs extends BaseFragment {
+public class UserCompleteJobsFragment extends BaseFragment {
     @BindView(R.id.txt_noresult)
     AnyTextView txtNoresult;
     @BindView(R.id.CompletedJobs_ListView)
     ListView CompletedJobsListView;
     Unbinder unbinder;
+    SetOrderCounts orderCounts;
     private ArrayListAdapter<UserComleteJobsEnt> adapter;
     private ArrayList<UserComleteJobsEnt> userCollection = new ArrayList<>();
 
-    public static UserCompleteJobs newInstance() {
-        return new UserCompleteJobs();
+    public static UserCompleteJobsFragment newInstance() {
+        return new UserCompleteJobsFragment();
+    }
+
+    public SetOrderCounts getOrderCounts() {
+        return orderCounts;
+    }
+
+    public void setOrderCounts(SetOrderCounts orderCounts) {
+        this.orderCounts = orderCounts;
     }
 
     @Override
@@ -100,14 +110,14 @@ public class UserCompleteJobs extends BaseFragment {
     private void setCompletedJobsData(ArrayList<UserComleteJobsEnt> result) {
         userCollection = new ArrayList<>();
 
-        if(result.size()<0)
-        {}
-        else{
+      /*  if (result.size() <= 0) {
+            UIHelper.showShortToastInCenter(getDockActivity(), "No Data to Show");
+        } else {
             CompletedJobsListView.setVisibility(View.GONE);
         }
-
+*/
         userCollection.addAll(result);
-
+        orderCounts.setcompleteCount(result.size());
       /*  userCollection.add(new UserComleteJobsEnt("01", "24-3-17", "Al Musa", "Electrical", 4, "AED 55.00",getString(R.string.dummy_desciption)));
         userCollection.add(new UserComleteJobsEnt("02", "25-3-17", "Al Musa", "Plumbing", 3, "AED 55.00",getString(R.string.dummy_desciption)));
         userCollection.add(new UserComleteJobsEnt("03", "26-3-17", "Al Musa", "Cleaning", 5, "AED 55.00",getString(R.string.dummy_desciption)));*/

@@ -52,7 +52,7 @@ public class DatePickerHelper {
     }
     public String getStringDate(int year, int month, int day) {
         Calendar calendar = new GregorianCalendar(year, month, day);
-        return new SimpleDateFormat("yyyy MMM dd", Locale.ENGLISH).format(calendar.getTime());
+        return new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(calendar.getTime());
     }
 
 }

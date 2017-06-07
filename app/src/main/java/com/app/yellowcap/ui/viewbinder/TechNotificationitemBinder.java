@@ -11,9 +11,7 @@ import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-/**
- * Created by saeedhyder on 5/24/2017.
- */
+
 
 public class TechNotificationitemBinder extends ViewBinder<NotificationEnt>{
 

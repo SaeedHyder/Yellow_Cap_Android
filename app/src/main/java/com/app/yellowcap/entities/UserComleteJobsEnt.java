@@ -10,13 +10,6 @@ import java.util.List;
  */
 
 public class UserComleteJobsEnt {
-    private String Job;
-    private String jobCompleted;
-    private String TechnicianName;
-    private String JobTitle;
-    private float rating;
-    private String amountPaid;
-    private String description;
 
     @SerializedName("id")
     @Expose
@@ -68,87 +61,27 @@ public class UserComleteJobsEnt {
     private String updatedAt;
     @SerializedName("assign_technician")
     @Expose
-    private List<RegistrationResultEnt> assignTechnician = null;
+    private List<RequestTechnicianEnt> assignTechnician = null;
     @SerializedName("service_detail")
     @Expose
     private ServiceEnt serviceDetail;
     @SerializedName("servics_list")
     @Expose
-    private List<ServiceEnt> servicsList = null;
+    private List<ServiceChildEnt> servicsList = null;
     @SerializedName("image_detail")
     @Expose
     private List<ImageDetailEnt> imageDetail = null;
 
-    public UserComleteJobsEnt(String job,
-                              String jobCompleted,
-                              String technicianName,
-                              String jobTitle,
-                              float rating,
-                              String amountPaid,
-                              String description) {
-        Job = job;
-        this.jobCompleted = jobCompleted;
-        TechnicianName = technicianName;
-        JobTitle = jobTitle;
-        this.rating = rating;
-        this.amountPaid = amountPaid;
-        this.description = description;
+    @SerializedName("feedbackdetail")
+    @Expose
+    private FeedBackEnt feedbackdetail = null;
+
+    public FeedBackEnt getFeedbackdetail() {
+        return feedbackdetail;
     }
 
-    public String getJob() {
-        return Job;
-    }
-
-    public void setJob(String job) {
-        Job = job;
-    }
-
-    public String getJobCompleted() {
-        return jobCompleted;
-    }
-
-    public void setJobCompleted(String jobCompleted) {
-        this.jobCompleted = jobCompleted;
-    }
-
-    public String getTechnicianName() {
-        return TechnicianName;
-    }
-
-    public void setTechnicianName(String technicianName) {
-        TechnicianName = technicianName;
-    }
-
-    public String getJobTitle() {
-        return JobTitle;
-    }
-
-    public void setJobTitle(String jobTitle) {
-        JobTitle = jobTitle;
-    }
-
-    public float getRating() {
-        return rating;
-    }
-
-    public void setRating(float rating) {
-        this.rating = rating;
-    }
-
-    public String getAmountPaid() {
-        return amountPaid;
-    }
-
-    public void setAmountPaid(String amountPaid) {
-        this.amountPaid = amountPaid;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setFeedbackdetail(FeedBackEnt feedbackdetail) {
+        this.feedbackdetail = feedbackdetail;
     }
 
     public Integer getId() {
@@ -279,11 +212,11 @@ public class UserComleteJobsEnt {
         this.updatedAt = updatedAt;
     }
 
-    public List<RegistrationResultEnt> getAssignTechnician() {
+    public List<RequestTechnicianEnt> getAssignTechnician() {
         return assignTechnician;
     }
 
-    public void setAssignTechnician(List<RegistrationResultEnt> assignTechnician) {
+    public void setAssignTechnician(List<RequestTechnicianEnt> assignTechnician) {
         this.assignTechnician = assignTechnician;
     }
 
@@ -295,11 +228,11 @@ public class UserComleteJobsEnt {
         this.serviceDetail = serviceDetail;
     }
 
-    public List<ServiceEnt> getServicsList() {
+    public List<ServiceChildEnt> getServicsList() {
         return servicsList;
     }
 
-    public void setServicsList(List<ServiceEnt> servicsList) {
+    public void setServicsList(List<ServiceChildEnt> servicsList) {
         this.servicsList = servicsList;
     }
 

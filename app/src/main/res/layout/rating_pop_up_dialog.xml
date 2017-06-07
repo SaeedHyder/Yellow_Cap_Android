@@ -142,13 +142,14 @@
             android:background="@drawable/rectangle"
             android:orientation="horizontal">
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.app.yellowcap.ui.views.AnyEditTextView
                 android:id="@+id/txt_feedback"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:alpha="0.7"
+                android:gravity="top"
                 android:background="@color/transparent"
                 android:hint="@string/write_feedback_here"
                 android:maxLength="100"

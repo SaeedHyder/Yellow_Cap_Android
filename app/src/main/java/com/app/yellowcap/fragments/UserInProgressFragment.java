@@ -19,6 +19,7 @@ import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.interfaces.CallUser;
+import com.app.yellowcap.interfaces.SetOrderCounts;
 import com.app.yellowcap.interfaces.onCancelJobListner;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.viewbinder.UserInProgressBinder;
@@ -43,11 +44,21 @@ public class UserInProgressFragment extends BaseFragment implements CallUser, on
     @BindView(R.id.InProgress_ListView)
     ListView InProgressListView;
     Unbinder unbinder;
+    SetOrderCounts orderCounts;
     private ArrayListAdapter<UserInProgressEnt> adapter;
     private ArrayList<UserInProgressEnt> userCollection;
 
     public static UserInProgressFragment newInstance() {
         return new UserInProgressFragment();
+    }
+
+
+    public SetOrderCounts getOrderCounts() {
+        return orderCounts;
+    }
+
+    public void setOrderCounts(SetOrderCounts orderCounts) {
+        this.orderCounts = orderCounts;
     }
 
     @Override
@@ -103,6 +114,7 @@ public class UserInProgressFragment extends BaseFragment implements CallUser, on
     private void setInProgressJobsData(ArrayList<UserInProgressEnt> result) {
         userCollection = new ArrayList<>();
         userCollection.addAll(result);
+        orderCounts.setInprogressCount(result.size());
       /*  userCollection.add(new UserInProgressEnt("Al Musa","Ac not colling well","AED 55.00","+971 XXX XXX XXX",false));
         userCollection.add(new UserInProgressEnt("Al Musa","Ac not colling well","AED 55.00","+971 123 456 789",true));
         userCollection.add(new UserInProgressEnt("Al Musa","Ac not colling well","AED 55.00","+971 789 123 465",true));
@@ -123,30 +135,33 @@ public class UserInProgressFragment extends BaseFragment implements CallUser, on
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
     @Override
     public void CallOnUserNumber(String number) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:"+number));
+        intent.setData(Uri.parse("tel:" + number));
         startActivity(intent);
     }
 
     @Override
     public void onCancelJob(int position) {
-        getDockActivity().onLoadingStarted();
+
         final DialogHelper dialogHelper = new DialogHelper(getDockActivity());
         dialogHelper.initCancelJobDialog(R.layout.cancle_job_dialog, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancelJob(userCollection.get(0).getId());
-                dialogHelper.hideDialog();
+                getDockActivity().onLoadingStarted();
+                cancelJob(userCollection.get(0).getId(),dialogHelper);
+
+
             }
         }, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialogHelper.hideDialog();
+                getDockActivity().onLoadingFinished();
             }
         });
         dialogHelper.setCancelable(false);
@@ -155,13 +170,15 @@ public class UserInProgressFragment extends BaseFragment implements CallUser, on
 
     }
 
-    private void cancelJob(Integer requestID) {
-        Call<ResponseWrapper<RequestEnt>> call= webService.changeStatus(prefHelper.getUserId(),requestID,"", AppConstants.CANCEL_JOB);
+    private void cancelJob(Integer requestID, final DialogHelper dialogHelper) {
+        Call<ResponseWrapper<RequestEnt>> call = webService.changeStatus(prefHelper.getUserId(), requestID, "", AppConstants.CANCEL_JOB);
         call.enqueue(new Callback<ResponseWrapper<RequestEnt>>() {
             @Override
             public void onResponse(Call<ResponseWrapper<RequestEnt>> call, Response<ResponseWrapper<RequestEnt>> response) {
                 getDockActivity().onLoadingFinished();
+                dialogHelper.hideDialog();
                 if (response.body().getResponse().equals("2000")) {
+
                     getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
                 } else {
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());

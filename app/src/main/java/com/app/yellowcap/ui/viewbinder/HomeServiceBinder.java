@@ -36,7 +36,6 @@ public class HomeServiceBinder extends ViewBinder<ServiceEnt> {
         holder.txtServiceName.setText(entity.getTitle());
         Picasso.with(context)
                 .load(entity.getServiceImage())
-                .placeholder(R.drawable.ac)
                 .into(holder.imgService);
     }
 
