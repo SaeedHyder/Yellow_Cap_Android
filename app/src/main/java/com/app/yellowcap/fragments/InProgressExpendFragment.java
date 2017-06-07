@@ -101,6 +101,7 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
         collectionGroup.add(new InProgressParentEnt("02","23-3-17","Al Musa","Plumbing","AED 55.00","Dubai Marina,NearMarina"));
         collectionGroup.add(new InProgressParentEnt("02","23-3-17","Al Musa","Plumbing","AED 55.00","Dubai Marina,NearMarina"));
         collectionChild.add(new InProgressChildEnt("Your order is successfully made "+"\n"+"and the details have been stored.","AED 110","AED 200"));
+        collectionChild.add(new InProgressChildEnt("Your order is successfully made "+"\n"+"and the details have been stored.","AED 110","AED 200"));
             listDataChild.put(collectionGroup.get(0), collectionChild1);
             listDataChild.put(collectionGroup.get(1), collectionChild);
              listDataChild.put(collectionGroup.get(2), collectionChild1);
@@ -111,7 +112,7 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
 
     private void bindData() {
 
-        adapter = new ArrayListExpandableAdapter<>(getDockActivity(), collectionGroup, listDataChild, new InprogressExpandBinder(getDockActivity(),this,this));
+        adapter = new ArrayListExpandableAdapter<>(getDockActivity(), collectionGroup, listDataChild, new InprogressExpandBinder(getDockActivity(),this,this),elvInprogress);
 
         elvInprogress.setAdapter(adapter);
         adapter.notifyDataSetChanged();

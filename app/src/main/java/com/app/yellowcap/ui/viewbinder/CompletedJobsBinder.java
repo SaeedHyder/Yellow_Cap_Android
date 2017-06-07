@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.entities.CompletedJobsEnt;
+import com.app.yellowcap.entities.TechInProgressEnt;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.CustomRatingBar;
@@ -17,7 +18,7 @@ import static com.app.yellowcap.R.id.txt_Rating;
  * Created by saeedhyder on 5/22/2017.
  */
 
-public class CompletedJobsBinder extends ViewBinder<CompletedJobsEnt> {
+public class CompletedJobsBinder extends ViewBinder<TechInProgressEnt> {
 
     public CompletedJobsBinder() {
         super(R.layout.completedjobs_item);
@@ -29,9 +30,9 @@ public class CompletedJobsBinder extends ViewBinder<CompletedJobsEnt> {
     }
 
     @Override
-    public void bindView(CompletedJobsEnt entity, int position, int grpPosition, View view, Activity activity) {
+    public void bindView(TechInProgressEnt entity, int position, int grpPosition, View view, Activity activity) {
         final CompletedJobsBinder.ViewHolder viewHolder = (CompletedJobsBinder.ViewHolder) view.getTag();
-       ;
+
         viewHolder.rbAddRating.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -39,6 +40,12 @@ public class CompletedJobsBinder extends ViewBinder<CompletedJobsEnt> {
                 return true;
             }
         });
+        viewHolder.txt_jobNoText.setText(String.valueOf(entity.getId()));
+        viewHolder.txt_jobCompletedText.setText(entity.getRequest_detail().getDate());
+        viewHolder.txt_JobTitleText.setText("");
+        viewHolder.txt_clientNameText.setText("");
+        viewHolder.rbAddRating.setScore(4);
+        viewHolder.txt_EarningText.setText("(COD): AED "+entity.getRequest_detail().getTotal());
 
         setTextStyle(viewHolder);
 

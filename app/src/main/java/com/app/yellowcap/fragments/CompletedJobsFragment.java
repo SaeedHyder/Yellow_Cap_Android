@@ -2,6 +2,7 @@ package com.app.yellowcap.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,10 @@ import android.widget.ListView;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.entities.CompletedJobsEnt;
+import com.app.yellowcap.entities.ResponseWrapper;
+import com.app.yellowcap.entities.TechInProgressEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.viewbinder.CompletedJobsBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
@@ -19,6 +23,11 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.app.yellowcap.R.id.lv_NewJobs;
 
 /**
  * Created by saeedhyder on 5/22/2017.
@@ -26,15 +35,15 @@ import butterknife.Unbinder;
 
 public class CompletedJobsFragment extends BaseFragment {
 
-    @BindView(R.id.txt_noresult)
-    AnyTextView txtNoresult;
+    @BindView(R.id.txt_no_data)
+    AnyTextView txt_no_data;
     @BindView(R.id.CompletedJobs_ListView)
     ListView CompletedJobsListView;
     Unbinder unbinder;
 
-    private ArrayListAdapter<CompletedJobsEnt> adapter;
+    private ArrayListAdapter<TechInProgressEnt> adapter;
 
-    private ArrayList<CompletedJobsEnt> userCollection = new ArrayList<>();
+    private ArrayList<TechInProgressEnt> userCollection = new ArrayList<>();
 
     public static CompletedJobsFragment newInstance() {
 
@@ -45,7 +54,7 @@ public class CompletedJobsFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        adapter = new ArrayListAdapter<CompletedJobsEnt>(getDockActivity(), new CompletedJobsBinder());
+        adapter = new ArrayListAdapter<TechInProgressEnt>(getDockActivity(), new CompletedJobsBinder());
     }
 
     @Nullable
@@ -65,20 +74,58 @@ public class CompletedJobsFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        setCompletedJobsData();
+        getCompletedJobs();
     }
 
-    private void setCompletedJobsData() {
+    private void getCompletedJobs() {
+        getDockActivity().onLoadingStarted();
+        Call<ResponseWrapper<ArrayList<TechInProgressEnt>>> call = webService.techCompleteJobs(Integer.valueOf(prefHelper.getUserId()));
 
+        call.enqueue(new Callback<ResponseWrapper<ArrayList<TechInProgressEnt>>>() {
+            @Override
+            public void onResponse(Call<ResponseWrapper<ArrayList<TechInProgressEnt>>> call, Response<ResponseWrapper<ArrayList<TechInProgressEnt>>> response) {
+                getDockActivity().onLoadingFinished();
+                if (response.body().getResponse().equals("2000")) {
+                    setCompletedJobsData(response.body().getResult());
+                } else {
+                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWrapper<ArrayList<TechInProgressEnt>>> call, Throwable t) {
+                getDockActivity().onLoadingFinished();
+                Log.e("UserSignupFragment", t.toString());
+                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+            }
+        });
+
+    }
+
+
+    private void setCompletedJobsData(ArrayList<TechInProgressEnt> result) {
+      /*  userCollection.add(new CompletedJobsEnt("02","23-3-17","Al Musa","Plumbing","5","AED 55.00"));
         userCollection.add(new CompletedJobsEnt("02","23-3-17","Al Musa","Plumbing","5","AED 55.00"));
-        userCollection.add(new CompletedJobsEnt("02","23-3-17","Al Musa","Plumbing","5","AED 55.00"));
-        userCollection.add(new CompletedJobsEnt("02","23-3-17","Al Musa","Plumbing","5","AED 55.00"));
+        userCollection.add(new CompletedJobsEnt("02","23-3-17","Al Musa","Plumbing","5","AED 55.00"));*/
+        userCollection = new ArrayList<>();
+
+       /* if(result.size()<0)
+        {
+            txt_no_data.setVisibility(View.VISIBLE);
+            CompletedJobsListView.setVisibility(View.GONE);
+        }
+        else{
+            txt_no_data.setVisibility(View.GONE);
+            CompletedJobsListView.setVisibility(View.GONE);
+        }
+*/
+        userCollection.addAll(result);
 
 
         bindData(userCollection);
     }
 
-    private void bindData(ArrayList<CompletedJobsEnt> userCollection) {
+    private void bindData(ArrayList<TechInProgressEnt> userCollection) {
 
         adapter.clearList();
         CompletedJobsListView.setAdapter(adapter);

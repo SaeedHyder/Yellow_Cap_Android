@@ -7,19 +7,18 @@
 
 
     <com.app.yellowcap.ui.views.AnyTextView
-        android:id="@+id/txt_noresult"
+        android:id="@+id/txt_no_data"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:paddingBottom="@dimen/x5"
-        android:paddingLeft="@dimen/x8"
-        android:paddingTop="@dimen/x2"
-        android:text="@string/no_result_found"
-        android:textColor="@color/black"
-        android:textSize="@dimen/x20"
-        android:textStyle="normal"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/no_data"
+        android:textColor="@color/dark_grey"
+        android:layout_gravity="center"
+        app:typeface="Roboto-Regular.ttf"
+        android:textSize="@dimen/x15"
         android:visibility="gone"
-        app:typeface="Roboto-Regular.ttf" />
+
+        />
 
     <ListView
         android:id="@+id/CompletedJobs_ListView"

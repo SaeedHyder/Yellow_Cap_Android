@@ -2,6 +2,8 @@ package com.app.yellowcap.retrofit;
 
 
 import com.app.yellowcap.entities.JobRequestEnt;
+import com.app.yellowcap.entities.NewJobEnt;
+import com.app.yellowcap.entities.NewJobsEnt;
 import com.app.yellowcap.entities.NotificationEnt;
 import com.app.yellowcap.entities.RegistrationResultEnt;
 import com.app.yellowcap.entities.RequestEnt;
@@ -9,6 +11,7 @@ import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.ServiceEnt;
 import com.app.yellowcap.entities.StaticPageEnt;
 
+import com.app.yellowcap.entities.TechInProgressEnt;
 import com.app.yellowcap.entities.UserComleteJobsEnt;
 import com.app.yellowcap.entities.UserInProgressEnt;
 
@@ -131,7 +134,7 @@ public interface WebService {
                                                    @Field("completion_time")String completion_time);
 
     @FormUrlEncoded
-    @POST(" request/technicianrequeststatus")
+    @POST("request/technicianrequeststatus")
     Call<ResponseWrapper<JobRequestEnt>> rejectJob(@Field("assign_id")Integer assign_id,
                                                    @Field("technician_id")Integer technician_id,
                                                    @Field("request_id")Integer request_id,
@@ -148,6 +151,21 @@ public interface WebService {
 
     @GET("notification/count/{user_id}")
     Call<ResponseWrapper<countEnt>> getNotificationCount(
-            @Path("user_id") String user_id);
+            @Field("user_id") String user_id);
+
+
+    @GET("request/newjobs")
+    Call<ResponseWrapper<ArrayList<NewJobsEnt>>> newJobs(
+            @Query("technician_id") Integer technician_id);
+
+    @GET("request/technicianinprogress")
+    Call<ResponseWrapper<ArrayList<TechInProgressEnt>>> techInProgress(
+            @Query("technician_id") Integer technician_id);
+
+    @GET("request/techniciancompletejob")
+    Call<ResponseWrapper<ArrayList<TechInProgressEnt>>> techCompleteJobs(
+            @Query("technician_id") Integer technician_id);
+
+
 
 }

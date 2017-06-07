@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.entities.NewJobEnt;
+import com.app.yellowcap.entities.NewJobsEnt;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -14,9 +15,11 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * Created by saeedhyder on 5/22/2017.
  */
 
-public class NewJobsitemBinder  extends ViewBinder<NewJobEnt> {
+public class NewJobsitemBinder  extends ViewBinder<NewJobsEnt> {
 
     private ImageLoader imageLoader;
+    String title="";
+    String title1="";
 
     public NewJobsitemBinder() {
         super(R.layout.newjobs_item);
@@ -31,7 +34,18 @@ public class NewJobsitemBinder  extends ViewBinder<NewJobEnt> {
     }
 
     @Override
-    public void bindView(NewJobEnt entity, int position, int grpPosition, View view, Activity activity) {
+    public void bindView(NewJobsEnt entity, int position, int grpPosition, View view, Activity activity) {
+
+        NewJobsitemBinder.ViewHolder viewHolder = (NewJobsitemBinder.ViewHolder) view.getTag();
+
+
+        if(entity.getRequest_detail().getService_detail()!=null || entity.getRequest_detail().getServics_list().get(0).getService_detail()!=null) {
+            title=entity.getRequest_detail().getService_detail().getTitle();
+            title1=entity.getRequest_detail().getServics_list().get(0).getService_detail().getTitle();
+            viewHolder.txt_jobNotification.setText(title+"/"+title1);
+        }
+        else{
+        viewHolder.txt_jobNotification.setText("No Title");}
 
     }
 

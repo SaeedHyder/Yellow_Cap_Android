@@ -2,6 +2,7 @@ package com.app.yellowcap.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +10,16 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.app.yellowcap.R;
-import com.app.yellowcap.entities.NewJobEnt;
+import com.app.yellowcap.entities.NewJobsEnt;
+import com.app.yellowcap.entities.NewJobsEnt;
+import com.app.yellowcap.entities.NotificationEnt;
+import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.helpers.UIHelper;
+import com.app.yellowcap.retrofit.GsonFactory;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.viewbinder.NewJobsitemBinder;
+import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
 
 import java.util.ArrayList;
@@ -20,6 +27,11 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.app.yellowcap.R.string.call;
 
 /**
  * Created by saeedhyder on 5/22/2017.
@@ -30,8 +42,11 @@ public class NewJobsFragment extends BaseFragment {
     @BindView(R.id.lv_NewJobs)
     ListView lv_NewJobs;
 
-    private ArrayListAdapter<NewJobEnt> adapter;
-    private ArrayList<NewJobEnt> userCollection ;
+    @BindView(R.id.txt_no_data)
+    AnyTextView txtNoData;
+
+    private ArrayListAdapter<NewJobsEnt> adapter;
+    private ArrayList<NewJobsEnt> userCollection ;
 
     Unbinder unbinder;
 
@@ -42,7 +57,7 @@ public class NewJobsFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new ArrayListAdapter<NewJobEnt>(getDockActivity(), new NewJobsitemBinder());
+        adapter = new ArrayListAdapter<NewJobsEnt>(getDockActivity(), new NewJobsitemBinder());
     }
 
     @Nullable
@@ -64,10 +79,59 @@ public class NewJobsFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        setNotificationData();
+        getNewJobs();
         selectNewJobsListItem();
 
 
+
+    }
+
+    private void getNewJobs() {
+        loadingStarted();
+        Call<ResponseWrapper<ArrayList<NewJobsEnt>>> call = webService.newJobs(Integer.valueOf(prefHelper.getUserId()));
+
+        call.enqueue(new Callback<ResponseWrapper<ArrayList<NewJobsEnt>>>() {
+            @Override
+            public void onResponse(Call<ResponseWrapper<ArrayList<NewJobsEnt>>> call, Response<ResponseWrapper<ArrayList<NewJobsEnt>>> response) {
+                loadingFinished();
+                if (response.body().getResponse().equals("2000")) {
+                    setNewJobsData(response.body().getResult());
+                } else {
+                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWrapper<ArrayList<NewJobsEnt>>> call, Throwable t) {
+                loadingFinished();
+                Log.e("UserSignupFragment", t.toString());
+                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+            }
+        });
+
+    }
+
+
+    private void setNewJobsData(ArrayList<NewJobsEnt> result) {
+        if (result.size() <= 0) {
+            txtNoData.setVisibility(View.VISIBLE);
+            lv_NewJobs.setVisibility(View.GONE);
+        } else {
+            txtNoData.setVisibility(View.GONE);
+            lv_NewJobs.setVisibility(View.VISIBLE);
+        }
+        userCollection = new ArrayList<>();
+        userCollection.addAll(result);
+
+        bindData(userCollection);
+    }
+
+    private void bindData(ArrayList<NewJobsEnt> userCollection) {
+
+        adapter.clearList();
+        lv_NewJobs.setAdapter(adapter);
+        adapter.addAll(userCollection);
+        adapter.notifyDataSetChanged();
     }
 
     private void selectNewJobsListItem() {
@@ -76,27 +140,10 @@ public class NewJobsFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                getDockActivity().replaceDockableFragment(NewJobDetail.newInstance(), "NewJobDetail");
+               getDockActivity().addDockableFragment(NewJobDetail.newInstance(userCollection.get(position)), "NewJobDetail");
             }
         });
 
-    }
-
-    private void setNotificationData() {
-        userCollection = new ArrayList<>();
-        userCollection.add(new NewJobEnt("drawable://" + R.drawable.itemlogo, "Failure In Ac Unit", "drawable://" + R.drawable.next));
-        userCollection.add(new NewJobEnt("drawable://" + R.drawable.itemlogo, "Failure In Ac Unit", "drawable://" + R.drawable.next));
-        userCollection.add(new NewJobEnt("drawable://" + R.drawable.itemlogo, "Failure In Ac Unit", "drawable://" + R.drawable.next));
-
-        bindData(userCollection);
-    }
-
-    private void bindData(ArrayList<NewJobEnt> userCollection) {
-
-        adapter.clearList();
-        lv_NewJobs.setAdapter(adapter);
-        adapter.addAll(userCollection);
-        adapter.notifyDataSetChanged();
     }
 
     @Override

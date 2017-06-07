@@ -12,18 +12,13 @@ import com.app.yellowcap.activities.DockActivity;
 import com.app.yellowcap.entities.InProgressChildEnt;
 import com.app.yellowcap.entities.InProgressParentEnt;
 import com.app.yellowcap.fragments.EditJobTechFragment;
-import com.app.yellowcap.fragments.HomeFragment;
 import com.app.yellowcap.interfaces.CallUser;
 import com.app.yellowcap.interfaces.MarkAsComplete;
 import com.app.yellowcap.ui.viewbinders.abstracts.ExpandableListViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.app.yellowcap.R.id.view;
 
 /**
  * Created by saeedhyder on 6/6/2017.
@@ -36,41 +31,40 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<InProgressP
     MarkAsComplete complete;
 
 
-
-
-    public InprogressExpandBinder(DockActivity context,CallUser callUser,MarkAsComplete complete) {
+    public InprogressExpandBinder(DockActivity context, CallUser callUser, MarkAsComplete complete) {
 
         super(R.layout.inprogress_tech_parent, R.layout.inprogress_chlid);
         this.context = context;
-        this.callUser=callUser;
-        this.complete=complete;
+        this.callUser = callUser;
+        this.complete = complete;
 
     }
-
-
 
 
     @Override
     public BaseGroupViewHolder createGroupViewHolder(View view) {
-        return new InprogressExpandBinder.parentViewHolder(view);
+        return new parentViewHolder(view);
     }
 
     @Override
     public BaseGroupViewHolder createChildViewHolder(View view) {
-        return new InprogressExpandBinder.childViewHolder(view);
+        return new childViewHolder(view);
     }
 
     @Override
     public void bindGroupView(InProgressParentEnt entity, int position, int grpPosition, int childCount, View view, Activity activity) {
 
-        InprogressExpandBinder.parentViewHolder parentViewHolder = (InprogressExpandBinder.parentViewHolder) view.getTag();
+        parentViewHolder parentViewHolder = (InprogressExpandBinder.parentViewHolder) view.getTag();
 
-        if(childCount <= 0)
-        {
+        if (childCount <= 0) {
+            parentViewHolder.hideView.setVisibility(View.GONE);
+            parentViewHolder.llEstimatedQuotation.setVisibility(View.GONE);
             parentViewHolder.llBottomBtns.setVisibility(View.VISIBLE);
+        } else {
+            parentViewHolder.hideView.setVisibility(View.VISIBLE);
+            parentViewHolder.llEstimatedQuotation.setVisibility(View.VISIBLE);
+            parentViewHolder.llBottomBtns.setVisibility(View.GONE);
         }
-        else
-        { parentViewHolder.llBottomBtns.setVisibility(View.GONE);}
         parentViewHolder.txtJobNoText.setText(entity.getJob());
         parentViewHolder.txtJobPostedText.setText(entity.getJobPosted());
         parentViewHolder.txtClientNameText.setText(entity.getClientName());
@@ -117,12 +111,20 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<InProgressP
         parentViewHolder.txtJobTitle.setTypeface(null, Typeface.BOLD);
         parentViewHolder.txtEarning.setTypeface(null, Typeface.BOLD);
         parentViewHolder.txtAddress.setTypeface(null, Typeface.BOLD);
+        parentViewHolder.txtEstimatedQuotation.setTypeface(null, Typeface.BOLD);
+
     }
 
     @Override
-    public void bindChildView(InProgressChildEnt entity, int position, int grpPosition, View view, Activity activity) {
+    public void bindChildView(InProgressChildEnt entity, int position, int grpPosition, int childCount, View view, Activity activity) {
 
-        InprogressExpandBinder.childViewHolder childViewHolder = (InprogressExpandBinder.childViewHolder) view.getTag();
+        childViewHolder childViewHolder = (InprogressExpandBinder.childViewHolder) view.getTag();
+
+        if (position == childCount - 1) {
+            childViewHolder.llBottomEarning.setVisibility(View.VISIBLE);
+        } else {
+            childViewHolder.llBottomEarning.setVisibility(View.GONE);
+        }
 
         childViewHolder.txtJob1.setText(entity.getTxt_job());
         childViewHolder.txtAddEarningText.setText(entity.getEarning());
@@ -142,6 +144,15 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<InProgressP
             }
         });
 
+        setTextStyleChild(childViewHolder);
+
+
+    }
+
+    private void setTextStyleChild(childViewHolder childViewHolder) {
+
+        childViewHolder.txtTotalEarning.setTypeface(null, Typeface.BOLD);
+        childViewHolder.txtAddEarning.setTypeface(null, Typeface.BOLD);
 
     }
 
@@ -185,7 +196,7 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<InProgressP
         AnyTextView txtAddressText;
         @BindView(R.id.ll_Address)
         LinearLayout llAddress;
-       @BindView(R.id.btn_callUser)
+        @BindView(R.id.btn_callUser)
         Button btnCallUser;
         @BindView(R.id.btn_addJob)
         Button btnAddJob;
@@ -197,13 +208,21 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<InProgressP
         View txtLine;
         @BindView(R.id.ll_BottomBtns)
         LinearLayout llBottomBtns;
+        @BindView(R.id.hideView)
+        View hideView;
+        @BindView(R.id.txt_EstimatedQuotation)
+        AnyTextView txtEstimatedQuotation;
+        @BindView(R.id.txt_EstimatedQuotationText)
+        AnyTextView txtEstimatedQuotationText;
+        @BindView(R.id.ll_EstimatedQuotation)
+        LinearLayout llEstimatedQuotation;
 
         parentViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
     }
 
-    public static class childViewHolder extends BaseGroupViewHolder{
+    public static class childViewHolder extends BaseGroupViewHolder {
         @BindView(R.id.iv_editJobBtn)
         ImageView ivEditJobBtn;
         @BindView(R.id.ll_profileItems)
@@ -234,9 +253,14 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<InProgressP
         LinearLayout llBottombuttons;
         @BindView(R.id.ll_AdditionalJob)
         LinearLayout llAdditionalJob;
+        @BindView(R.id.ll_BottomEarning)
+        LinearLayout llBottomEarning;
 
         childViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
     }
+
+
+
 }

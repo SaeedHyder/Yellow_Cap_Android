@@ -17,7 +17,9 @@ import android.widget.TimePicker;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.entities.JobRequestEnt;
+import com.app.yellowcap.entities.NewJobsEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
+import com.app.yellowcap.entities.serviceList;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.helpers.DateHelper;
 import com.app.yellowcap.helpers.DialogHelper;
@@ -31,9 +33,9 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -109,11 +111,40 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
     Button btnReject;
     @BindView(R.id.ll_buttons)
     LinearLayout llButtons;
+    @BindView(R.id.mainFrame)
+    LinearLayout mainFrame;
     private AnyTextView arriveTime;
     private AnyTextView completeTime;
 
+    final static String NEWJOB = "NEWJOB";
+    String newJobString;
+    NewJobsEnt newJobJson;
+
     public static NewJobDetail newInstance() {
         return new NewJobDetail();
+    }
+
+    public static NewJobDetail newInstance(NewJobsEnt newJobsEnt) {
+
+        Bundle args = new Bundle();
+        args.putString(NEWJOB, new Gson().toJson(newJobsEnt));
+        NewJobDetail fragment = new NewJobDetail();
+        fragment.setArguments(args);
+        return fragment;
+
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            newJobString = getArguments().getString(NEWJOB);
+            // Toast.makeText(getDockActivity(), ConversationId, Toast.LENGTH_LONG).show();
+        }
+        if (!NEWJOB.isEmpty()) {
+            newJobJson = new Gson().fromJson(newJobString, NewJobsEnt.class);
+
+        }
     }
 
     @Nullable
@@ -133,10 +164,28 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        txtPreferredDateTime.setText("22 Feb 2017"+"    "+"  02:30 PM");
+
+        setJobDetail();
         setListners();
         setImageGallery();
         setTextStyle();
+
+    }
+
+    private void setJobDetail() {
+        txtJobName.setText(newJobJson.getRequest_detail().getService_detail().getTitle());
+        if(newJobJson.getUser_detail()!=null){
+        txtCustomerName.setText(newJobJson.getUser_detail().getFull_name());}
+        else{
+            txtCustomerName.setText(" ");
+        }
+        txtEstimatedQuote.setText("Between AED " + newJobJson.getRequest_detail().getEstimate_to() + " to " + newJobJson.getRequest_detail().getEstimate_from() + "- COD");
+        //SERVICE remaining
+        txtAddress.setText(newJobJson.getRequest_detail().getAddress());
+        txtDescription.setText(newJobJson.getRequest_detail().getDiscription());
+        txtPreferredDateTime.setText(newJobJson.getRequest_detail().getDate() + "  " + newJobJson.getRequest_detail().getTime());
+        txtPreferredDateTime.setText("22 Feb 2017" + "    " + "  02:30 PM");
+
 
     }
 
@@ -157,14 +206,13 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
 
     private void setImageGallery() {
 
-        ArrayList<Integer> arrayList = new ArrayList<Integer>();
+        /*ArrayList<Integer> arrayList = new ArrayList<Integer>();
         arrayList.add(0, R.drawable.plumber1);
         arrayList.add(1, R.drawable.plumber2);
         arrayList.add(2, R.drawable.plumber3);
         arrayList.add(3, R.drawable.plumber4);
         arrayList.add(4, R.drawable.plumber2);
-
-        for (Integer image : arrayList) {
+           for (Integer image : arrayList) {
             DefaultSliderView textSliderView = new DefaultSliderView(getDockActivity());
             // initialize a SliderLayout
             textSliderView
@@ -177,8 +225,28 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
             textSliderView.getBundle()
                     .putString("extra", image + "");
 
-            imageSlider.addSlider(textSliderView);
+            imageSlider.addSlider(textSliderView); }*/
+        try {
+
+            for (serviceList item : newJobJson.getRequest_detail().getServics_list()) {
+                DefaultSliderView textSliderView = new DefaultSliderView(getDockActivity());
+                // initialize a SliderLayout
+                textSliderView
+                        .image(item.getService_detail().getService_image())
+                        .setScaleType(BaseSliderView.ScaleType.Fit)
+                        .setOnSliderClickListener(this);
+
+                //add your extra information
+                textSliderView.bundle(new Bundle());
+                textSliderView.getBundle()
+                        .putString("extra", item.getService_detail().getService_image() + "");
+
+                imageSlider.addSlider(textSliderView);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
 
         imageSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
         imageSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
@@ -229,20 +297,19 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                             } else {
                                 textView.setText(timePicker.getTime(hourOfDay, minute));
                             }
-                        }
-                     else {
-                        if (!arriveTime.getText().toString().isEmpty()) {
-                            SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm a");
+                        } else {
+                            if (!arriveTime.getText().toString().isEmpty()) {
+                                SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm a");
                                 Date date = parseFormat.parse(arriveTime.getText().toString());
                                 if (!DateHelper.isTimeAfter(date.getHours(), date.getMinutes(), hourOfDay, minute)) {
                                     UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.time_error));
                                 } else {
                                     textView.setText(timePicker.getTime(hourOfDay, minute));
                                 }
-                        } else {
-                            UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.arrive_time_error));
+                            } else {
+                                UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.arrive_time_error));
+                            }
                         }
-                    }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -260,7 +327,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
             case btn_accept:
 
                 final DialogHelper JobDetailDialog = new DialogHelper(getDockActivity());
-              Dialog dialog = JobDetailDialog.initJobDetailDialog(R.layout.new_job_detail_dialog, new View.OnClickListener() {
+                Dialog dialog = JobDetailDialog.initJobDetailDialog(R.layout.new_job_detail_dialog, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (arriveTime != null && completeTime != null) {
@@ -270,11 +337,10 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                             } else if (completeTime.getText().toString().isEmpty()) {
                                 UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.complete_time_error));
                             } else {
-                                jobAccept(arriveTime,completeTime,JobDetailDialog);
+                                jobAccept(arriveTime, completeTime, JobDetailDialog);
 
                             }
                         }
-
 
 
                     }
@@ -305,7 +371,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                 RefusalDialog.initJobRefusalDialog(R.layout.job_refusal_dialog, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        jobReject(RefusalDialog.getEditText(R.id.ed_msg),RefusalDialog);
+                        jobReject(RefusalDialog.getEditText(R.id.ed_msg), RefusalDialog);
 
                         //RefusalDialog.hideDialog();
                     }
@@ -322,39 +388,38 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
 
     private void jobReject(String reason, final DialogHelper refusalDialog) {
 
-        if(!reason.equals("")){
-        getDockActivity().onLoadingStarted();
-        Call<ResponseWrapper<JobRequestEnt>> call= webService.rejectJob(2, 33,43,2,reason);
-        call.enqueue(new Callback<ResponseWrapper<JobRequestEnt>>() {
-            @Override
-            public void onResponse(Call<ResponseWrapper<JobRequestEnt>> call, Response<ResponseWrapper<JobRequestEnt>> response) {
-                getDockActivity().onLoadingFinished();
-                if (response.body().getResponse().equals("2000")) {
-                    refusalDialog.hideDialog();
-                    getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
+        if (!reason.equals("")) {
+            getDockActivity().onLoadingStarted();
+            Call<ResponseWrapper<JobRequestEnt>> call = webService.rejectJob(newJobJson.getId(), newJobJson.getTechnician_id(), newJobJson.getRequest_id(), 2, reason);
+            call.enqueue(new Callback<ResponseWrapper<JobRequestEnt>>() {
+                @Override
+                public void onResponse(Call<ResponseWrapper<JobRequestEnt>> call, Response<ResponseWrapper<JobRequestEnt>> response) {
+                    getDockActivity().onLoadingFinished();
+                    if (response.body().getResponse().equals("2000")) {
+                        refusalDialog.hideDialog();
+                        getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
 
-                } else {
-                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                    } else {
+                        UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ResponseWrapper<JobRequestEnt>> call, Throwable t) {
-                getDockActivity().onLoadingFinished();
-                Log.e("EntryCodeFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
-            }
-        });}
-        else
-        {
-            UIHelper.showShortToastInCenter(getDockActivity(),"Enter the Reason");
+                @Override
+                public void onFailure(Call<ResponseWrapper<JobRequestEnt>> call, Throwable t) {
+                    getDockActivity().onLoadingFinished();
+                    Log.e("EntryCodeFragment", t.toString());
+                    UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                }
+            });
+        } else {
+            UIHelper.showShortToastInCenter(getDockActivity(), "Enter the Reason");
         }
 
     }
 
     private void jobAccept(AnyTextView arriveTime, AnyTextView completeTime, final DialogHelper jobDetailDialog) {
         getDockActivity().onLoadingStarted();
-        Call<ResponseWrapper<JobRequestEnt>> call= webService.acceptJob(2, 33,43,1,arriveTime.getText().toString(),completeTime.getText().toString());
+        Call<ResponseWrapper<JobRequestEnt>> call = webService.acceptJob(newJobJson.getId(), newJobJson.getTechnician_id(), newJobJson.getRequest_id(), 1, arriveTime.getText().toString(), completeTime.getText().toString());
         call.enqueue(new Callback<ResponseWrapper<JobRequestEnt>>() {
             @Override
             public void onResponse(Call<ResponseWrapper<JobRequestEnt>> call, Response<ResponseWrapper<JobRequestEnt>> response) {

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 
 import com.app.yellowcap.ui.viewbinders.abstracts.ExpandableListViewBinder;
 
@@ -16,16 +17,19 @@ public class ArrayListExpandableAdapter<T, E> extends BaseExpandableListAdapter 
 
     protected ExpandableListViewBinder<T, E> viewBinder;
 
+    protected ExpandableListView elvInprogress;
+
 
     private ArrayList<T> headerCollection = new ArrayList<>();
     private HashMap<T, ArrayList<E>> ChildCollection = new HashMap<>();
 
     public ArrayListExpandableAdapter(Activity context, ArrayList<T> headerCollection, HashMap<T, ArrayList<E>> listDataChild,
-                                      ExpandableListViewBinder<T, E> viewBinder) {
+                                      ExpandableListViewBinder<T, E> viewBinder, ExpandableListView elvInprogress) {
         mContext = context;
         this.headerCollection = headerCollection;
         this.ChildCollection = listDataChild;
         this.viewBinder = viewBinder;
+        this.elvInprogress=elvInprogress;
 
     }
 
@@ -74,7 +78,7 @@ public class ArrayListExpandableAdapter<T, E> extends BaseExpandableListAdapter 
 
         final E childItem = (E) getChild(groupPosition, childPosition);
 
-        viewBinder.bindChildView(childItem, childPosition, 0, convertView, mContext);
+        viewBinder.bindChildView(childItem, childPosition, 0,this.ChildCollection.get(this.headerCollection.get(groupPosition)).size(), convertView, mContext);
 
         return convertView;
 
@@ -92,6 +96,8 @@ public class ArrayListExpandableAdapter<T, E> extends BaseExpandableListAdapter 
         }
 
         T groupItem = (T) getGroup(groupPosition);
+
+        elvInprogress.expandGroup(groupPosition);
         viewBinder.bindGroupView(groupItem, groupPosition, 0, this.ChildCollection.get(this.headerCollection.get(groupPosition)).size(),  convertView, mContext);
 
         return convertView;

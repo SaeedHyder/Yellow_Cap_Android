@@ -124,7 +124,7 @@
     <string name="about_app">About App</string>
     <string name="job_completed">Job Completed:</string>
     <string name="client_name">Client Name:</string>
-    <string name="job_title">Job Title:</string>
+    <string name="job_title">Job:</string>
     <string name="earning_cod">Earning (COD):</string>
     <string name="rating">Rating:</string>
     <string name="my_profile">My Profile</string>
@@ -250,7 +250,7 @@
     <string name="profile_pic_error">Select Profile Picture</string>
     <string name="imagelimit_error">You have Reached the limit of 5 Images</string>
     <string name="job_posted_label">Job Posted : </string>
-
+    <string name="Estimated_Quotation">Estimated Quotation</string>
 
 
 </resources>

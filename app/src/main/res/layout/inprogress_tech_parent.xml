@@ -138,6 +138,37 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_EstimatedQuotation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginRight="@dimen/x20"
+        android:layout_marginBottom="@dimen/x3"
+        android:orientation="horizontal">
+
+
+        <com.app.yellowcap.ui.views.AnyTextView
+            android:id="@+id/txt_EstimatedQuotation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Estimated_Quotation"
+            android:layout_marginRight="@dimen/x8"
+            android:textColor="@color/lightBlack"
+            android:textSize="@dimen/x15"
+            app:typeface="Roboto-Regular.ttf"/>
+
+        <com.app.yellowcap.ui.views.AnyTextView
+            android:id="@+id/txt_EstimatedQuotationText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Between AED 100 to 150"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/x15"
+            app:typeface="Roboto-Regular.ttf" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/ll_Earning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -198,6 +229,13 @@
             app:typeface="Roboto-Regular.ttf"/>
 
     </LinearLayout>
+    <View
+        android:id="@+id/hideView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:layout_marginTop="@dimen/x5"
+        android:alpha="0.6"
+        android:background="@drawable/text" />
 
     <LinearLayout
         android:id="@+id/ll_BottomBtns"
@@ -257,7 +295,7 @@
             android:id="@+id/txt_line"
             android:layout_width="match_parent"
             android:layout_height="@dimen/x1"
-            android:layout_marginBottom="@dimen/x3"
+
             android:layout_marginLeft="@dimen/x10"
             android:layout_marginRight="@dimen/x10"
             android:layout_marginTop="@dimen/x10"

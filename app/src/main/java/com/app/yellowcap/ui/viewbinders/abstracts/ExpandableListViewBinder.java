@@ -53,7 +53,7 @@ public abstract class ExpandableListViewBinder<T,E> {
      * @param activity
      */
     public abstract void bindGroupView(T entity, int position, int grpPosition, int childCount,  View view, Activity activity);
-    public abstract void bindChildView(E entity, int position, int grpPosition, View view, Activity activity);
+    public abstract void bindChildView(E entity, int position, int grpPosition, int size, View view, Activity activity);
 
     protected static class BaseGroupViewHolder {
 
