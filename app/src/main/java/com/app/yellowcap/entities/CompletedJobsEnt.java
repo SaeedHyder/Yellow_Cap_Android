@@ -2,9 +2,6 @@ package com.app.yellowcap.entities;
 
 import com.app.yellowcap.ui.views.AnyTextView;
 
-/**
- * Created by saeedhyder on 5/22/2017.
- */
 
 public class CompletedJobsEnt {
 
