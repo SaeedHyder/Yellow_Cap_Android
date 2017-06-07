@@ -48,7 +48,7 @@ public class UserNotificationsFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new ArrayListAdapter<NotificationEnt>(getDockActivity(), new UserNotificationitemBinder(getDockActivity()));
+        adapter = new ArrayListAdapter<NotificationEnt>(getDockActivity(), new UserNotificationitemBinder(getDockActivity(),webService,prefHelper));
     }
 
     @Override

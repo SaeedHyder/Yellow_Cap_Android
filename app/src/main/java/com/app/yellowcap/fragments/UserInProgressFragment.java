@@ -176,8 +176,9 @@ public class UserInProgressFragment extends BaseFragment implements CallUser, on
             @Override
             public void onResponse(Call<ResponseWrapper<RequestEnt>> call, Response<ResponseWrapper<RequestEnt>> response) {
                 getDockActivity().onLoadingFinished();
+                dialogHelper.hideDialog();
                 if (response.body().getResponse().equals("2000")) {
-                    dialogHelper.hideDialog();
+
                     getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
                 } else {
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());

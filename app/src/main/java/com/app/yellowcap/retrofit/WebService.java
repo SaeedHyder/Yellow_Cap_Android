@@ -8,12 +8,9 @@ import com.app.yellowcap.entities.RequestEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.ServiceEnt;
 import com.app.yellowcap.entities.StaticPageEnt;
-
 import com.app.yellowcap.entities.UserComleteJobsEnt;
 import com.app.yellowcap.entities.UserInProgressEnt;
-
 import com.app.yellowcap.entities.countEnt;
-
 
 import java.util.ArrayList;
 
@@ -33,7 +30,7 @@ public interface WebService {
     @FormUrlEncoded
     @POST("user/register")
     Call<ResponseWrapper<RegistrationResultEnt>> registerUser(@Field("full_name") String userName,
-                                                @Field("phone_no") String UserPhone);
+                                                              @Field("phone_no") String UserPhone);
 
     @FormUrlEncoded
     @POST("notification/updatedevicetoken")
@@ -91,72 +88,75 @@ public interface WebService {
                                                     @Part ArrayList<MultipartBody.Part> images
 
     );
+
     @GET("request/userinprogress")
-    Call<ResponseWrapper<ArrayList<UserInProgressEnt>>>getUserInprogress(@Query("user_id")String userID);
+    Call<ResponseWrapper<ArrayList<UserInProgressEnt>>> getUserInprogress(@Query("user_id") String userID);
 
     @GET("request/usercompletejob")
-    Call<ResponseWrapper<ArrayList<UserComleteJobsEnt>>>getUserCompleted(@Query("user_id")String userID);
+    Call<ResponseWrapper<ArrayList<UserComleteJobsEnt>>> getUserCompleted(@Query("user_id") String userID);
+
     @Multipart
     @POST("request/editbyuser")
     Call<ResponseWrapper<RequestEnt>> editUserRequest(@Part("user_id") RequestBody userID,
                                                       @Part("request_id") RequestBody request_id,
-                                                    @Part("service_id") RequestBody service_id,
-                                                    @Part("services_ids") RequestBody services_ids,
-                                                    @Part("discription") RequestBody discription,
-                                                    @Part("address") RequestBody address,
-                                                    @Part("full_address") RequestBody full_address,
-                                                    @Part("date") RequestBody date,
-                                                    @Part("time") RequestBody time,
-                                                    @Part("payment_type") RequestBody payment_type,
-                                                    @Part("status") RequestBody status,
-                                                    @Part ArrayList<MultipartBody.Part> images
+                                                      @Part("service_id") RequestBody service_id,
+                                                      @Part("services_ids") RequestBody services_ids,
+                                                      @Part("discription") RequestBody discription,
+                                                      @Part("address") RequestBody address,
+                                                      @Part("full_address") RequestBody full_address,
+                                                      @Part("date") RequestBody date,
+                                                      @Part("time") RequestBody time,
+                                                      @Part("payment_type") RequestBody payment_type,
+                                                      @Part("status") RequestBody status,
+                                                      @Part ArrayList<MultipartBody.Part> images
 
     );
+
     @FormUrlEncoded
     @POST("request/status")
-    Call<ResponseWrapper<RequestEnt>> changeStatus(@Field("user_id")String userID,
-                                                   @Field("request_id")Integer RequestID,
-                                                   @Field("message")String message,
-                                                   @Field("status")Integer Status);
-
+    Call<ResponseWrapper<RequestEnt>> changeStatus(@Field("user_id") String userID,
+                                                   @Field("request_id") Integer RequestID,
+                                                   @Field("message") String message,
+                                                   @Field("status") Integer Status);
 
 
     @FormUrlEncoded
     @POST(" request/technicianrequeststatus")
-    Call<ResponseWrapper<JobRequestEnt>> acceptJob(@Field("assign_id")String assign_id,
-                                                   @Field("technician_id")String technician_id,
-                                                   @Field("request_id")String request_id,
-                                                   @Field("status")Integer status,
-                                                   @Field("arrival_time")String arrival_time,
-                                                   @Field("completion_time")String completion_time);
+    Call<ResponseWrapper<JobRequestEnt>> acceptJob(@Field("assign_id") String assign_id,
+                                                   @Field("technician_id") String technician_id,
+                                                   @Field("request_id") String request_id,
+                                                   @Field("status") Integer status,
+                                                   @Field("arrival_time") String arrival_time,
+                                                   @Field("completion_time") String completion_time);
 
     @FormUrlEncoded
     @POST(" request/technicianrequeststatus")
-    Call<ResponseWrapper<JobRequestEnt>> rejectJob(@Field("assign_id")String assign_id,
-                                                   @Field("technician_id")String technician_id,
-                                                   @Field("request_id")String request_id,
-                                                   @Field("status")Integer status,
-                                                   @Field("message")String message
-                                                  );
+    Call<ResponseWrapper<JobRequestEnt>> rejectJob(@Field("assign_id") String assign_id,
+                                                   @Field("technician_id") String technician_id,
+                                                   @Field("request_id") String request_id,
+                                                   @Field("status") Integer status,
+                                                   @Field("message") String message
+    );
 
     @FormUrlEncoded
     @POST("request/markcomplte")
-    Call<ResponseWrapper<JobRequestEnt>> markComplete(@Field("assign_id")Integer assign_id,
-                                                   @Field("technician_id")Integer technician_id,
-                                                   @Field("request_id")Integer request_id,
-                                                   @Field("finish")Integer finish);
+    Call<ResponseWrapper<JobRequestEnt>> markComplete(@Field("assign_id") Integer assign_id,
+                                                      @Field("technician_id") Integer technician_id,
+                                                      @Field("request_id") Integer request_id,
+                                                      @Field("finish") Integer finish);
 
     @GET("notification/count/{user_id}")
     Call<ResponseWrapper<countEnt>> getNotificationCount(
             @Path("user_id") String user_id);
+
     @FormUrlEncoded
     @POST("technician/feedback")
-    Call<ResponseWrapper>sendFeedback(@Field("user_id")String user_id,
-                                      @Field("request_id")String request_id,
-                                      @Field("technician_id")String technician_id,
-                                      @Field("rate")String rate,
-                                      @Field("feedback")String feedback,
-                                      @Field("tip_technician")String tip_technician
-                                     );
+    Call<ResponseWrapper> sendFeedback(@Field("user_id") String user_id,
+                                       @Field("request_id") String request_id,
+                                       @Field("technician_id") String technician_id,
+                                       @Field("rate") String rate,
+                                       @Field("feedback") String feedback,
+                                       @Field("tip_technician") String tip_technician
+    );
 
 }

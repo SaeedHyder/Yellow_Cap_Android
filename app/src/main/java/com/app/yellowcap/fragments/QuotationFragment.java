@@ -143,11 +143,11 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
     private void setData() {
         if (QuotationData != null) {
             txtJobNumber.setText(String.valueOf(QuotationData.getRequestDetail().getId()));
-            txtJobTitle.setText(QuotationData.getRequestDetail().getMessage());
+           // txtJobTitle.setText(QuotationData.getRequestDetail().getServiceDetail().getTitle());
             txtPaymentMode.setText(QuotationData.getRequestDetail().getPaymentType());
-            txtUserAddress.setText(QuotationData.getRecieverDetail().getAddress() + " " + QuotationData.getRequestDetail().getFullAddress());
-            txtEstimatedQuote.setText("Between AED " + QuotationData.getRequestDetail().getEstimateTo()
-                    + " to " + QuotationData.getRequestDetail().getEstimateFrom());
+            txtUserAddress.setText(QuotationData.getRequestDetail().getAddress() + " " + QuotationData.getRequestDetail().getFullAddress());
+            txtEstimatedQuote.setText("Between AED " + QuotationData.getRequestDetail().getEstimateFrom()
+                    + " to " + QuotationData.getRequestDetail().getEstimateTo());
         }
     }
 
@@ -183,8 +183,8 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
             @Override
             public void onResponse(Call<ResponseWrapper<RequestEnt>> call, Response<ResponseWrapper<RequestEnt>> response) {
                 getDockActivity().onLoadingFinished();
+                dialog.hideDialog();
                 if (response.body().getResponse().equals("2000")) {
-                    dialog.hideDialog();
                     getMainActivity().popBackStackTillEntry(0);
                     getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(), "UserJobsFragment");
                 } else {

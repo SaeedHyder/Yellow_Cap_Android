@@ -43,16 +43,16 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
     public void bindView(final UserInProgressEnt entity, final int position, int grpPosition, View view, Activity activity) {
         InProgressViewHolder viewHolder = (InProgressViewHolder) view.getTag();
         if (entity.getAssignTechnician().size() > 0) {
-            viewHolder.txtTechNameText.setText(entity.getAssignTechnician().get(0).getFullName());
-            viewHolder.txtNumberText.setText(entity.getAssignTechnician().get(0).getPhoneNo());
-            if (!entity.getAssignTechnician().get(0).getPhoneNo().equals("")) {
+            viewHolder.txtTechNameText.setText(entity.getAssignTechnician().get(0).getTechnicianDetail().getFullName());
+            viewHolder.txtNumberText.setText(entity.getAssignTechnician().get(0).getTechnicianDetail().getPhoneNo());
+            if (!entity.getAssignTechnician().get(0).getTechnicianDetail().getPhoneNo().equals("")) {
                 viewHolder.btnCallUser.setBackground(context.getResources().getDrawable(R.drawable.button_background));
             } else {
                 viewHolder.btnCallUser.setBackground(context.getResources().getDrawable(R.drawable.button_blackbackground));
             }
         }
         if (entity.getServicsList().size() > 0)
-            viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getTitle());
+            viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getTitle());
         viewHolder.txtAmountText.setText(entity.getTotal());
 
 
@@ -74,8 +74,8 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
             @Override
             public void onClick(View v) {
                 if (entity.getAssignTechnician().size() > 0) {
-                    if (!entity.getAssignTechnician().get(0).getPhoneNo().equals("")) {
-                      callUser.CallOnUserNumber(entity.getAssignTechnician().get(0).getPhoneNo());
+                    if (!entity.getAssignTechnician().get(0).getTechnicianDetail().getPhoneNo().equals("")) {
+                      callUser.CallOnUserNumber(entity.getAssignTechnician().get(0).getTechnicianDetail().getPhoneNo());
                     } else {
                         UIHelper.showShortToastInCenter(context, "We will soon assign you a Technician");
                     }
