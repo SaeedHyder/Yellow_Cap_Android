@@ -250,7 +250,9 @@
     <string name="profile_pic_error">Select Profile Picture</string>
     <string name="imagelimit_error">You have Reached the limit of 5 Images</string>
     <string name="job_posted_label">Job Posted : </string>
-
+    <string name="no_technician_error">No Technician Assign</string>
+    <string name="assignText">We will soon assign you a Technician</string>
+    <string name="no_number_tech">0000000000</string>
 
 
 </resources>

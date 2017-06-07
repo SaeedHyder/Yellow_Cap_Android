@@ -76,6 +76,7 @@ public class EntryCodeFragment extends BaseFragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_submit_code:
+                loadingStarted();
                 verifyCode();
                 break;
         }
@@ -89,6 +90,7 @@ public class EntryCodeFragment extends BaseFragment implements View.OnClickListe
             call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
                 @Override
                 public void onResponse(Call<ResponseWrapper<RegistrationResultEnt>> call, Response<ResponseWrapper<RegistrationResultEnt>> response) {
+                   loadingFinished();
                     if (response.body().getResponse().equals("2000")) {
                         TokenUpdater.getInstance().UpdateToken(getDockActivity(),
                                 prefHelper.getUserId(),
@@ -106,11 +108,13 @@ public class EntryCodeFragment extends BaseFragment implements View.OnClickListe
 
                 @Override
                 public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
+                    loadingFinished();
                     Log.e("EntryCodeFragment", t.toString());
                     UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
                 }
             });
         } else {
+            loadingFinished();
             UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.valid_code_error));
         }
 

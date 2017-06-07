@@ -34,13 +34,13 @@ public class UserCompleteJobsBinder extends ViewBinder<UserComleteJobsEnt> {
     public void bindView(UserComleteJobsEnt entity, int position, int grpPosition, View view, Activity activity) {
         final ViewHolder viewHolder = (ViewHolder)view.getTag();
         viewHolder.txtJobNoText.setText(String.valueOf(entity.getId()));
-        viewHolder.txtJobTitleText.setText(entity.getServiceDetail().getTitle());
-        viewHolder.txtClientNameText.setText(entity.getAssignTechnician().get(0).getFullName());
+        viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getTitle());
+        viewHolder.txtClientNameText.setText(entity.getAssignTechnician().get(0).getTechnicianDetail().getFullName());
         viewHolder.txtEarningText.setText(entity.getTotal());
         String sourceString = "<b>" + "Description:" + "</b> " + entity.getDiscription();
         viewHolder.txtDescriptionText.setText(Html.fromHtml(sourceString));
-        UIHelper.showShortToastInCenter(view.getContext(),"Rating Not Available");
-     //  viewHolder.rbAddRating.setScore(entity.getAssignTechnician().get(0).);
+
+         viewHolder.rbAddRating.setScore(entity.getFeedbackdetail().getRate());
         viewHolder.rbAddRating.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {

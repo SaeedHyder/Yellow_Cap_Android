@@ -31,7 +31,7 @@ import retrofit2.Response;
  * Created on 5/24/2017.
  */
 
-public class UserCompleteJobs extends BaseFragment {
+public class UserCompleteJobsFragment extends BaseFragment {
     @BindView(R.id.txt_noresult)
     AnyTextView txtNoresult;
     @BindView(R.id.CompletedJobs_ListView)
@@ -41,8 +41,8 @@ public class UserCompleteJobs extends BaseFragment {
     private ArrayListAdapter<UserComleteJobsEnt> adapter;
     private ArrayList<UserComleteJobsEnt> userCollection = new ArrayList<>();
 
-    public static UserCompleteJobs newInstance() {
-        return new UserCompleteJobs();
+    public static UserCompleteJobsFragment newInstance() {
+        return new UserCompleteJobsFragment();
     }
 
     public SetOrderCounts getOrderCounts() {
@@ -110,12 +110,12 @@ public class UserCompleteJobs extends BaseFragment {
     private void setCompletedJobsData(ArrayList<UserComleteJobsEnt> result) {
         userCollection = new ArrayList<>();
 
-        if (result.size() < 0) {
+      /*  if (result.size() <= 0) {
             UIHelper.showShortToastInCenter(getDockActivity(), "No Data to Show");
         } else {
             CompletedJobsListView.setVisibility(View.GONE);
         }
-
+*/
         userCollection.addAll(result);
         orderCounts.setcompleteCount(result.size());
       /*  userCollection.add(new UserComleteJobsEnt("01", "24-3-17", "Al Musa", "Electrical", 4, "AED 55.00",getString(R.string.dummy_desciption)));

@@ -143,7 +143,7 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
     private void setData() {
         if (QuotationData != null) {
             txtJobNumber.setText(String.valueOf(QuotationData.getRequestDetail().getId()));
-           // txtJobTitle.setText(QuotationData.getRequestDetail().getServiceDetail().getTitle());
+            txtJobTitle.setText(QuotationData.getRequestDetail().getServiceDetail().getTitle());
             txtPaymentMode.setText(QuotationData.getRequestDetail().getPaymentType());
             txtUserAddress.setText(QuotationData.getRequestDetail().getAddress() + " " + QuotationData.getRequestDetail().getFullAddress());
             txtEstimatedQuote.setText("Between AED " + QuotationData.getRequestDetail().getEstimateFrom()

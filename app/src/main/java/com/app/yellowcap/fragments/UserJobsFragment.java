@@ -93,7 +93,7 @@ public class UserJobsFragment extends BaseFragment implements View.OnClickListen
         unbinder.unbind();
     }
 
-    private void ReplaceListViewFragment(UserCompleteJobs frag) {
+    private void ReplaceListViewFragment(UserCompleteJobsFragment frag) {
         frag.setOrderCounts(this);
         FragmentTransaction transaction = getChildFragmentManager()
                 .beginTransaction();
@@ -136,7 +136,7 @@ public class UserJobsFragment extends BaseFragment implements View.OnClickListen
                 selectedArrowInProgress.setVisibility(View.GONE);
                 txtJobCount.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.yellow));
                 txtInProgressCount.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.gray));
-                ReplaceListViewFragment(UserCompleteJobs.newInstance());
+                ReplaceListViewFragment(UserCompleteJobsFragment.newInstance());
                 break;
 
             case R.id.ll_InProgess:

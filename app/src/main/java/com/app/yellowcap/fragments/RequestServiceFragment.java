@@ -56,6 +56,7 @@ import com.jota.autocompletelocation.AutoCompleteLocation;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -184,6 +185,29 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(preferreddate, btnPreferreddate.getText().toString());
+        outState.putString(preferredtime, btnPreferredtime.getText().toString());
+
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            btnPreferredtime.setText(savedInstanceState.getString(preferredtime));
+            btnPreferreddate.setText(savedInstanceState.getString(preferreddate));
+        }
+
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.fragment_request_service;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_request_service, container, false);
@@ -191,24 +215,6 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
 
         return view;
-    }
-
-    private void initListViewAdapter() {
-      /*
-        selectedJobs.add("Total Electricity Failure/Break down");
-        selectedJobs.add("No Electricity in some Room");
-        selectedJobs.add("Repair Ac");
-        selectedJobs.add("Ac Not Working");*/
-
-        bindSelectedJobview(selectedJobs);
-    }
-
-    private void bindSelectedJobview(ArrayList<ServiceEnt> jobs) {
-        selectedJobsadapter.clearList();
-        listViewJobselected.setAdapter(selectedJobsadapter);
-        selectedJobsadapter.addAll(jobs);
-        selectedJobsadapter.notifyDataSetChanged();
-        setListViewHeightBasedOnChildren(listViewJobselected);
     }
 
     @Override
@@ -223,34 +229,80 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             setDataInAdapter(images);
             initJobTypeSpinner(TYPE);
             txtJobPosted.setText(getString(R.string.job_posted_label) +
-                    new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
+                    new SimpleDateFormat("dd-MM-yy").format(Calendar.getInstance().getTime()));
         }
 
 
     }
 
-    private void setDataInAdapter(ArrayList<String> ImageArray) {
+    private void initListViewAdapter() {
+      /*
+        selectedJobs.add("Total Electricity Failure/Break down");
+        selectedJobs.add("No Electricity in some Room");
+        selectedJobs.add("Repair Ac");
+        selectedJobs.add("Ac Not Working");*/
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getDockActivity(), LinearLayoutManager.HORIZONTAL, false);
-        addimages.setLayoutManager(layoutManager);
-        mAdapter = new RecyclerViewAdapterImages(ImageArray, getDockActivity(), this);
-       /* RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());*/
-        addimages.setLayoutManager(layoutManager);
-        addimages.setItemAnimator(new DefaultItemAnimator());
-        addimages.setAdapter(mAdapter);
+        bindSelectedJobview(selectedJobs);
+    }
 
+    private void setListener() {
+        btnPreferreddate.setOnClickListener(this);
+        btnPreferredtime.setOnClickListener(this);
+        btnAddimage.setOnClickListener(this);
+        btnCc.setOnClickListener(this);
+        btnCod.setOnClickListener(this);
+        btnRequest.setOnClickListener(this);
+        getMainActivity().setImageSetter(this);
+        edtLocationgps.setAutoCompleteTextListener(this);
+        imgGps.setOnClickListener(this);
     }
 
     @Override
-    protected int getLayout() {
-        return R.layout.fragment_request_service;
-    }
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_preferreddate:
+                initDatePicker(btnPreferreddate);
+                break;
+            case R.id.btn_preferredtime:
+                initTimePicker(btnPreferredtime);
+                break;
+            case R.id.btn_addimage:
+                if (images.size() > 4) {
+                    UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.imagelimit_error));
+                } else {
+                    CameraHelper.uploadMedia(getMainActivity());
+                }
 
-    /*@Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }*/
+                break;
+            case R.id.btn_cc:
+                paymentType = "credit";
+                setCCCheck();
+                CreditCardFragment fragment = CreditCardFragment.newInstance();
+                getDockActivity().addDockableFragment(fragment, "CreditCardFragment");
+                break;
+
+            case R.id.btn_cod:
+                paymentType = "cash";
+                setCODCheck();
+                break;
+            case R.id.btn_request:
+                if (validate()) {
+                    loadingStarted();
+                    CreateRequest();
+                }
+
+                break;
+            case R.id.img_gps:
+               /* if (getMainActivity().statusCheck()) {
+                    LocationModel locationModel = getMainActivity().getMyCurrentLocation();
+                    if (locationModel != null)
+                        edtLocationgps.setText(locationModel.getAddress());
+                }*/
+                getLocation(edtLocationgps);
+
+                break;
+        }
+    }
 
     private void initJobTypeSpinner(String type) {
         jobcollection = new ArrayList<>();
@@ -373,15 +425,15 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             btnPreferredtime.setText( new SimpleDateFormat("h:mm a").format(d1));*/
             btnPreferreddate.setText(previousRequestData.getDate());
             btnPreferredtime.setText(previousRequestData.getTime());
-            txtJobPosted.setText(getString(R.string.job_posted_label) + new SimpleDateFormat("yyyy-MM-dd").format(d2));
+            txtJobPosted.setText(getString(R.string.job_posted_label) + new SimpleDateFormat("dd-MM-yy").format(d2));
         } catch (Exception ex) {
             Logger.getLogger(RequestServiceFragment.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (previousRequestData.getPaymentType().equals("cc")) {
-            paymentType = "cc";
+        if (previousRequestData.getPaymentType().equals("credit")) {
+            paymentType = "credit";
             setCCCheck();
         } else {
-            paymentType = "cod";
+            paymentType = "cash";
             setCODCheck();
         }
 
@@ -419,18 +471,6 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         });
     }
 
-    private void setListener() {
-        btnPreferreddate.setOnClickListener(this);
-        btnPreferredtime.setOnClickListener(this);
-        btnAddimage.setOnClickListener(this);
-        btnCc.setOnClickListener(this);
-        btnCod.setOnClickListener(this);
-        btnRequest.setOnClickListener(this);
-        getMainActivity().setImageSetter(this);
-        edtLocationgps.setAutoCompleteTextListener(this);
-        imgGps.setOnClickListener(this);
-    }
-
     private void getLocation(AutoCompleteTextView textView) {
         if (getMainActivity().statusCheck()) {
             LocationModel locationModel = getMainActivity().getMyCurrentLocation();
@@ -439,53 +479,6 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             else {
                 getLocation(edtLocationgps);
             }
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_preferreddate:
-                initDatePicker(btnPreferreddate);
-                break;
-            case R.id.btn_preferredtime:
-                initTimePicker(btnPreferredtime);
-                break;
-            case R.id.btn_addimage:
-                if (images.size() > 4) {
-                    UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.imagelimit_error));
-                } else {
-                    CameraHelper.uploadMedia(getMainActivity());
-                }
-
-                break;
-            case R.id.btn_cc:
-                paymentType = "cc";
-                setCCCheck();
-                CreditCardFragment fragment = CreditCardFragment.newInstance();
-                getDockActivity().addDockableFragment(fragment, "CreditCardFragment");
-                break;
-
-            case R.id.btn_cod:
-                paymentType = "cod";
-                setCODCheck();
-                break;
-            case R.id.btn_request:
-                if (validate()) {
-                    loadingStarted();
-                    CreateRequest();
-                }
-
-                break;
-            case R.id.img_gps:
-               /* if (getMainActivity().statusCheck()) {
-                    LocationModel locationModel = getMainActivity().getMyCurrentLocation();
-                    if (locationModel != null)
-                        edtLocationgps.setText(locationModel.getAddress());
-                }*/
-                getLocation(edtLocationgps);
-
-                break;
         }
     }
 
@@ -499,11 +492,17 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         }
         String serviceIDS = StringUtils.join(selectedIDS, ",");
         ArrayList<MultipartBody.Part> files = new ArrayList<>();
+        int index = 0;
         for (String item : images
                 ) {
-            File file = new File(item);
-            files.add(MultipartBody.Part.createFormData("image[]",
-                    file.getName(), RequestBody.create(MediaType.parse("image/*"), file)));
+            if (!item.contains("http://")) {
+
+                File file = new File(item);
+                files.add(MultipartBody.Part.createFormData("images[]",
+                        file.getName(), RequestBody.create(MediaType.parse("image/*"), file)));
+
+            }
+            index++;
         }
         //MultipartBody.Part[] part = files.toArray();
         Call<ResponseWrapper<RequestEnt>> call;
@@ -562,18 +561,6 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         });
     }
 
-    private void setCCCheck() {
-
-        imgCcCheck.invalidate();
-        imgCcCheck.setVisibility(View.VISIBLE);
-        imgCodCheck.setVisibility(View.GONE);
-    }
-
-    private void setCODCheck() {
-        imgCcCheck.setVisibility(View.GONE);
-        imgCodCheck.setVisibility(View.VISIBLE);
-    }
-
     private boolean validate() {
         if (edtLocationgps.getText().toString().isEmpty()) {
             edtLocationgps.setError("Enter Address");
@@ -598,6 +585,18 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         }
     }
 
+    private void setCCCheck() {
+
+        imgCcCheck.invalidate();
+        imgCcCheck.setVisibility(View.VISIBLE);
+        imgCodCheck.setVisibility(View.GONE);
+    }
+
+    private void setCODCheck() {
+        imgCcCheck.setVisibility(View.GONE);
+        imgCodCheck.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void setTitleBar(TitleBar titleBar) {
         super.setTitleBar(titleBar);
@@ -605,31 +604,6 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         titleBar.hideButtons();
         titleBar.showBackButton();
         titleBar.setSubHeading(getString(R.string.request_setvice));
-    }
-
-    private void initTimePicker(final TextView textView) {
-        Calendar calendar = Calendar.getInstance();
-        final TimePickerHelper timePicker = new TimePickerHelper();
-        timePicker.initTimeDialog(getDockActivity(), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                Date date = new Date();
-                if (!DateHelper.isTimeAfter(date.getHours(), date.getMinutes(), hourOfDay, minute)) {
-                    UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.less_time_error));
-                } else {
-                    Calendar c = Calendar.getInstance();
-                    int year = c.get(Calendar.YEAR);
-                    int month = c.get(Calendar.MONTH);
-                    int day = c.get(Calendar.DAY_OF_MONTH);
-                    c.set(year, month, day, hourOfDay, minute);
-                    preTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(c.getTime());
-                    textView.setText(timePicker.getTime(hourOfDay, minute));
-                }
-
-            }
-        }, DateFormat.is24HourFormat(getMainActivity()));
-
-        timePicker.showTime();
     }
 
     private void initDatePicker(final TextView textView) {
@@ -655,9 +629,9 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                             UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.date_before_error));
                         } else {
 
-                            predate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(c.getTime());
+                            predate = new SimpleDateFormat("dd-MM-yy").format(c.getTime());
 
-                            textView.setText(datePickerHelper.getStringDate(year, month, dayOfMonth));
+                            textView.setText(predate);
                         }
 
                     }
@@ -666,30 +640,48 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         datePickerHelper.showDate();
     }
 
-    @Override
-    public void setImage(String imagePath) {
-        if (imagePath != null) {
-            images.add(imagePath);
-            mAdapter.notifyItemInserted(images.size() - 1);
-            mAdapter.notifyDataSetChanged();
-        }
+    private void initTimePicker(final TextView textView) {
+        Calendar calendar = Calendar.getInstance();
+        final TimePickerHelper timePicker = new TimePickerHelper();
+        timePicker.initTimeDialog(getDockActivity(), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                Date date = new Date();
+                if (!DateHelper.isTimeAfter(date.getHours(), date.getMinutes(), hourOfDay, minute)) {
+                    UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.less_time_error));
+                } else {
+                    Calendar c = Calendar.getInstance();
+                    int year = c.get(Calendar.YEAR);
+                    int month = c.get(Calendar.MONTH);
+                    int day = c.get(Calendar.DAY_OF_MONTH);
+                    c.set(year, month, day, hourOfDay, minute);
+                    preTime = new SimpleDateFormat("HH:mm:ss").format(c.getTime());
+                    textView.setText(timePicker.getTime(hourOfDay, minute));
+                }
+
+            }
+        }, DateFormat.is24HourFormat(getMainActivity()));
+
+        timePicker.showTime();
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString(preferreddate, btnPreferreddate.getText().toString());
-        outState.putString(preferredtime, btnPreferredtime.getText().toString());
-
+    private void bindSelectedJobview(ArrayList<ServiceEnt> jobs) {
+        selectedJobsadapter.clearList();
+        listViewJobselected.setAdapter(selectedJobsadapter);
+        selectedJobsadapter.addAll(jobs);
+        selectedJobsadapter.notifyDataSetChanged();
+        setListViewHeightBasedOnChildren(listViewJobselected);
     }
 
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        if (savedInstanceState != null) {
-            btnPreferredtime.setText(savedInstanceState.getString(preferredtime));
-            btnPreferreddate.setText(savedInstanceState.getString(preferreddate));
-        }
+    private void setDataInAdapter(ArrayList<String> ImageArray) {
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getDockActivity(), LinearLayoutManager.HORIZONTAL, false);
+        addimages.setLayoutManager(layoutManager);
+        mAdapter = new RecyclerViewAdapterImages(ImageArray, getDockActivity(), this);
+       /* RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());*/
+        addimages.setLayoutManager(layoutManager);
+        addimages.setItemAnimator(new DefaultItemAnimator());
+        addimages.setAdapter(mAdapter);
 
     }
 
@@ -699,6 +691,15 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         selectedJobsadapter.addAll(selectedJobs);
         selectedJobsadapter.notifyDataSetChanged();
         setListViewHeightBasedOnChildren(listViewJobselected);
+    }
+
+    @Override
+    public void setImage(String imagePath) {
+        if (imagePath != null) {
+            images.add(imagePath);
+            mAdapter.notifyItemInserted(images.size() - 1);
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

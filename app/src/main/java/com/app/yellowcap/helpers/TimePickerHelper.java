@@ -37,7 +37,7 @@ public class TimePickerHelper {
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
         c.set(year,month,day,hourOfDay, minute);
-        return  new SimpleDateFormat("h:mm a").format(c.getTime());
+        return  new SimpleDateFormat("HH:mm:ss").format(c.getTime());
     }
 
 }

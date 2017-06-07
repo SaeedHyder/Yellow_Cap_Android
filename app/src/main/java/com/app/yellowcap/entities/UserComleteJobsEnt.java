@@ -61,16 +61,28 @@ public class UserComleteJobsEnt {
     private String updatedAt;
     @SerializedName("assign_technician")
     @Expose
-    private List<RegistrationResultEnt> assignTechnician = null;
+    private List<RequestTechnicianEnt> assignTechnician = null;
     @SerializedName("service_detail")
     @Expose
     private ServiceEnt serviceDetail;
     @SerializedName("servics_list")
     @Expose
-    private List<ServiceEnt> servicsList = null;
+    private List<ServiceChildEnt> servicsList = null;
     @SerializedName("image_detail")
     @Expose
     private List<ImageDetailEnt> imageDetail = null;
+
+    @SerializedName("feedbackdetail")
+    @Expose
+    private FeedBackEnt feedbackdetail = null;
+
+    public FeedBackEnt getFeedbackdetail() {
+        return feedbackdetail;
+    }
+
+    public void setFeedbackdetail(FeedBackEnt feedbackdetail) {
+        this.feedbackdetail = feedbackdetail;
+    }
 
     public Integer getId() {
         return id;
@@ -200,11 +212,11 @@ public class UserComleteJobsEnt {
         this.updatedAt = updatedAt;
     }
 
-    public List<RegistrationResultEnt> getAssignTechnician() {
+    public List<RequestTechnicianEnt> getAssignTechnician() {
         return assignTechnician;
     }
 
-    public void setAssignTechnician(List<RegistrationResultEnt> assignTechnician) {
+    public void setAssignTechnician(List<RequestTechnicianEnt> assignTechnician) {
         this.assignTechnician = assignTechnician;
     }
 
@@ -216,11 +228,11 @@ public class UserComleteJobsEnt {
         this.serviceDetail = serviceDetail;
     }
 
-    public List<ServiceEnt> getServicsList() {
+    public List<ServiceChildEnt> getServicsList() {
         return servicsList;
     }
 
-    public void setServicsList(List<ServiceEnt> servicsList) {
+    public void setServicsList(List<ServiceChildEnt> servicsList) {
         this.servicsList = servicsList;
     }
 

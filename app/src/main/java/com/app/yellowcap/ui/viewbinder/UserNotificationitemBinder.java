@@ -11,6 +11,7 @@ import com.app.yellowcap.entities.NotificationEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.QuotationFragment;
 import com.app.yellowcap.fragments.UserHomeFragment;
+import com.app.yellowcap.fragments.UserJobsFragment;
 import com.app.yellowcap.helpers.BasePreferenceHelper;
 import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.helpers.UIHelper;
@@ -57,12 +58,13 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
             @Override
             public void onClick(View v) {
                 switch (entity.getActionType()) {
-                    case "job":
+                    case "Job":
+                        dockActivity.replaceDockableFragment(UserJobsFragment.newInstance(), "UserJobsFragment");
                         break;
                     case "Quotation":
                         dockActivity.replaceDockableFragment(QuotationFragment.newInstance(entity), "QuotationFragment");
                         break;
-                    case "complete":
+                    case "feedback":
                         openRatingPopup(entity);
                         break;
                 }

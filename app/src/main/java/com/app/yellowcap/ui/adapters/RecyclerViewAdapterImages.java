@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.activities.DockActivity;
@@ -13,9 +12,6 @@ import com.app.yellowcap.interfaces.onDeleteImage;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
-
 
 
 /**
@@ -27,27 +23,13 @@ public class RecyclerViewAdapterImages extends RecyclerView.Adapter<RecyclerView
 
     private DockActivity context;
     private ImageLoader imageLoader;
-   private List<String> addedImages ;
+    private List<String> addedImages;
     private onDeleteImage onDeleteImage;
-
-
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public ImageView img_addedimages;
-        public ImageView delete_image;
-
-        public MyViewHolder(View view) {
-            super(view);
-            img_addedimages = (ImageView) view.findViewById(R.id.img_addedimages);
-            delete_image = (ImageView) view.findViewById(R.id.delete_image);
-
-        }
-    }
 
 
     public RecyclerViewAdapterImages(List<String> Addedimages, DockActivity a, onDeleteImage onDeleteImage) {
         this.addedImages = Addedimages;
-        this.context=a;
+        this.context = a;
         imageLoader = ImageLoader.getInstance();
         this.onDeleteImage = onDeleteImage;
 
@@ -65,14 +47,17 @@ public class RecyclerViewAdapterImages extends RecyclerView.Adapter<RecyclerView
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final String imagespath = addedImages.get(position);
 
-
-        imageLoader.displayImage("file://" + imagespath,holder.img_addedimages);
-
+        //Picasso.with(context).load(imagespath).into(holder.img_addedimages);
+        if (imagespath.contains("http://")) {
+            imageLoader.displayImage(imagespath, holder.img_addedimages);
+        } else {
+            imageLoader.displayImage("file://" + imagespath, holder.img_addedimages);
+        }
         holder.delete_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //context.replaceDockableFragment(ChatFragment.newInstance(), "Chat Fragment");
-              onDeleteImage.onDelete(position);
+                onDeleteImage.onDelete(position);
             }
         });
     }
@@ -80,5 +65,17 @@ public class RecyclerViewAdapterImages extends RecyclerView.Adapter<RecyclerView
     @Override
     public int getItemCount() {
         return addedImages.size();
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        public ImageView img_addedimages;
+        public ImageView delete_image;
+
+        public MyViewHolder(View view) {
+            super(view);
+            img_addedimages = (ImageView) view.findViewById(R.id.img_addedimages);
+            delete_image = (ImageView) view.findViewById(R.id.delete_image);
+
+        }
     }
 }
