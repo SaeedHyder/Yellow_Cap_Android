@@ -139,6 +139,13 @@ public interface WebService {
                                                    @Field("message")String message
                                                   );
 
+    @FormUrlEncoded
+    @POST("request/markcomplte")
+    Call<ResponseWrapper<JobRequestEnt>> markComplete(@Field("assign_id")Integer assign_id,
+                                                   @Field("technician_id")Integer technician_id,
+                                                   @Field("request_id")Integer request_id,
+                                                   @Field("finish")Integer finish);
+
     @GET("notification/count/{user_id}")
     Call<ResponseWrapper<countEnt>> getNotificationCount(
             @Path("user_id") String user_id);

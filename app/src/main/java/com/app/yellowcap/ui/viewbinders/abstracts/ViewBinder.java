@@ -32,7 +32,7 @@ public abstract class ViewBinder<T> {
 	 */
 	public abstract void bindView(T entity,int position, int grpPosition , View view, Activity activity);
 
-	protected static class BaseViewHolder {
+	public static class BaseViewHolder {
 		
 	}
 }

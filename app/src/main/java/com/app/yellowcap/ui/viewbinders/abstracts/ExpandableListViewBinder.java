@@ -5,6 +5,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.app.yellowcap.ui.viewbinder.InprogressExpandBinder;
+
+import static com.app.yellowcap.R.id.view;
+
 public abstract class ExpandableListViewBinder<T,E> {
 
     int mLayoutGroupId;
@@ -13,6 +17,7 @@ public abstract class ExpandableListViewBinder<T,E> {
     public ExpandableListViewBinder() {
 
     }
+
 
     public ExpandableListViewBinder(int layoutGroupId,int layoutChildId) {
         mLayoutGroupId = layoutGroupId;
@@ -35,8 +40,10 @@ public abstract class ExpandableListViewBinder<T,E> {
 
     }
 
+
+
     public abstract BaseGroupViewHolder createGroupViewHolder(View view);
-    public abstract BaseChildViewHolder createChildViewHolder(View view);
+    public abstract BaseGroupViewHolder createChildViewHolder(View view);
 
     /**
      * @param entity
@@ -45,7 +52,7 @@ public abstract class ExpandableListViewBinder<T,E> {
      * @param view
      * @param activity
      */
-    public abstract void bindGroupView(T entity, int position, int grpPosition, View view, Activity activity);
+    public abstract void bindGroupView(T entity, int position, int grpPosition, int childCount,  View view, Activity activity);
     public abstract void bindChildView(E entity, int position, int grpPosition, View view, Activity activity);
 
     protected static class BaseGroupViewHolder {

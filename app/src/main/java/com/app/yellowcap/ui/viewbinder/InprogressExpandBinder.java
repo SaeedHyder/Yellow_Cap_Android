@@ -1,0 +1,242 @@
+package com.app.yellowcap.ui.viewbinder;
+
+import android.app.Activity;
+import android.graphics.Typeface;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import com.app.yellowcap.R;
+import com.app.yellowcap.activities.DockActivity;
+import com.app.yellowcap.entities.InProgressChildEnt;
+import com.app.yellowcap.entities.InProgressParentEnt;
+import com.app.yellowcap.fragments.EditJobTechFragment;
+import com.app.yellowcap.fragments.HomeFragment;
+import com.app.yellowcap.interfaces.CallUser;
+import com.app.yellowcap.interfaces.MarkAsComplete;
+import com.app.yellowcap.ui.viewbinders.abstracts.ExpandableListViewBinder;
+import com.app.yellowcap.ui.views.AnyTextView;
+
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+import static com.app.yellowcap.R.id.view;
+
+/**
+ * Created by saeedhyder on 6/6/2017.
+ */
+
+public class InprogressExpandBinder extends ExpandableListViewBinder<InProgressParentEnt, InProgressChildEnt> {
+
+    DockActivity context;
+    CallUser callUser;
+    MarkAsComplete complete;
+
+
+
+
+    public InprogressExpandBinder(DockActivity context,CallUser callUser,MarkAsComplete complete) {
+
+        super(R.layout.inprogress_tech_parent, R.layout.inprogress_chlid);
+        this.context = context;
+        this.callUser=callUser;
+        this.complete=complete;
+
+    }
+
+
+
+
+    @Override
+    public BaseGroupViewHolder createGroupViewHolder(View view) {
+        return new InprogressExpandBinder.parentViewHolder(view);
+    }
+
+    @Override
+    public BaseGroupViewHolder createChildViewHolder(View view) {
+        return new InprogressExpandBinder.childViewHolder(view);
+    }
+
+    @Override
+    public void bindGroupView(InProgressParentEnt entity, int position, int grpPosition, int childCount, View view, Activity activity) {
+
+        InprogressExpandBinder.parentViewHolder parentViewHolder = (InprogressExpandBinder.parentViewHolder) view.getTag();
+
+        if(childCount <= 0)
+        {
+            parentViewHolder.llBottomBtns.setVisibility(View.VISIBLE);
+        }
+        else
+        { parentViewHolder.llBottomBtns.setVisibility(View.GONE);}
+        parentViewHolder.txtJobNoText.setText(entity.getJob());
+        parentViewHolder.txtJobPostedText.setText(entity.getJobPosted());
+        parentViewHolder.txtClientNameText.setText(entity.getClientName());
+        parentViewHolder.txtJobTitleText.setText(entity.getJobTitle());
+        parentViewHolder.txtEarningText.setText(entity.getEarning());
+        parentViewHolder.txtAddressText.setText(entity.getAddress());
+
+        setTextStyle(parentViewHolder);
+
+        parentViewHolder.btnCallUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callUser.CallOnUserNumber("00000");
+            }
+        });
+
+        parentViewHolder.ivEditBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.replaceDockableFragment(EditJobTechFragment.newInstance(), "EditJobTechFragment");
+            }
+        });
+
+        parentViewHolder.btnAddJob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.replaceDockableFragment(EditJobTechFragment.newInstance(), "EditJobTechFragment");
+            }
+        });
+        parentViewHolder.btnMarkAsComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                complete.markAsComplete();
+            }
+        });
+
+
+    }
+
+    private void setTextStyle(parentViewHolder parentViewHolder) {
+        parentViewHolder.txtJobNo.setTypeface(null, Typeface.BOLD);
+        parentViewHolder.txtJobPosted.setTypeface(null, Typeface.BOLD);
+        parentViewHolder.txtClientName.setTypeface(null, Typeface.BOLD);
+        parentViewHolder.txtJobTitle.setTypeface(null, Typeface.BOLD);
+        parentViewHolder.txtEarning.setTypeface(null, Typeface.BOLD);
+        parentViewHolder.txtAddress.setTypeface(null, Typeface.BOLD);
+    }
+
+    @Override
+    public void bindChildView(InProgressChildEnt entity, int position, int grpPosition, View view, Activity activity) {
+
+        InprogressExpandBinder.childViewHolder childViewHolder = (InprogressExpandBinder.childViewHolder) view.getTag();
+
+        childViewHolder.txtJob1.setText(entity.getTxt_job());
+        childViewHolder.txtAddEarningText.setText(entity.getEarning());
+        childViewHolder.txtTotalEarningText.setText(entity.getTotalEarning());
+
+        childViewHolder.btnMarkAsCompleteBottom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                complete.markAsComplete();
+            }
+        });
+
+        childViewHolder.btnAddJobbottom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.replaceDockableFragment(EditJobTechFragment.newInstance(), "EditJobTechFragment");
+            }
+        });
+
+
+    }
+
+
+    static class parentViewHolder extends BaseGroupViewHolder {
+        @BindView(R.id.txt_jobNo)
+        AnyTextView txtJobNo;
+        @BindView(R.id.txt_jobNoText)
+        AnyTextView txtJobNoText;
+        @BindView(R.id.iv_editBtn)
+        ImageView ivEditBtn;
+        @BindView(R.id.ll_job)
+        LinearLayout llJob;
+        @BindView(R.id.txt_jobPosted)
+        AnyTextView txtJobPosted;
+        @BindView(R.id.txt_jobPostedText)
+        AnyTextView txtJobPostedText;
+        @BindView(R.id.ll_jobPosted)
+        LinearLayout llJobPosted;
+        @BindView(R.id.txt_ClientName)
+        AnyTextView txtClientName;
+        @BindView(R.id.txt_clientNameText)
+        AnyTextView txtClientNameText;
+        @BindView(R.id.ll_clientName)
+        LinearLayout llClientName;
+        @BindView(R.id.txt_JobTitle)
+        AnyTextView txtJobTitle;
+        @BindView(R.id.txt_JobTitleText)
+        AnyTextView txtJobTitleText;
+        @BindView(R.id.ll_JobTitle)
+        LinearLayout llJobTitle;
+        @BindView(R.id.txt_Earning)
+        AnyTextView txtEarning;
+        @BindView(R.id.txt_EarningText)
+        AnyTextView txtEarningText;
+        @BindView(R.id.ll_Earning)
+        LinearLayout llEarning;
+        @BindView(R.id.txt_Address)
+        AnyTextView txtAddress;
+        @BindView(R.id.txt_AddressText)
+        AnyTextView txtAddressText;
+        @BindView(R.id.ll_Address)
+        LinearLayout llAddress;
+       @BindView(R.id.btn_callUser)
+        Button btnCallUser;
+        @BindView(R.id.btn_addJob)
+        Button btnAddJob;
+        @BindView(R.id.ll_buttons)
+        LinearLayout llButtons;
+        @BindView(R.id.btn_markAsComplete)
+        Button btnMarkAsComplete;
+        @BindView(R.id.txt_line)
+        View txtLine;
+        @BindView(R.id.ll_BottomBtns)
+        LinearLayout llBottomBtns;
+
+        parentViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
+    }
+
+    public static class childViewHolder extends BaseGroupViewHolder{
+        @BindView(R.id.iv_editJobBtn)
+        ImageView ivEditJobBtn;
+        @BindView(R.id.ll_profileItems)
+        LinearLayout llProfileItems;
+        @BindView(R.id.txt_job1)
+        AnyTextView txtJob1;
+        @BindView(R.id.txt_job2)
+        AnyTextView txtJob2;
+        @BindView(R.id.txt_job3)
+        AnyTextView txtJob3;
+        @BindView(R.id.txt_AddEarning)
+        AnyTextView txtAddEarning;
+        @BindView(R.id.txt_AddEarningText)
+        AnyTextView txtAddEarningText;
+        @BindView(R.id.ll_AddEarning)
+        LinearLayout llAddEarning;
+        @BindView(R.id.txt_TotalEarning)
+        AnyTextView txtTotalEarning;
+        @BindView(R.id.txt_TotalEarningText)
+        AnyTextView txtTotalEarningText;
+        @BindView(R.id.ll_TotalEarning)
+        LinearLayout llTotalEarning;
+        @BindView(R.id.btn_AddJobbottom)
+        Button btnAddJobbottom;
+        @BindView(R.id.btn_markAsCompleteBottom)
+        Button btnMarkAsCompleteBottom;
+        @BindView(R.id.ll_Bottombuttons)
+        LinearLayout llBottombuttons;
+        @BindView(R.id.ll_AdditionalJob)
+        LinearLayout llAdditionalJob;
+
+        childViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
+    }
+}

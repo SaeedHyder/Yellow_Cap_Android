@@ -100,7 +100,7 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
                 selectedArrowInProgress.setVisibility(View.VISIBLE);
                 txtJobCount.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.gray));
                 txtInProgressCount.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.yellow));
-                ReplaceListViewFragment(InProgressFragment.newInstance());
+                ReplaceListViewFragment(InProgressExpendFragment.newInstance());
                 break;
         }
 
