@@ -17,9 +17,10 @@ import berlin.volders.badger.CountBadge;
  */
 
 public class BadgeHelper {
-    ImageView imgNotificationCounter ;
+    ImageView imgNotificationCounter;
     DockActivity dockActivity;
     private CountBadge badge;
+
     public BadgeHelper(ImageView imgNotificationCounter, DockActivity activity) {
         this.imgNotificationCounter = imgNotificationCounter;
         dockActivity = activity;
@@ -29,14 +30,14 @@ public class BadgeHelper {
         imgNotificationCounter.setVisibility(View.GONE);
     }
 
-    public ImageView getImgNotificationCounter(){
+    public ImageView getImgNotificationCounter() {
         return imgNotificationCounter;
     }
 
     public CountBadge initBadge(Context mcontext) {
         imgNotificationCounter.setVisibility(View.VISIBLE);
-        CountBadge.Factory circle = new CountBadge.Factory(BadgeShape.circle(.7f, Gravity.CENTER_VERTICAL ),
-                dockActivity. getResources().getColor(R.color.text_color),dockActivity. getResources().getColor(R.color.white));
+        CountBadge.Factory circle = new CountBadge.Factory(BadgeShape.circle(.7f, Gravity.CENTER_VERTICAL),
+                dockActivity.getResources().getColor(R.color.text_color), dockActivity.getResources().getColor(R.color.white));
 
         Badger<CountBadge> badger = Badger.sett(dockActivity.getResources().getDrawable(R.drawable.ic_badge), circle);
         imgNotificationCounter.setImageDrawable(badger.drawable);
@@ -50,7 +51,7 @@ public class BadgeHelper {
         try {
             if (count > 99) {
                 CountBadge.Factory circle = new CountBadge.Factory(BadgeShape.oval(1f, 2f, Gravity.BOTTOM),
-                        dockActivity.  getResources().getColor(R.color.text_color),dockActivity. getResources().getColor(R.color.white));
+                        dockActivity.getResources().getColor(R.color.text_color), dockActivity.getResources().getColor(R.color.white));
 
                 Badger<CountBadge> badger = Badger.sett(dockActivity.getResources().getDrawable(R.drawable.ic_badge), circle);
                 imgNotificationCounter.setImageDrawable(badger.drawable);
@@ -62,11 +63,12 @@ public class BadgeHelper {
             e.printStackTrace();
         }
     }
-    public void addtoBadge(int count,CountBadge countBadge) {
+
+    public void addtoBadge(int count, CountBadge countBadge) {
         try {
             if (count > 99) {
                 CountBadge.Factory circle = new CountBadge.Factory(BadgeShape.oval(1f, 2f, Gravity.BOTTOM),
-                        dockActivity. getResources().getColor(R.color.text_color),dockActivity. getResources().getColor(R.color.white));
+                        dockActivity.getResources().getColor(R.color.text_color), dockActivity.getResources().getColor(R.color.white));
 
                 Badger<CountBadge> badger = Badger.sett(dockActivity.getResources().getDrawable(R.drawable.ic_badge), circle);
                 imgNotificationCounter.setImageDrawable(badger.drawable);
@@ -78,12 +80,15 @@ public class BadgeHelper {
             e.printStackTrace();
         }
     }
-    public boolean isBadgeVisible(){
-        return imgNotificationCounter.getVisibility()==View.VISIBLE;
+
+    public boolean isBadgeVisible() {
+        return imgNotificationCounter.getVisibility() == View.VISIBLE;
     }
-    public void showBadge(){
+
+    public void showBadge() {
         imgNotificationCounter.setVisibility(View.VISIBLE);
     }
+
     public int getBadgeCount() {
         try {
             return badge.getCount();

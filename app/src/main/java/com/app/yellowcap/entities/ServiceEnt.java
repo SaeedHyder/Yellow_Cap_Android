@@ -99,4 +99,22 @@ public class ServiceEnt {
     public void setServiceImage(String serviceImage) {
         this.serviceImage = serviceImage;
     }
+
+    @Override
+    public boolean equals(Object object)
+    {
+        boolean isEqual= false;
+
+        if (object != null && object instanceof ServiceEnt)
+        {
+            isEqual = (this.id == ((ServiceEnt) object).id);
+        }
+
+        return isEqual;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id;
+    }
 }

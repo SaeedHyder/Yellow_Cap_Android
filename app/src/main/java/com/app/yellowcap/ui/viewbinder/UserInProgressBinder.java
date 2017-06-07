@@ -79,6 +79,8 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
                     } else {
                         UIHelper.showShortToastInCenter(context, "We will soon assign you a Technician");
                     }
+                }else {
+                    UIHelper.showShortToastInCenter(context, "We will soon assign you a Technician");
                 }
             }
         });

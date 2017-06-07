@@ -79,6 +79,7 @@ public abstract class BaseFragment extends Fragment {
         }
     };
     private boolean isLoading;
+    private DockActivity activity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -116,6 +117,13 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (DockActivity)context;
     }
 
     protected void createClient() {
@@ -163,7 +171,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected DockActivity getDockActivity() {
 
-        DockActivity activity = (DockActivity) getActivity();
+       /* DockActivity activity = (DockActivity) getActivity();
         while (activity == null) {
             activity = (DockActivity) getActivity();
             try {
@@ -171,7 +179,7 @@ public abstract class BaseFragment extends Fragment {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
         return activity;
 
     }

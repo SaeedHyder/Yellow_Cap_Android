@@ -90,6 +90,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
             public void onClick(View v) {
                 drawerLayout.openDrawer(Gravity.LEFT);
 
+
             }
         });
 

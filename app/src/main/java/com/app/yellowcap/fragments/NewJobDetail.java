@@ -19,6 +19,7 @@ import com.app.yellowcap.R;
 import com.app.yellowcap.entities.JobRequestEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.helpers.DateHelper;
 import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.helpers.TimePickerHelper;
@@ -270,7 +271,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                             } else if (completeTime.getText().toString().isEmpty()) {
                                 UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.complete_time_error));
                             } else {
-                                jobAccept(arriveTime,completeTime,JobDetailDialog);
+                                //jobAccept(arriveTime,completeTime,JobDetailDialog);
 
                             }
                         }
@@ -324,7 +325,8 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
 
         if(!reason.equals("")){
         getDockActivity().onLoadingStarted();
-        Call<ResponseWrapper<JobRequestEnt>> call= webService.rejectJob(2, 33,43,2,reason);
+        Call<ResponseWrapper<JobRequestEnt>> call= webService.rejectJob("2", prefHelper.getUserId()
+                ,"43", AppConstants.TECH_REJECT_JOB,reason);
         call.enqueue(new Callback<ResponseWrapper<JobRequestEnt>>() {
             @Override
             public void onResponse(Call<ResponseWrapper<JobRequestEnt>> call, Response<ResponseWrapper<JobRequestEnt>> response) {
@@ -354,7 +356,8 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
 
     private void jobAccept(AnyTextView arriveTime, AnyTextView completeTime, final DialogHelper jobDetailDialog) {
         getDockActivity().onLoadingStarted();
-        Call<ResponseWrapper<JobRequestEnt>> call= webService.acceptJob(2, 33,43,1,arriveTime.getText().toString(),completeTime.getText().toString());
+        Call<ResponseWrapper<JobRequestEnt>> call= webService.acceptJob("2", prefHelper.getUserId(),
+                "43",AppConstants.TECH_ACCEPT_JOB,arriveTime.getText().toString(),completeTime.getText().toString());
         call.enqueue(new Callback<ResponseWrapper<JobRequestEnt>>() {
             @Override
             public void onResponse(Call<ResponseWrapper<JobRequestEnt>> call, Response<ResponseWrapper<JobRequestEnt>> response) {

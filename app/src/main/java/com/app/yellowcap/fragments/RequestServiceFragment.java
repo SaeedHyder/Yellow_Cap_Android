@@ -34,6 +34,7 @@ import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.ServiceEnt;
 import com.app.yellowcap.entities.UserInProgressEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.helpers.CameraHelper;
 import com.app.yellowcap.helpers.DateHelper;
 import com.app.yellowcap.helpers.DatePickerHelper;
@@ -364,15 +365,17 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         initJobTypeSpinner(TYPE);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
-            Date d  = sdf.parse(previousRequestData.getDate());
-            Date d1 = sdf.parse(previousRequestData.getTime());
+          /*  Date d  = sdf.parse(previousRequestData.getDate());
+            Date d1 = sdf.parse(previousRequestData.getTime());*/
             Date d2 = sdf.parse(previousRequestData.getCreatedAt());
-            predate = sdf.format(d);
-            preTime = sdf.format(d1);
-            btnPreferreddate.setText(new SimpleDateFormat("yyyy MMM dd", Locale.ENGLISH).format(d));
-            btnPreferredtime.setText( new SimpleDateFormat("h:mm a").format(d1));
+            predate = previousRequestData.getDate();
+            preTime = previousRequestData.getTime();
+          /*  btnPreferreddate.setText(new SimpleDateFormat("yyyy MMM dd", Locale.ENGLISH).format(d));
+            btnPreferredtime.setText( new SimpleDateFormat("h:mm a").format(d1));*/
+          btnPreferreddate.setText(previousRequestData.getDate());
+            btnPreferredtime.setText(previousRequestData.getTime());
             txtJobPosted.setText(getString(R.string.job_posted_label)+  new SimpleDateFormat("yyyy-MM-dd").format(d2));
-        } catch (ParseException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(RequestServiceFragment.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (previousRequestData.getPaymentType().equals("cc")){
@@ -399,13 +402,10 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         spnJobdescription.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (!selectedJobs.contains(jobChildcollection.get(position)))
-                    for (int i = 0;i<selectedJobs.size();i++){
-                        if (!selectedJobs.get(i).getTitle().equals(jobChildcollection.get(position).getTitle())){
+                        if (!selectedJobs.contains(jobChildcollection.get(position))){
                             selectedJobs.add(jobChildcollection.get(position));
-                            break;
                         }
-                    }
+
 
 
                 refreshListview();
@@ -521,7 +521,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                     RequestBody.create(MediaType.parse("text/plain"), predate),
                     RequestBody.create(MediaType.parse("text/plain"), preTime),
                     RequestBody.create(MediaType.parse("text/plain"), paymentType),
-                    RequestBody.create(MediaType.parse("text/plain"), "0"), files);
+                    RequestBody.create(MediaType.parse("text/plain"), String.valueOf(AppConstants.CREATE_REQUEST)), files);
     }else{
         call = webService.editUserRequest(
                 RequestBody.create(MediaType.parse("text/plain"), prefHelper.getUserId()),
@@ -534,7 +534,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 RequestBody.create(MediaType.parse("text/plain"), predate),
                 RequestBody.create(MediaType.parse("text/plain"), preTime),
                 RequestBody.create(MediaType.parse("text/plain"), paymentType),
-                RequestBody.create(MediaType.parse("text/plain"), "0"), files);
+                RequestBody.create(MediaType.parse("text/plain"), String.valueOf(AppConstants.CREATE_REQUEST)), files);
     }
         call.enqueue(new Callback<ResponseWrapper<RequestEnt>>() {
             @Override
@@ -580,6 +580,9 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     private boolean validate() {
         if (edtLocationgps.getText().toString().isEmpty()) {
             edtLocationgps.setError("Enter Address");
+            return false;
+        }else if (edtLocationspecific.getText().toString().isEmpty()) {
+            edtLocationspecific.setError("Enter Address");
             return false;
         } else if (btnPreferreddate.getText().toString().isEmpty()) {
             UIHelper.showShortToastInCenter(getDockActivity(), "Select Date");

@@ -5,8 +5,11 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.app.yellowcap.R;
+import com.app.yellowcap.activities.DockActivity;
 import com.app.yellowcap.entities.NewJobEnt;
 import com.app.yellowcap.entities.NotificationEnt;
+import com.app.yellowcap.fragments.QuotationFragment;
+import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -18,10 +21,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
 
     private ImageLoader imageLoader;
-
-    public UserNotificationitemBinder() {
+private DockActivity dockActivity;
+    public UserNotificationitemBinder(DockActivity activity) {
         super(R.layout.newjobs_item);
-
+this.dockActivity = activity;
         imageLoader = ImageLoader.getInstance();
     }
 
@@ -42,9 +45,27 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
                 switch (entity.getActionType()){
                     case "job":
                         break;
+                    case "Quotation":
+                        dockActivity.replaceDockableFragment(QuotationFragment.newInstance(entity), "QuotationFragment");
+                        break;
+                    case "complete":
+                        openRatingPopup(entity);
+                        break;
                 }
             }
         });
+    }
+
+    private void openRatingPopup(NotificationEnt entity) {
+        final DialogHelper dialogHelper = new DialogHelper(dockActivity);
+        dialogHelper.initRatingDialog(R.layout.rating_pop_up_dialog, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogHelper.hideDialog();
+            }
+        },entity.getRequestDetail().getServiceDetail().getTitle(),entity.getRequestDetail().getMessage());
+        dialogHelper.setCancelable(true);
+        dialogHelper.showDialog();
     }
 
     public static class ViewHolder extends BaseViewHolder {

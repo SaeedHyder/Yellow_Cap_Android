@@ -50,7 +50,7 @@ public class RequestEnt {
     @SerializedName("user_id")
     @Expose
     private Integer userId;
-    
+
     @SerializedName("technician_id")
     @Expose
     private Integer technicianId;
@@ -63,6 +63,12 @@ public class RequestEnt {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
+    @SerializedName("service_detail")
+    @Expose
+    private ServiceEnt serviceDetail;
+    @SerializedName("image_detail")
+    @Expose
+    private List<ImageDetailEnt> imageDetail = null;
 
     public Integer getId() {
         return id;
@@ -189,7 +195,7 @@ public class RequestEnt {
     }
 
     public void setCreatedAt(String createdAt) {
-        this.createdAt = DateHelper.getLocalTimeDate (createdAt);
+        this.createdAt = DateHelper.getLocalTimeDate(createdAt);
     }
 
     public String getUpdatedAt() {
@@ -197,7 +203,7 @@ public class RequestEnt {
     }
 
     public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = DateHelper.getLocalTimeDate (updatedAt);
+        this.updatedAt = DateHelper.getLocalTimeDate(updatedAt);
     }
 
     public ServiceEnt getServiceDetail() {
@@ -215,11 +221,4 @@ public class RequestEnt {
     public void setImageDetail(List<ImageDetailEnt> imageDetail) {
         this.imageDetail = imageDetail;
     }
-
-    @SerializedName("service_detail")
-    @Expose
-    private ServiceEnt serviceDetail;
-    @SerializedName("image_detail")
-    @Expose
-    private List<ImageDetailEnt> imageDetail = null;
 }

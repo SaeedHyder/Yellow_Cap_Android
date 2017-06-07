@@ -8,6 +8,7 @@ import android.view.View;
 import com.app.yellowcap.R;
 import com.app.yellowcap.entities.UserComleteJobsEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.CustomRatingBar;
@@ -32,13 +33,14 @@ public class UserCompleteJobsBinder extends ViewBinder<UserComleteJobsEnt> {
     @Override
     public void bindView(UserComleteJobsEnt entity, int position, int grpPosition, View view, Activity activity) {
         final ViewHolder viewHolder = (ViewHolder)view.getTag();
-        viewHolder.txtJobNoText.setText(entity.getJob());
-        viewHolder.txtJobTitleText.setText(entity.getJobTitle());
-        viewHolder.txtClientNameText.setText(entity.getTechnicianName());
-        viewHolder.txtEarningText.setText(entity.getAmountPaid());
-        String sourceString = "<b>" + "Description:" + "</b> " + entity.getDescription();
+        viewHolder.txtJobNoText.setText(String.valueOf(entity.getId()));
+        viewHolder.txtJobTitleText.setText(entity.getServiceDetail().getTitle());
+        viewHolder.txtClientNameText.setText(entity.getAssignTechnician().get(0).getFullName());
+        viewHolder.txtEarningText.setText(entity.getTotal());
+        String sourceString = "<b>" + "Description:" + "</b> " + entity.getDiscription();
         viewHolder.txtDescriptionText.setText(Html.fromHtml(sourceString));
-       viewHolder.rbAddRating.setScore(entity.getRating());
+        UIHelper.showShortToastInCenter(view.getContext(),"Rating Not Available");
+     //  viewHolder.rbAddRating.setScore(entity.getAssignTechnician().get(0).);
         viewHolder.rbAddRating.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
