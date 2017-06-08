@@ -10,7 +10,6 @@ import static com.app.yellowcap.helpers.DateHelper.getLocalTimeDate;
  */
 
 public class ServiceEnt {
-
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -35,6 +34,16 @@ public class ServiceEnt {
     @SerializedName("service_image")
     @Expose
     private String serviceImage;
+    public ServiceEnt(Integer id, String title, String image, Integer parentId, String createdAt, String updatedAt, String deletedAt, String serviceImage) {
+        this.id = id;
+        this.title = title;
+        this.image = image;
+        this.parentId = parentId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.deletedAt = deletedAt;
+        this.serviceImage = serviceImage;
+    }
 
     public Integer getId() {
         return id;
@@ -101,12 +110,10 @@ public class ServiceEnt {
     }
 
     @Override
-    public boolean equals(Object object)
-    {
-        boolean isEqual= false;
+    public boolean equals(Object object) {
+        boolean isEqual = false;
 
-        if (object != null && object instanceof ServiceEnt)
-        {
+        if (object != null && object instanceof ServiceEnt) {
             isEqual = (this.id == ((ServiceEnt) object).id);
         }
 

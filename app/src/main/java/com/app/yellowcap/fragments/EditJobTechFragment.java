@@ -2,40 +2,59 @@ package com.app.yellowcap.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.app.yellowcap.R;
+import com.app.yellowcap.entities.RequestDetail;
+import com.app.yellowcap.entities.RequestEnt;
+import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.ServiceEnt;
+import com.app.yellowcap.entities.serviceList;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.global.AppConstants;
+import com.app.yellowcap.helpers.DialogHelper;
+import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.interfaces.onDeleteImage;
-import com.app.yellowcap.retrofit.entities.ServiceDate;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.viewbinder.SelectedJobBinder;
+import com.app.yellowcap.ui.views.AnyEditTextView;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
+import com.google.gson.Gson;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-
-import static com.app.yellowcap.fragments.RequestServiceFragment.setListViewHeightBasedOnChildren;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by saeedhyder on 5/24/2017.
  */
 
 public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
-
+    public static String TYPE = "TYPE";
+    public static String PARENTID = "0";
+    public static String CLIENTNAME = "NAME";
     @BindView(R.id.txt_jobNo)
     AnyTextView txtJobNo;
     @BindView(R.id.txt_jobNoText)
@@ -72,12 +91,75 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
     LinearLayout llTotalPrice;
     Unbinder unbinder;
     ArrayList<String> images = new ArrayList<>();
-    private ArrayList<ServiceEnt> selectedJobs = new ArrayList<>();
+    @BindView(R.id.txt_additionDescription)
+    AnyEditTextView mTxtAdditionDescription;
+    @BindView(R.id.edt_total)
+    AnyEditTextView mEdtTotal;
+    private ArrayList<ServiceEnt> selectedJobs;
     private ArrayListAdapter<ServiceEnt> selectedJobsadapter;
-    private String jobtype;
+    private ServiceEnt jobtype;
+    private RequestDetail previousData;
+    private ArrayList<ServiceEnt> jobcollection;
+    private ArrayList<ServiceEnt> jobChildcollection;
+    private Boolean isEdit = false;
 
     public static EditJobTechFragment newInstance() {
         return new EditJobTechFragment();
+    }
+
+    public static EditJobTechFragment newInstance(RequestDetail editData) {
+        Bundle args = new Bundle();
+        args.putString(TYPE, new Gson().toJson(editData));
+        EditJobTechFragment fragment = new EditJobTechFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static EditJobTechFragment newInstance(String parentID, String ClientName) {
+        Bundle args = new Bundle();
+        args.putString(PARENTID, parentID);
+        args.putString(CLIENTNAME, ClientName);
+        EditJobTechFragment fragment = new EditJobTechFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    /**** Method for Setting the Height of the ListView dynamically.
+     **** Hack to fix the issue of not showing all the items of the ListView
+     **** when placed inside a ScrollView  ****/
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null)
+            return;
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0)
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            TYPE = getArguments().getString(TYPE);
+            PARENTID = getArguments().getString(PARENTID);
+            CLIENTNAME = getArguments().getString(CLIENTNAME);
+            if (TYPE != null)
+                previousData = new Gson().fromJson(TYPE, RequestDetail.class);
+
+
+        }
     }
 
     @Override
@@ -94,6 +176,26 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         return rootView;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        selectedJobs = new ArrayList<>();
+        if (previousData != null) {
+            PARENTID = String.valueOf(previousData.getId());
+            editCurrentService();
+        } else {
+            if (PARENTID != null) {
+                txtJobNo.setText(PARENTID);
+            }
+            if (CLIENTNAME != null) {
+                txtClientNameText.setText(CLIENTNAME);
+            }
+            initJobTypeSpinner("");
+        }
+
+
+    }
+
     private void initListViewAdapter() {
         /*selectedJobs.add("Total Electricity Failure/Break down");
         selectedJobs.add("No Electricity in some Room");
@@ -103,13 +205,212 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
 
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    private void initJobTypeSpinner(String type) {
+        jobcollection = new ArrayList<>();
+        Call<ResponseWrapper<ArrayList<ServiceEnt>>> call = webService.getHomeServices();
+        call.enqueue(new Callback<ResponseWrapper<ArrayList<ServiceEnt>>>() {
+            @Override
+            public void onResponse(Call<ResponseWrapper<ArrayList<ServiceEnt>>> call, Response<ResponseWrapper<ArrayList<ServiceEnt>>> response) {
+                if (response.body().getResponse().equals("2000")) {
+                    jobcollection.clear();
+                    jobcollection.addAll(response.body().getResult());
+                    setJobtypeSpinner();
+
+                } else {
+                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWrapper<ArrayList<ServiceEnt>>> call, Throwable t) {
+                Log.e("TermAndCondition", t.toString());
+                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+            }
+        });
+
+
+    }
+
+    private void setJobtypeSpinner() {
+        final ArrayList<String> jobtypearraylist = new ArrayList<String>();
+        for (ServiceEnt item : jobcollection
+                ) {
+            jobtypearraylist.add(item.getTitle());
+        }
+
+
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, jobtypearraylist);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnJobtype.setAdapter(categoryAdapter);
+        if (previousData != null) {
+            if (jobcollection.size() > 0) {
+                if (jobtypearraylist.contains(previousData.getService_detail().getTitle())) {
+                    spnJobtype.setSelection(jobtypearraylist.indexOf(previousData.getService_detail().getTitle()));
+                    jobtype = jobcollection.get(jobtypearraylist.indexOf(previousData.getService_detail().getTitle()));
+                    initJobDescriptionSpinner(jobtype);
+                } else {
+                    spnJobtype.setSelection(0);
+                    jobtype = jobcollection.get(0);
+                    initJobDescriptionSpinner(jobtype);
+                }
+            }
+            spnJobtype.setEnabled(false);
+        } else {
+            spnJobtype.setSelection(0);
+            jobtype = jobcollection.get(0);
+            initJobDescriptionSpinner(jobtype);
+        }
+
+        spnJobtype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedJobs.clear();
+                refreshListview();
+               jobtype = jobcollection.get(position);
+                initJobDescriptionSpinner(jobtype);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                //   initJobDescriptionSpinner(jobtype);
+            }
+        });
+    }
+
+    private void initJobDescriptionSpinner(ServiceEnt selectedService) {
+        if (selectedService != null) {
+
+            jobChildcollection = new ArrayList<>();
+            Call<ResponseWrapper<ArrayList<ServiceEnt>>> call = webService.getchildServices(String.valueOf(selectedService.getId()));
+            call.enqueue(new Callback<ResponseWrapper<ArrayList<ServiceEnt>>>() {
+                @Override
+                public void onResponse(Call<ResponseWrapper<ArrayList<ServiceEnt>>> call, Response<ResponseWrapper<ArrayList<ServiceEnt>>> response) {
+                    if (response.body().getResponse().equals("2000")) {
+                        selectedJobs.clear();
+                        jobChildcollection.clear();
+                        jobChildcollection.addAll(response.body().getResult());
+                        setJobDescriptionSpinner();
+
+                    } else {
+                        UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseWrapper<ArrayList<ServiceEnt>>> call, Throwable t) {
+                    Log.e("TermAndCondition", t.toString());
+                    UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                }
+            });
+
+        }
+    }
+
+    private void setJobDescriptionSpinner() {
+        final ArrayList<String> jobdescriptionarraylist = new ArrayList<String>();
+        for (ServiceEnt item : jobChildcollection
+                ) {
+            jobdescriptionarraylist.add(item.getTitle());
+        }
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, jobdescriptionarraylist);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnJobdescription.setAdapter(categoryAdapter);
+        spnJobdescription.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (!selectedJobs.contains(jobChildcollection.get(position))) {
+                    selectedJobs.add(jobChildcollection.get(position));
+                }
+
+
+                refreshListview();
+                // bindSelectedJobview(selectedJobs);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+              /*  if (!selectedJobs.contains(jobChildcollection.get(0)))
+                    selectedJobs.add(jobChildcollection.get(0));
+
+                refreshListview();*/
+            }
+        });
+    }
+
+    private void editCurrentService() {
+
+        for (serviceList item : previousData.getServics_list()
+                ) {
+            selectedJobs.add(new ServiceEnt(item.getService_detail().getId(),
+                    item.getService_detail().getTitle(),
+                    item.getService_detail().getImage(),
+                    item.getService_detail().getParent_id(),
+                    item.getService_detail().getCreated_at(),
+                    item.getService_detail().getUpdated_at(),
+                    item.getService_detail().getDeleted_at(),
+                    item.getService_detail().getService_image()));
+        }
+
+        refreshListview();
+        initJobTypeSpinner("");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        txtJobNo.setText(previousData.getId());
+        txtClientNameText.setText(previousData.getUser_detail().getFirst_name());
+        mTxtAdditionDescription.setText(previousData.getDiscription());
+        mEdtTotal.setText(previousData.getTotal());
+
+    }
+    private void CreateRequest() {
+        String serviceID = String.valueOf(jobcollection.get(spnJobtype.getSelectedItemPosition()).getId());
+        StringBuilder sb = new StringBuilder(selectedJobs.size());
+        ArrayList<Integer> selectedIDS = new ArrayList<>();
+        for (ServiceEnt item : selectedJobs
+                ) {
+            selectedIDS.add(item.getId());
+        }
+        String serviceIDS = StringUtils.join(selectedIDS, ",");
+        //MultipartBody.Part[] part = files.toArray();
+        Call<ResponseWrapper> call;
+        if (!isEdit) {
+            call = webService.editTechJob(prefHelper.getUserId(),
+                    serviceID,
+                    PARENTID,
+                    serviceIDS,
+                    mTxtAdditionDescription.getText().toString(),
+                    mEdtTotal.getText().toString());
+        } else {
+            call = webService.addTechJob(prefHelper.getUserId(),
+                    serviceID,
+                    PARENTID,
+                    serviceIDS,
+                    mTxtAdditionDescription.getText().toString(),
+                    mEdtTotal.getText().toString());
+        }
+        call.enqueue(new Callback<ResponseWrapper>() {
+            @Override
+            public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
+                loadingFinished();
+                if (response.body().getResponse().equals("2000")) {
+                    getDockActivity().replaceDockableFragment(OrderHistoryFragment.newInstance(), "OrderHistoryFragment");
+                } else {
+                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWrapper> call, Throwable t) {
+                loadingFinished();
+                Log.e("EntryCodeFragment", t.toString());
+                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+            }
+        });
+    }
+    private void refreshListview() {
+        selectedJobsadapter.clearList();
         listViewJobselected.setAdapter(selectedJobsadapter);
+        selectedJobsadapter.addAll(selectedJobs);
+        selectedJobsadapter.notifyDataSetChanged();
         setListViewHeightBasedOnChildren(listViewJobselected);
-        initJobTypeSpinner();
-        initJobDescriptionSpinner();
     }
 
     @Override
@@ -120,14 +421,13 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         titleBar.showsaveButton(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getDockActivity().replaceDockableFragment(OrderHistoryFragment.newInstance(), "OrderHistoryFragment");
+                CreateRequest();
             }
         });
         titleBar.showBackButton();
         titleBar.setSubHeading(getString(R.string.edit_job));
     }
-
-    private void initJobTypeSpinner() {
+ /*   private void initJobTypeSpinner() {
         final List<String> jobtypearraylist = new ArrayList<String>();
         jobtypearraylist.add("Electrical");
         jobtypearraylist.add("Plumbing");
@@ -178,7 +478,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
 
             }
         });
-    }
+    }*/
 
     @Override
     public void onDestroyView() {

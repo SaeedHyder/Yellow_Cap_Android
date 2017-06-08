@@ -56,12 +56,12 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
     private ArrayList<InProgressChildEnt> collectionChild1 ;
 =======*/
 
-    private ArrayListExpandableAdapter<RequestDetail, subRequest> adapter;
+    private ArrayListExpandableAdapter<RequestDetail, RequestDetail> adapter;
     private ArrayList<RequestDetail> collectionGroup;
-    private ArrayList<subRequest> collectionChild ;
+    private ArrayList<RequestDetail> collectionChild ;
 //>>>>>>> 29e8a3f026c4bd0d24fe2c96a2e5c2c96e670704
 
-    private HashMap<RequestDetail, ArrayList<subRequest>> listDataChild;
+    private HashMap<RequestDetail, ArrayList<RequestDetail>> listDataChild;
 
     public static InProgressExpendFragment newInstance() {
         return new InProgressExpendFragment();
