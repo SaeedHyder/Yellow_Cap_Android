@@ -128,7 +128,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void showNotificationMessage(Context context, String title, String message, String timeStamp, Intent intent) {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         NotificationHelper.getInstance().showNotification(context,
-                R.drawable.ic_launcher,
+                R.drawable.android_icon,
                 title,
                 message,
                 timeStamp,

@@ -130,7 +130,8 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     private String predate = "", preTime = "";
     private UserInProgressEnt previousRequestData;
     private Boolean isEdit = false;
-private ArrayList<String> deleteimages;
+    private ArrayList<String> deleteimages;
+
     public static RequestServiceFragment newInstance() {
         return new RequestServiceFragment();
     }
@@ -142,6 +143,30 @@ private ArrayList<String> deleteimages;
         RequestServiceFragment fragment = new RequestServiceFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    /**** Method for Setting the Height of the ListView dynamically.
+     **** Hack to fix the issue of not showing all the items of the ListView
+     **** when placed inside a ScrollView  ****/
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null)
+            return;
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0)
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
     }
 
     @Override
@@ -209,30 +234,6 @@ private ArrayList<String> deleteimages;
         }
 
 
-    }
-
-    /**** Method for Setting the Height of the ListView dynamically.
-     **** Hack to fix the issue of not showing all the items of the ListView
-     **** when placed inside a ScrollView  ****/
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null)
-            return;
-
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, listView);
-            if (i == 0)
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += view.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
     }
 
     private void initListViewAdapter() {
@@ -519,16 +520,16 @@ private ArrayList<String> deleteimages;
                     RequestBody.create(MediaType.parse("text/plain"), paymentType),
                     RequestBody.create(MediaType.parse("text/plain"), String.valueOf(AppConstants.CREATE_REQUEST)), files);
         } else {
-            ArrayList<String>deleteImagesIDs= new ArrayList<>();
-            if (previousRequestData !=null){
-                int index =0;
+            ArrayList<String> deleteImagesIDs = new ArrayList<>();
+            if (previousRequestData != null) {
+                int index = 0;
 
-                for(int i = 0; i< deleteimages.size(); i++){
-                    for (int j = 0;j<previousRequestData.getImageDetail().size();j++){
-                        if (previousRequestData.getImageDetail().get(j).getFileLink().equals(deleteimages.get(i))){
+                for (int i = 0; i < deleteimages.size(); i++) {
+                    for (int j = 0; j < previousRequestData.getImageDetail().size(); j++) {
+                        if (previousRequestData.getImageDetail().get(j).getFileLink().equals(deleteimages.get(i))) {
                             deleteImagesIDs.add(String.valueOf(previousRequestData.getImageDetail()
                                     .get(j).getId()));
-                                            break;
+                            break;
                         }
                     }
                 }
@@ -546,7 +547,7 @@ private ArrayList<String> deleteimages;
                     RequestBody.create(MediaType.parse("text/plain"), preTime),
                     RequestBody.create(MediaType.parse("text/plain"), paymentType),
                     RequestBody.create(MediaType.parse("text/plain"), String.valueOf(AppConstants.CREATE_REQUEST)), files,
-                    RequestBody.create(MediaType.parse("text/plain"),deleteimagesIDS));
+                    RequestBody.create(MediaType.parse("text/plain"), deleteimagesIDS));
         }
         call.enqueue(new Callback<ResponseWrapper<RequestEnt>>() {
             @Override
@@ -731,7 +732,7 @@ private ArrayList<String> deleteimages;
 
     @Override
     public void onDelete(int position) {
-        if (images.get(position).contains("http://")){
+        if (images.get(position).contains("http://")) {
             deleteimages.add(images.get(position));
         }
         images.remove(position);

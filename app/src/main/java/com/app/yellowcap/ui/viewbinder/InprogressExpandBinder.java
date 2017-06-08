@@ -29,7 +29,7 @@ import butterknife.ButterKnife;
  * Created by saeedhyder on 6/6/2017.
  */
 
-public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDetail, subRequest> {
+public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDetail, RequestDetail> {
 
     DockActivity context;
     CallUser callUser;
@@ -57,7 +57,7 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
     }
 
     @Override
-    public void bindGroupView(RequestDetail entity, int position, int grpPosition, int childCount, View view, Activity activity) {
+    public void bindGroupView(final RequestDetail entity, int position, int grpPosition, int childCount, View view, Activity activity) {
 
         parentViewHolder parentViewHolder = (InprogressExpandBinder.parentViewHolder) view.getTag();
 
@@ -76,6 +76,8 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         if(entity.getService_detail()!=null)
         {
             parentViewHolder.txtJobTitleText.setText(entity.getService_detail().getTitle());
+        }else{
+            parentViewHolder.txtJobTitleText.setText("");
         }
         parentViewHolder.txtEarningText.setText(entity.getTotal());
         parentViewHolder.txtAddressText.setText(entity.getAddress());
@@ -92,7 +94,7 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         parentViewHolder.ivEditBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.replaceDockableFragment(EditJobTechFragment.newInstance(), "EditJobTechFragment");
+                context.replaceDockableFragment(EditJobTechFragment.newInstance(entity), "EditJobTechFragment");
             }
         });
 
@@ -124,7 +126,7 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
     }
 
     @Override
-    public void bindChildView(subRequest entity, int position, int grpPosition, int childCount, View view, Activity activity) {
+    public void bindChildView(final RequestDetail entity, int position, int grpPosition, int childCount, View view, Activity activity) {
 
         childViewHolder childViewHolder = (InprogressExpandBinder.childViewHolder) view.getTag();
 
@@ -135,14 +137,15 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         } else {
             childViewHolder.llBottomEarning.setVisibility(View.GONE);
         }
-
+        StringBuilder   stringBuilder = new StringBuilder();
         for(serviceList item : entity.getServics_list())
         {
+            stringBuilder.append(item.getService_detail().getTitle()+System.getProperty("line.separator"));
             subFieldTitles.add(item.getService_detail().getTitle());
 
         }
 
-        childViewHolder.txtJob1.setText("");
+        childViewHolder.txtJob1.setText(stringBuilder.toString());
         childViewHolder.txtAddEarningText.setText("AED "+entity.getTotal());
         childViewHolder.txtTotalEarningText.setText("AED "+entity.getTotal());
 
@@ -163,7 +166,7 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         childViewHolder.ivEditJobBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.replaceDockableFragment(EditJobTechFragment.newInstance(), "EditJobTechFragment");
+                context.replaceDockableFragment(EditJobTechFragment.newInstance(entity), "EditJobTechFragment");
             }
         });
 
