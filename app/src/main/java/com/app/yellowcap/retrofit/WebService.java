@@ -113,7 +113,8 @@ public interface WebService {
                                                       @Part("time") RequestBody time,
                                                       @Part("payment_type") RequestBody payment_type,
                                                       @Part("status") RequestBody status,
-                                                      @Part ArrayList<MultipartBody.Part> images
+                                                      @Part ArrayList<MultipartBody.Part> images,
+                                                      @Part("image_ids") RequestBody deleteImages
 
     );
 
@@ -128,7 +129,7 @@ public interface WebService {
     @FormUrlEncoded
     @POST(" request/technicianrequeststatus")
     Call<ResponseWrapper<JobRequestEnt>> acceptJob(@Field("assign_id") Integer assign_id,
-                                                   @Field("technician_id") Integer technician_id,
+                                                   @Field("technician_id") String technician_id,
                                                    @Field("request_id") Integer request_id,
                                                    @Field("status") Integer status,
                                                    @Field("arrival_time") String arrival_time,
@@ -137,7 +138,7 @@ public interface WebService {
     @FormUrlEncoded
     @POST("request/technicianrequeststatus")
     Call<ResponseWrapper<JobRequestEnt>> rejectJob(@Field("assign_id")Integer assign_id,
-                                                   @Field("technician_id")Integer technician_id,
+                                                   @Field("technician_id")String technician_id,
                                                    @Field("request_id")Integer request_id,
                                                    @Field("status")Integer status,
                                                    @Field("message")String message

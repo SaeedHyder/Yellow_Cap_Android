@@ -28,10 +28,22 @@ public class RequestDetail {
     ArrayList<serviceList> servics_list;
     ServiceDetail service_detail;
     UserDetail user_detail;
+
     ArrayList<subRequest> sub_request;
+
+    private ArrayList<ImageDetailEnt> image_detail;
 
     public int getId() {
         return id;
+    }
+
+
+    public ArrayList<ImageDetailEnt> getImage_detail() {
+        return image_detail;
+    }
+
+    public void setImage_detail(ArrayList<ImageDetailEnt> image_detail) {
+        this.image_detail = image_detail;
     }
 
     public void setId(int id) {
@@ -188,5 +200,13 @@ public class RequestDetail {
 
     public void setUser_detail(UserDetail user_detail) {
         this.user_detail = user_detail;
+    }
+
+    public ArrayList<subRequest> getSub_request() {
+        return sub_request;
+    }
+
+    public void setSub_request(ArrayList<subRequest> sub_request) {
+        this.sub_request = sub_request;
     }
 }

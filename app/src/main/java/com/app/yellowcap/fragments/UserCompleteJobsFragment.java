@@ -32,8 +32,8 @@ import retrofit2.Response;
  */
 
 public class UserCompleteJobsFragment extends BaseFragment {
-    @BindView(R.id.txt_noresult)
-    AnyTextView txtNoresult;
+   /* @BindView(R.id.txt_noresult)
+    AnyTextView txtNoresult;*/
     @BindView(R.id.CompletedJobs_ListView)
     ListView CompletedJobsListView;
     Unbinder unbinder;

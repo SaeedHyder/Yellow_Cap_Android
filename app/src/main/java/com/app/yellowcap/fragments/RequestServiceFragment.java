@@ -56,7 +56,6 @@ import com.jota.autocompletelocation.AutoCompleteLocation;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -131,7 +130,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     private String predate = "", preTime = "";
     private UserInProgressEnt previousRequestData;
     private Boolean isEdit = false;
-
+private ArrayList<String> deleteimages;
     public static RequestServiceFragment newInstance() {
         return new RequestServiceFragment();
     }
@@ -143,30 +142,6 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         RequestServiceFragment fragment = new RequestServiceFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    /**** Method for Setting the Height of the ListView dynamically.
-     **** Hack to fix the issue of not showing all the items of the ListView
-     **** when placed inside a ScrollView  ****/
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null)
-            return;
-
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, listView);
-            if (i == 0)
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += view.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
     }
 
     @Override
@@ -221,6 +196,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         selectedJobs = new ArrayList<>();
+        deleteimages = new ArrayList<>();
         setListener();
         if (previousRequestData != null) {
             isEdit = true;
@@ -233,6 +209,30 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         }
 
 
+    }
+
+    /**** Method for Setting the Height of the ListView dynamically.
+     **** Hack to fix the issue of not showing all the items of the ListView
+     **** when placed inside a ScrollView  ****/
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null)
+            return;
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0)
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
     }
 
     private void initListViewAdapter() {
@@ -492,7 +492,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         }
         String serviceIDS = StringUtils.join(selectedIDS, ",");
         ArrayList<MultipartBody.Part> files = new ArrayList<>();
-        int index = 0;
+
         for (String item : images
                 ) {
             if (!item.contains("http://")) {
@@ -502,7 +502,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                         file.getName(), RequestBody.create(MediaType.parse("image/*"), file)));
 
             }
-            index++;
+
         }
         //MultipartBody.Part[] part = files.toArray();
         Call<ResponseWrapper<RequestEnt>> call;
@@ -519,6 +519,21 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                     RequestBody.create(MediaType.parse("text/plain"), paymentType),
                     RequestBody.create(MediaType.parse("text/plain"), String.valueOf(AppConstants.CREATE_REQUEST)), files);
         } else {
+            ArrayList<String>deleteImagesIDs= new ArrayList<>();
+            if (previousRequestData !=null){
+                int index =0;
+
+                for(int i = 0; i< deleteimages.size(); i++){
+                    for (int j = 0;j<previousRequestData.getImageDetail().size();j++){
+                        if (previousRequestData.getImageDetail().get(j).getFileLink().equals(deleteimages.get(i))){
+                            deleteImagesIDs.add(String.valueOf(previousRequestData.getImageDetail()
+                                    .get(j).getId()));
+                                            break;
+                        }
+                    }
+                }
+            }
+            String deleteimagesIDS = StringUtils.join(deleteImagesIDs, ",");
             call = webService.editUserRequest(
                     RequestBody.create(MediaType.parse("text/plain"), prefHelper.getUserId()),
                     RequestBody.create(MediaType.parse("text/plain"), String.valueOf(previousRequestData.getId())),
@@ -530,7 +545,8 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                     RequestBody.create(MediaType.parse("text/plain"), predate),
                     RequestBody.create(MediaType.parse("text/plain"), preTime),
                     RequestBody.create(MediaType.parse("text/plain"), paymentType),
-                    RequestBody.create(MediaType.parse("text/plain"), String.valueOf(AppConstants.CREATE_REQUEST)), files);
+                    RequestBody.create(MediaType.parse("text/plain"), String.valueOf(AppConstants.CREATE_REQUEST)), files,
+                    RequestBody.create(MediaType.parse("text/plain"),deleteimagesIDS));
         }
         call.enqueue(new Callback<ResponseWrapper<RequestEnt>>() {
             @Override
@@ -542,6 +558,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                         @Override
                         public void onClick(View v) {
                             RequestSend.hideDialog();
+                            getDockActivity().popBackStackTillEntry(0);
                             getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
                         }
                     });
@@ -714,6 +731,9 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
     @Override
     public void onDelete(int position) {
+        if (images.get(position).contains("http://")){
+            deleteimages.add(images.get(position));
+        }
         images.remove(position);
         mAdapter.notifyItemRemoved(position);
         mAdapter.notifyDataSetChanged();
