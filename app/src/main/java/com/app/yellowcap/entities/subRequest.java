@@ -3,10 +3,10 @@ package com.app.yellowcap.entities;
 import java.util.ArrayList;
 
 /**
- * Created by saeedhyder on 6/7/2017.
+ * Created by saeedhyder on 6/8/2017.
  */
 
-public class RequestDetail {
+public class subRequest {
 
     int id;
     int service_id;
@@ -20,15 +20,14 @@ public class RequestDetail {
     String estimate_from;
     String estimate_to;
     String total;
-    String user_id;
+    int user_id;
     String message;
     String parent_id;
     String created_at;
     String updated_at;
     ArrayList<serviceList> servics_list;
     ServiceDetail service_detail;
-    UserDetail user_detail;
-    ArrayList<subRequest> sub_request;
+
 
     public int getId() {
         return id;
@@ -126,11 +125,11 @@ public class RequestDetail {
         this.total = total;
     }
 
-    public String getUser_id() {
+    public int getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(String user_id) {
+    public void setUser_id(int user_id) {
         this.user_id = user_id;
     }
 
@@ -170,23 +169,15 @@ public class RequestDetail {
         return servics_list;
     }
 
+    public void setServics_list(ArrayList<serviceList> servics_list) {
+        this.servics_list = servics_list;
+    }
+
     public ServiceDetail getService_detail() {
         return service_detail;
     }
 
     public void setService_detail(ServiceDetail service_detail) {
         this.service_detail = service_detail;
-    }
-
-    public void setServics_list(ArrayList<serviceList> servics_list) {
-        this.servics_list = servics_list;
-    }
-
-    public UserDetail getUser_detail() {
-        return user_detail;
-    }
-
-    public void setUser_detail(UserDetail user_detail) {
-        this.user_detail = user_detail;
     }
 }

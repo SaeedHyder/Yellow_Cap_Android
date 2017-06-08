@@ -15,6 +15,7 @@ import com.app.yellowcap.entities.InProgressChildEnt;
 import com.app.yellowcap.entities.InProgressParentEnt;
 import com.app.yellowcap.entities.JobRequestEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
+import com.app.yellowcap.entities.TechInProgressEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.interfaces.CallUser;
@@ -49,7 +50,6 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
     private ArrayListExpandableAdapter<InProgressParentEnt, InProgressChildEnt> adapter;
     private ArrayList<InProgressParentEnt> collectionGroup;
     private ArrayList<InProgressChildEnt> collectionChild ;
-    private ArrayList<InProgressChildEnt> collectionChild1 ;
 
     private HashMap<InProgressParentEnt, ArrayList<InProgressChildEnt>> listDataChild;
 
@@ -90,10 +90,37 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        setInProgressJobsData();
+        getInProgressJobsData();
     }
 
-    private void setInProgressJobsData() {
+    private void getInProgressJobsData() {
+
+        getDockActivity().onLoadingStarted();
+        Call<ResponseWrapper<ArrayList<TechInProgressEnt>>> call = webService.techCompleteJobs(Integer.valueOf(prefHelper.getUserId()));
+
+        call.enqueue(new Callback<ResponseWrapper<ArrayList<TechInProgressEnt>>>() {
+            @Override
+            public void onResponse(Call<ResponseWrapper<ArrayList<TechInProgressEnt>>> call, Response<ResponseWrapper<ArrayList<TechInProgressEnt>>> response) {
+                getDockActivity().onLoadingFinished();
+                if (response.body().getResponse().equals("2000")) {
+                    setInProgressJobsData(response.body().getResult());
+                } else {
+                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWrapper<ArrayList<TechInProgressEnt>>> call, Throwable t) {
+                getDockActivity().onLoadingFinished();
+                Log.e("UserSignupFragment", t.toString());
+                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+            }
+        });
+
+
+    }
+
+    private void setInProgressJobsData(ArrayList<TechInProgressEnt> result) {
 
      /*   userCollection.add(new InProgressEnt("02","23-3-17","Al Musa","Plumbing","AED 55.00","Dubai Marina,NearMarina"));
         userCollection.add(new InProgressEnt("02","23-3-17","Al Musa","Plumbing","AED 55.00","Dubai Marina,NearMarina"));
@@ -104,17 +131,18 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
 
         collectionGroup = new ArrayList<>();
         collectionChild = new ArrayList<>();
-        collectionChild1= new ArrayList<>();
+
         listDataChild = new HashMap<>();
-        collectionGroup.add(new InProgressParentEnt("02","23-3-17","Al Musa","Plumbing","AED 55.00","Dubai Marina,NearMarina"));
-        collectionGroup.add(new InProgressParentEnt("02","23-3-17","Al Musa","Plumbing","AED 55.00","Dubai Marina,NearMarina"));
-        collectionGroup.add(new InProgressParentEnt("02","23-3-17","Al Musa","Plumbing","AED 55.00","Dubai Marina,NearMarina"));
-        collectionGroup.add(new InProgressParentEnt("02","23-3-17","Al Musa","Plumbing","AED 55.00","Dubai Marina,NearMarina"));
+        for(TechInProgressEnt item: result){
+            collectionGroup.add(new InProgressParentEnt(String.valueOf(item.getId()),item.getRequest_detail().getDate(),item.getRequest_detail().getUser_detail().getFull_name(),item.getRequest_detail().getService_detail().getTitle(),item.getRequest_detail().getTotal(),item.getRequest_detail().getAddress()));
+        }
+        //collectionGroup.add(new InProgressParentEnt("re","23-3-17","Al Musa","Plumbing","AED 55.00","Dubai Marina,NearMarina"));
+
         collectionChild.add(new InProgressChildEnt("Your order is successfully made "+"\n"+"and the details have been stored.","AED 110","AED 200"));
         collectionChild.add(new InProgressChildEnt("Your order is successfully made "+"\n"+"and the details have been stored.","AED 110","AED 200"));
-            listDataChild.put(collectionGroup.get(0), collectionChild1);
+            listDataChild.put(collectionGroup.get(0), collectionChild);
             listDataChild.put(collectionGroup.get(1), collectionChild);
-             listDataChild.put(collectionGroup.get(2), collectionChild1);
+             listDataChild.put(collectionGroup.get(2), collectionChild);
           listDataChild.put(collectionGroup.get(3), collectionChild);
         orderCounts.setInprogressCount(collectionGroup.size());
 
