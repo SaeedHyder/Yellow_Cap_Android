@@ -7,8 +7,6 @@ import android.view.View;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.entities.UserComleteJobsEnt;
-import com.app.yellowcap.fragments.abstracts.BaseFragment;
-import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.CustomRatingBar;
@@ -32,26 +30,28 @@ public class UserCompleteJobsBinder extends ViewBinder<UserComleteJobsEnt> {
 
     @Override
     public void bindView(UserComleteJobsEnt entity, int position, int grpPosition, View view, Activity activity) {
-        final ViewHolder viewHolder = (ViewHolder)view.getTag();
+        final ViewHolder viewHolder = (ViewHolder) view.getTag();
         viewHolder.txtJobNoText.setText(String.valueOf(entity.getId()));
-        viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getTitle());
-        viewHolder.txtClientNameText.setText(entity.getAssignTechnician().get(0).getTechnicianDetail().getFullName());
+        if (entity.getServicsList().size() > 0)
+            viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getTitle());
+        if (entity.getAssignTechnician().size() > 0)
+            viewHolder.txtClientNameText.setText(entity.getAssignTechnician().get(0).getTechnicianDetail().getFullName());
         viewHolder.txtEarningText.setText(entity.getTotal());
         String sourceString = "<b>" + "Description:" + "</b> " + entity.getDiscription();
         viewHolder.txtDescriptionText.setText(Html.fromHtml(sourceString));
-
-         viewHolder.rbAddRating.setScore(entity.getFeedbackdetail().getRate());
+        if (entity.getFeedbackdetail() != null)
+            viewHolder.rbAddRating.setScore(entity.getFeedbackdetail().getRate());
         viewHolder.rbAddRating.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                viewHolder. rbAddRating.setFocusable(false);
+                viewHolder.rbAddRating.setFocusable(false);
                 return true;
             }
         });
 
     }
 
-   public static class ViewHolder extends BaseViewHolder {
+    public static class ViewHolder extends BaseViewHolder {
         @BindView(R.id.txt_jobNoText)
         AnyTextView txtJobNoText;
         @BindView(R.id.txt_jobCompletedText)

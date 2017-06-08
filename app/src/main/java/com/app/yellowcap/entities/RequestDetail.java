@@ -27,9 +27,26 @@ public class RequestDetail {
     String updated_at;
     ArrayList<serviceList> servics_list;
     ServiceDetail service_detail;
-
+    UserDetail user_detail;
+    private ArrayList<ImageDetailEnt> image_detail;
     public int getId() {
         return id;
+    }
+
+    public UserDetail getUser_detail() {
+        return user_detail;
+    }
+
+    public void setUser_detail(UserDetail user_detail) {
+        this.user_detail = user_detail;
+    }
+
+    public ArrayList<ImageDetailEnt> getImage_detail() {
+        return image_detail;
+    }
+
+    public void setImage_detail(ArrayList<ImageDetailEnt> image_detail) {
+        this.image_detail = image_detail;
     }
 
     public void setId(int id) {

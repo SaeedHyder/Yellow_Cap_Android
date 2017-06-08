@@ -39,10 +39,14 @@ public class NewJobsitemBinder  extends ViewBinder<NewJobsEnt> {
         NewJobsitemBinder.ViewHolder viewHolder = (NewJobsitemBinder.ViewHolder) view.getTag();
 
 
-        if(entity.getRequest_detail().getService_detail()!=null || entity.getRequest_detail().getServics_list().get(0).getService_detail()!=null) {
-            title=entity.getRequest_detail().getService_detail().getTitle();
-            title1=entity.getRequest_detail().getServics_list().get(0).getService_detail().getTitle();
-            viewHolder.txt_jobNotification.setText(title+"/"+title1);
+        if(entity.getRequest_detail().getService_detail()!=null) {
+            if (entity.getRequest_detail().getService_detail() != null) {
+                title = entity.getRequest_detail().getService_detail().getTitle();
+                if (entity.getRequest_detail().getServics_list().size()>0) {
+                    title1 = entity.getRequest_detail().getServics_list().get(0).getService_detail().getTitle();
+                }
+                viewHolder.txt_jobNotification.setText(title + "/" + title1);
+            }
         }
         else{
         viewHolder.txt_jobNotification.setText("No Title");}

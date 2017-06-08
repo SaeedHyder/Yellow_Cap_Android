@@ -16,11 +16,13 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.app.yellowcap.R;
+import com.app.yellowcap.entities.ImageDetailEnt;
 import com.app.yellowcap.entities.JobRequestEnt;
 import com.app.yellowcap.entities.NewJobsEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.serviceList;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.helpers.DateHelper;
 import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.helpers.TimePickerHelper;
@@ -54,6 +56,7 @@ import static com.app.yellowcap.R.id.btn_accept;
 
 public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener, View.OnClickListener {
 
+    final static String NEWJOB = "NEWJOB";
     @BindView(R.id.imageSlider)
     SliderLayout imageSlider;
     @BindView(R.id.pagerIndicator)
@@ -113,12 +116,10 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
     LinearLayout llButtons;
     @BindView(R.id.mainFrame)
     LinearLayout mainFrame;
-    private AnyTextView arriveTime;
-    private AnyTextView completeTime;
-
-    final static String NEWJOB = "NEWJOB";
     String newJobString;
     NewJobsEnt newJobJson;
+    private AnyTextView arriveTime;
+    private AnyTextView completeTime;
 
     public static NewJobDetail newInstance() {
         return new NewJobDetail();
@@ -141,7 +142,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
             newJobString = getArguments().getString(NEWJOB);
             // Toast.makeText(getDockActivity(), ConversationId, Toast.LENGTH_LONG).show();
         }
-        if (!NEWJOB.isEmpty()) {
+        if (newJobString != null) {
             newJobJson = new Gson().fromJson(newJobString, NewJobsEnt.class);
 
         }
@@ -174,9 +175,9 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
 
     private void setJobDetail() {
         txtJobName.setText(newJobJson.getRequest_detail().getService_detail().getTitle());
-        if(newJobJson.getUser_detail()!=null){
-        txtCustomerName.setText(newJobJson.getUser_detail().getFull_name());}
-        else{
+        if (newJobJson.getRequest_detail().getUser_detail() != null) {
+            txtCustomerName.setText(newJobJson.getRequest_detail().getUser_detail().getFull_name());
+        } else {
             txtCustomerName.setText(" ");
         }
         txtEstimatedQuote.setText("Between AED " + newJobJson.getRequest_detail().getEstimate_to() + " to " + newJobJson.getRequest_detail().getEstimate_from() + "- COD");
@@ -228,18 +229,18 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
             imageSlider.addSlider(textSliderView); }*/
         try {
 
-            for (serviceList item : newJobJson.getRequest_detail().getServics_list()) {
+            for (ImageDetailEnt item : newJobJson.getRequest_detail().getImage_detail()) {
                 DefaultSliderView textSliderView = new DefaultSliderView(getDockActivity());
                 // initialize a SliderLayout
                 textSliderView
-                        .image(item.getService_detail().getService_image())
+                        .image(item.getFileLink())
                         .setScaleType(BaseSliderView.ScaleType.Fit)
                         .setOnSliderClickListener(this);
 
                 //add your extra information
                 textSliderView.bundle(new Bundle());
                 textSliderView.getBundle()
-                        .putString("extra", item.getService_detail().getService_image() + "");
+                        .putString("extra", item.getFileLink() + "");
 
                 imageSlider.addSlider(textSliderView);
             }
@@ -325,38 +326,46 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
 
         switch (v.getId()) {
             case btn_accept:
-
+                String request = "";
+                String userName = "";
+                if (newJobJson.getRequest_detail().getService_detail() != null) {
+                    request = newJobJson.getRequest_detail().getService_detail().getTitle();
+                }
+                if (newJobJson.getRequest_detail().getUser_detail() != null) {
+                    userName = newJobJson.getRequest_detail().getUser_detail().getFull_name();
+                }
                 final DialogHelper JobDetailDialog = new DialogHelper(getDockActivity());
                 Dialog dialog = JobDetailDialog.initJobDetailDialog(R.layout.new_job_detail_dialog, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (arriveTime != null && completeTime != null) {
-                            if (arriveTime.getText().toString().isEmpty()) {
-                                UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.arrive_time_error));
+                            @Override
+                            public void onClick(View v) {
+                                if (arriveTime != null && completeTime != null) {
+                                    if (arriveTime.getText().toString().isEmpty()) {
+                                        UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.arrive_time_error));
 
-                            } else if (completeTime.getText().toString().isEmpty()) {
-                                UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.complete_time_error));
-                            } else {
-                                jobAccept(arriveTime, completeTime, JobDetailDialog);
+                                    } else if (completeTime.getText().toString().isEmpty()) {
+                                        UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.complete_time_error));
+                                    } else {
+                                        jobAccept(arriveTime, completeTime, JobDetailDialog);
 
+                                    }
+                                }
                             }
-                        }
+                        },
 
+                        request,
+                        userName, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
 
-                    }
-                }, "Sink Broken", "Mohammad Ali", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                                initTimePicker(arriveTime);
+                            }
+                        }, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
 
-                        initTimePicker(arriveTime);
-                    }
-                }, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        initTimePicker(completeTime);
-                    }
-                });
+                                initTimePicker(completeTime);
+                            }
+                        });
 
                 arriveTime = JobDetailDialog.getTimeTextview(R.id.txt_arrval_time);
                 completeTime = JobDetailDialog.getTimeTextview(R.id.txt_complete_time);
@@ -390,13 +399,14 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
 
         if (!reason.equals("")) {
             getDockActivity().onLoadingStarted();
-            Call<ResponseWrapper<JobRequestEnt>> call = webService.rejectJob(newJobJson.getId(), newJobJson.getTechnician_id(), newJobJson.getRequest_id(), 2, reason);
+            Call<ResponseWrapper<JobRequestEnt>> call = webService.rejectJob(newJobJson.getId(), prefHelper.getUserId(), newJobJson.getRequest_id(), AppConstants.TECH_REJECT_JOB, reason);
             call.enqueue(new Callback<ResponseWrapper<JobRequestEnt>>() {
                 @Override
                 public void onResponse(Call<ResponseWrapper<JobRequestEnt>> call, Response<ResponseWrapper<JobRequestEnt>> response) {
                     getDockActivity().onLoadingFinished();
                     if (response.body().getResponse().equals("2000")) {
                         refusalDialog.hideDialog();
+                        getDockActivity().popBackStackTillEntry(0);
                         getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
 
                     } else {
@@ -419,14 +429,15 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
 
     private void jobAccept(AnyTextView arriveTime, AnyTextView completeTime, final DialogHelper jobDetailDialog) {
         getDockActivity().onLoadingStarted();
-        Call<ResponseWrapper<JobRequestEnt>> call = webService.acceptJob(newJobJson.getId(), newJobJson.getTechnician_id(), newJobJson.getRequest_id(), 1, arriveTime.getText().toString(), completeTime.getText().toString());
+        Call<ResponseWrapper<JobRequestEnt>> call = webService.acceptJob(newJobJson.getId(), prefHelper.getUserId(), newJobJson.getRequest_id(),
+                AppConstants.TECH_ACCEPT_JOB, arriveTime.getText().toString(), completeTime.getText().toString());
         call.enqueue(new Callback<ResponseWrapper<JobRequestEnt>>() {
             @Override
             public void onResponse(Call<ResponseWrapper<JobRequestEnt>> call, Response<ResponseWrapper<JobRequestEnt>> response) {
                 getDockActivity().onLoadingFinished();
                 if (response.body().getResponse().equals("2000")) {
                     jobDetailDialog.hideDialog();
-                    getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
+                    getDockActivity().replaceDockableFragment(OrderHistoryFragment.newInstance(), "HomeFragment");
                 } else {
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
                 }

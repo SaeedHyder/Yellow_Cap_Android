@@ -75,4 +75,22 @@ public class ImageDetailEnt {
     public void setFileLink(String fileLink) {
         this.fileLink = fileLink;
     }
+
+    @Override
+    public boolean equals(Object object)
+    {
+        boolean isEqual= false;
+
+        if (object != null && object instanceof String)
+        {
+            isEqual = (this.fileLink.equals(object.toString()) );
+        }
+
+        return isEqual;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id;
+    }
 }

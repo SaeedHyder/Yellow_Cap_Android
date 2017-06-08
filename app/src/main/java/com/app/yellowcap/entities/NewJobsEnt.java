@@ -17,7 +17,8 @@ public class NewJobsEnt {
     String updated_at;
     TechnicianDetail technician_detail;
     RequestDetail request_detail;
-    UserDetail user_detail;
+
+
 
 
     public int getId() {
@@ -108,11 +109,5 @@ public class NewJobsEnt {
         this.request_detail = request_detail;
     }
 
-    public UserDetail getUser_detail() {
-        return user_detail;
-    }
 
-    public void setUser_detail(UserDetail user_detail) {
-        this.user_detail = user_detail;
-    }
 }
