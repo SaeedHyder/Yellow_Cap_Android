@@ -14,8 +14,11 @@ import com.app.yellowcap.R;
 import com.app.yellowcap.entities.InProgressChildEnt;
 import com.app.yellowcap.entities.InProgressParentEnt;
 import com.app.yellowcap.entities.JobRequestEnt;
+import com.app.yellowcap.entities.RequestDetail;
 import com.app.yellowcap.entities.ResponseWrapper;
+import com.app.yellowcap.entities.ServiceDetail;
 import com.app.yellowcap.entities.TechInProgressEnt;
+import com.app.yellowcap.entities.subRequest;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.interfaces.CallUser;
@@ -47,11 +50,11 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
     Unbinder unbinder;
     SetOrderCounts orderCounts;
 
-    private ArrayListExpandableAdapter<InProgressParentEnt, InProgressChildEnt> adapter;
-    private ArrayList<InProgressParentEnt> collectionGroup;
-    private ArrayList<InProgressChildEnt> collectionChild ;
+    private ArrayListExpandableAdapter<RequestDetail, subRequest> adapter;
+    private ArrayList<RequestDetail> collectionGroup;
+    private ArrayList<subRequest> collectionChild ;
 
-    private HashMap<InProgressParentEnt, ArrayList<InProgressChildEnt>> listDataChild;
+    private HashMap<RequestDetail, ArrayList<subRequest>> listDataChild;
 
     public static InProgressExpendFragment newInstance() {
         return new InProgressExpendFragment();
@@ -133,17 +136,23 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
         collectionChild = new ArrayList<>();
 
         listDataChild = new HashMap<>();
-        for(TechInProgressEnt item: result){
-            collectionGroup.add(new InProgressParentEnt(String.valueOf(item.getId()),item.getRequest_detail().getDate(),item.getRequest_detail().getUser_detail().getFull_name(),item.getRequest_detail().getService_detail().getTitle(),item.getRequest_detail().getTotal(),item.getRequest_detail().getAddress()));
+        for (TechInProgressEnt item:result
+             ) {
+            collectionGroup.add(item.getRequest_detail());
+            if(item.getRequest_detail().getSub_request()!=null){
+            collectionChild.addAll(item.getRequest_detail().getSub_request());}
+            listDataChild.put(item.getRequest_detail(),collectionChild);
         }
-        //collectionGroup.add(new InProgressParentEnt("re","23-3-17","Al Musa","Plumbing","AED 55.00","Dubai Marina,NearMarina"));
+          /*  collectionGroup.addAll(result);
 
+        //collectionGroup.add(new InProgressParentEnt("re","23-3-17","Al Musa","Plumbing","AED 55.00","Dubai Marina,NearMarina"));
+        for(ServiceDetail)
         collectionChild.add(new InProgressChildEnt("Your order is successfully made "+"\n"+"and the details have been stored.","AED 110","AED 200"));
         collectionChild.add(new InProgressChildEnt("Your order is successfully made "+"\n"+"and the details have been stored.","AED 110","AED 200"));
             listDataChild.put(collectionGroup.get(0), collectionChild);
             listDataChild.put(collectionGroup.get(1), collectionChild);
              listDataChild.put(collectionGroup.get(2), collectionChild);
-          listDataChild.put(collectionGroup.get(3), collectionChild);
+          listDataChild.put(collectionGroup.get(3), collectionChild);*/
         orderCounts.setInprogressCount(collectionGroup.size());
 
         bindData();
