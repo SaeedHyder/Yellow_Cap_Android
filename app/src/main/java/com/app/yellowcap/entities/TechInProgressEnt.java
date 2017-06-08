@@ -18,7 +18,7 @@ package com.app.yellowcap.entities;
     String updated_at;
     TechnicianDetail technician_detail;
     RequestDetail request_detail;
-    UserDetail user_detail;
+
 
     public int getId() {
         return id;
@@ -116,11 +116,5 @@ package com.app.yellowcap.entities;
         this.request_detail = request_detail;
     }
 
-    public UserDetail getUser_detail() {
-        return user_detail;
-    }
 
-    public void setUser_detail(UserDetail user_detail) {
-        this.user_detail = user_detail;
-    }
 }

@@ -11,11 +11,16 @@ import com.app.yellowcap.R;
 import com.app.yellowcap.activities.DockActivity;
 import com.app.yellowcap.entities.InProgressChildEnt;
 import com.app.yellowcap.entities.InProgressParentEnt;
+import com.app.yellowcap.entities.RequestDetail;
+import com.app.yellowcap.entities.serviceList;
+import com.app.yellowcap.entities.subRequest;
 import com.app.yellowcap.fragments.EditJobTechFragment;
 import com.app.yellowcap.interfaces.CallUser;
 import com.app.yellowcap.interfaces.MarkAsComplete;
 import com.app.yellowcap.ui.viewbinders.abstracts.ExpandableListViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,7 +29,7 @@ import butterknife.ButterKnife;
  * Created by saeedhyder on 6/6/2017.
  */
 
-public class InprogressExpandBinder extends ExpandableListViewBinder<InProgressParentEnt, InProgressChildEnt> {
+public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDetail, subRequest> {
 
     DockActivity context;
     CallUser callUser;
@@ -52,7 +57,7 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<InProgressP
     }
 
     @Override
-    public void bindGroupView(InProgressParentEnt entity, int position, int grpPosition, int childCount, View view, Activity activity) {
+    public void bindGroupView(RequestDetail entity, int position, int grpPosition, int childCount, View view, Activity activity) {
 
         parentViewHolder parentViewHolder = (InprogressExpandBinder.parentViewHolder) view.getTag();
 
@@ -65,11 +70,14 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<InProgressP
             parentViewHolder.llEstimatedQuotation.setVisibility(View.VISIBLE);
             parentViewHolder.llBottomBtns.setVisibility(View.GONE);
         }
-        parentViewHolder.txtJobNoText.setText(entity.getJob());
-        parentViewHolder.txtJobPostedText.setText(entity.getJobPosted());
-        parentViewHolder.txtClientNameText.setText(entity.getClientName());
-        parentViewHolder.txtJobTitleText.setText(entity.getJobTitle());
-        parentViewHolder.txtEarningText.setText(entity.getEarning());
+        parentViewHolder.txtJobNoText.setText(String.valueOf(entity.getId()));
+        parentViewHolder.txtJobPostedText.setText(entity.getDate());
+        parentViewHolder.txtClientNameText.setText(entity.getUser_detail().getFull_name());
+        if(entity.getService_detail()!=null)
+        {
+            parentViewHolder.txtJobTitleText.setText(entity.getService_detail().getTitle());
+        }
+        parentViewHolder.txtEarningText.setText(entity.getTotal());
         parentViewHolder.txtAddressText.setText(entity.getAddress());
 
         setTextStyle(parentViewHolder);
@@ -116,9 +124,11 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<InProgressP
     }
 
     @Override
-    public void bindChildView(InProgressChildEnt entity, int position, int grpPosition, int childCount, View view, Activity activity) {
+    public void bindChildView(subRequest entity, int position, int grpPosition, int childCount, View view, Activity activity) {
 
         childViewHolder childViewHolder = (InprogressExpandBinder.childViewHolder) view.getTag();
+
+        ArrayList<String> subFieldTitles=new ArrayList<>();
 
         if (position == childCount - 1) {
             childViewHolder.llBottomEarning.setVisibility(View.VISIBLE);
@@ -126,9 +136,15 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<InProgressP
             childViewHolder.llBottomEarning.setVisibility(View.GONE);
         }
 
-        childViewHolder.txtJob1.setText(entity.getTxt_job());
-        childViewHolder.txtAddEarningText.setText(entity.getEarning());
-        childViewHolder.txtTotalEarningText.setText(entity.getTotalEarning());
+        for(serviceList item : entity.getServics_list())
+        {
+            subFieldTitles.add(item.getService_detail().getTitle());
+
+        }
+
+        childViewHolder.txtJob1.setText("");
+        childViewHolder.txtAddEarningText.setText("AED "+entity.getTotal());
+        childViewHolder.txtTotalEarningText.setText("AED "+entity.getTotal());
 
         childViewHolder.btnMarkAsCompleteBottom.setOnClickListener(new View.OnClickListener() {
             @Override
