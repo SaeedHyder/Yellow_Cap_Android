@@ -61,6 +61,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     private MainActivity mContext;
+    public boolean isNotification;
     private boolean loading;
     private ImageChooserManager imageChooserManager;
     private String filePath;
@@ -83,6 +84,13 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         Log.i("Screen Density", ScreenHelper.getDensity(this) + "");
 
         settingSideMenu();
+
+        if (getIntent() != null) {
+            if (getIntent().getExtras() != null)
+                isNotification = getIntent().getExtras().getBoolean("tapped");
+
+
+        }
 
         titleBar.setMenuButtonListener(new OnClickListener() {
 

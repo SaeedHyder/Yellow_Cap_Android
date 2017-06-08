@@ -1,5 +1,8 @@
 package com.app.yellowcap.fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,6 +20,7 @@ import com.app.yellowcap.R;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.ServiceEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.adapters.HomeServiceAdapter;
@@ -53,6 +57,8 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
      LinearLayout llMove;
      @BindView(R.id.ll_custom)
      LinearLayout llCustom;*/
+    public boolean isNotification = false;
+    protected BroadcastReceiver broadcastReceiver;
     Unbinder unbinder;
     @BindView(R.id.filter_subtypes)
     GridView filterSubtypes;
@@ -81,9 +87,39 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         loadingStarted();
+        if (getMainActivity().isNotification) {
+            getMainActivity().isNotification = false;
+            showNotification();
+        }
         setListener();
         gethomeData();
+        onNotificationReceived();
 
+    }
+
+    private void onNotificationReceived() {
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // checking for type intent filter
+                if (intent.getAction().equals(AppConstants.REGISTRATION_COMPLETE)) {
+                    // gcm successfully registered
+                    // now subscribe to `global` topic to receive app wide notifications
+                    System.out.println("registration complete");
+                    // FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+                    System.out.println(prefHelper.getFirebase_TOKEN());
+
+                } else if (intent.getAction().equals(AppConstants.PUSH_NOTIFICATION)) {
+                    // new push notification is received
+                    isNotification = true;
+                    System.out.println(prefHelper.getFirebase_TOKEN());
+                }
+            }
+        };
+    }
+
+    private void showNotification() {
+        getDockActivity().addDockableFragment(UserNotificationsFragment.newInstance(), "UserNotificationsFragment");
     }
 
     private void gethomeData() {
