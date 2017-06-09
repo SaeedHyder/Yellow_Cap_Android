@@ -7,11 +7,8 @@ import android.util.Log;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.activities.MainActivity;
-import com.app.yellowcap.activities.Notification;
 import com.app.yellowcap.entities.ResponseWrapper;
-
 import com.app.yellowcap.entities.countEnt;
-import com.app.yellowcap.fragments.SideMenuFragment;
 import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.global.WebServiceConstants;
 import com.app.yellowcap.helpers.BasePreferenceHelper;
@@ -41,23 +38,25 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             return;
 
         // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
+        /*if (remoteMessage.getNotification() != null) {
             Log.e(TAG, "Notification Body: " + remoteMessage.getNotification().getBody());
             //handleNotification(remoteMessage.getNotification().getBody());
-            handleDataMessage(remoteMessage);
-        }
+            getNotificationCount();
+        }*/
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
               /*  JSONObject json = new JSONObject(remoteMessage.getData().toString());
                 Log.e(TAG, "DATA: " + json);*/
-               handleDataMessage(remoteMessage);
+
+            buildNotification(remoteMessage);
+            getNotificationCount();
 
         }
     }
 
-    private void handleNotification(String message) {
+   /* private void handleNotification(String message) {
         if (!NotificationHelper.getInstance().isAppIsInBackground(getApplicationContext())) {
             // app is in foreground, broadcast the push message
             Intent pushNotification = new Intent(AppConstants.PUSH_NOTIFICATION);
@@ -70,55 +69,58 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             // If the app is in background, firebase itself handles the notification
         }
+    }*/
+
+    private void getNotificationCount() {
+
+
+        webservice = WebServiceFactory.getWebServiceInstanceWithCustomInterceptor(getApplicationContext(),
+                WebServiceConstants.SERVICE_URL);
+        preferenceHelper = new BasePreferenceHelper(getApplicationContext());
+        Call<ResponseWrapper<countEnt>> callback = webservice.getNotificationCount(preferenceHelper.getUserId());
+        callback.enqueue(new Callback<ResponseWrapper<countEnt>>() {
+            @Override
+            public void onResponse(Call<ResponseWrapper<countEnt>> call, Response<ResponseWrapper<countEnt>> response) {
+
+                preferenceHelper.setBadgeCount(response.body().getResult().getCount());
+                try {
+
+
+                } catch (Exception e) {
+                    Log.e(TAG, "Exception: " + e.getMessage());
+                }
+
+                Log.e(TAG, "aasd" + preferenceHelper.getUserId() + response.body().getResult().getCount());
+                //  SendNotification(response.body().getResult().getCount(), json);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWrapper<countEnt>> call, Throwable t) {
+                Log.e(TAG, t.toString());
+                System.out.println(t.toString());
+            }
+        });
+
+
     }
 
-    private void handleDataMessage(final RemoteMessage messageBody) {
+    private void buildNotification(RemoteMessage messageBody) {
+        String title = getString(R.string.App_Name);
+        String message = messageBody.getData().get("message");
 
 
-            webservice = WebServiceFactory.getWebServiceInstanceWithCustomInterceptor(getApplicationContext(),
-                    WebServiceConstants.SERVICE_URL);
-            preferenceHelper = new BasePreferenceHelper(getApplicationContext());
-            Call<ResponseWrapper<countEnt>> callback = webservice.getNotificationCount(preferenceHelper.getUserId());
-            callback.enqueue(new Callback<ResponseWrapper<countEnt>>() {
-                @Override
-                public void onResponse(Call<ResponseWrapper<countEnt>> call, Response<ResponseWrapper<countEnt>> response) {
+        Log.e(TAG, "message: " + message);
 
-                    preferenceHelper.setBadgeCount(response.body().getResult().getCount());
-                    try {
+        Intent resultIntent = new Intent(MyFirebaseMessagingService.this, MainActivity.class);
+        resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        resultIntent.putExtra("message", message);
+        resultIntent.putExtra("tapped", true);
+        Intent pushNotification = new Intent(AppConstants.PUSH_NOTIFICATION);
+        pushNotification.putExtra("message", message);
 
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(pushNotification);
 
-                        String title = getString(R.string.App_Name);
-                        String message = messageBody.getData().get("message");
-
-
-                        Log.e(TAG, "message: " + message);
-
-                        Intent resultIntent = new Intent(MyFirebaseMessagingService.this, MainActivity.class);
-                        resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        resultIntent.putExtra("message", message);
-                        resultIntent.putExtra("tapped", true);
-                        Intent pushNotification = new Intent(AppConstants.PUSH_NOTIFICATION);
-                        pushNotification.putExtra("message", message);
-                        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(pushNotification);
-                        showNotificationMessage(MyFirebaseMessagingService.this, title, message, "", resultIntent);
-
-                    } catch (Exception e) {
-                        Log.e(TAG, "Exception: " + e.getMessage());
-                    }
-
-                    Log.e(TAG,"aasd"+preferenceHelper.getUserId()+response.body().getResult().getCount());
-                    //  SendNotification(response.body().getResult().getCount(), json);
-                }
-
-                @Override
-                public void onFailure(Call<ResponseWrapper<countEnt>> call, Throwable t) {
-                    Log.e(TAG,t.toString());
-                    System.out.println(t.toString());
-                }
-            });
-
-
-
+        showNotificationMessage(MyFirebaseMessagingService.this, title, message, "", resultIntent);
     }
 
     private void SendNotification(int count, JSONObject json) {
@@ -129,7 +131,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * Showing notification with text only
      */
     private void showNotificationMessage(Context context, String title, String message, String timeStamp, Intent intent) {
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         NotificationHelper.getInstance().showNotification(context,
                 R.drawable.android_icon,
                 title,

@@ -42,6 +42,8 @@ public class EntryCodeFragment extends BaseFragment implements View.OnClickListe
         return new EntryCodeFragment();
     }
 
+
+
     @Override
     protected int getLayout() {
         return R.layout.fragment_entry_code;
@@ -51,7 +53,12 @@ public class EntryCodeFragment extends BaseFragment implements View.OnClickListe
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setlistener();
+        insertPin();
         // initPinEnrty();
+    }
+
+    private void insertPin() {
+        txtPinEntry.setText(prefHelper.getRegistrationResult().getCode());
     }
 
     private void setlistener() {

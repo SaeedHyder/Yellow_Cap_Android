@@ -23,7 +23,7 @@
                 android:id="@+id/txt_term_condition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="text"
+
                 android:gravity="center_vertical|center_horizontal"
                 android:textColor="#181616"
                 android:scrollbars="vertical"

@@ -52,10 +52,7 @@ public class AboutAppFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ResponseWrapper<StaticPageEnt>> call, Response<ResponseWrapper<StaticPageEnt>> response) {
                 if (response.body().getResponse().equals("2000")) {
-                    getMainActivity().titleBar.setSubHeading(response.body().getResult().getTitle());
-                    getMainActivity().titleBar.invalidate();
-                    scrollTv1.setText(response.body().getResult().getBody());
-                    scrollTv1.setMovementMethod(new ScrollingMovementMethod());
+                    settitle(response.body().getResult().getBody());
                 }
                 else{
                     UIHelper.showShortToastInCenter(getDockActivity(),response.body().getMessage());
@@ -68,6 +65,13 @@ public class AboutAppFragment extends BaseFragment {
                 UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
+    }
+
+    private void settitle(String response) {
+        getMainActivity().titleBar.setSubHeading(getString(R.string.about_app));
+        getMainActivity().titleBar.invalidate();
+        scrollTv1.setText(response);
+        scrollTv1.setMovementMethod(new ScrollingMovementMethod());
     }
 
     @Override

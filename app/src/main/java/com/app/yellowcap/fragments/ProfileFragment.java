@@ -105,13 +105,20 @@ public class ProfileFragment extends BaseFragment {
 
     private void setProfileData(TechProfileEnt result) {
 
-        imageLoader.displayImage(result.getProfile_image(),CircularImageSharePop);
+        imageLoader.displayImage(prefHelper.getRegistrationResult().getProfileImage(),CircularImageSharePop);
         edtFirstName.setText(result.getFirst_name());
         edtLastName.setText(result.getLast_name());
         edtEmailId.setText(result.getEmail());
         edtPhoneNo.setText(result.getPhone_no());
         edtRegistrationType.setText(result.getRegistration_type());
         edtRegDate.setText(result.getRegistration_date());
+       /* imageLoader.displayImage(prefHelper.getRegistrationResult().getProfileImage(),CircularImageSharePop);
+        edtFirstName.setText(prefHelper.getRegistrationResult().getFirstName());
+        edtLastName.setText(prefHelper.getRegistrationResult().getLastName());
+        edtEmailId.setText(prefHelper.getRegistrationResult().getEmail());
+        edtPhoneNo.setText(prefHelper.getRegistrationResult().getPhoneNo());
+        edtRegistrationType.setText(prefHelper.getRegistrationResult().getRegistrationType());
+        edtRegDate.setText(prefHelper.getRegistrationResult().getRegistrationDate());*/
 
     }
 

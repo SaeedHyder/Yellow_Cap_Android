@@ -92,14 +92,14 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
 
         ReplaceListView2Fragment(InProgressExpendFragment.newInstance());
 
-        //getTechData();
+        getTechData();
 
         ReplaceListViewFragment(CompletedJobsFragment.newInstance());
     }
 
     private void getTechData() {
         imageloader.displayImage(prefHelper.getRegistrationResult().getProfileImage(),mCircularImageSharePop);
-        mTxtUserName.setText(prefHelper.getRegistrationResult().getFullAddress());
+        mTxtUserName.setText(prefHelper.getRegistrationResult().getFullName());
         mTxtUserProfession.setText(prefHelper.getRegistrationResult().getRegistrationType());
 
 

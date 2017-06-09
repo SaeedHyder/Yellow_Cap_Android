@@ -31,16 +31,18 @@
             android:id="@+id/txt_jobNoText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.7"
             android:text="01"
             android:textColor="@color/gray"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
+
         <ImageView
             android:id="@+id/iv_editBtn"
-            android:layout_width="@dimen/x14"
-            android:layout_height="@dimen/x14"
-            android:src="@drawable/edit"/>
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"
+            android:src="@drawable/edit" />
 
     </LinearLayout>
 

@@ -146,15 +146,16 @@ public class UserInProgressFragment extends BaseFragment implements CallUser, on
     }
 
     @Override
-    public void onCancelJob(int position) {
+    public void onCancelJob(final int position) {
 
         final DialogHelper dialogHelper = new DialogHelper(getDockActivity());
         dialogHelper.initCancelJobDialog(R.layout.cancle_job_dialog, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getDockActivity().onLoadingStarted();
-                cancelJob(userCollection.get(0).getId(),dialogHelper);
-
+                if (userCollection.size()>position) {
+                    cancelJob(userCollection.get(position).getId(), dialogHelper);
+                }
 
             }
         }, new View.OnClickListener() {
@@ -171,6 +172,7 @@ public class UserInProgressFragment extends BaseFragment implements CallUser, on
     }
 
     private void cancelJob(Integer requestID, final DialogHelper dialogHelper) {
+        UIHelper.showShortToastInCenter(getDockActivity(),String.valueOf(AppConstants.CANCEL_JOB));
         Call<ResponseWrapper<RequestEnt>> call = webService.changeStatus(prefHelper.getUserId(), requestID, "", AppConstants.CANCEL_JOB);
         call.enqueue(new Callback<ResponseWrapper<RequestEnt>>() {
             @Override

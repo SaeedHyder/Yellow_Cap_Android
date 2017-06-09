@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -74,6 +75,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.app.yellowcap.R.id.edt_addtional_job;
+
 /**
  * Created on 5/22/2017.
  */
@@ -112,7 +115,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     @BindView(R.id.img_cod_check)
     ImageView imgCodCheck;
     Unbinder unbinder;
-    @BindView(R.id.edt_addtional_job)
+    @BindView(edt_addtional_job)
     AnyEditTextView edtAddtionalJob;
     @BindView(R.id.txt_job_posted)
     AnyTextView txtJobPosted;
@@ -231,9 +234,29 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             initJobTypeSpinner(TYPE);
             txtJobPosted.setText(getString(R.string.job_posted_label) +
                     new SimpleDateFormat("dd-MM-yy").format(Calendar.getInstance().getTime()));
+
         }
 
+        setListners();
 
+
+    }
+
+    private void setListners() {
+
+        edtAddtionalJob.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                switch (event.getAction() & MotionEvent.ACTION_MASK){
+                    case MotionEvent.ACTION_UP:
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     private void initListViewAdapter() {

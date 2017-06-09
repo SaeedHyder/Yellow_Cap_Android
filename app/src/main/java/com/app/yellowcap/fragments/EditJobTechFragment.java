@@ -1,9 +1,11 @@
 package com.app.yellowcap.fragments;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -39,6 +41,9 @@ import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.app.yellowcap.R.id.txt_additionDescription;
+import static com.app.yellowcap.R.id.txt_totalPriceText;
 
 /**
  * Created by saeedhyder on 5/24/2017.
@@ -79,7 +84,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
     AnyTextView txtPricing;
     @BindView(R.id.txt_Total)
     AnyTextView txtTotal;
-    @BindView(R.id.txt_totalPriceText)
+    @BindView(txt_totalPriceText)
     AnyTextView txtTotalPriceText;
     @BindView(R.id.ll_TotalPrice)
     LinearLayout llTotalPrice;
@@ -189,8 +194,27 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
             }
             initJobTypeSpinner("");
         }
+        txtTotalPriceText.setTypeface(null, Typeface.BOLD);
+
+        setListners();
 
 
+    }
+
+    private void setListners() {
+        mTxtAdditionDescription.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                switch (event.getAction() & MotionEvent.ACTION_MASK){
+                    case MotionEvent.ACTION_UP:
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     private void initListViewAdapter() {

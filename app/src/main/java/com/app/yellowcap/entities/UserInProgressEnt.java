@@ -62,7 +62,7 @@ public class UserInProgressEnt {
     private String updatedAt;
     @SerializedName("assign_technician")
     @Expose
-    private List<RequestTechnicianEnt> assignTechnician = null;
+    private RequestTechnicianEnt assignTechnician = null;
     @SerializedName("service_detail")
     @Expose
     private ServiceEnt serviceDetail;
@@ -72,7 +72,18 @@ public class UserInProgressEnt {
     @SerializedName("image_detail")
     @Expose
     private List<ImageDetailEnt> imageDetail = null;
+    public String getTotal_amount() {
+        return total_amount;
+    }
 
+    public void setTotal_amount(String total_amount) {
+        this.total_amount = total_amount;
+    }
+
+    @SerializedName("total_amount")
+    @Expose
+
+    private String total_amount = "";
     public Integer getId() {
         return id;
     }
@@ -201,11 +212,11 @@ public class UserInProgressEnt {
         this.updatedAt = DateHelper.getLocalTimeDate(updatedAt);
     }
 
-    public List<RequestTechnicianEnt> getAssignTechnician() {
+    public RequestTechnicianEnt getAssignTechnician() {
         return assignTechnician;
     }
 
-    public void setAssignTechnician(List<RequestTechnicianEnt> assignTechnician) {
+    public void setAssignTechnician(RequestTechnicianEnt assignTechnician) {
         this.assignTechnician = assignTechnician;
     }
 

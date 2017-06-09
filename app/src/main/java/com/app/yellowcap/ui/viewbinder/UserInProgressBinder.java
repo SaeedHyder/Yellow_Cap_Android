@@ -44,8 +44,8 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
     public void bindView(final UserInProgressEnt entity, final int position, int grpPosition, View view, Activity activity) {
         InProgressViewHolder viewHolder = (InProgressViewHolder) view.getTag();
         RequestTechnicianEnt technicianEnt = null;
-        if (entity.getAssignTechnician().size() > 0) {
-            technicianEnt = entity.getAssignTechnician().get(0);
+        if (entity.getAssignTechnician()!=null) {
+            technicianEnt = entity.getAssignTechnician();
         }
         if (technicianEnt != null) {
             viewHolder.ivEditBtn.setVisibility(View.GONE);
@@ -64,7 +64,7 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
         if (entity.getTotal().equals("")) {
             viewHolder.txtAmountText.setText(context.getString(R.string.aed) + " " + entity.getEstimateFrom());
         } else {
-            viewHolder.txtAmountText.setText(context.getString(R.string.aed) + " " + entity.getTotal());
+            viewHolder.txtAmountText.setText(context.getString(R.string.aed) + " " + entity.getTotal_amount());
 
         }
 

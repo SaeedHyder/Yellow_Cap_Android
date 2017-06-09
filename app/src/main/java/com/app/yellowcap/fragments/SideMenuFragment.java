@@ -127,13 +127,13 @@ public class SideMenuFragment extends BaseFragment  {
                     // new push notification is received
                    // getMainActivity().isNotification = true;
                     notificationCount = prefHelper.getBadgeCount();
-                    updateNotificationsCount.updateCount(notificationCount);
+                    updateNotificationsCount.updateCount(prefHelper.getBadgeCount());
 
-                    getMainActivity().notificationIntent();
+                   /* getMainActivity().notificationIntent();
                     if (getMainActivity().isNotification) {
                        getMainActivity().isNotification = false;
                        getDockActivity().addDockableFragment(UserNotificationsFragment.newInstance(), "UserNotificationsFragment");
-                    }
+                    }*/
 
                     System.out.println(prefHelper.getFirebase_TOKEN());
 
@@ -169,8 +169,7 @@ public class SideMenuFragment extends BaseFragment  {
 
     private void setProfileData(RegistrationResultEnt result) {
         prefHelper.putRegistrationResult(result);
-        Picasso.with(getDockActivity()).load(result.getProfileImage()).
-                placeholder(R.drawable.profileimage).into(CircularImageSharePop);
+        Picasso.with(getDockActivity()).load(result.getProfileImage()).into(CircularImageSharePop);
 
         txtUserName.setText(result.getFullName());
         txtUseremail.setText(result.getEmail());

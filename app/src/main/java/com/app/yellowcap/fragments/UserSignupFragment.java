@@ -11,7 +11,6 @@ import android.widget.Button;
 import com.app.yellowcap.R;
 import com.app.yellowcap.entities.RegistrationResultEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
-import com.app.yellowcap.entities.UserEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.helpers.TokenUpdater;
@@ -80,6 +79,7 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
         switch (v.getId()) {
             case R.id.btn_signup:
                 if (isvalidated()) {
+                    loadingStarted();
                     registerUser();
 
                 }
@@ -93,6 +93,7 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
         call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
             @Override
             public void onResponse(Call<ResponseWrapper<RegistrationResultEnt>> call, Response<ResponseWrapper<RegistrationResultEnt>> response) {
+                loadingFinished();
                 if (response.body().getResponse().equals("2000")) {
                     prefHelper.putRegistrationResult(response.body().getResult());
                     prefHelper.setUserType("user");
@@ -103,15 +104,15 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
                             prefHelper.getUserId(),
                             AppConstants.Device_Type,
                             prefHelper.getFirebase_TOKEN());
-                    getDockActivity().replaceDockableFragment(EntryCodeFragment.newInstance(),"EntryCodeFragment");
-                }
-                else{
-                    UIHelper.showShortToastInCenter(getDockActivity(),response.body().getMessage());
+                    getDockActivity().replaceDockableFragment(EntryCodeFragment.newInstance(), "EntryCodeFragment");
+                } else {
+                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
+                loadingFinished();
                 Log.e("UserSignupFragment", t.toString());
                 UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
@@ -133,7 +134,7 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
         } else if (edtnumber.getText().toString().isEmpty()) {
             edtnumber.setError(getString(R.string.enter_number));
             return false;
-        } else if (edtnumber.getText().toString().length() < 13) {
+        } else if (edtnumber.getText().toString().length() < 10 || edtnumber.getText().toString().length() > 16) {
             edtnumber.setError(getString(R.string.enter_valid_number_error));
             return false;
         } else {

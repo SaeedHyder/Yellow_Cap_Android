@@ -77,7 +77,18 @@ public class RequestDetail {
     private ArrayList<ImageDetailEnt> image_detail;
     FeedbackDetail feedbackdetail;
 
+    public String getTotal_amount() {
+        return total_amount;
+    }
 
+    public void setTotal_amount(String total_amount) {
+        this.total_amount = total_amount;
+    }
+
+    @SerializedName("total_amount")
+    @Expose
+
+    private String total_amount = "";
 
 
 
