@@ -139,6 +139,7 @@ public class CompletedJobsFragment extends BaseFragment {
     private void bindData(ArrayList<TechInProgressEnt> userCollection) {
 
         adapter.clearList();
+        if (CompletedJobsListView!=null)
         CompletedJobsListView.setAdapter(adapter);
         adapter.addAll(userCollection);
         adapter.notifyDataSetChanged();

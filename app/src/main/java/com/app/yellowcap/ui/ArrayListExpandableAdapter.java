@@ -78,7 +78,7 @@ public class ArrayListExpandableAdapter<T, E> extends BaseExpandableListAdapter 
 
         final E childItem = (E) getChild(groupPosition, childPosition);
 
-        viewBinder.bindChildView(childItem, childPosition, 0,this.ChildCollection.get(this.headerCollection.get(groupPosition)).size(), convertView, mContext);
+        viewBinder.bindChildView(childItem, childPosition, groupPosition,this.ChildCollection.get(this.headerCollection.get(groupPosition)).size(), convertView, mContext);
 
         return convertView;
 

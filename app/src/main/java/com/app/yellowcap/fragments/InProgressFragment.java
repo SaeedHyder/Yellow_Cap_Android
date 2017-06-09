@@ -37,7 +37,7 @@ import retrofit2.Response;
  * Created by saeedhyder on 5/24/2017.
  */
 
-public class InProgressFragment extends BaseFragment implements CallUser,MarkAsComplete{
+public class InProgressFragment extends BaseFragment implements CallUser{
 
     @BindView(R.id.txt_noresult)
     AnyTextView txtNoresult;
@@ -61,7 +61,7 @@ public class InProgressFragment extends BaseFragment implements CallUser,MarkAsC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new ArrayListAdapter<InProgressEnt>(getDockActivity(), new InProgressBinder(this,getDockActivity(),this));
+        //adapter = new ArrayListAdapter<InProgressEnt>(getDockActivity(), new InProgressBinder());
     }
 
     @Override
@@ -111,35 +111,6 @@ public class InProgressFragment extends BaseFragment implements CallUser,MarkAsC
         startActivity(intent);
     }
 
-    @Override
-    public void markAsComplete() {
 
-        getDockActivity().onLoadingStarted();
-        Call<ResponseWrapper<JobRequestEnt>> call = webService.markComplete(
-                2,33,43,1);
-
-        call.enqueue(new Callback<ResponseWrapper<JobRequestEnt>>() {
-            @Override
-            public void onResponse(Call<ResponseWrapper<JobRequestEnt>> call, Response<ResponseWrapper<JobRequestEnt>> response) {
-
-                getDockActivity().onLoadingFinished();
-                if (response.body().getResponse().equals("2000")) {
-                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
-                } else {
-                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseWrapper<JobRequestEnt>> call, Throwable t) {
-                getDockActivity().onLoadingFinished();
-                Log.e("EntryCodeFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
-            }
-        });
-
-
-    }
 }
 

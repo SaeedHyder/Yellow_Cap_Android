@@ -68,7 +68,7 @@ public class InProgressBinder extends ViewBinder<InProgressEnt> {
         viewHolder.btn_markAsComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                complete.markAsComplete();
+              //  complete.markAsComplete();
                 context.replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
             }
         });

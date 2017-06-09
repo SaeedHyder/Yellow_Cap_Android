@@ -1,43 +1,103 @@
 package com.app.yellowcap.entities;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by saeedhyder on 6/7/2017.
  */
 
 public class RequestDetail {
-
-    int id;
-    int service_id;
-    String discription;
-    String address;
-    String full_address;
-    String date;
-    String time;
-    String payment_type;
-    int status;
-    String estimate_from;
-    String estimate_to;
-    String total;
-    String user_id;
-    String message;
-    String parent_id;
-    String created_at;
-    String updated_at;
-    ArrayList<serviceList> servics_list;
-    ServiceDetail service_detail;
-    UserDetail user_detail;
-    ArrayList<RequestDetail> sub_request;
+    @SerializedName("id")
+    @Expose
+    private int id;
+    @SerializedName("service_id")
+    @Expose
+    private int service_id;
+    @SerializedName("discription")
+    @Expose
+    private String discription;
+    @SerializedName("address")
+    @Expose
+    private String address;
+    @SerializedName("full_address")
+    @Expose
+    private String full_address;
+    @SerializedName("date")
+    @Expose
+    private String date;
+    @SerializedName("time")
+    @Expose
+    private String time;
+    @SerializedName("payment_type")
+    @Expose
+    private String payment_type;
+    @SerializedName("status")
+    @Expose
+    private int status;
+    @SerializedName("estimate_from")
+    @Expose
+    private String estimate_from;
+    @SerializedName("estimate_to")
+    @Expose
+    private String estimate_to;
+    @SerializedName("total")
+    @Expose
+    private String total;
+    @SerializedName("user_id")
+    @Expose
+    private String user_id;
+    @SerializedName("message")
+    @Expose
+    private String message;
+    @SerializedName("parent_id")
+    @Expose
+    private String parent_id;
+    @SerializedName("created_at")
+    @Expose
+    private String created_at;
+    @SerializedName("updated_at")
+    @Expose
+    private String updated_at;
+    @SerializedName("servics_list")
+    @Expose
+    private List<serviceList> servics_list;
+    @SerializedName("service_detail")
+    @Expose
+    private ServiceDetail service_detail;
+    @SerializedName("user_detail")
+    @Expose
+    private UserDetail user_detail;
+    @SerializedName("sub_request")
+    @Expose
+    private List<RequestDetail> subRequest = null;
+    private ArrayList<ImageDetailEnt> image_detail;
     FeedbackDetail feedbackdetail;
 
 
-    private ArrayList<ImageDetailEnt> image_detail;
+
+
+
+
+    public List<RequestDetail> getSubRequest() {
+        return subRequest;
+    }
+
+
+    public void setSubRequest(List<RequestDetail> subRequest) {
+        this.subRequest = subRequest;
+    }
 
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public ArrayList<ImageDetailEnt> getImage_detail() {
         return image_detail;
@@ -45,10 +105,6 @@ public class RequestDetail {
 
     public void setImage_detail(ArrayList<ImageDetailEnt> image_detail) {
         this.image_detail = image_detail;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getService_id() {
@@ -179,8 +235,12 @@ public class RequestDetail {
         this.updated_at = updated_at;
     }
 
-    public ArrayList<serviceList> getServics_list() {
+    public List<serviceList> getServics_list() {
         return servics_list;
+    }
+
+    public void setServics_list(List<serviceList> servics_list) {
+        this.servics_list = servics_list;
     }
 
     public ServiceDetail getService_detail() {
@@ -191,10 +251,6 @@ public class RequestDetail {
         this.service_detail = service_detail;
     }
 
-    public void setServics_list(ArrayList<serviceList> servics_list) {
-        this.servics_list = servics_list;
-    }
-
     public UserDetail getUser_detail() {
         return user_detail;
     }
@@ -203,13 +259,9 @@ public class RequestDetail {
         this.user_detail = user_detail;
     }
 
-    public ArrayList<RequestDetail> getSub_request() {
-        return sub_request;
-    }
 
-    public void setSub_request(ArrayList<RequestDetail> sub_request) {
-        this.sub_request = sub_request;
-    }
+
+
 
     public FeedbackDetail getFeedbackdetail() {
         return feedbackdetail;
@@ -218,4 +270,5 @@ public class RequestDetail {
     public void setFeedbackdetail(FeedbackDetail feedbackdetail) {
         this.feedbackdetail = feedbackdetail;
     }
+
 }

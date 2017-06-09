@@ -1,23 +1,49 @@
 package com.app.yellowcap.entities;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by saeedhyder on 6/7/2017.
  */
 
     public class TechInProgressEnt {
-
-    int id;
-    int technician_id;
-    int request_id;
+    @SerializedName("id")
+    @Expose
+    private int id;
+    @SerializedName("technician_id")
+    @Expose
+    private int technician_id;
+    @SerializedName("request_id")
+    @Expose
+    private int request_id;
+    @SerializedName("status")
+    @Expose
     int status;
-    String message;
-    String arrival_time;
-    String completion_time;
-    int finish;
-    String created_at;
-    String updated_at;
-    TechnicianDetail technician_detail;
-    RequestDetail request_detail;
+    @SerializedName("message")
+    @Expose
+    private String message;
+    @SerializedName("arrival_time")
+    @Expose
+    private  String arrival_time;
+    @SerializedName("completion_time")
+    @Expose
+    private  String completion_time;
+    @SerializedName("finish")
+    @Expose
+    private   int finish;
+    @SerializedName("created_at")
+    @Expose
+    private  String created_at;
+    @SerializedName("updated_at")
+    @Expose
+    private  String updated_at;
+    @SerializedName("technician_detail")
+    @Expose
+    private TechnicianDetail technician_detail;
+    @SerializedName("request_detail")
+    @Expose
+    private RequestDetail request_detail;
 
 
     public int getId() {
