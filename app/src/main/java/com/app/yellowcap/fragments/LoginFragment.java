@@ -110,6 +110,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
                     prefHelper.setUsrId(String.valueOf(response.body().getResult().getId()));
                     prefHelper.setUsrName(response.body().getResult().getFullName());
                     prefHelper.setPhonenumber(response.body().getResult().getPhoneNo());
+                    prefHelper.putRegistrationResult(response.body().getResult());
                     TokenUpdater.getInstance().UpdateToken(getDockActivity(),
                             prefHelper.getUserId(),
                             AppConstants.Device_Type,

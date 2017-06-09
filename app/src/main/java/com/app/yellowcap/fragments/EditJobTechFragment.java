@@ -48,6 +48,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
     public static String TYPE = "TYPE";
     public static String PARENTID = "0";
     public static String CLIENTNAME = "NAME";
+    public static String ISEDIT = "isEdit";
     @BindView(R.id.txt_jobNo)
     AnyTextView txtJobNoText;
     @BindView(R.id.txt_jobNoText)
@@ -94,17 +95,15 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
     private RequestDetail previousData;
     private ArrayList<ServiceEnt> jobcollection;
     private ArrayList<ServiceEnt> jobChildcollection;
-    public static String ISEDIT="isEdit";
     private Boolean isEdit = false;
 
     public static EditJobTechFragment newInstance() {
         return new EditJobTechFragment();
     }
 
-    public static EditJobTechFragment newInstance(RequestDetail editData,boolean isEdit) {
+    public static EditJobTechFragment newInstance(RequestDetail editData) {
         Bundle args = new Bundle();
         args.putString(TYPE, new Gson().toJson(editData));
-        args.putBoolean(ISEDIT,isEdit);
         EditJobTechFragment fragment = new EditJobTechFragment();
         fragment.setArguments(args);
         return fragment;
@@ -150,7 +149,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
             TYPE = getArguments().getString(TYPE);
             PARENTID = getArguments().getString(PARENTID);
             CLIENTNAME = getArguments().getString(CLIENTNAME);
-            isEdit=getArguments().getBoolean(ISEDIT);
+            isEdit = getArguments().getBoolean(ISEDIT);
             if (TYPE != null)
                 previousData = new Gson().fromJson(TYPE, RequestDetail.class);
 
@@ -178,6 +177,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         super.onViewCreated(view, savedInstanceState);
         selectedJobs = new ArrayList<>();
         if (previousData != null) {
+            isEdit = true;
             PARENTID = String.valueOf(previousData.getId());
             editCurrentService();
         } else {
@@ -263,10 +263,12 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         spnJobtype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedJobs.clear();
-                refreshListview();
-                jobtype = jobcollection.get(position);
-                initJobDescriptionSpinner(jobtype);
+                if (!isEdit) {
+                    selectedJobs.clear();
+                    refreshListview();
+                    jobtype = jobcollection.get(position);
+                    initJobDescriptionSpinner(jobtype);
+                }
             }
 
             @Override
@@ -285,7 +287,9 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
                 @Override
                 public void onResponse(Call<ResponseWrapper<ArrayList<ServiceEnt>>> call, Response<ResponseWrapper<ArrayList<ServiceEnt>>> response) {
                     if (response.body().getResponse().equals("2000")) {
-                        selectedJobs.clear();
+                        if (!isEdit) {
+                            selectedJobs.clear();
+                        }
                         jobChildcollection.clear();
                         jobChildcollection.addAll(response.body().getResult());
                         setJobDescriptionSpinner();
@@ -356,7 +360,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         initJobTypeSpinner("");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         txtJobNo.setText(String.valueOf(previousData.getId()));
-        txtClientNameText.setText(previousData.getUser_detail().getFirst_name());
+        txtClientNameText.setText(previousData.getUser_detail().getFull_name());
         mTxtAdditionDescription.setText(previousData.getDiscription());
         mEdtTotal.setText(previousData.getTotal());
 
@@ -429,11 +433,10 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
             }
         });
         titleBar.showBackButton();
-        if(isEdit) {
+        if (isEdit) {
             titleBar.setSubHeading(getString(R.string.edit_job));
-        }
-        else
-        { titleBar.setSubHeading("Add Job");
+        } else {
+            titleBar.setSubHeading("Add Job");
         }
     }
  /*   private void initJobTypeSpinner() {

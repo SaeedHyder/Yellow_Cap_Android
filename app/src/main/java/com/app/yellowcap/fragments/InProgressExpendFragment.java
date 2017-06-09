@@ -20,6 +20,7 @@ import com.app.yellowcap.entities.ServiceDetail;
 import com.app.yellowcap.entities.TechInProgressEnt;
 import com.app.yellowcap.entities.subRequest;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.interfaces.CallUser;
 import com.app.yellowcap.interfaces.MarkAsComplete;
@@ -47,7 +48,7 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
     AnyTextView txtNoresult;
     @BindView(R.id.elv_inprogress)
     ExpandableListView elvInprogress;
-    Unbinder unbinder;
+    private static String assignID;
     SetOrderCounts orderCounts;
 /*<<<<<<< HEAD
     private ArrayListExpandableAdapter<InProgressParentEnt, InProgressChildEnt> adapter;
@@ -61,6 +62,7 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
     private ArrayList<RequestDetail> collectionChild ;
 //>>>>>>> 29e8a3f026c4bd0d24fe2c96a2e5c2c96e670704
 
+    private ArrayList<TechInProgressEnt> userCollection;
     private HashMap<RequestDetail, ArrayList<RequestDetail>> listDataChild;
 
     public static InProgressExpendFragment newInstance() {
@@ -92,28 +94,29 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
         return rootView;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        userCollection = new ArrayList<>();
         getInProgressJobsData();
     }
 
     private void getInProgressJobsData() {
 
         getDockActivity().onLoadingStarted();
-        Call<ResponseWrapper<ArrayList<TechInProgressEnt>>> call = webService.techCompleteJobs(Integer.valueOf(prefHelper.getUserId()));
+        Call<ResponseWrapper<ArrayList<TechInProgressEnt>>> call = webService.techInProgress(Integer.valueOf(prefHelper.getUserId()));
 
         call.enqueue(new Callback<ResponseWrapper<ArrayList<TechInProgressEnt>>>() {
             @Override
             public void onResponse(Call<ResponseWrapper<ArrayList<TechInProgressEnt>>> call, Response<ResponseWrapper<ArrayList<TechInProgressEnt>>> response) {
                 getDockActivity().onLoadingFinished();
                 if (response.body().getResponse().equals("2000")) {
-                    setInProgressJobsData(response.body().getResult());
+                    userCollection.addAll(response.body().getResult());
+                    setInProgressJobsData(userCollection);
                 } else {
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
                 }
@@ -146,8 +149,14 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
         for (TechInProgressEnt item:result
              ) {
             collectionGroup.add(item.getRequest_detail());
-            if(item.getRequest_detail().getSub_request()!=null){
-            collectionChild.addAll(item.getRequest_detail().getSub_request());}
+            if(item.getRequest_detail().getSubRequest()!=null) {
+                for (RequestDetail childItem : item.getRequest_detail().getSubRequest()
+                        ) {
+                    childItem.setUser_detail(item.getRequest_detail().getUser_detail());
+                    collectionChild.add(childItem);
+                }
+                //  collectionChild.addAll(item.getRequest_detail().getSubRequest());}
+            }
             listDataChild.put(item.getRequest_detail(),collectionChild);
         }
           /*  collectionGroup.addAll(result);
@@ -161,30 +170,29 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
              listDataChild.put(collectionGroup.get(2), collectionChild);
           listDataChild.put(collectionGroup.get(3), collectionChild);*/
         orderCounts.setInprogressCount(collectionGroup.size());
-
+        adapter = new ArrayListExpandableAdapter<>(getDockActivity(), collectionGroup, listDataChild, new InprogressExpandBinder(getDockActivity(),this,this),elvInprogress);
         bindData();
     }
 
     private void bindData() {
 
-        adapter = new ArrayListExpandableAdapter<>(getDockActivity(), collectionGroup, listDataChild, new InprogressExpandBinder(getDockActivity(),this,this),elvInprogress);
+        if (elvInprogress!=null)
         elvInprogress.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+
 
     @Override
-    public void markAsComplete() {
-
+    public void markAsComplete(int position,String RequestID) {
+        String assignID = "";
         getDockActivity().onLoadingStarted();
+        if (userCollection.size()>position){
+            assignID = String.valueOf(userCollection.get(position).getId());
+        }
         Call<ResponseWrapper<JobRequestEnt>> call = webService.markComplete(
-                2,33,43,1);
+                assignID,prefHelper.getUserId(),RequestID, AppConstants.TECH_MARK_COMPLETE);
 
         call.enqueue(new Callback<ResponseWrapper<JobRequestEnt>>() {
             @Override
@@ -193,7 +201,7 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
                 getDockActivity().onLoadingFinished();
                 if (response.body().getResponse().equals("2000")) {
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
-                    getDockActivity().addDockableFragment(HomeFragment.newInstance(), "HomeFragment");
+                    getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
                 } else {
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
                 }

@@ -6,5 +6,5 @@ package com.app.yellowcap.interfaces;
 
 public interface MarkAsComplete {
 
-    void markAsComplete();
+    void markAsComplete(int position,String RequestID);
 }

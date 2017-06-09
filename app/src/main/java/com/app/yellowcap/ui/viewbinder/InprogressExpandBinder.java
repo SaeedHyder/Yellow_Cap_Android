@@ -57,7 +57,7 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
     }
 
     @Override
-    public void bindGroupView(final RequestDetail entity, int position, int grpPosition, int childCount, View view, Activity activity) {
+    public void bindGroupView(final RequestDetail entity, final int position, int grpPosition, int childCount, View view, Activity activity) {
 
         parentViewHolder parentViewHolder = (InprogressExpandBinder.parentViewHolder) view.getTag();
 
@@ -94,7 +94,7 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         parentViewHolder.ivEditBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.replaceDockableFragment(EditJobTechFragment.newInstance(entity,true), "EditJobTechFragment");
+                context.replaceDockableFragment(EditJobTechFragment.newInstance(entity), "EditJobTechFragment");
             }
         });
 
@@ -107,7 +107,7 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         parentViewHolder.btnMarkAsComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                complete.markAsComplete();
+                complete.markAsComplete(position,String.valueOf(entity.getId()));
             }
         });
 
@@ -126,7 +126,7 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
     }
 
     @Override
-    public void bindChildView(final RequestDetail entity, int position, int grpPosition, int childCount, View view, Activity activity) {
+    public void bindChildView(final RequestDetail entity, final int position, final int grpPosition, int childCount, View view, Activity activity) {
 
         childViewHolder childViewHolder = (InprogressExpandBinder.childViewHolder) view.getTag();
 
@@ -152,21 +152,21 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         childViewHolder.btnMarkAsCompleteBottom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                complete.markAsComplete();
+                complete.markAsComplete(grpPosition,String.valueOf(entity.getParent_id()));
             }
         });
 
         childViewHolder.btnAddJobbottom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.replaceDockableFragment(EditJobTechFragment.newInstance(String.valueOf(entity.getId()),entity.getUser_detail().getFull_name()), "EditJobTechFragment");
+                context.replaceDockableFragment(EditJobTechFragment.newInstance(String.valueOf(entity.getParent_id()),entity.getUser_detail().getFull_name()), "EditJobTechFragment");
             }
         });
 
         childViewHolder.ivEditJobBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.replaceDockableFragment(EditJobTechFragment.newInstance(entity,true),"EditJobTechFragment");
+                context.replaceDockableFragment(EditJobTechFragment.newInstance(entity),"EditJobTechFragment");
             }
         });
 

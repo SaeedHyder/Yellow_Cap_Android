@@ -1,6 +1,10 @@
 package com.app.yellowcap.entities;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by saeedhyder on 6/8/2017.
@@ -8,41 +12,78 @@ import java.util.ArrayList;
 
 public class subRequest {
 
-    int id;
-    int service_id;
-    String discription;
-    String address;
-    String full_address;
-    String date;
-    String time;
-    String payment_type;
-    int status;
-    String estimate_from;
-    String estimate_to;
-    String total;
-    int user_id;
-    String message;
-    String parent_id;
-    String created_at;
-    String updated_at;
-    ArrayList<serviceList> servics_list;
-    ServiceDetail service_detail;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("service_id")
+    @Expose
+    private Integer serviceId;
+    @SerializedName("discription")
+    @Expose
+    private String discription;
+    @SerializedName("address")
+    @Expose
+    private String address;
+    @SerializedName("full_address")
+    @Expose
+    private String fullAddress;
+    @SerializedName("date")
+    @Expose
+    private String date;
+    @SerializedName("time")
+    @Expose
+    private String time;
+    @SerializedName("payment_type")
+    @Expose
+    private String paymentType;
+    @SerializedName("status")
+    @Expose
+    private Integer status;
+    @SerializedName("estimate_from")
+    @Expose
+    private String estimateFrom;
+    @SerializedName("estimate_to")
+    @Expose
+    private String estimateTo;
+    @SerializedName("total")
+    @Expose
+    private String total;
+    @SerializedName("user_id")
+    @Expose
+    private Integer userId;
+    @SerializedName("message")
+    @Expose
+    private String message;
+    @SerializedName("parent_id")
+    @Expose
+    private Integer parentId;
+    @SerializedName("created_at")
+    @Expose
+    private String createdAt;
+    @SerializedName("updated_at")
+    @Expose
+    private String updatedAt;
+    @SerializedName("service_detail")
+    @Expose
+    private ServiceDetail serviceDetail;
+    @SerializedName("servics_list")
+    @Expose
+    private List<serviceList> servicsList = null;
 
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getService_id() {
-        return service_id;
+    public Integer getServiceId() {
+        return serviceId;
     }
 
-    public void setService_id(int service_id) {
-        this.service_id = service_id;
+    public void setServiceId(Integer serviceId) {
+        this.serviceId = serviceId;
     }
 
     public String getDiscription() {
@@ -61,12 +102,12 @@ public class subRequest {
         this.address = address;
     }
 
-    public String getFull_address() {
-        return full_address;
+    public String getFullAddress() {
+        return fullAddress;
     }
 
-    public void setFull_address(String full_address) {
-        this.full_address = full_address;
+    public void setFullAddress(String fullAddress) {
+        this.fullAddress = fullAddress;
     }
 
     public String getDate() {
@@ -85,36 +126,36 @@ public class subRequest {
         this.time = time;
     }
 
-    public String getPayment_type() {
-        return payment_type;
+    public String getPaymentType() {
+        return paymentType;
     }
 
-    public void setPayment_type(String payment_type) {
-        this.payment_type = payment_type;
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
-    public String getEstimate_from() {
-        return estimate_from;
+    public String getEstimateFrom() {
+        return estimateFrom;
     }
 
-    public void setEstimate_from(String estimate_from) {
-        this.estimate_from = estimate_from;
+    public void setEstimateFrom(String estimateFrom) {
+        this.estimateFrom = estimateFrom;
     }
 
-    public String getEstimate_to() {
-        return estimate_to;
+    public String getEstimateTo() {
+        return estimateTo;
     }
 
-    public void setEstimate_to(String estimate_to) {
-        this.estimate_to = estimate_to;
+    public void setEstimateTo(String estimateTo) {
+        this.estimateTo = estimateTo;
     }
 
     public String getTotal() {
@@ -125,12 +166,12 @@ public class subRequest {
         this.total = total;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getMessage() {
@@ -141,43 +182,43 @@ public class subRequest {
         this.message = message;
     }
 
-    public String getParent_id() {
-        return parent_id;
+    public Integer getParentId() {
+        return parentId;
     }
 
-    public void setParent_id(String parent_id) {
-        this.parent_id = parent_id;
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public String getUpdated_at() {
-        return updated_at;
+    public String getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
-    public ArrayList<serviceList> getServics_list() {
-        return servics_list;
+    public ServiceDetail getServiceDetail() {
+        return serviceDetail;
     }
 
-    public void setServics_list(ArrayList<serviceList> servics_list) {
-        this.servics_list = servics_list;
+    public void setServiceDetail(ServiceDetail serviceDetail) {
+        this.serviceDetail = serviceDetail;
     }
 
-    public ServiceDetail getService_detail() {
-        return service_detail;
+    public List<serviceList> getServicsList() {
+        return servicsList;
     }
 
-    public void setService_detail(ServiceDetail service_detail) {
-        this.service_detail = service_detail;
+    public void setServicsList(List<serviceList> servicsList) {
+        this.servicsList = servicsList;
     }
 }
