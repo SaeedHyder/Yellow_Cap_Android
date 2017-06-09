@@ -67,6 +67,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
     private ImageChooserManager imageChooserManager;
     private String filePath;
     private int chooserType;
+    String string="";
     private boolean isActivityResultOver = false;
     private String originalFilePath;
     private String thumbnailFilePath;
@@ -86,6 +87,13 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
 
         settingSideMenu();
 
+        if(getIntent().getExtras()!=null) {
+            string = getIntent().getExtras().getString("mystring");
+        }
+
+        if(string.equals("tapped")){
+            isNotification=true;
+        }
         notificationIntent();
 
         titleBar.setMenuButtonListener(new OnClickListener() {

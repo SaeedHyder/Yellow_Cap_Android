@@ -70,6 +70,7 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
 
         mainFrame.setVisibility(View.GONE);
         setListners();
+        ReplaceListView2Fragment(InProgressExpendFragment.newInstance());
         ReplaceListViewFragment(CompletedJobsFragment.newInstance());
     }
 
@@ -125,6 +126,21 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
 
     }
 
+    private void ReplaceListView2Fragment(InProgressExpendFragment frag) {
+
+        frag.setOrderCounts(this);
+        FragmentTransaction transaction = getChildFragmentManager()
+                .beginTransaction();
+
+        transaction.replace(R.id.ll_listView2, frag);
+        transaction
+                .addToBackStack(
+                        getChildFragmentManager().getBackStackEntryCount() == 0 ? KEY_FRAG_FIRST
+                                : null).commit();
+
+    }
+
+
     private void ReplaceListViewFragment(InProgressExpendFragment frag) {
 
         frag.setOrderCounts(this);
@@ -148,11 +164,13 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
     @Override
     public void setcompleteCount(int count) {
         txtJobCount.setText(String.valueOf(count));
-        mainFrame.setVisibility(View.VISIBLE);
+
     }
 
     @Override
     public void setInprogressCount(int count) {
+
         txtInProgressCount.setText(String.valueOf(count));
+        mainFrame.setVisibility(View.VISIBLE);
     }
 }

@@ -106,7 +106,7 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
     private void getInProgressJobsData() {
 
         getDockActivity().onLoadingStarted();
-        Call<ResponseWrapper<ArrayList<TechInProgressEnt>>> call = webService.techCompleteJobs(Integer.valueOf(prefHelper.getUserId()));
+        Call<ResponseWrapper<ArrayList<TechInProgressEnt>>> call = webService.techInProgress(Integer.valueOf(prefHelper.getUserId()));
 
         call.enqueue(new Callback<ResponseWrapper<ArrayList<TechInProgressEnt>>>() {
             @Override

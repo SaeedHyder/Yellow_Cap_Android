@@ -29,6 +29,8 @@ public class RequestDetail {
     ServiceDetail service_detail;
     UserDetail user_detail;
     ArrayList<RequestDetail> sub_request;
+    FeedbackDetail feedbackdetail;
+
 
     private ArrayList<ImageDetailEnt> image_detail;
 
@@ -207,5 +209,13 @@ public class RequestDetail {
 
     public void setSub_request(ArrayList<RequestDetail> sub_request) {
         this.sub_request = sub_request;
+    }
+
+    public FeedbackDetail getFeedbackdetail() {
+        return feedbackdetail;
+    }
+
+    public void setFeedbackdetail(FeedbackDetail feedbackdetail) {
+        this.feedbackdetail = feedbackdetail;
     }
 }

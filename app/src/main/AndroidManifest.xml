@@ -66,6 +66,7 @@
 
         <!-- ./Firebase Notifications -->
 
+        <activity android:name=".activities.Notification"></activity>
     </application>
 
 </manifest>

@@ -42,9 +42,15 @@ public class CompletedJobsBinder extends ViewBinder<TechInProgressEnt> {
         });
         viewHolder.txt_jobNoText.setText(String.valueOf(entity.getId()));
         viewHolder.txt_jobCompletedText.setText(entity.getRequest_detail().getDate());
-        viewHolder.txt_JobTitleText.setText("");
-        viewHolder.txt_clientNameText.setText("");
-        viewHolder.rbAddRating.setScore(4);
+        if(entity.getRequest_detail().getService_detail()!=null){
+        viewHolder.txt_JobTitleText.setText(entity.getRequest_detail().getService_detail().getTitle());
+        }
+        if(entity.getRequest_detail().getUser_detail()!=null) {
+            viewHolder.txt_clientNameText.setText(entity.getRequest_detail().getUser_detail().getFull_name());
+        }
+        if(entity.getRequest_detail().getFeedbackdetail()!=null) {
+            viewHolder.rbAddRating.setScore(entity.getRequest_detail().getFeedbackdetail().getRate());
+        }
         viewHolder.txt_EarningText.setText("(COD): AED "+entity.getRequest_detail().getTotal());
 
         setTextStyle(viewHolder);
