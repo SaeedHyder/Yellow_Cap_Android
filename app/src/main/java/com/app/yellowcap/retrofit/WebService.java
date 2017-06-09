@@ -10,6 +10,7 @@ import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.ServiceEnt;
 import com.app.yellowcap.entities.StaticPageEnt;
 import com.app.yellowcap.entities.TechInProgressEnt;
+import com.app.yellowcap.entities.TechProfileEnt;
 import com.app.yellowcap.entities.UserComleteJobsEnt;
 import com.app.yellowcap.entities.UserInProgressEnt;
 import com.app.yellowcap.entities.countEnt;
@@ -163,6 +164,10 @@ public interface WebService {
 
     @GET("request/techniciancompletejob")
     Call<ResponseWrapper<ArrayList<TechInProgressEnt>>> techCompleteJobs(
+            @Query("technician_id") Integer technician_id);
+
+    @GET("technician/getprofile")
+    Call<ResponseWrapper<TechProfileEnt>> techProfile(
             @Query("technician_id") Integer technician_id);
 
 

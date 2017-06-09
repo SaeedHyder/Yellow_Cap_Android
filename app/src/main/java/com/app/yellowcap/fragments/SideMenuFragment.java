@@ -65,7 +65,9 @@ public class SideMenuFragment extends BaseFragment  {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        madapter = new ArrayListAdapter<NavigationEnt>(getDockActivity(), new NavigationItemBinder(getDockActivity(), this));
+        madapter = new ArrayListAdapter<NavigationEnt>(getDockActivity(), new NavigationItemBinder(getDockActivity(), this,prefHelper));
+
+
     }
 
 
@@ -82,6 +84,7 @@ public class SideMenuFragment extends BaseFragment  {
         getUserProfile();
         onNotificationReceived();
 
+
     }
 
     public void setInterface(UpdateNotificationsCount notificationsCount) {
@@ -90,6 +93,7 @@ public class SideMenuFragment extends BaseFragment  {
 
     @Override
     public void onResume() {
+
         super.onResume();
         TokenUpdater.getInstance().UpdateToken(getDockActivity(), prefHelper.getUserId(), "android", prefHelper.getFirebase_TOKEN());
 
@@ -121,9 +125,15 @@ public class SideMenuFragment extends BaseFragment  {
 
                 } else if (intent.getAction().equals(AppConstants.PUSH_NOTIFICATION)) {
                     // new push notification is received
-                    isNotificationTap = true;
+                   // getMainActivity().isNotification = true;
                     notificationCount = prefHelper.getBadgeCount();
                     updateNotificationsCount.updateCount(notificationCount);
+
+                    getMainActivity().notificationIntent();
+                    if (getMainActivity().isNotification) {
+                       getMainActivity().isNotification = false;
+                       getDockActivity().addDockableFragment(UserNotificationsFragment.newInstance(), "UserNotificationsFragment");
+                    }
 
                     System.out.println(prefHelper.getFirebase_TOKEN());
 

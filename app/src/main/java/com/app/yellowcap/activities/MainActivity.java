@@ -33,6 +33,7 @@ import com.app.yellowcap.entities.LocationModel;
 import com.app.yellowcap.fragments.HomeFragment;
 import com.app.yellowcap.fragments.SideMenuFragment;
 import com.app.yellowcap.fragments.UserHomeFragment;
+import com.app.yellowcap.fragments.UserNotificationsFragment;
 import com.app.yellowcap.fragments.UserSelectionFragment;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.helpers.ScreenHelper;
@@ -85,12 +86,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
 
         settingSideMenu();
 
-        if (getIntent() != null) {
-            if (getIntent().getExtras() != null)
-                isNotification = getIntent().getExtras().getBoolean("tapped");
-
-
-        }
+        notificationIntent();
 
         titleBar.setMenuButtonListener(new OnClickListener() {
 
@@ -122,6 +118,16 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         if (savedInstanceState == null)
             initFragment();
 
+    }
+
+    public void notificationIntent() {
+
+        if (getIntent() != null) {
+            if (getIntent().getExtras() != null) {
+                isNotification = getIntent().getExtras().getBoolean("tapped");
+                //  replaceDockableFragment(UserNotificationsFragment.newInstance(), "UserNotificationsFragment"); }
+            }
+        }
     }
 
     private void askPermission() {
