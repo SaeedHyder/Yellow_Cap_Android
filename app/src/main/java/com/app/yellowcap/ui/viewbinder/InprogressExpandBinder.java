@@ -94,14 +94,14 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         parentViewHolder.ivEditBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.replaceDockableFragment(EditJobTechFragment.newInstance(entity), "EditJobTechFragment");
+                context.replaceDockableFragment(EditJobTechFragment.newInstance(entity,true), "EditJobTechFragment");
             }
         });
 
         parentViewHolder.btnAddJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.replaceDockableFragment(EditJobTechFragment.newInstance(), "EditJobTechFragment");
+                context.replaceDockableFragment(EditJobTechFragment.newInstance(String.valueOf(entity.getId()),entity.getUser_detail().getFull_name()), "EditJobTechFragment");
             }
         });
         parentViewHolder.btnMarkAsComplete.setOnClickListener(new View.OnClickListener() {
@@ -159,14 +159,14 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         childViewHolder.btnAddJobbottom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.replaceDockableFragment(EditJobTechFragment.newInstance(), "EditJobTechFragment");
+                context.replaceDockableFragment(EditJobTechFragment.newInstance(String.valueOf(entity.getId()),entity.getUser_detail().getFull_name()), "EditJobTechFragment");
             }
         });
 
         childViewHolder.ivEditJobBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.replaceDockableFragment(EditJobTechFragment.newInstance(entity), "EditJobTechFragment");
+                context.replaceDockableFragment(EditJobTechFragment.newInstance(entity,true),"EditJobTechFragment");
             }
         });
 

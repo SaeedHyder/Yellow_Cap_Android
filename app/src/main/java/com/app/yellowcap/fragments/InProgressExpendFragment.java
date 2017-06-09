@@ -168,7 +168,6 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
     private void bindData() {
 
         adapter = new ArrayListExpandableAdapter<>(getDockActivity(), collectionGroup, listDataChild, new InprogressExpandBinder(getDockActivity(),this,this),elvInprogress);
-
         elvInprogress.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

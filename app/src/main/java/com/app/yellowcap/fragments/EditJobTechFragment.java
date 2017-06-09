@@ -15,13 +15,10 @@ import android.widget.Spinner;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.entities.RequestDetail;
-import com.app.yellowcap.entities.RequestEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.ServiceEnt;
 import com.app.yellowcap.entities.serviceList;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
-import com.app.yellowcap.global.AppConstants;
-import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.interfaces.onDeleteImage;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
@@ -33,16 +30,12 @@ import com.google.gson.Gson;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,9 +49,9 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
     public static String PARENTID = "0";
     public static String CLIENTNAME = "NAME";
     @BindView(R.id.txt_jobNo)
-    AnyTextView txtJobNo;
-    @BindView(R.id.txt_jobNoText)
     AnyTextView txtJobNoText;
+    @BindView(R.id.txt_jobNoText)
+    AnyTextView txtJobNo;
     @BindView(R.id.ll_job)
     LinearLayout llJob;
     @BindView(R.id.txt_ClientName)
@@ -101,15 +94,17 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
     private RequestDetail previousData;
     private ArrayList<ServiceEnt> jobcollection;
     private ArrayList<ServiceEnt> jobChildcollection;
+    public static String ISEDIT="isEdit";
     private Boolean isEdit = false;
 
     public static EditJobTechFragment newInstance() {
         return new EditJobTechFragment();
     }
 
-    public static EditJobTechFragment newInstance(RequestDetail editData) {
+    public static EditJobTechFragment newInstance(RequestDetail editData,boolean isEdit) {
         Bundle args = new Bundle();
         args.putString(TYPE, new Gson().toJson(editData));
+        args.putBoolean(ISEDIT,isEdit);
         EditJobTechFragment fragment = new EditJobTechFragment();
         fragment.setArguments(args);
         return fragment;
@@ -155,11 +150,13 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
             TYPE = getArguments().getString(TYPE);
             PARENTID = getArguments().getString(PARENTID);
             CLIENTNAME = getArguments().getString(CLIENTNAME);
+            isEdit=getArguments().getBoolean(ISEDIT);
             if (TYPE != null)
                 previousData = new Gson().fromJson(TYPE, RequestDetail.class);
 
 
         }
+        selectedJobsadapter = new ArrayListAdapter<ServiceEnt>(getDockActivity(), new SelectedJobBinder(this));
     }
 
     @Override
@@ -185,7 +182,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
             editCurrentService();
         } else {
             if (PARENTID != null) {
-                txtJobNo.setText(PARENTID);
+                txtJobNo.setText(String.valueOf(PARENTID));
             }
             if (CLIENTNAME != null) {
                 txtClientNameText.setText(CLIENTNAME);
@@ -201,7 +198,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         selectedJobs.add("No Electricity in some Room");
         selectedJobs.add("Repair Ac");
         selectedJobs.add("Ac Not Working");*/
-        selectedJobsadapter = new ArrayListAdapter<ServiceEnt>(getDockActivity(), selectedJobs, new SelectedJobBinder(this));
+
 
     }
 
@@ -244,10 +241,12 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         spnJobtype.setAdapter(categoryAdapter);
         if (previousData != null) {
             if (jobcollection.size() > 0) {
-                if (jobtypearraylist.contains(previousData.getService_detail().getTitle())) {
-                    spnJobtype.setSelection(jobtypearraylist.indexOf(previousData.getService_detail().getTitle()));
-                    jobtype = jobcollection.get(jobtypearraylist.indexOf(previousData.getService_detail().getTitle()));
-                    initJobDescriptionSpinner(jobtype);
+                if (previousData.getService_detail() != null) {
+                    if (jobtypearraylist.contains(previousData.getService_detail().getTitle())) {
+                        spnJobtype.setSelection(jobtypearraylist.indexOf(previousData.getService_detail().getTitle()));
+                        jobtype = jobcollection.get(jobtypearraylist.indexOf(previousData.getService_detail().getTitle()));
+                        initJobDescriptionSpinner(jobtype);
+                    }
                 } else {
                     spnJobtype.setSelection(0);
                     jobtype = jobcollection.get(0);
@@ -266,7 +265,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedJobs.clear();
                 refreshListview();
-               jobtype = jobcollection.get(position);
+                jobtype = jobcollection.get(position);
                 initJobDescriptionSpinner(jobtype);
             }
 
@@ -341,25 +340,28 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
 
         for (serviceList item : previousData.getServics_list()
                 ) {
-            selectedJobs.add(new ServiceEnt(item.getService_detail().getId(),
-                    item.getService_detail().getTitle(),
-                    item.getService_detail().getImage(),
-                    item.getService_detail().getParent_id(),
-                    item.getService_detail().getCreated_at(),
-                    item.getService_detail().getUpdated_at(),
-                    item.getService_detail().getDeleted_at(),
-                    item.getService_detail().getService_image()));
+            if (item.getService_detail() != null) {
+                selectedJobs.add(new ServiceEnt(item.getService_detail().getId(),
+                        item.getService_detail().getTitle(),
+                        item.getService_detail().getImage(),
+                        item.getService_detail().getParent_id(),
+                        item.getService_detail().getCreated_at(),
+                        item.getService_detail().getUpdated_at(),
+                        item.getService_detail().getDeleted_at(),
+                        item.getService_detail().getService_image()));
+            }
         }
 
         refreshListview();
         initJobTypeSpinner("");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        txtJobNo.setText(previousData.getId());
+        txtJobNo.setText(String.valueOf(previousData.getId()));
         txtClientNameText.setText(previousData.getUser_detail().getFirst_name());
         mTxtAdditionDescription.setText(previousData.getDiscription());
         mEdtTotal.setText(previousData.getTotal());
 
     }
+
     private void CreateRequest() {
         String serviceID = String.valueOf(jobcollection.get(spnJobtype.getSelectedItemPosition()).getId());
         StringBuilder sb = new StringBuilder(selectedJobs.size());
@@ -372,19 +374,20 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         //MultipartBody.Part[] part = files.toArray();
         Call<ResponseWrapper> call;
         if (!isEdit) {
-            call = webService.editTechJob(prefHelper.getUserId(),
-                    serviceID,
-                    PARENTID,
-                    serviceIDS,
-                    mTxtAdditionDescription.getText().toString(),
-                    mEdtTotal.getText().toString());
-        } else {
             call = webService.addTechJob(prefHelper.getUserId(),
                     serviceID,
                     PARENTID,
                     serviceIDS,
                     mTxtAdditionDescription.getText().toString(),
                     mEdtTotal.getText().toString());
+        } else {
+            call = webService.editTechJob(prefHelper.getUserId(),
+                    serviceID,
+                    PARENTID,
+                    serviceIDS,
+                    mTxtAdditionDescription.getText().toString(),
+                    mEdtTotal.getText().toString());
+
         }
         call.enqueue(new Callback<ResponseWrapper>() {
             @Override
@@ -405,6 +408,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
             }
         });
     }
+
     private void refreshListview() {
         selectedJobsadapter.clearList();
         listViewJobselected.setAdapter(selectedJobsadapter);
@@ -425,7 +429,12 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
             }
         });
         titleBar.showBackButton();
-        titleBar.setSubHeading(getString(R.string.edit_job));
+        if(isEdit) {
+            titleBar.setSubHeading(getString(R.string.edit_job));
+        }
+        else
+        { titleBar.setSubHeading("Add Job");
+        }
     }
  /*   private void initJobTypeSpinner() {
         final List<String> jobtypearraylist = new ArrayList<String>();
@@ -494,6 +503,10 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
 
     @Override
     public void OnDeleteJobs(int position) {
+        if (selectedJobs.size() > position)
+            selectedJobs.remove(position);
 
+
+        refreshListview();
     }
 }
