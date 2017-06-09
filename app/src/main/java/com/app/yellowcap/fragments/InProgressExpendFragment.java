@@ -175,6 +175,7 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
     }
 
     private void bindData() {
+        
 
         if (elvInprogress!=null)
         elvInprogress.setAdapter(adapter);
