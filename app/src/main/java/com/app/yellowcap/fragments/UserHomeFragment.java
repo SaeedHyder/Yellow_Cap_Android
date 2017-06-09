@@ -89,7 +89,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
         loadingStarted();
         if (getMainActivity().isNotification) {
             getMainActivity().isNotification = false;
-            showNotification();
+            getDockActivity().addDockableFragment(UserNotificationsFragment.newInstance(), "UserNotificationsFragment");
         }
         setListener();
         gethomeData();
@@ -118,9 +118,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
         };
     }
 
-    private void showNotification() {
-        getDockActivity().addDockableFragment(UserNotificationsFragment.newInstance(), "UserNotificationsFragment");
-    }
+
 
     private void gethomeData() {
         Call<ResponseWrapper<ArrayList<ServiceEnt>>> call = webService.getHomeServices();

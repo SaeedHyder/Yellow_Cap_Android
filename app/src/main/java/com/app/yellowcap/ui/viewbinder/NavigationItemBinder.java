@@ -9,6 +9,7 @@ import com.app.yellowcap.R;
 import com.app.yellowcap.activities.DockActivity;
 import com.app.yellowcap.entities.NavigationEnt;
 import com.app.yellowcap.fragments.SideMenuFragment;
+import com.app.yellowcap.helpers.BasePreferenceHelper;
 import com.app.yellowcap.interfaces.UpdateNotificationsCount;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
@@ -25,13 +26,16 @@ import butterknife.ButterKnife;
 public class NavigationItemBinder extends ViewBinder<NavigationEnt> implements UpdateNotificationsCount{
     DockActivity activity;
     BadgeHelper badgeHelper;
+    BasePreferenceHelper prefHelper;
     UpdateNotificationsCount count;
+    int badgeCount;
     ImageView countView;
 
 
-    public NavigationItemBinder(DockActivity activity,  SideMenuFragment fragment) {
+    public NavigationItemBinder(DockActivity activity,  SideMenuFragment fragment,BasePreferenceHelper prefHelper) {
         super(R.layout.row_item_nav);
         this.activity = activity;
+        this.prefHelper=prefHelper;
 
         fragment.setInterface(this);
 
@@ -58,7 +62,7 @@ public class NavigationItemBinder extends ViewBinder<NavigationEnt> implements U
             badgeHelper.hideBadge();
             if (entity.getItem_text().equals(activity.getString(R.string.notifications))) {
                 badgeHelper.initBadge(activity);
-                badgeHelper.addtoBadge(entity.getNotificationCount());
+                badgeHelper.addtoBadge(prefHelper.getBadgeCount());
                 badgeHelper.showBadge();
             }
         }
@@ -70,6 +74,7 @@ public class NavigationItemBinder extends ViewBinder<NavigationEnt> implements U
 
     @Override
     public void updateCount(int count) {
+        badgeCount=count;
         badgeHelper.addtoBadge(count);
         badgeHelper.getImgNotificationCounter().invalidate();
     }

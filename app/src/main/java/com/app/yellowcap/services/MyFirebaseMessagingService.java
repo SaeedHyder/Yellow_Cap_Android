@@ -10,6 +10,7 @@ import com.app.yellowcap.activities.MainActivity;
 import com.app.yellowcap.entities.ResponseWrapper;
 
 import com.app.yellowcap.entities.countEnt;
+import com.app.yellowcap.fragments.SideMenuFragment;
 import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.global.WebServiceConstants;
 import com.app.yellowcap.helpers.BasePreferenceHelper;
@@ -80,7 +81,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             callback.enqueue(new Callback<ResponseWrapper<countEnt>>() {
                 @Override
                 public void onResponse(Call<ResponseWrapper<countEnt>> call, Response<ResponseWrapper<countEnt>> response) {
-                    ;
+
                     preferenceHelper.setBadgeCount(response.body().getResult().getCount());
                     try {
 
@@ -91,13 +92,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                         Log.e(TAG, "message: " + message);
 
-                        Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+                        Intent resultIntent = new Intent(MyFirebaseMessagingService.this, MainActivity.class);
+                        resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         resultIntent.putExtra("message", message);
                         resultIntent.putExtra("tapped", true);
                         Intent pushNotification = new Intent(AppConstants.PUSH_NOTIFICATION);
                         pushNotification.putExtra("message", message);
                         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(pushNotification);
-                        showNotificationMessage(getApplicationContext(), title, message, "", resultIntent);
+                        showNotificationMessage(MyFirebaseMessagingService.this, title, message, "", resultIntent);
 
                     } catch (Exception e) {
                         Log.e(TAG, "Exception: " + e.getMessage());
@@ -126,7 +128,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * Showing notification with text only
      */
     private void showNotificationMessage(Context context, String title, String message, String timeStamp, Intent intent) {
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         NotificationHelper.getInstance().showNotification(context,
                 R.drawable.android_icon,
                 title,
