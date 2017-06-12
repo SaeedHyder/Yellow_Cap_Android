@@ -41,13 +41,12 @@ public class NotificationHelper {
         if (TextUtils.isEmpty(message))
             return;
 
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         final PendingIntent resultPendingIntent =
                 PendingIntent.getActivity(
                         mContext,
                         0,
                         intent,
-                        PendingIntent.FLAG_UPDATE_CURRENT
+                        PendingIntent.FLAG_ONE_SHOT
                 );
         final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
                 mContext);

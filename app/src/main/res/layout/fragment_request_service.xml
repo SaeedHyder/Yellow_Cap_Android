@@ -129,10 +129,13 @@
                 android:layout_height="@dimen/x100"
                 android:background="@drawable/square_border"
                 android:ems="10"
+                android:overScrollMode="always"
+                android:scrollbarStyle="insideInset"
                 android:gravity="top"
                 android:hint="@string/addtional_job_description"
                 android:imeOptions="actionDone"
                 android:inputType="textMultiLine"
+
                 android:maxHeight="@dimen/x100"
                 android:padding="@dimen/x10"
                 android:scrollbars="vertical"

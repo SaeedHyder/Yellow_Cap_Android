@@ -13,7 +13,7 @@
         android:layout_marginTop="@dimen/x40"
         android:layout_marginBottom="@dimen/x40"
         android:layout_weight="0.4"
-        android:src="@drawable/profileimage" />
+         />
 
     <LinearLayout
         android:id="@+id/ll_textFields"

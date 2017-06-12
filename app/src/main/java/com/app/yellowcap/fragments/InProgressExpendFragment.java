@@ -149,15 +149,21 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
         for (TechInProgressEnt item:result
              ) {
             collectionGroup.add(item.getRequest_detail());
-            if(item.getRequest_detail().getSubRequest()!=null) {
+            if(item.getRequest_detail().getSubRequest().size()>0) {
                 for (RequestDetail childItem : item.getRequest_detail().getSubRequest()
                         ) {
                     childItem.setUser_detail(item.getRequest_detail().getUser_detail());
+                    childItem.setTotal_amount(item.getRequest_detail().getTotal_amount());
                     collectionChild.add(childItem);
+
                 }
                 //  collectionChild.addAll(item.getRequest_detail().getSubRequest());}
+                listDataChild.put(item.getRequest_detail(),collectionChild);
+                collectionChild = new ArrayList<>();
+            }else {
+                listDataChild.put(item.getRequest_detail(),new ArrayList<RequestDetail>());
             }
-            listDataChild.put(item.getRequest_detail(),collectionChild);
+
         }
           /*  collectionGroup.addAll(result);
 
@@ -222,7 +228,7 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
     @Override
     public void CallOnUserNumber(String number) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:0123456789"));
+        intent.setData(Uri.parse("tel:"+number));
         startActivity(intent);
     }
 }

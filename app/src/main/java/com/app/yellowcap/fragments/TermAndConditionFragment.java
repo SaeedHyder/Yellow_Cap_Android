@@ -65,6 +65,7 @@ public class TermAndConditionFragment extends BaseFragment {
                 if (isChecked){
                     prefHelper.setLoginStatus(true);
                     getDockActivity().popBackStackTillEntry(0);
+                    getMainActivity().refreshSideMenu();
                     getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(),"User Home Fragment");
                 }
             }
@@ -78,10 +79,7 @@ public class TermAndConditionFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ResponseWrapper<StaticPageEnt>> call, Response<ResponseWrapper<StaticPageEnt>> response) {
                 if (response.body().getResponse().equals("2000")) {
-                    getMainActivity().titleBar.setSubHeading(response.body().getResult().getTitle());
-                    getMainActivity().titleBar.invalidate();
-                    txtTermCondition.setText(response.body().getResult().getBody());
-                    txtTermCondition.setMovementMethod(new ScrollingMovementMethod());
+                    settitle(response.body().getResult().getBody());
                 }
                 else{
                     UIHelper.showShortToastInCenter(getDockActivity(),response.body().getMessage());
@@ -95,6 +93,13 @@ public class TermAndConditionFragment extends BaseFragment {
             }
         });
 
+    }
+
+    private void settitle(String response) {
+        getMainActivity().titleBar.setSubHeading(getString(R.string.terms_conditons));
+        getMainActivity().titleBar.invalidate();
+        txtTermCondition.setText(response);
+        txtTermCondition.setMovementMethod(new ScrollingMovementMethod());
     }
 
     @Override

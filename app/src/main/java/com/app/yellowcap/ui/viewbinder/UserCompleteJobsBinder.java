@@ -31,12 +31,12 @@ public class UserCompleteJobsBinder extends ViewBinder<UserComleteJobsEnt> {
     @Override
     public void bindView(UserComleteJobsEnt entity, int position, int grpPosition, View view, Activity activity) {
         final ViewHolder viewHolder = (ViewHolder) view.getTag();
-        viewHolder.txtJobNoText.setText(String.valueOf(entity.getId()));
+        viewHolder.txtJobNoText.setText(String.valueOf(position+1));
         if (entity.getServicsList().size() > 0)
             viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getTitle());
-        if (entity.getAssignTechnician().size() > 0)
-            viewHolder.txtClientNameText.setText(entity.getAssignTechnician().get(0).getTechnicianDetail().getFullName());
-        viewHolder.txtEarningText.setText(entity.getTotal());
+        if (entity.getAssignTechnician()!=null)
+            viewHolder.txtClientNameText.setText(entity.getAssignTechnician().getTechnicianDetail().getFullName());
+        viewHolder.txtEarningText.setText(entity.getTotal_amount());
         String sourceString = "<b>" + "Description:" + "</b> " + entity.getDiscription();
         viewHolder.txtDescriptionText.setText(Html.fromHtml(sourceString));
         if (entity.getFeedbackdetail() != null)

@@ -48,6 +48,8 @@ public class UserJobsFragment extends BaseFragment implements View.OnClickListen
     CircleImageView CircularImageSharePop;
     @BindView(R.id.txt_userName)
     AnyTextView txtUserName;
+    @BindView(R.id.mainFrame)
+    LinearLayout mainFrame;
 
     public static UserJobsFragment newInstance() {
         return new UserJobsFragment();
@@ -62,6 +64,9 @@ public class UserJobsFragment extends BaseFragment implements View.OnClickListen
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setListners();
+
+        mainFrame.setVisibility(View.GONE);
+        ReplaceListView2Fragment(UserCompleteJobsFragment.newInstance());
         ReplaceListViewFragment(UserInProgressFragment.newInstance());
         setProfileData();
         setInprogressCount(0);
@@ -105,6 +110,20 @@ public class UserJobsFragment extends BaseFragment implements View.OnClickListen
                                 : null).commit();
 
     }
+
+    private void ReplaceListView2Fragment(UserCompleteJobsFragment frag) {
+        frag.setOrderCounts(this);
+        FragmentTransaction transaction = getChildFragmentManager()
+                .beginTransaction();
+
+        transaction.replace(R.id.ll_listView2, frag);
+        transaction
+                .addToBackStack(
+                        getChildFragmentManager().getBackStackEntryCount() == 0 ? KEY_FRAG_FIRST
+                                : null).commit();
+
+    }
+
     private void ReplaceListViewFragment(UserInProgressFragment frag) {
         frag.setOrderCounts(this);
         FragmentTransaction transaction = getChildFragmentManager()
@@ -151,6 +170,7 @@ public class UserJobsFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void setcompleteCount(int count) {
+        mainFrame.setVisibility(View.VISIBLE);
         txtJobCount.setText(String.valueOf(count));
     }
 

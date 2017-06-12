@@ -61,7 +61,7 @@ public class UserComleteJobsEnt {
     private String updatedAt;
     @SerializedName("assign_technician")
     @Expose
-    private List<RequestTechnicianEnt> assignTechnician = null;
+    private RequestTechnicianEnt assignTechnician = null;
     @SerializedName("service_detail")
     @Expose
     private ServiceEnt serviceDetail;
@@ -75,6 +75,19 @@ public class UserComleteJobsEnt {
     @SerializedName("feedbackdetail")
     @Expose
     private FeedBackEnt feedbackdetail = null;
+
+    public String getTotal_amount() {
+        return total_amount;
+    }
+
+    public void setTotal_amount(String total_amount) {
+        this.total_amount = total_amount;
+    }
+
+    @SerializedName("total_amount")
+    @Expose
+
+    private String total_amount = "";
 
     public FeedBackEnt getFeedbackdetail() {
         return feedbackdetail;
@@ -212,11 +225,11 @@ public class UserComleteJobsEnt {
         this.updatedAt = updatedAt;
     }
 
-    public List<RequestTechnicianEnt> getAssignTechnician() {
+    public RequestTechnicianEnt getAssignTechnician() {
         return assignTechnician;
     }
 
-    public void setAssignTechnician(List<RequestTechnicianEnt> assignTechnician) {
+    public void setAssignTechnician(RequestTechnicianEnt assignTechnician) {
         this.assignTechnician = assignTechnician;
     }
 

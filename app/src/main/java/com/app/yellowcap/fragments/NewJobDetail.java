@@ -183,7 +183,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
         txtEstimatedQuote.setText("Between AED " + newJobJson.getRequest_detail().getEstimate_to() + " to " + newJobJson.getRequest_detail().getEstimate_from() + "- COD");
         //SERVICE remaining
         txtAddress.setText(newJobJson.getRequest_detail().getAddress());
-        txtDescription.setText(newJobJson.getRequest_detail().getDiscription());
+        txtDescription.setText(newJobJson.getRequest_detail().getDiscription().trim());
         txtPreferredDateTime.setText(newJobJson.getRequest_detail().getDate() + "  " + newJobJson.getRequest_detail().getTime());
         txtPreferredDateTime.setText("22 Feb 2017" + "    " + "  02:30 PM");
 
@@ -234,7 +234,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                 // initialize a SliderLayout
                 textSliderView
                         .image(item.getFileLink())
-                        .setScaleType(BaseSliderView.ScaleType.Fit)
+                        .setScaleType(BaseSliderView.ScaleType.CenterInside)
                         .setOnSliderClickListener(this);
 
                 //add your extra information
@@ -300,7 +300,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                             }
                         } else {
                             if (!arriveTime.getText().toString().isEmpty()) {
-                                SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm a");
+                                SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm:ss");
                                 Date date = parseFormat.parse(arriveTime.getText().toString());
                                 if (!DateHelper.isTimeAfter(date.getHours(), date.getMinutes(), hourOfDay, minute)) {
                                     UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.time_error));
@@ -385,7 +385,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                         //RefusalDialog.hideDialog();
                     }
                 });
-                RefusalDialog.setCancelable(false);
+                RefusalDialog.setCancelable(true);
                 RefusalDialog.showDialog();
 
                 break;

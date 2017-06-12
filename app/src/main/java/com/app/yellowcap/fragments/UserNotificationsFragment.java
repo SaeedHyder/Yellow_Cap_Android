@@ -11,8 +11,12 @@ import android.widget.ListView;
 import com.app.yellowcap.R;
 import com.app.yellowcap.entities.NotificationEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
+import com.app.yellowcap.entities.countEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.global.WebServiceConstants;
+import com.app.yellowcap.helpers.BasePreferenceHelper;
 import com.app.yellowcap.helpers.UIHelper;
+import com.app.yellowcap.retrofit.WebServiceFactory;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.viewbinder.UserNotificationitemBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
@@ -26,6 +30,8 @@ import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by saeedhyder on 5/24/2017.
@@ -63,6 +69,36 @@ public class UserNotificationsFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
+    private void getNotificationCount() {
+
+
+        Call<ResponseWrapper<countEnt>> callback = webService.getNotificationCount(prefHelper.getUserId());
+        callback.enqueue(new Callback<ResponseWrapper<countEnt>>() {
+            @Override
+            public void onResponse(Call<ResponseWrapper<countEnt>> call, Response<ResponseWrapper<countEnt>> response) {
+
+                prefHelper.setBadgeCount(response.body().getResult().getCount());
+                getMainActivity().refreshSideMenu();
+                try {
+
+
+                } catch (Exception e) {
+                    Log.e(UserNotificationsFragment.class.getSimpleName(), "Exception: " + e.getMessage());
+                }
+
+                Log.e(UserNotificationsFragment.class.getSimpleName(), "aasd" + prefHelper.getUserId() + response.body().getResult().getCount());
+                //  SendNotification(response.body().getResult().getCount(), json);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWrapper<countEnt>> call, Throwable t) {
+                Log.e(UserNotificationsFragment.class.getSimpleName(), t.toString());
+                System.out.println(t.toString());
+            }
+        });
+
+
+    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -70,6 +106,7 @@ public class UserNotificationsFragment extends BaseFragment {
         loadingStarted();
         getNotification();
         NotificationItemListner();
+        getNotificationCount();
 
     }
 

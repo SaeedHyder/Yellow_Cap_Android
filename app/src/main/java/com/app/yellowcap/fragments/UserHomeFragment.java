@@ -91,9 +91,10 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
             getMainActivity().isNotification = false;
             getDockActivity().addDockableFragment(UserNotificationsFragment.newInstance(), "UserNotificationsFragment");
         }
+
         setListener();
         gethomeData();
-        onNotificationReceived();
+
 
     }
 

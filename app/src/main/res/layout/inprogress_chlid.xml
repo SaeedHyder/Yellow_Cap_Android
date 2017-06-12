@@ -162,6 +162,13 @@
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginTop="@dimen/x10"
+                android:alpha="0.6"
+                android:background="@drawable/text" />
+
             <LinearLayout
                 android:id="@+id/ll_Bottombuttons"
                 android:layout_width="match_parent"
@@ -178,6 +185,7 @@
                     android:layout_height="@dimen/x35"
                     android:layout_marginRight="@dimen/x3"
                     android:layout_weight="1"
+
                     android:background="@drawable/button_blackbackground"
                     android:text="@string/add_job"
                     android:textColor="@color/white" />
@@ -186,6 +194,7 @@
                     android:id="@+id/btn_markAsCompleteBottom"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/x35"
+
                     android:layout_marginLeft="@dimen/x3"
                     android:layout_weight="1"
                     android:background="@drawable/button_background"
@@ -193,13 +202,6 @@
                     android:textColor="@color/white" />
 
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/x1"
-                android:layout_marginTop="@dimen/x10"
-                android:alpha="0.6"
-                android:background="@drawable/text" />
 
 
         </LinearLayout>

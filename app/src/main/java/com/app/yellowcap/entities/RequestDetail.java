@@ -75,10 +75,28 @@ public class RequestDetail {
     @Expose
     private List<RequestDetail> subRequest = null;
     private ArrayList<ImageDetailEnt> image_detail;
+    FeedbackDetail feedbackdetail;
+
+    public String getTotal_amount() {
+        return total_amount;
+    }
+
+    public void setTotal_amount(String total_amount) {
+        this.total_amount = total_amount;
+    }
+
+    @SerializedName("total_amount")
+    @Expose
+
+    private String total_amount = "";
+
+
+
 
     public List<RequestDetail> getSubRequest() {
         return subRequest;
     }
+
 
     public void setSubRequest(List<RequestDetail> subRequest) {
         this.subRequest = subRequest;
@@ -252,5 +270,16 @@ public class RequestDetail {
         this.user_detail = user_detail;
     }
 
+
+
+
+
+    public FeedbackDetail getFeedbackdetail() {
+        return feedbackdetail;
+    }
+
+    public void setFeedbackdetail(FeedbackDetail feedbackdetail) {
+        this.feedbackdetail = feedbackdetail;
+    }
 
 }
