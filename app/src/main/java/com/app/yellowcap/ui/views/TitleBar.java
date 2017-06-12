@@ -102,6 +102,9 @@ public class TitleBar extends RelativeLayout {
 		txtTitle.setText(heading);
 
 	}
+	public TextView getTxtTitle(){
+		return txtTitle;
+	}
 
 	public void showTitleBar() {
 		this.setVisibility(View.VISIBLE);

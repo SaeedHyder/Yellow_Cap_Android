@@ -208,6 +208,7 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
                 getDockActivity().onLoadingFinished();
                 if (response.body().getResponse().equals("2000")) {
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                    getDockActivity().popBackStackTillEntry(0);
                     getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
                 } else {
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());

@@ -59,6 +59,7 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
             public void onClick(View v) {
                 switch (entity.getActionType()) {
                     case "Job":
+                        dockActivity.popBackStackTillEntry(1);
                         dockActivity.replaceDockableFragment(UserJobsFragment.newInstance(), "UserJobsFragment");
                         break;
                     case "Quotation":
@@ -89,7 +90,7 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
         Call<ResponseWrapper> call =  service.sendFeedback(prefhelper.getUserId(),
                 String.valueOf(ent.getRequestDetail().getId()),
                String.valueOf( ent.getRequestDetail().getTechnicianId()),
-                String.valueOf(helper.getRating(R.id.rbAddRating)),
+                Math.round(helper.getRating(R.id.rbAddRating)),
                 helper.getEditText(R.id.txt_feedback),
                 helper.getEditText(R.id.txt_tip));
         call.enqueue(new Callback<ResponseWrapper>() {
@@ -97,6 +98,7 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
             public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
                 helper.hideDialog();
                 if (response.body().getResponse().equals("2000")) {
+                    dockActivity.popBackStackTillEntry(0);
                    dockActivity.replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
                 } else {
                     UIHelper.showShortToastInCenter(dockActivity, response.body().getMessage());
@@ -105,6 +107,7 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
 
             @Override
             public void onFailure(Call<ResponseWrapper> call, Throwable t) {
+                helper.hideDialog();
                 Log.e("EntryCodeFragment", t.toString());
                 UIHelper.showShortToastInCenter(dockActivity, t.toString());
             }

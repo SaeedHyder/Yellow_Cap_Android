@@ -69,6 +69,7 @@ public class InProgressBinder extends ViewBinder<InProgressEnt> {
             @Override
             public void onClick(View v) {
               //  complete.markAsComplete();
+                context.popBackStackTillEntry(0);
                 context.replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
             }
         });

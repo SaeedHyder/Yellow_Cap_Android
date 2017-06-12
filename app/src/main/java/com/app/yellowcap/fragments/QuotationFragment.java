@@ -148,6 +148,9 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
             txtUserAddress.setText(QuotationData.getRequestDetail().getAddress() + " " + QuotationData.getRequestDetail().getFullAddress());
             txtEstimatedQuote.setText("Between AED " + QuotationData.getRequestDetail().getEstimateFrom()
                     + " to " + QuotationData.getRequestDetail().getEstimateTo());
+
+            getMainActivity().titleBar.setSubHeading(QuotationData.getRequestDetail().getServiceDetail().getTitle());
+            getMainActivity().titleBar.getTxtTitle().invalidate();
         }
     }
 
@@ -209,7 +212,7 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
             public void onResponse(Call<ResponseWrapper<RequestEnt>> call, Response<ResponseWrapper<RequestEnt>> response) {
                 getDockActivity().onLoadingFinished();
                 if (response.body().getResponse().equals("2000")) {
-
+                    getDockActivity().popBackStackTillEntry(1);
                     getDockActivity().replaceDockableFragment(UserJobsFragment.newInstance(), "UserJobsFragment");
                 } else {
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
@@ -231,7 +234,10 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
         getDockActivity().lockDrawer();
         titleBar.hideButtons();
         titleBar.showBackButton();
-        titleBar.setSubHeading(getString(R.string.Electrical));
+        if (QuotationData!=null)
+        titleBar.setSubHeading(QuotationData.getRequestDetail().getServiceDetail().getTitle());
+        else
+            titleBar.setSubHeading("Quotation");
 
     }
 

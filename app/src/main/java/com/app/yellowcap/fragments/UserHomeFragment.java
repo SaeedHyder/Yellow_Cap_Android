@@ -151,6 +151,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
 
     private void bindview(ArrayList<ServiceEnt> userservices) {
         mServiceAdapter.clearList();
+        if (filterSubtypes!=null)
         filterSubtypes.setAdapter(mServiceAdapter);
         mServiceAdapter.addAll(userservices);
         mServiceAdapter.notifyDataSetChanged();

@@ -696,8 +696,8 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                     int month = c.get(Calendar.MONTH);
                     int day = c.get(Calendar.DAY_OF_MONTH);
                     c.set(year, month, day, hourOfDay, minute);
-                    preTime = new SimpleDateFormat("HH:mm:ss").format(c.getTime());
-                    textView.setText(timePicker.getTime(hourOfDay, minute));
+                    preTime = new SimpleDateFormat("HH:mm").format(c.getTime());
+                    textView.setText(preTime);
                 }
 
             }

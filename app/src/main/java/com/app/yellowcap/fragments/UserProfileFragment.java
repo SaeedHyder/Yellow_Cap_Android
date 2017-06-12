@@ -197,6 +197,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
                 if (response.body().getResponse().equals("2000")) {
                     prefHelper.putRegistrationResult(response.body().getResult());
                     getMainActivity().refreshSideMenu();
+                    getDockActivity().popBackStackTillEntry(0);
                     getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
                 } else {
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());

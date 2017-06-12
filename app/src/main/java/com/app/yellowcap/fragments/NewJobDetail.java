@@ -186,7 +186,8 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
         txtDescription.setText(newJobJson.getRequest_detail().getDiscription().trim());
         txtPreferredDateTime.setText(newJobJson.getRequest_detail().getDate() + "  " + newJobJson.getRequest_detail().getTime());
         txtPreferredDateTime.setText("22 Feb 2017" + "    " + "  02:30 PM");
-
+        getMainActivity().titleBar.setSubHeading(newJobJson.getRequest_detail().getService_detail().getTitle());
+        getMainActivity().titleBar.getTxtTitle().invalidate();
 
     }
 
@@ -437,6 +438,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                 getDockActivity().onLoadingFinished();
                 if (response.body().getResponse().equals("2000")) {
                     jobDetailDialog.hideDialog();
+                    getDockActivity().popBackStackTillEntry(1);
                     getDockActivity().replaceDockableFragment(OrderHistoryFragment.newInstance(), "HomeFragment");
                 } else {
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
@@ -460,7 +462,11 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
         getDockActivity().lockDrawer();
         titleBar.hideButtons();
         titleBar.showBackButton();
-        titleBar.setSubHeading(getString(R.string.plumbing));
+        if (newJobJson!=null)
+            titleBar.setSubHeading(newJobJson.getRequest_detail().getService_detail().getTitle());
+        else
+            titleBar.setSubHeading("New Job");
+       // titleBar.setSubHeading(getString(R.string.plumbing));
 
     }
 

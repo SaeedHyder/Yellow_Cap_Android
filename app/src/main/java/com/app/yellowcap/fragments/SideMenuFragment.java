@@ -188,6 +188,7 @@ public class SideMenuFragment extends BaseFragment  {
                 img.setImageResource(entity.getSelectedDrawable());*/
 
                 if (navigationItemList.get(position).getItem_text().equals(getString(R.string.home))) {
+                    getDockActivity().popBackStackTillEntry(0);
                     getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
                 } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.notifications))) {
                     getDockActivity().replaceDockableFragment(UserNotificationsFragment.newInstance(), "UserHomeFragment");

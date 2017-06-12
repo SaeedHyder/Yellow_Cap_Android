@@ -2,7 +2,9 @@ package com.app.yellowcap.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.app.yellowcap.R;
 
@@ -46,8 +48,14 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void launchTimerAndTask() {
-
-        // Launch timer to test image changing and background threads work
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showMainActivity();
+            }
+        }, MIN_TIME_INTERVAL_FOR_SPLASH);
+    }
+      /*  // Launch timer to test image changing and background threads work
         checkWorkTimer = new Timer();
         checkWorkTimer.scheduleAtFixedRate(new TimerTask() {
 
@@ -60,8 +68,8 @@ public class SplashActivity extends AppCompatActivity {
 
         }, MIN_TIME_INTERVAL_FOR_SPLASH, TIME_INTERVAL_TO_CHECK);
 
-        new Thread(backgroundWork).start();
-    }
+        new Thread(backgroundWork).start();*/
+
 
     private void initNextActivity() {
         checkWorkTimer.cancel();
@@ -72,6 +80,6 @@ public class SplashActivity extends AppCompatActivity {
     private void showMainActivity() {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
-        finish();
+        this.finish();
     }
 }

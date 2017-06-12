@@ -7,14 +7,15 @@
     android:layout_gravity="center"
     android:background="@drawable/roundshapelayout"
     android:orientation="vertical">
+
     <LinearLayout
         android:id="@+id/textLayout"
         android:layout_width="@dimen/x300"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:padding="@dimen/x10"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/x10">
 
         <com.app.yellowcap.ui.views.AnyTextView
             android:id="@+id/txtHeader"
@@ -71,9 +72,10 @@
                 android:layout_weight="0.7"
                 android:background="@color/transparent"
                 android:gravity="center_vertical"
+                android:hint="@string/tip_techinecian"
+                android:inputType="number"
                 android:paddingLeft="@dimen/x10"
-                android:text="@string/tip_techinecian"
-                android:textColor="@color/grey"
+                android:textColor="@color/black"
                 android:textSize="@dimen/x12"
                 android:textStyle="normal"
                 app:typeface="Roboto-Regular.ttf" />
@@ -149,8 +151,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:alpha="0.7"
-                android:gravity="top"
                 android:background="@color/transparent"
+                android:gravity="top"
                 android:hint="@string/write_feedback_here"
                 android:maxLength="100"
                 android:paddingLeft="@dimen/x10"
@@ -158,6 +160,10 @@
                 android:paddingTop="@dimen/x5"
                 android:scrollbars="vertical"
                 android:textColor="@color/dark_grey"
+                android:overScrollMode="always"
+                android:imeOptions="actionDone"
+                android:inputType="textMultiLine"
+                android:scrollbarStyle="insideInset"
                 android:textSize="@dimen/x15"
                 app:typeface="Roboto-Regular.ttf" />
 
@@ -165,9 +171,8 @@
         </LinearLayout>
 
 
-
-
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -176,7 +176,7 @@ public interface WebService {
     Call<ResponseWrapper> sendFeedback(@Field("user_id") String user_id,
                                        @Field("request_id") String request_id,
                                        @Field("technician_id") String technician_id,
-                                       @Field("rate") String rate,
+                                       @Field("rate") Integer rate,
                                        @Field("feedback") String feedback,
                                        @Field("tip_technician") String tip_technician
     );

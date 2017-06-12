@@ -180,7 +180,7 @@ public class UserInProgressFragment extends BaseFragment implements CallUser, on
                 getDockActivity().onLoadingFinished();
                 dialogHelper.hideDialog();
                 if (response.body().getResponse().equals("2000")) {
-
+                    getDockActivity().popBackStackTillEntry(0);
                     getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
                 } else {
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
