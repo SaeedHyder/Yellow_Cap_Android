@@ -198,4 +198,7 @@ public interface WebService {
                                      @Field("services_ids") String services_ids,
                                      @Field("discription") String discription,
                                      @Field("total") String total);
+    @FormUrlEncoded
+    @POST("user/logout")
+    Call<ResponseWrapper>logoutTechnician(@Field("user_id")String userID);
 }

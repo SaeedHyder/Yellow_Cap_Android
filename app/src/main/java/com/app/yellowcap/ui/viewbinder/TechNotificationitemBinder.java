@@ -18,7 +18,7 @@ public class TechNotificationitemBinder extends ViewBinder<NotificationEnt>{
     private ImageLoader imageLoader;
 
     public TechNotificationitemBinder() {
-        super(R.layout.newjobs_item);
+        super(R.layout.notification_item);
 
         imageLoader = ImageLoader.getInstance();
     }

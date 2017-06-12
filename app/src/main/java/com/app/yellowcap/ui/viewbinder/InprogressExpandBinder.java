@@ -60,25 +60,25 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
 
         if (childCount <= 0) {
             parentViewHolder.hideView.setVisibility(View.GONE);
-            parentViewHolder.llEstimatedQuotation.setVisibility(View.GONE);
+            parentViewHolder.llEstimatedQuotation.setVisibility(View.VISIBLE);
             parentViewHolder.llBottomBtns.setVisibility(View.VISIBLE);
         } else {
             parentViewHolder.hideView.setVisibility(View.VISIBLE);
             parentViewHolder.llEstimatedQuotation.setVisibility(View.VISIBLE);
             parentViewHolder.llBottomBtns.setVisibility(View.GONE);
         }
-        parentViewHolder.txtJobNoText.setText(String.valueOf(position+1));
+        parentViewHolder.txtJobNoText.setText(String.valueOf(position + 1));
         parentViewHolder.txtJobPostedText.setText(entity.getDate());
         parentViewHolder.txtClientNameText.setText(entity.getUser_detail().getFull_name());
-        parentViewHolder.txtEstimatedQuotationText.setText("Between AED " + entity.getEstimate_to() + " to " + entity.getEstimate_from());
+        parentViewHolder.txtEstimatedQuotationText.setText(context.getString(R.string.between_aed) +" "+ entity.getEstimate_to() + " to " + entity.getEstimate_from());
         if (entity.getService_detail() != null) {
             parentViewHolder.txtJobTitleText.setText(entity.getService_detail().getTitle());
         } else {
             parentViewHolder.txtJobTitleText.setText("");
         }
-        if (entity.getTotal().equals("")){
-            parentViewHolder.txtEarningText.setText("AED 0");
-        }else {
+        if (entity.getTotal().equals("")) {
+            parentViewHolder.txtEarningText.setText(context.getString(R.string.aed) + " 0");
+        } else {
             parentViewHolder.txtEarningText.setText(entity.getTotal());
         }
         parentViewHolder.txtAddressText.setText(entity.getAddress());
@@ -142,15 +142,15 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         }
         StringBuilder stringBuilder = new StringBuilder();
         for (serviceList item : entity.getServics_list()) {
-            if(item.getService_detail().getTitle()!=null) {
+            if (item.getService_detail().getTitle() != null) {
                 stringBuilder.append(item.getService_detail().getTitle() + System.getProperty("line.separator"));
                 subFieldTitles.add(item.getService_detail().getTitle());
             }
         }
 
         childViewHolder.txtJob1.setText(stringBuilder.toString());
-        childViewHolder.txtAddEarningText.setText("AED " + entity.getTotal());
-        childViewHolder.txtTotalEarningText.setText("AED " + entity.getTotal_amount());
+        childViewHolder.txtAddEarningText.setText(context.getString(R.string.aed)+" "+ entity.getTotal()  );
+        childViewHolder.txtTotalEarningText.setText(context.getString(R.string.aed) +" " + entity.getTotal_amount());
 
         childViewHolder.btnMarkAsCompleteBottom.setOnClickListener(new View.OnClickListener() {
             @Override

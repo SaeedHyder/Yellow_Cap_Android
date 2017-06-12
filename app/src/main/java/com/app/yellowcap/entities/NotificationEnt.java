@@ -41,7 +41,7 @@ public class NotificationEnt {
     private RegistrationResultEnt recieverDetail;
     @SerializedName("request_detail")
     @Expose
-    private RequestEnt requestDetail;
+    private UserInProgressEnt requestDetail;
 
     public Integer getState() {
         return state;
@@ -51,11 +51,11 @@ public class NotificationEnt {
         this.state = state;
     }
 
-    public RequestEnt getRequestDetail() {
+    public UserInProgressEnt getRequestDetail() {
         return requestDetail;
     }
 
-    public void setRequestDetail(RequestEnt requestDetail) {
+    public void setRequestDetail(UserInProgressEnt requestDetail) {
         this.requestDetail = requestDetail;
     }
 

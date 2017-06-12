@@ -88,7 +88,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
     AnyTextView txtTotalPriceText;
     @BindView(R.id.ll_TotalPrice)
     LinearLayout llTotalPrice;
-    Unbinder unbinder;
+
     ArrayList<String> images = new ArrayList<>();
     @BindView(R.id.txt_additionDescription)
     AnyEditTextView mTxtAdditionDescription;
@@ -173,7 +173,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         initListViewAdapter();
-        unbinder = ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
         return rootView;
     }
 
@@ -422,7 +422,8 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
             public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
                 loadingFinished();
                 if (response.body().getResponse().equals("2000")) {
-                    getDockActivity().replaceDockableFragment(OrderHistoryFragment.newInstance(), "OrderHistoryFragment");
+                    getDockActivity().popBackStackTillEntry(0);
+                    getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
                 } else {
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
                 }
@@ -516,11 +517,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         });
     }*/
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+
 
 
     @Override

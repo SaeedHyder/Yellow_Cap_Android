@@ -202,7 +202,7 @@
     <string name="write_feedback_here">write feedback here...</string>
     <string name="rate_techinecian">Rate Techinecian</string>
     <string name="tip_techinecian">Tip Techinecian</string>
-    <string name="aed">AED</string>
+    <string name="aed">AED  </string>
     <string name="we_have_recive_your_request_will_touch_shorthly">"\"We have received your request\n and will be in touch shortly\""</string>
     <string name="close">Close</string>
     <string name="forgot_password_dialog">Forgot Password</string>
@@ -254,6 +254,7 @@
     <string name="no_technician_error">No Technician Assign</string>
     <string name="assignText">We will soon assign you a Technician</string>
     <string name="no_number_tech">0000000000</string>
+    <string name="between_aed">Between AED  </string>
     >>>>>>> 26601661599e29fc71be7dc73340ccaded6d53a8
 
 

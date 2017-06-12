@@ -89,7 +89,7 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
     private void submitFeedback(NotificationEnt ent, final DialogHelper helper) {
         Call<ResponseWrapper> call =  service.sendFeedback(prefhelper.getUserId(),
                 String.valueOf(ent.getRequestDetail().getId()),
-               String.valueOf( ent.getRequestDetail().getTechnicianId()),
+               String.valueOf( ent.getRequestDetail().getAssign_technician_details().getTechnicianId()),
                 Math.round(helper.getRating(R.id.rbAddRating)),
                 helper.getEditText(R.id.txt_feedback),
                 helper.getEditText(R.id.txt_tip));

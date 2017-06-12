@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +12,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.app.yellowcap.R;
+import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
+import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.TitleBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.app.yellowcap.R.id.ll_history;
 import static com.app.yellowcap.R.id.ll_logout;
@@ -27,6 +33,8 @@ import static com.app.yellowcap.R.id.ll_profile;
 
 public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
+    public boolean isNotification = false;
+    protected BroadcastReceiver broadcastReceiver;
     @BindView(R.id.ll_newJobs)
     LinearLayout ll_newJobs;
     @BindView(R.id.ll_header)
@@ -60,8 +68,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     @BindView(R.id.ll_ItemsParent)
     LinearLayout llItemsParent;
     Unbinder unbinder;
-    public boolean isNotification = false;
-    protected BroadcastReceiver broadcastReceiver;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -78,7 +84,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     protected int getLayout() {
         return R.layout.fragment_home;
     }
-        @Override
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -102,7 +109,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void showNotification() {
-        getDockActivity().addDockableFragment(TechNotificationsFragment.newInstance(), "TechNotificationsFragment");
+        getDockActivity().addDockableFragment(NewJobsFragment.newInstance(), "TechNotificationsFragment");
     }
 
     private void onNotificationReceived() {
@@ -182,9 +189,26 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 break;
 
             case ll_logout:
-                getDockActivity().popBackStackTillEntry(0);
-                prefHelper.setLoginStatus(false);
-               getDockActivity().replaceDockableFragment(UserSelectionFragment.newInstance(), "ProfileFragment");
+                Call<ResponseWrapper> call = webService.logoutTechnician(prefHelper.getUserId());
+                call.enqueue(new Callback<ResponseWrapper>() {
+                    @Override
+                    public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
+                        if (response.body().getResponse().equals("2000")) {
+                            getDockActivity().popBackStackTillEntry(0);
+                            prefHelper.setLoginStatus(false);
+                            getDockActivity().replaceDockableFragment(UserSelectionFragment.newInstance(), "ProfileFragment");
+                        } else {
+                            UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseWrapper> call, Throwable t) {
+                        Log.e("UserSignupFragment", t.toString());
+                        UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                    }
+                });
+
                 break;
 
 
