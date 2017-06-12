@@ -34,8 +34,8 @@ public class UserCompleteJobsBinder extends ViewBinder<UserComleteJobsEnt> {
         viewHolder.txtJobNoText.setText(String.valueOf(position+1));
         if (entity.getServicsList().size() > 0)
             viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getTitle());
-        if (entity.getAssignTechnician()!=null)
-            viewHolder.txtClientNameText.setText(entity.getAssignTechnician().getTechnicianDetail().getFullName());
+        if (entity.getAssign_technician_details()!=null)
+            viewHolder.txtClientNameText.setText(entity.getAssign_technician_details().getTechnician_details().getFullName());
         viewHolder.txtEarningText.setText(entity.getTotal_amount());
         String sourceString = "<b>" + "Description:" + "</b> " + entity.getDiscription();
         viewHolder.txtDescriptionText.setText(Html.fromHtml(sourceString));

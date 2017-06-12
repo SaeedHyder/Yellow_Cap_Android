@@ -59,9 +59,9 @@ public class UserComleteJobsEnt {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
-    @SerializedName("assign_technician")
+    @SerializedName("assign_technician_details")
     @Expose
-    private RequestTechnicianEnt assignTechnician = null;
+    private RequestTechnicianEnt assign_technician_details = null;
     @SerializedName("service_detail")
     @Expose
     private ServiceEnt serviceDetail;
@@ -225,12 +225,12 @@ public class UserComleteJobsEnt {
         this.updatedAt = updatedAt;
     }
 
-    public RequestTechnicianEnt getAssignTechnician() {
-        return assignTechnician;
+    public RequestTechnicianEnt getAssign_technician_details() {
+        return assign_technician_details;
     }
 
-    public void setAssignTechnician(RequestTechnicianEnt assignTechnician) {
-        this.assignTechnician = assignTechnician;
+    public void setAssign_technician_details(RequestTechnicianEnt assign_technician_details) {
+        this.assign_technician_details = assign_technician_details;
     }
 
     public ServiceEnt getServiceDetail() {

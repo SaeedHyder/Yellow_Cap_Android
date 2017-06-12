@@ -45,13 +45,13 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
     public void bindView(final UserInProgressEnt entity, final int position, int grpPosition, View view, Activity activity) {
         InProgressViewHolder viewHolder = (InProgressViewHolder) view.getTag();
         RequestTechnicianEnt technicianEnt = null;
-        if (entity.getAssignTechnician()!=null) {
-            technicianEnt = entity.getAssignTechnician();
+        if (entity.getAssign_technician_details()!=null) {
+            technicianEnt = entity.getAssign_technician_details();
         }
         if (technicianEnt != null&&entity.getStatus()== AppConstants.TECH_ACCEPT_ASSIGN_JOB) {
             viewHolder.ivEditBtn.setVisibility(View.GONE);
-            viewHolder.txtTechNameText.setText(technicianEnt.getTechnicianDetail().getFullName());
-            viewHolder.txtNumberText.setText(technicianEnt.getTechnicianDetail().getPhoneNo());
+            viewHolder.txtTechNameText.setText(technicianEnt.getTechnician_details().getFullName());
+            viewHolder.txtNumberText.setText(technicianEnt.getTechnician_details().getPhoneNo());
             viewHolder.btnCallUser.setBackground(context.getResources().getDrawable(R.drawable.button_background));
         } else {
             viewHolder.ivEditBtn.setVisibility(View.VISIBLE);
@@ -89,7 +89,7 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
             @Override
             public void onClick(View v) {
                 if (finalTechnicianEnt != null&&entity.getStatus()==AppConstants.TECH_ACCEPT_ASSIGN_JOB) {
-                    callUser.CallOnUserNumber(finalTechnicianEnt.getTechnicianDetail().getPhoneNo());
+                    callUser.CallOnUserNumber(finalTechnicianEnt.getTechnician_details().getPhoneNo());
                 } else {
                     UIHelper.showShortToastInCenter(context, context.getString(R.string.assignText));
                 }

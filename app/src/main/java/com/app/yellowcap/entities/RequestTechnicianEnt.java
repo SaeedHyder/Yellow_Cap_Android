@@ -36,9 +36,9 @@ public class RequestTechnicianEnt {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
-    @SerializedName("technician_detail")
+    @SerializedName("technician_details")
     @Expose
-    private RegistrationResultEnt technicianDetail;
+    private RegistrationResultEnt technician_details;
 
     public Integer getId() {
         return id;
@@ -112,11 +112,11 @@ public class RequestTechnicianEnt {
         this.updatedAt = updatedAt;
     }
 
-    public RegistrationResultEnt getTechnicianDetail() {
-        return technicianDetail;
+    public RegistrationResultEnt getTechnician_details() {
+        return technician_details;
     }
 
-    public void setTechnicianDetail(RegistrationResultEnt technicianDetail) {
-        this.technicianDetail = technicianDetail;
+    public void setTechnician_details(RegistrationResultEnt technician_details) {
+        this.technician_details = technician_details;
     }
 }
