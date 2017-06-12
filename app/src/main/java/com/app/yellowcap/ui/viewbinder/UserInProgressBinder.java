@@ -10,6 +10,7 @@ import com.app.yellowcap.activities.DockActivity;
 import com.app.yellowcap.entities.RequestTechnicianEnt;
 import com.app.yellowcap.entities.UserInProgressEnt;
 import com.app.yellowcap.fragments.RequestServiceFragment;
+import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.interfaces.CallUser;
 import com.app.yellowcap.interfaces.onCancelJobListner;
@@ -47,7 +48,7 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
         if (entity.getAssignTechnician().size() > 0) {
             technicianEnt = entity.getAssignTechnician().get(0);
         }
-        if (technicianEnt != null) {
+        if (technicianEnt != null&&entity.getStatus()== AppConstants.TECH_ACCEPT_ASSIGN_JOB) {
             viewHolder.ivEditBtn.setVisibility(View.GONE);
             viewHolder.txtTechNameText.setText(technicianEnt.getTechnicianDetail().getFullName());
             viewHolder.txtNumberText.setText(technicianEnt.getTechnicianDetail().getPhoneNo());
@@ -87,7 +88,7 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
         viewHolder.btnCallUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (finalTechnicianEnt != null) {
+                if (finalTechnicianEnt != null&&entity.getStatus()==AppConstants.TECH_ACCEPT_ASSIGN_JOB) {
                     callUser.CallOnUserNumber(finalTechnicianEnt.getTechnicianDetail().getPhoneNo());
                 } else {
                     UIHelper.showShortToastInCenter(context, context.getString(R.string.assignText));

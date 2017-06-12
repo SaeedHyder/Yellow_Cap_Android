@@ -42,7 +42,8 @@ public class AppConstants {
     public static final int ACCEPT_QUOTATION = 2;
     public static final int CANCEL_QUOTATION = 3;
     public static final int CANCEL_JOB = 4;
-    public static final int COMPLETE_JOB = 6;
+    public static final int TECH_ACCEPT_ASSIGN_JOB = 6;
+    public static final int COMPLETE_JOB = 7;
     public static final int TECH_ACCEPT_JOB = 1;
     public static final int TECH_REJECT_JOB = 2;
     public static final int TECH_MARK_COMPLETE = 1;
