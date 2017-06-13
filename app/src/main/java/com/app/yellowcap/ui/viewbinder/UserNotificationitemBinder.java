@@ -93,7 +93,7 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
                 Math.round(helper.getRating(R.id.rbAddRating)),
                 helper.getEditText(R.id.txt_feedback),
                 helper.getEditText(R.id.txt_tip));
-        
+
         call.enqueue(new Callback<ResponseWrapper>() {
             @Override
             public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
