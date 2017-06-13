@@ -158,7 +158,8 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
                 getLocation(edtLocationgps);
                 break;
             case R.id.btn_editcard:
-                getDockActivity().replaceDockableFragment(CreditCardFragment.newInstance(), "CreditCardFargment");
+                UIHelper.showShortToastInCenter(getDockActivity(),"Will be Implemented Later");
+                //getDockActivity().replaceDockableFragment(CreditCardFragment.newInstance(), "CreditCardFargment");
                 break;
             case R.id.btn_submit:
                 if (validate()) {

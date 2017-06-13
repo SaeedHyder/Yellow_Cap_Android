@@ -299,10 +299,11 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
                 break;
             case R.id.btn_cc:
-                paymentType = "credit";
+              /*  paymentType = "credit";
                 setCCCheck();
                 CreditCardFragment fragment = CreditCardFragment.newInstance();
-                getDockActivity().addDockableFragment(fragment, "CreditCardFragment");
+                getDockActivity().addDockableFragment(fragment, "CreditCardFragment");*/
+              UIHelper.showShortToastInCenter(getDockActivity(),"Will be Implemented Later");
                 break;
 
             case R.id.btn_cod:
