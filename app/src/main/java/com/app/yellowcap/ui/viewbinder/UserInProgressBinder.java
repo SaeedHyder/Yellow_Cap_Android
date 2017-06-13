@@ -63,7 +63,7 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
         if (entity.getServicsList().size() > 0)
             viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getTitle());
         if (entity.getTotal().equals("")) {
-            viewHolder.txtAmountText.setText(context.getString(R.string.aed) + " " + entity.getEstimateFrom()+" To "+entity.getEstimateFrom());
+            viewHolder.txtAmountText.setText(context.getString(R.string.aed) + " " + entity.getEstimateFrom()+" To "+entity.getEstimateTo());
         } else {
             viewHolder.txtAmountText.setText(context.getString(R.string.aed) + " " + entity.getTotal_amount());
 

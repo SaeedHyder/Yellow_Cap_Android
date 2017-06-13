@@ -43,7 +43,7 @@ public class UserInProgressFragment extends BaseFragment implements CallUser, on
     AnyTextView txtNoresult;
     @BindView(R.id.InProgress_ListView)
     ListView InProgressListView;
-    Unbinder unbinder;
+
     SetOrderCounts orderCounts;
     private ArrayListAdapter<UserInProgressEnt> adapter;
     private ArrayList<UserInProgressEnt> userCollection;
@@ -76,7 +76,7 @@ public class UserInProgressFragment extends BaseFragment implements CallUser, on
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
         return rootView;
     }
 
@@ -132,11 +132,7 @@ public class UserInProgressFragment extends BaseFragment implements CallUser, on
     }
 
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
 
-    }
 
     @Override
     public void CallOnUserNumber(String number) {

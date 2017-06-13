@@ -36,7 +36,6 @@ public class UserCompleteJobsFragment extends BaseFragment {
     AnyTextView txtNoresult;*/
     @BindView(R.id.CompletedJobs_ListView)
     ListView CompletedJobsListView;
-    Unbinder unbinder;
     SetOrderCounts orderCounts;
     private ArrayListAdapter<UserComleteJobsEnt> adapter;
     private ArrayList<UserComleteJobsEnt> userCollection = new ArrayList<>();
@@ -69,7 +68,7 @@ public class UserCompleteJobsFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_completedjobs, container, false);
-        unbinder = ButterKnife.bind(this, view);
+      ButterKnife.bind(this, view);
         return view;
     }
 
@@ -133,11 +132,7 @@ public class UserCompleteJobsFragment extends BaseFragment {
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+
 
 
 }
