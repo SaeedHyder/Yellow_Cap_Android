@@ -61,7 +61,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     Button btnEditcard;
     @BindView(R.id.btn_submit)
     Button btnsubmit;
-    Unbinder unbinder;
+
 
     public static UserProfileFragment newInstance() {
         return new UserProfileFragment();
@@ -76,7 +76,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
+       ButterKnife.bind(this, rootView);
         return rootView;
     }
 
@@ -136,11 +136,6 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
         titleBar.showBackButton();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 
     private void getLocation(AutoCompleteTextView textView) {
         if (getMainActivity().statusCheck()) {

@@ -32,7 +32,7 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
 
     @BindView(R.id.ll_listView)
     LinearLayout llListView;
-    Unbinder unbinder;
+
     @BindView(R.id.ll_CompletedJobs)
     LinearLayout llCompletedJobs;
     @BindView(R.id.ll_InProgess)
@@ -72,7 +72,7 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_orderhistory, container, false);
-        unbinder = ButterKnife.bind(this, view);
+    ButterKnife.bind(this, view);
         return view;
     }
 
@@ -186,11 +186,6 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
 
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 
     @Override
     public void setcompleteCount(int count) {

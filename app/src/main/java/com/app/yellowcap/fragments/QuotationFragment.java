@@ -73,7 +73,7 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
     Button btnReject;
     @BindView(R.id.ll_buttons)
     LinearLayout llButtons;
-    Unbinder unbinder;
+
     @BindView(R.id.txt_jobNumberHeading)
     AnyTextView txtJobNumberHeading;
     @BindView(R.id.txt_JobTitleHeading)
@@ -245,14 +245,9 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
         return rootView;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 
 }

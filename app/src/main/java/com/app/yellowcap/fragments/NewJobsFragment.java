@@ -48,7 +48,7 @@ public class NewJobsFragment extends BaseFragment {
     private ArrayListAdapter<NewJobsEnt> adapter;
     private ArrayList<NewJobsEnt> userCollection ;
 
-    Unbinder unbinder;
+
 
     public static NewJobsFragment newInstance() {
         return new NewJobsFragment();
@@ -65,7 +65,7 @@ public class NewJobsFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_newjobs, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        ButterKnife.bind(this, view);
         return view;
 
     }

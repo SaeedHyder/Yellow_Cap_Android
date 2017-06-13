@@ -61,7 +61,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
     SliderLayout imageSlider;
     @BindView(R.id.pagerIndicator)
     PagerIndicator pagerIndicator;
-    Unbinder unbinder;
+
     @BindView(R.id.viewPager)
     LinearLayout viewPager;
     @BindView(R.id.txt_jobNameHeading)
@@ -152,7 +152,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_newjobs_detail, container, false);
-        unbinder = ButterKnife.bind(this, view);
+       ButterKnife.bind(this, view);
         return view;
 
     }
@@ -471,11 +471,6 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
     }
 
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 
 
 }

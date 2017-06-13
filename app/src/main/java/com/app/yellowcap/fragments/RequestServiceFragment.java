@@ -114,7 +114,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     ImageView imgCcCheck;
     @BindView(R.id.img_cod_check)
     ImageView imgCodCheck;
-    Unbinder unbinder;
+
     @BindView(edt_addtional_job)
     AnyEditTextView edtAddtionalJob;
     @BindView(R.id.txt_job_posted)
@@ -214,7 +214,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_request_service, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        ButterKnife.bind(this, view);
 
 
         return view;
@@ -784,10 +784,4 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     }
 
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-
-    }
 }

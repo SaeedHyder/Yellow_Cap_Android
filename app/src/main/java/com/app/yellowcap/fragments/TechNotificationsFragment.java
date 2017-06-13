@@ -35,7 +35,7 @@ public class TechNotificationsFragment extends BaseFragment {
 
     @BindView(R.id.lv_TechNotification)
     ListView lvTechNotification;
-    Unbinder unbinder;
+
     @BindView(R.id.txt_no_data)
     AnyTextView txtNoData;
     private ArrayListAdapter<NotificationEnt> adapter;
@@ -60,7 +60,7 @@ public class TechNotificationsFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
         return rootView;
     }
 
@@ -139,9 +139,4 @@ public class TechNotificationsFragment extends BaseFragment {
 
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 }

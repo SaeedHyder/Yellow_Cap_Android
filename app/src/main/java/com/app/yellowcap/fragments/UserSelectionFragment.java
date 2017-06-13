@@ -25,7 +25,7 @@ public class UserSelectionFragment extends BaseFragment implements View.OnClickL
     LinearLayout usercontainer;
     @BindView(R.id.techniciancontainer)
     LinearLayout techniciancontainer;
-    Unbinder unbinder;
+
 
     public static UserSelectionFragment newInstance() {
         return new UserSelectionFragment();
@@ -65,15 +65,11 @@ public class UserSelectionFragment extends BaseFragment implements View.OnClickL
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
+     ButterKnife.bind(this, rootView);
         return rootView;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+
 
     @Override
     public void onClick(View v) {

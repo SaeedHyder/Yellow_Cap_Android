@@ -36,7 +36,7 @@ public class TermAndConditionFragment extends BaseFragment {
     View txtLine;
     @BindView(R.id.chk_read)
     CheckBox chkRead;
-    Unbinder unbinder;
+
 
     public static TermAndConditionFragment newInstance() {
         return new TermAndConditionFragment();
@@ -106,13 +106,9 @@ public class TermAndConditionFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
         return rootView;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+
 }

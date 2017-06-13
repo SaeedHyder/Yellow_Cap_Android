@@ -40,7 +40,6 @@ public class CompletedJobsFragment extends BaseFragment {
     AnyTextView txt_no_data;
     @BindView(R.id.CompletedJobs_ListView)
     ListView CompletedJobsListView;
-    Unbinder unbinder;
     SetOrderCounts orderCounts;
 
     private ArrayListAdapter<TechInProgressEnt> adapter;
@@ -71,7 +70,7 @@ public class CompletedJobsFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_completedjobs, container, false);
-        unbinder = ButterKnife.bind(this, view);
+       ButterKnife.bind(this, view);
         return view;
     }
 
@@ -145,9 +144,5 @@ public class CompletedJobsFragment extends BaseFragment {
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+
 }

@@ -59,7 +59,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
      LinearLayout llCustom;*/
     public boolean isNotification = false;
     protected BroadcastReceiver broadcastReceiver;
-    Unbinder unbinder;
+
     @BindView(R.id.filter_subtypes)
     GridView filterSubtypes;
     private ArrayList<ServiceEnt> userservices;
@@ -200,15 +200,10 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
+      ButterKnife.bind(this, rootView);
         return rootView;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 
     private void addRequestServiceFragment(ServiceEnt type) {
         getDockActivity().replaceDockableFragment(RequestServiceFragment.newInstance(type,null), "RequestServiceFragment");

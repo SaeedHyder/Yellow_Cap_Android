@@ -43,7 +43,7 @@ public class UserJobsFragment extends BaseFragment implements View.OnClickListen
     AnyTextView txtJobCount;
     @BindView(R.id.txt_InProgressCount)
     AnyTextView txtInProgressCount;
-    Unbinder unbinder;
+
     @BindView(R.id.CircularImageSharePop)
     CircleImageView CircularImageSharePop;
     @BindView(R.id.txt_userName)
@@ -88,15 +88,11 @@ public class UserJobsFragment extends BaseFragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
+       ButterKnife.bind(this, rootView);
         return rootView;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+
 
     private void ReplaceListViewFragment(UserCompleteJobsFragment frag) {
         frag.setOrderCounts(this);

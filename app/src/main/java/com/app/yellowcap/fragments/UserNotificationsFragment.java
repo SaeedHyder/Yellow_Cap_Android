@@ -42,7 +42,7 @@ public class UserNotificationsFragment extends BaseFragment {
     ListView lvUserNotification;
     @BindView(R.id.txt_no_data)
     AnyTextView txtNoData;
-    Unbinder unbinder;
+
 
     private ArrayListAdapter<NotificationEnt> adapter;
     private ArrayList<NotificationEnt> userCollection;
@@ -66,7 +66,7 @@ public class UserNotificationsFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
         return rootView;
     }
     private void getNotificationCount() {
@@ -176,9 +176,5 @@ public class UserNotificationsFragment extends BaseFragment {
 
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+
 }

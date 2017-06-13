@@ -34,7 +34,7 @@ public class EntryCodeFragment extends BaseFragment implements View.OnClickListe
     PinEntryEditText txtPinEntry;
     @BindView(R.id.btn_submit_code)
     Button btnSubmitCode;
-    Unbinder unbinder;
+
     private Boolean isValidate = false;
     private String pinCode = "";
 
@@ -69,15 +69,11 @@ public class EntryCodeFragment extends BaseFragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
+       ButterKnife.bind(this, rootView);
         return rootView;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+
 
     @Override
     public void onClick(View v) {

@@ -33,7 +33,7 @@ public class AboutAppFragment extends BaseFragment {
     }
     @BindView(R.id.scroll_tv1)
     TextView scrollTv1;
-    Unbinder unbinder;
+
 
     @Override
     protected int getLayout() {
@@ -87,13 +87,9 @@ public class AboutAppFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
+       ButterKnife.bind(this, rootView);
         return rootView;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+
 }

@@ -67,7 +67,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     LinearLayout llItemsThirdRow;
     @BindView(R.id.ll_ItemsParent)
     LinearLayout llItemsParent;
-    Unbinder unbinder;
+
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -90,7 +90,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
 
-        unbinder = ButterKnife.bind(this, view);
+      ButterKnife.bind(this, view);
         return view;
 
     }
@@ -160,12 +160,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-
-    }
 
     @Override
     public void onClick(View v) {

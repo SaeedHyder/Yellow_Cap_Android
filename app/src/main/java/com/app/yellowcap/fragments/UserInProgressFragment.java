@@ -168,7 +168,7 @@ public class UserInProgressFragment extends BaseFragment implements CallUser, on
     }
 
     private void cancelJob(Integer requestID, final DialogHelper dialogHelper) {
-        UIHelper.showShortToastInCenter(getDockActivity(),String.valueOf(AppConstants.CANCEL_JOB));
+
         Call<ResponseWrapper<RequestEnt>> call = webService.changeStatus(prefHelper.getUserId(), requestID, "", AppConstants.CANCEL_JOB);
         call.enqueue(new Callback<ResponseWrapper<RequestEnt>>() {
             @Override

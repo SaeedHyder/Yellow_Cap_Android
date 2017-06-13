@@ -49,7 +49,7 @@ public class ProfileFragment extends BaseFragment {
     LinearLayout llProfileItems;
     @BindView(R.id.ll_profileDetail)
     LinearLayout llProfileDetail;
-    Unbinder unbinder;
+
     @BindView(R.id.mainFrame)
     LinearLayout mainFrame;
 
@@ -64,7 +64,7 @@ public class ProfileFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_technicianprofile, container, false);
-        unbinder = ButterKnife.bind(this, view);
+      ButterKnife.bind(this, view);
         return view;
 
     }
@@ -137,9 +137,5 @@ public class ProfileFragment extends BaseFragment {
 
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+
 }
