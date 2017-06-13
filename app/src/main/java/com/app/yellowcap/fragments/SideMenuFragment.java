@@ -48,7 +48,7 @@ public class SideMenuFragment extends BaseFragment  {
     AnyTextView txtUseremail;
     @BindView(R.id.nav_listview)
     ListView navListview;
-    Unbinder unbinder;
+
     protected BroadcastReceiver broadcastReceiver;
     public boolean isNotificationTap = false;
     int notificationCount;
@@ -212,12 +212,7 @@ public class SideMenuFragment extends BaseFragment  {
         titleBar.hideTitleBar();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
 
-    }
 
     private void binddata() {
         navigationItemList.add(new NavigationEnt(R.drawable.home_yellow, R.drawable.home, getString(R.string.home)));
@@ -240,7 +235,7 @@ public class SideMenuFragment extends BaseFragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
+         ButterKnife.bind(this, rootView);
         return rootView;
     }
 
