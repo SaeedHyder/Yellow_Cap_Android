@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.GridLayout;
 import android.widget.GridView;
 
 import com.app.yellowcap.R;
@@ -21,6 +22,7 @@ import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.ServiceEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
+import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.adapters.HomeServiceAdapter;
@@ -86,14 +88,17 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loadingStarted();
+
         if (getMainActivity().isNotification) {
             getMainActivity().isNotification = false;
             getDockActivity().addDockableFragment(UserNotificationsFragment.newInstance(), "UserNotificationsFragment");
         }
 
         setListener();
-        gethomeData();
+        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+            loadingStarted();
+            gethomeData();
+        }
 
 
     }
@@ -138,7 +143,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
             public void onFailure(Call<ResponseWrapper<ArrayList<ServiceEnt>>> call, Throwable t) {
                 loadingFinished();
                 Log.e("UserHome", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+             //   UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }
@@ -151,8 +156,13 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
 
     private void bindview(ArrayList<ServiceEnt> userservices) {
         mServiceAdapter.clearList();
-        if (filterSubtypes!=null)
-        filterSubtypes.setAdapter(mServiceAdapter);
+        if (filterSubtypes!=null) {
+            //filterSubtypes.setLayoutParams(new GridLayoutManager.LayoutParams(GridLayout.LayoutParams.FILL_PARENT, GridLayoutManager.LayoutParams.FILL_PARENT));
+          /*  filterSubtypes.setNumColumns(GridView.AUTO_FIT);
+            filterSubtypes.setColumnWidth(GridView.AUTO_FIT);
+            filterSubtypes.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);*/
+            filterSubtypes.setAdapter(mServiceAdapter);
+        }
         mServiceAdapter.addAll(userservices);
         mServiceAdapter.notifyDataSetChanged();
 

@@ -15,6 +15,7 @@ import com.app.yellowcap.entities.NewJobsEnt;
 import com.app.yellowcap.entities.NotificationEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.retrofit.GsonFactory;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
@@ -78,8 +79,9 @@ public class NewJobsFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        getNewJobs();
+        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+            getNewJobs();
+        }
         selectNewJobsListItem();
 
 
@@ -105,7 +107,7 @@ public class NewJobsFragment extends BaseFragment {
             public void onFailure(Call<ResponseWrapper<ArrayList<NewJobsEnt>>> call, Throwable t) {
                 loadingFinished();
                 Log.e("UserSignupFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+               // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
 

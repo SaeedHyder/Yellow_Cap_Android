@@ -17,6 +17,7 @@ import com.app.yellowcap.entities.RegistrationResultEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.helpers.CameraHelper;
+import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.AnyEditTextView;
 import com.app.yellowcap.ui.views.TitleBar;
@@ -84,7 +85,9 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setlistener();
-        getUserProfile();
+        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+            getUserProfile();
+        }
         getMainActivity().setImageSetter(this);
     }
 
@@ -104,7 +107,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
             @Override
             public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
                 Log.e("EntryCodeFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+               // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }
@@ -163,8 +166,10 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
                 break;
             case R.id.btn_submit:
                 if (validate()) {
-                    loadingStarted();
-                    updateProfile();
+                    if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                        loadingStarted();
+                        updateProfile();
+                    }
                 }
                 break;
         }
@@ -203,8 +208,8 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
             @Override
             public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
                 loadingFinished();
-                Log.e("EntryCodeFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                Log.e("UserProfileDFragment", t.toString());
+               // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }

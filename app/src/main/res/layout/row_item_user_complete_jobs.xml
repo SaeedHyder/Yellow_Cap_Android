@@ -30,7 +30,7 @@
             android:id="@+id/txt_jobNoText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="01"
+
             android:textColor="@color/gray"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
@@ -61,7 +61,7 @@
             android:id="@+id/txt_jobCompletedText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="23-3-17"
+
             android:textColor="@color/gray"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
@@ -92,7 +92,7 @@
             android:id="@+id/txt_clientNameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Al Musa"
+
             android:textColor="@color/gray"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
@@ -123,7 +123,7 @@
             android:id="@+id/txt_JobTitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Plumber"
+
             android:textColor="@color/gray"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
@@ -163,7 +163,7 @@
             app:starOff="@drawable/star1"
             app:starOn="@drawable/star2"
             app:starPadding="@dimen/x2"
-            app:stars="3" />
+            app:stars="0" />
 
 
 
@@ -194,7 +194,7 @@
             android:id="@+id/txt_EarningText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AED 55.00"
+
             android:textColor="@color/gray"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
@@ -212,8 +212,7 @@
             android:id="@+id/txt_description_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dummy_desciption"
-            android:textColor="@color/gray"
+             android:textColor="@color/gray"
             android:textSize="@dimen/x15"
             android:maxLines="3"
             app:typeface="Roboto-Regular.ttf"/>

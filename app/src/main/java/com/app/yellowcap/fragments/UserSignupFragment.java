@@ -13,6 +13,7 @@ import com.app.yellowcap.entities.RegistrationResultEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
+import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.TokenUpdater;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.AnyEditTextView;
@@ -75,8 +76,10 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
         switch (v.getId()) {
             case R.id.btn_signup:
                 if (isvalidated()) {
-                    loadingStarted();
-                    registerUser();
+                    if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                        loadingStarted();
+                        registerUser();
+                    }
 
                 }
                 break;
@@ -110,7 +113,7 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
             public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
                 loadingFinished();
                 Log.e("UserSignupFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+
             }
         });
     }

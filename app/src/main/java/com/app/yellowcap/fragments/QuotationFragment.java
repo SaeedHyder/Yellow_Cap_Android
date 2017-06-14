@@ -18,6 +18,7 @@ import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.helpers.DialogHelper;
+import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
@@ -163,7 +164,9 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
                 cancelJobDialog.initCancelQuotationDialog(R.layout.cancle_quatation_dialog, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        cancelQuotation(cancelJobDialog);
+                        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                            cancelQuotation(cancelJobDialog);
+                        }
                     }
                 });
                 cancelJobDialog.setCancelable(true);
@@ -171,8 +174,10 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
 
                 break;
             case R.id.btn_accept:
-                getDockActivity().onLoadingStarted();
-                acceptQuotation();
+                if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                    getDockActivity().onLoadingStarted();
+                    acceptQuotation();
+                }
                 break;
 
         }
@@ -199,7 +204,7 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
             public void onFailure(Call<ResponseWrapper<RequestEnt>> call, Throwable t) {
                 getDockActivity().onLoadingFinished();
                 Log.e("UserSignupFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+               // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }
@@ -223,7 +228,7 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
             public void onFailure(Call<ResponseWrapper<RequestEnt>> call, Throwable t) {
                 getDockActivity().onLoadingFinished();
                 Log.e("UserSignupFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+              //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }

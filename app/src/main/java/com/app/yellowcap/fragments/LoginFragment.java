@@ -15,6 +15,7 @@ import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.helpers.DialogHelper;
+import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.TokenUpdater;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.AnyEditTextView;
@@ -81,8 +82,10 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
         switch (v.getId()) {
             case R.id.btn_login:
                 if (isvalidate()) {
-                    loadingStarted();
-                    loginTechnician();
+                    if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                        loadingStarted();
+                        loginTechnician();
+                    }
                 }
                 break;
 
@@ -131,7 +134,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
             public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
                 loadingFinished();
                 Log.e("UserSignupFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+              //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }

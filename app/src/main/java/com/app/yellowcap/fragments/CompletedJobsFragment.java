@@ -13,6 +13,7 @@ import com.app.yellowcap.entities.CompletedJobsEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.TechInProgressEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.interfaces.SetOrderCounts;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
@@ -82,8 +83,9 @@ public class CompletedJobsFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        getCompletedJobs();
+        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+            getCompletedJobs();
+        }
     }
 
     private void getCompletedJobs() {
@@ -105,7 +107,7 @@ public class CompletedJobsFragment extends BaseFragment {
             public void onFailure(Call<ResponseWrapper<ArrayList<TechInProgressEnt>>> call, Throwable t) {
                 getDockActivity().onLoadingFinished();
                 Log.e("UserSignupFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+               // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
 

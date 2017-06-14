@@ -12,6 +12,7 @@ import com.app.yellowcap.R;
 import com.app.yellowcap.entities.NotificationEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.viewbinder.TechNotificationitemBinder;
@@ -68,7 +69,9 @@ public class TechNotificationsFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         loadingStarted();
-        getNotification();
+        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+            getNotification();
+        }
         NotificationItemListner();
 
     }
@@ -102,7 +105,7 @@ public class TechNotificationsFragment extends BaseFragment {
             public void onFailure(Call<ResponseWrapper<ArrayList<NotificationEnt>>> call, Throwable t) {
                 loadingFinished();
                 Log.e("UserSignupFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+              //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }
