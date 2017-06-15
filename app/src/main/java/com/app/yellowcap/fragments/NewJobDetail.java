@@ -186,7 +186,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
         txtAddress.setText(newJobJson.getRequest_detail().getAddress());
         txtDescription.setText(newJobJson.getRequest_detail().getDiscription().trim());
         txtPreferredDateTime.setText(newJobJson.getRequest_detail().getDate() + "  " + newJobJson.getRequest_detail().getTime());
-        txtPreferredDateTime.setText("22 Feb 2017" + "    " + "  02:30 PM");
+        //txtPreferredDateTime.setText("22 Feb 2017" + "    " + "  02:30 PM");
         getMainActivity().titleBar.setSubHeading(newJobJson.getRequest_detail().getService_detail().getTitle());
         getMainActivity().titleBar.getTxtTitle().invalidate();
 

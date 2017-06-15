@@ -25,6 +25,7 @@ import com.app.yellowcap.activities.MainActivity;
 import com.app.yellowcap.global.WebServiceConstants;
 import com.app.yellowcap.helpers.BasePreferenceHelper;
 import com.app.yellowcap.helpers.GPSTracker;
+import com.app.yellowcap.helpers.KeyboardHide;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.interfaces.LoadingListener;
 import com.app.yellowcap.retrofit.WebService;
@@ -111,6 +112,10 @@ public abstract class BaseFragment extends Fragment {
         if (prefHelper.getUserType().equals("technician")) {
             getDockActivity().lockDrawer();
         }
+        if (getMainActivity() != null && getMainActivity().getWindow().getDecorView() != null) {
+            KeyboardHide.hideSoftKeyboard(getMainActivity(), getMainActivity().getWindow().getDecorView());
+        }
+
         //setTitleBar(((MainActivity) getDockActivity()).titleBar);
     }
 
@@ -138,6 +143,9 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onPause() {
+        if (getMainActivity() != null && getMainActivity().getWindow().getDecorView() != null) {
+            KeyboardHide.hideSoftKeyboard(getMainActivity(), getMainActivity().getWindow().getDecorView());
+        }
         super.onPause();
 
         if (getDockActivity().getWindow() != null)
