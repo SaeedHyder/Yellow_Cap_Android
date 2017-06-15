@@ -179,6 +179,7 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
                     acceptQuotation();
                 }
                 break;
+            
 
         }
 
