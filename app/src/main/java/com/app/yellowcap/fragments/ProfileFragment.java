@@ -12,6 +12,7 @@ import com.app.yellowcap.R;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.TechProfileEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
@@ -49,7 +50,7 @@ public class ProfileFragment extends BaseFragment {
     LinearLayout llProfileItems;
     @BindView(R.id.ll_profileDetail)
     LinearLayout llProfileDetail;
-    Unbinder unbinder;
+
     @BindView(R.id.mainFrame)
     LinearLayout mainFrame;
 
@@ -64,7 +65,7 @@ public class ProfileFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_technicianprofile, container, false);
-        unbinder = ButterKnife.bind(this, view);
+      ButterKnife.bind(this, view);
         return view;
 
     }
@@ -75,7 +76,9 @@ public class ProfileFragment extends BaseFragment {
 
         imageLoader=ImageLoader.getInstance();
         mainFrame.setVisibility(View.GONE);
-        getTechProfile();
+        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+            getTechProfile();
+        }
     }
 
     private void getTechProfile() {
@@ -97,7 +100,7 @@ public class ProfileFragment extends BaseFragment {
             @Override
             public void onFailure(Call<ResponseWrapper<TechProfileEnt>> call, Throwable t) {
                 Log.e("EntryCodeFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+               // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
 
@@ -137,9 +140,5 @@ public class ProfileFragment extends BaseFragment {
 
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+
 }

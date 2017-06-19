@@ -12,6 +12,7 @@ import com.app.yellowcap.R;
 import com.app.yellowcap.entities.NotificationEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.viewbinder.TechNotificationitemBinder;
@@ -35,7 +36,7 @@ public class TechNotificationsFragment extends BaseFragment {
 
     @BindView(R.id.lv_TechNotification)
     ListView lvTechNotification;
-    Unbinder unbinder;
+
     @BindView(R.id.txt_no_data)
     AnyTextView txtNoData;
     private ArrayListAdapter<NotificationEnt> adapter;
@@ -60,15 +61,18 @@ public class TechNotificationsFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
         return rootView;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loadingStarted();
-        getNotification();
+
+        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+            loadingStarted();
+            getNotification();
+        }
         NotificationItemListner();
 
     }
@@ -102,7 +106,7 @@ public class TechNotificationsFragment extends BaseFragment {
             public void onFailure(Call<ResponseWrapper<ArrayList<NotificationEnt>>> call, Throwable t) {
                 loadingFinished();
                 Log.e("UserSignupFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+              //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }
@@ -139,9 +143,4 @@ public class TechNotificationsFragment extends BaseFragment {
 
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 }

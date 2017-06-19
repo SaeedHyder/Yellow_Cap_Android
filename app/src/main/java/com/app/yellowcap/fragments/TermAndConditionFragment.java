@@ -15,6 +15,7 @@ import com.app.yellowcap.R;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.StaticPageEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.TitleBar;
 
@@ -36,7 +37,7 @@ public class TermAndConditionFragment extends BaseFragment {
     View txtLine;
     @BindView(R.id.chk_read)
     CheckBox chkRead;
-    Unbinder unbinder;
+
 
     public static TermAndConditionFragment newInstance() {
         return new TermAndConditionFragment();
@@ -58,13 +59,15 @@ public class TermAndConditionFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        bindTextview();
+        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+            bindTextview();
+        }
         chkRead.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
-                    prefHelper.setLoginStatus(true);
-                    getDockActivity().popBackStackTillEntry(0);
+                  /*  prefHelper.setLoginStatus(true);
+                    getDockActivity().popBackStackTillEntry(0);*/
                     getMainActivity().refreshSideMenu();
                     getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(),"User Home Fragment");
                 }
@@ -89,7 +92,7 @@ public class TermAndConditionFragment extends BaseFragment {
             @Override
             public void onFailure(Call<ResponseWrapper<StaticPageEnt>> call, Throwable t) {
                 Log.e("TermAndCondition", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+              //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
 
@@ -106,13 +109,9 @@ public class TermAndConditionFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
         return rootView;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+
 }

@@ -17,6 +17,7 @@ import com.app.yellowcap.entities.UserInProgressEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.helpers.DialogHelper;
+import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.interfaces.CallUser;
 import com.app.yellowcap.interfaces.SetOrderCounts;
@@ -86,7 +87,10 @@ public class UserInProgressFragment extends BaseFragment implements CallUser, on
 
 
         getDockActivity().onLoadingStarted();
-        getInprogressJobs();
+        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+            getInprogressJobs();
+        }
+
     }
 
     private void getInprogressJobs() {
@@ -106,7 +110,7 @@ public class UserInProgressFragment extends BaseFragment implements CallUser, on
             public void onFailure(Call<ResponseWrapper<ArrayList<UserInProgressEnt>>> call, Throwable t) {
                 getDockActivity().onLoadingFinished();
                 Log.e("EntryCodeFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                //UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }
@@ -150,7 +154,9 @@ public class UserInProgressFragment extends BaseFragment implements CallUser, on
             public void onClick(View v) {
                 getDockActivity().onLoadingStarted();
                 if (userCollection.size()>position) {
-                    cancelJob(userCollection.get(position).getId(), dialogHelper);
+                    if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                        cancelJob(userCollection.get(position).getId(), dialogHelper);
+                    }
                 }
 
             }
@@ -168,7 +174,7 @@ public class UserInProgressFragment extends BaseFragment implements CallUser, on
     }
 
     private void cancelJob(Integer requestID, final DialogHelper dialogHelper) {
-        UIHelper.showShortToastInCenter(getDockActivity(),String.valueOf(AppConstants.CANCEL_JOB));
+
         Call<ResponseWrapper<RequestEnt>> call = webService.changeStatus(prefHelper.getUserId(), requestID, "", AppConstants.CANCEL_JOB);
         call.enqueue(new Callback<ResponseWrapper<RequestEnt>>() {
             @Override
@@ -187,7 +193,7 @@ public class UserInProgressFragment extends BaseFragment implements CallUser, on
             public void onFailure(Call<ResponseWrapper<RequestEnt>> call, Throwable t) {
                 getDockActivity().onLoadingFinished();
                 Log.e("EntryCodeFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+               // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }

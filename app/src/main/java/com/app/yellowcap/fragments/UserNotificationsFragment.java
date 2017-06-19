@@ -15,6 +15,7 @@ import com.app.yellowcap.entities.countEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.WebServiceConstants;
 import com.app.yellowcap.helpers.BasePreferenceHelper;
+import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.retrofit.WebServiceFactory;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
@@ -42,7 +43,7 @@ public class UserNotificationsFragment extends BaseFragment {
     ListView lvUserNotification;
     @BindView(R.id.txt_no_data)
     AnyTextView txtNoData;
-    Unbinder unbinder;
+
 
     private ArrayListAdapter<NotificationEnt> adapter;
     private ArrayList<NotificationEnt> userCollection;
@@ -66,11 +67,12 @@ public class UserNotificationsFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
         return rootView;
     }
     private void getNotificationCount() {
-
+        prefHelper.setBadgeCount(0);
+        getMainActivity().refreshSideMenu();
 
         Call<ResponseWrapper<countEnt>> callback = webService.getNotificationCount(prefHelper.getUserId());
         callback.enqueue(new Callback<ResponseWrapper<countEnt>>() {
@@ -79,13 +81,6 @@ public class UserNotificationsFragment extends BaseFragment {
 
                 prefHelper.setBadgeCount(response.body().getResult().getCount());
                 getMainActivity().refreshSideMenu();
-                try {
-
-
-                } catch (Exception e) {
-                    Log.e(UserNotificationsFragment.class.getSimpleName(), "Exception: " + e.getMessage());
-                }
-
                 Log.e(UserNotificationsFragment.class.getSimpleName(), "aasd" + prefHelper.getUserId() + response.body().getResult().getCount());
                 //  SendNotification(response.body().getResult().getCount(), json);
             }
@@ -103,10 +98,15 @@ public class UserNotificationsFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loadingStarted();
-        getNotification();
+
+        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+            loadingStarted();
+            getNotification();
+        }
         NotificationItemListner();
         getNotificationCount();
+        prefHelper.setBadgeCount(0);
+        getMainActivity().refreshSideMenu();
 
     }
 
@@ -127,7 +127,7 @@ public class UserNotificationsFragment extends BaseFragment {
             public void onFailure(Call<ResponseWrapper<ArrayList<NotificationEnt>>> call, Throwable t) {
                 loadingFinished();
                 Log.e("UserSignupFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                //UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }
@@ -176,9 +176,5 @@ public class UserNotificationsFragment extends BaseFragment {
 
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+
 }

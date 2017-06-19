@@ -25,6 +25,7 @@ import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.helpers.DateHelper;
 import com.app.yellowcap.helpers.DialogHelper;
+import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.TimePickerHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.AnyTextView;
@@ -61,7 +62,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
     SliderLayout imageSlider;
     @BindView(R.id.pagerIndicator)
     PagerIndicator pagerIndicator;
-    Unbinder unbinder;
+
     @BindView(R.id.viewPager)
     LinearLayout viewPager;
     @BindView(R.id.txt_jobNameHeading)
@@ -152,7 +153,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_newjobs_detail, container, false);
-        unbinder = ButterKnife.bind(this, view);
+       ButterKnife.bind(this, view);
         return view;
 
     }
@@ -185,7 +186,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
         txtAddress.setText(newJobJson.getRequest_detail().getAddress());
         txtDescription.setText(newJobJson.getRequest_detail().getDiscription().trim());
         txtPreferredDateTime.setText(newJobJson.getRequest_detail().getDate() + "  " + newJobJson.getRequest_detail().getTime());
-        txtPreferredDateTime.setText("22 Feb 2017" + "    " + "  02:30 PM");
+        //txtPreferredDateTime.setText("22 Feb 2017" + "    " + "  02:30 PM");
         getMainActivity().titleBar.setSubHeading(newJobJson.getRequest_detail().getService_detail().getTitle());
         getMainActivity().titleBar.getTxtTitle().invalidate();
 
@@ -346,7 +347,9 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                                     } else if (completeTime.getText().toString().isEmpty()) {
                                         UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.complete_time_error));
                                     } else {
-                                        jobAccept(arriveTime, completeTime, JobDetailDialog);
+                                        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                                            jobAccept(arriveTime, completeTime, JobDetailDialog);
+                                        }
 
                                     }
                                 }
@@ -381,7 +384,9 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                 RefusalDialog.initJobRefusalDialog(R.layout.job_refusal_dialog, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        jobReject(RefusalDialog.getEditText(R.id.ed_msg), RefusalDialog);
+                        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                            jobReject(RefusalDialog.getEditText(R.id.ed_msg), RefusalDialog);
+                        }
 
                         //RefusalDialog.hideDialog();
                     }
@@ -419,7 +424,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                 public void onFailure(Call<ResponseWrapper<JobRequestEnt>> call, Throwable t) {
                     getDockActivity().onLoadingFinished();
                     Log.e("EntryCodeFragment", t.toString());
-                    UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                   // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
                 }
             });
         } else {
@@ -449,7 +454,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
             public void onFailure(Call<ResponseWrapper<JobRequestEnt>> call, Throwable t) {
                 getDockActivity().onLoadingFinished();
                 Log.e("EntryCodeFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+              //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
 
@@ -471,11 +476,6 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
     }
 
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 
 
 }

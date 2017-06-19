@@ -42,8 +42,8 @@ public class CompletedJobsBinder extends ViewBinder<TechInProgressEnt> {
         });
         viewHolder.txt_jobNoText.setText(String.valueOf(position+1));
         viewHolder.txt_jobCompletedText.setText(entity.getRequest_detail().getDate());
-        if(entity.getRequest_detail().getService_detail()!=null){
-        viewHolder.txt_JobTitleText.setText(entity.getRequest_detail().getService_detail().getTitle());
+        if(entity.getRequest_detail().getServics_list().size()>0){
+        viewHolder.txt_JobTitleText.setText(entity.getRequest_detail().getServics_list().get(0).getService_detail().getTitle());
         }
         if(entity.getRequest_detail().getUser_detail()!=null) {
             viewHolder.txt_clientNameText.setText(entity.getRequest_detail().getUser_detail().getFull_name());

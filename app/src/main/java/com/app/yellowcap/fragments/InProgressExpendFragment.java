@@ -21,6 +21,7 @@ import com.app.yellowcap.entities.TechInProgressEnt;
 import com.app.yellowcap.entities.subRequest;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
+import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.interfaces.CallUser;
 import com.app.yellowcap.interfaces.MarkAsComplete;
@@ -102,7 +103,9 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         userCollection = new ArrayList<>();
-        getInProgressJobsData();
+        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+            getInProgressJobsData();
+        }
     }
 
     private void getInProgressJobsData() {
@@ -126,7 +129,7 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
             public void onFailure(Call<ResponseWrapper<ArrayList<TechInProgressEnt>>> call, Throwable t) {
                 getDockActivity().onLoadingFinished();
                 Log.e("UserSignupFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+             //   UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
 
@@ -198,32 +201,33 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
         if (userCollection.size()>position){
             assignID = String.valueOf(userCollection.get(position).getId());
         }
-        Call<ResponseWrapper<JobRequestEnt>> call = webService.markComplete(
-                assignID,prefHelper.getUserId(),RequestID, AppConstants.TECH_MARK_COMPLETE);
+        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+            Call<ResponseWrapper<JobRequestEnt>> call = webService.markComplete(
+                    assignID, prefHelper.getUserId(), RequestID, AppConstants.TECH_MARK_COMPLETE);
 
-        call.enqueue(new Callback<ResponseWrapper<JobRequestEnt>>() {
-            @Override
-            public void onResponse(Call<ResponseWrapper<JobRequestEnt>> call, Response<ResponseWrapper<JobRequestEnt>> response) {
+            call.enqueue(new Callback<ResponseWrapper<JobRequestEnt>>() {
+                @Override
+                public void onResponse(Call<ResponseWrapper<JobRequestEnt>> call, Response<ResponseWrapper<JobRequestEnt>> response) {
 
-                getDockActivity().onLoadingFinished();
-                if (response.body().getResponse().equals("2000")) {
-                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
-                    getDockActivity().popBackStackTillEntry(0);
-                    getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
-                } else {
-                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                    getDockActivity().onLoadingFinished();
+                    if (response.body().getResponse().equals("2000")) {
+                        UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                        getDockActivity().popBackStackTillEntry(0);
+                        getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
+                    } else {
+                        UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                    }
+
                 }
 
-            }
-
-            @Override
-            public void onFailure(Call<ResponseWrapper<JobRequestEnt>> call, Throwable t) {
-                getDockActivity().onLoadingFinished();
-                Log.e("EntryCodeFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
-            }
-        });
-
+                @Override
+                public void onFailure(Call<ResponseWrapper<JobRequestEnt>> call, Throwable t) {
+                    getDockActivity().onLoadingFinished();
+                    Log.e("EntryCodeFragment", t.toString());
+                    //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                }
+            });
+        }
 
     }
     @Override

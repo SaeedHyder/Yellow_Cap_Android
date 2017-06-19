@@ -101,7 +101,7 @@
             android:textStyle="normal"
             app:typeface="Roboto-Regular.ttf" />
 
-        <Spinner
+        <com.app.yellowcap.ui.views.AnySpinner
             android:id="@+id/spn_jobtype"
             android:layout_width="match_parent"
             android:layout_height="@dimen/x30"
@@ -126,7 +126,7 @@
             android:textStyle="normal"
             app:typeface="Roboto-Regular.ttf" />
 
-        <Spinner
+        <com.app.yellowcap.ui.views.AnySpinner
             android:id="@+id/spn_jobdescription"
             android:layout_width="match_parent"
             android:layout_height="@dimen/x30"

@@ -26,24 +26,25 @@ public class TokenUpdater {
 
     private TokenUpdater() {
     }
-    public void UpdateToken(Context context , final String userid, String DeviceType, String Token){
-        if (Token.isEmpty()){
-            Log.e("Token Updater","Token is Empty");
+    public void UpdateToken(Context context , final String userid, String DeviceType, String Token) {
+        if (Token.isEmpty()) {
+            Log.e("Token Updater", "Token is Empty");
         }
-        webservice = WebServiceFactory.getWebServiceInstanceWithCustomInterceptor(context,
-                WebServiceConstants.SERVICE_URL);
-       Call<ResponseWrapper>call = webservice.updateToken(userid,DeviceType,Token);
-        call.enqueue(new Callback<ResponseWrapper>() {
-            @Override
-            public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
+            webservice = WebServiceFactory.getWebServiceInstanceWithCustomInterceptor(context,
+                    WebServiceConstants.SERVICE_URL);
+            Call<ResponseWrapper> call = webservice.updateToken(userid, DeviceType, Token);
+            call.enqueue(new Callback<ResponseWrapper>() {
+                @Override
+                public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
 
-                Log.i("UPDATETOKEN",response.body().getResponse()+""+userid);
-            }
+                    Log.i("UPDATETOKEN", response.body().getResponse() + "" + userid);
+                }
 
-            @Override
-            public void onFailure(Call<ResponseWrapper> call, Throwable t) {
-                Log.e("UPDATETOKEN",t.toString());
-            }
-        });
-    }
+                @Override
+                public void onFailure(Call<ResponseWrapper> call, Throwable t) {
+                    Log.e("UPDATETOKEN", t.toString());
+                }
+            });
+        }
+
 }

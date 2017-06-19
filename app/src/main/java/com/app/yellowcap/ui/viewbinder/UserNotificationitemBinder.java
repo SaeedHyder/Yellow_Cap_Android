@@ -14,6 +14,7 @@ import com.app.yellowcap.fragments.UserHomeFragment;
 import com.app.yellowcap.fragments.UserJobsFragment;
 import com.app.yellowcap.helpers.BasePreferenceHelper;
 import com.app.yellowcap.helpers.DialogHelper;
+import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.retrofit.WebService;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
@@ -74,14 +75,21 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
     }
 
     private void openRatingPopup(final NotificationEnt entity) {
+        String message="";
+        if (entity.getRequestDetail().getServicsList().size()>0){
+            message = entity.getRequestDetail().getServicsList().get(0).getServiceEnt().getTitle();
+        }
         final DialogHelper dialogHelper = new DialogHelper(dockActivity);
         dialogHelper.initRatingDialog(R.layout.rating_pop_up_dialog, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
               //  dialogHelper.hideDialog();
-                submitFeedback(entity,dialogHelper);
+                if (InternetHelper.CheckInternetConectivityandShowToast(dockActivity)) {
+                    submitFeedback(entity, dialogHelper);
+                }
             }
-        }, entity.getRequestDetail().getServiceDetail().getTitle(), entity.getRequestDetail().getMessage());
+        }, entity.getRequestDetail().getServiceDetail().getTitle(),message
+                );
         dialogHelper.setCancelable(true);
         dialogHelper.showDialog();
     }
@@ -93,7 +101,7 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
                 Math.round(helper.getRating(R.id.rbAddRating)),
                 helper.getEditText(R.id.txt_feedback),
                 helper.getEditText(R.id.txt_tip));
-        
+
         call.enqueue(new Callback<ResponseWrapper>() {
             @Override
             public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
@@ -110,7 +118,7 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
             public void onFailure(Call<ResponseWrapper> call, Throwable t) {
                 helper.hideDialog();
                 Log.e("EntryCodeFragment", t.toString());
-                UIHelper.showShortToastInCenter(dockActivity, t.toString());
+               // UIHelper.showShortToastInCenter(dockActivity, t.toString());
             }
         });
     }

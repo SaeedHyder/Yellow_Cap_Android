@@ -48,6 +48,7 @@
         android:layout_width="@dimen/x300"
         android:layout_height="match_parent"
         android:layout_gravity="left"
+        android:clickable="true"
         android:choiceMode="singleChoice"
         android:dividerHeight="1dp" />
 

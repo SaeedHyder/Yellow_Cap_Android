@@ -17,6 +17,7 @@ import com.app.yellowcap.entities.RegistrationResultEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.helpers.CameraHelper;
+import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.AnyEditTextView;
 import com.app.yellowcap.ui.views.TitleBar;
@@ -61,7 +62,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     Button btnEditcard;
     @BindView(R.id.btn_submit)
     Button btnsubmit;
-    Unbinder unbinder;
+
 
     public static UserProfileFragment newInstance() {
         return new UserProfileFragment();
@@ -76,7 +77,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
+       ButterKnife.bind(this, rootView);
         return rootView;
     }
 
@@ -84,7 +85,9 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setlistener();
-        getUserProfile();
+        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+            getUserProfile();
+        }
         getMainActivity().setImageSetter(this);
     }
 
@@ -104,7 +107,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
             @Override
             public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
                 Log.e("EntryCodeFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+               // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }
@@ -136,11 +139,6 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
         titleBar.showBackButton();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 
     private void getLocation(AutoCompleteTextView textView) {
         if (getMainActivity().statusCheck()) {
@@ -163,12 +161,15 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
                 getLocation(edtLocationgps);
                 break;
             case R.id.btn_editcard:
-                getDockActivity().replaceDockableFragment(CreditCardFragment.newInstance(), "CreditCardFargment");
+                UIHelper.showShortToastInCenter(getDockActivity(),"Will be Implemented Later");
+                //getDockActivity().replaceDockableFragment(CreditCardFragment.newInstance(), "CreditCardFargment");
                 break;
             case R.id.btn_submit:
                 if (validate()) {
-                    loadingStarted();
-                    updateProfile();
+                    if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                        loadingStarted();
+                        updateProfile();
+                    }
                 }
                 break;
         }
@@ -207,8 +208,8 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
             @Override
             public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
                 loadingFinished();
-                Log.e("EntryCodeFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                Log.e("UserProfileDFragment", t.toString());
+               // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }

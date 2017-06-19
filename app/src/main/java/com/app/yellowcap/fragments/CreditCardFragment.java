@@ -41,7 +41,7 @@ public class CreditCardFragment extends BaseFragment implements View.OnClickList
     AnyEditTextView edtCcName;
     @BindView(R.id.btn_update)
     Button btnupdate;
-    Unbinder unbinder;
+
 
 
     public static CreditCardFragment newInstance() {
@@ -68,15 +68,10 @@ public class CreditCardFragment extends BaseFragment implements View.OnClickList
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
+       ButterKnife.bind(this, rootView);
         return rootView;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 
     @Override
     public void onClick(View v) {

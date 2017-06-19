@@ -19,6 +19,7 @@ import com.app.yellowcap.entities.RegistrationResultEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
+import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.TokenUpdater;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.interfaces.UpdateNotificationsCount;
@@ -81,7 +82,9 @@ public class SideMenuFragment extends BaseFragment  {
         super.onViewCreated(view, savedInstanceState);
         setlistItemClickListener();
         binddata();
-        getUserProfile();
+        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+            getUserProfile();
+        }
         onNotificationReceived();
 
 
@@ -128,7 +131,7 @@ public class SideMenuFragment extends BaseFragment  {
                    // getMainActivity().isNotification = true;
                     notificationCount = prefHelper.getBadgeCount();
                     updateNotificationsCount.updateCount(prefHelper.getBadgeCount());
-
+                    getMainActivity().refreshSideMenu();
                    /* getMainActivity().notificationIntent();
                     if (getMainActivity().isNotification) {
                        getMainActivity().isNotification = false;
@@ -161,7 +164,7 @@ public class SideMenuFragment extends BaseFragment  {
                 @Override
                 public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
                     Log.e("EntryCodeFragment", t.toString());
-                    UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                  //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
                 }
             });
         }

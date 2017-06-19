@@ -1,13 +1,19 @@
 package com.app.yellowcap.entities;
 
+import android.content.Context;
+import android.widget.GridView;
+
 /**
  * Created on 5/4/2017.
  */
 
-public class AndroidInfo {
+public class AndroidInfo  {
     private String name;
 
+
+
     public AndroidInfo(String name, String version) {
+
         this.name = name;
         this.version = version;
     }

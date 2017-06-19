@@ -108,6 +108,7 @@ public class DialogHelper {
     }
     public String getEditText(int editTextID){
         AnyEditTextView editTextView = (AnyEditTextView)dialog.findViewById(editTextID);
+        KeyboardHide.hideSoftKeyboard(dialog.getContext(),editTextView);
         return  editTextView.getText().toString();
     }
     public void showDialog(){

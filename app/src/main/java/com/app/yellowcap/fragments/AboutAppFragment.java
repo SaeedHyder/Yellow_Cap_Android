@@ -13,6 +13,7 @@ import com.app.yellowcap.R;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.StaticPageEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.TitleBar;
 
@@ -33,7 +34,7 @@ public class AboutAppFragment extends BaseFragment {
     }
     @BindView(R.id.scroll_tv1)
     TextView scrollTv1;
-    Unbinder unbinder;
+
 
     @Override
     protected int getLayout() {
@@ -43,7 +44,9 @@ public class AboutAppFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        bindTextview();
+        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+            bindTextview();
+        }
     }
 
     private void bindTextview() {
@@ -62,7 +65,7 @@ public class AboutAppFragment extends BaseFragment {
             @Override
             public void onFailure(Call<ResponseWrapper<StaticPageEnt>> call, Throwable t) {
                 Log.e("TermAndCondition", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                //UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }
@@ -87,13 +90,9 @@ public class AboutAppFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
+       ButterKnife.bind(this, rootView);
         return rootView;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+
 }

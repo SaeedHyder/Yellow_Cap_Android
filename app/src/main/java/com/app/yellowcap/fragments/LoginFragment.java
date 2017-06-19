@@ -15,6 +15,7 @@ import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.helpers.DialogHelper;
+import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.TokenUpdater;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.AnyEditTextView;
@@ -42,7 +43,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
     AnyEditTextView edtEmail;
     @BindView(R.id.edtPassword)
     AnyEditTextView edtPassword;
-    Unbinder unbinder1;
+
 
     public static LoginFragment newInstance() {
         return new LoginFragment();
@@ -52,7 +53,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onViewCreated(view, savedInstanceState);
-        unbinder = ButterKnife.bind(this, view);
+        ButterKnife.bind(this, view);
         setListeners();
 
     }
@@ -81,7 +82,10 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
         switch (v.getId()) {
             case R.id.btn_login:
                 if (isvalidate()) {
-                    loginTechnician();
+                    if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                        loadingStarted();
+                        loginTechnician();
+                    }
                 }
                 break;
 
@@ -106,6 +110,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
             @Override
             public void onResponse(Call<ResponseWrapper<RegistrationResultEnt>> call, Response<ResponseWrapper<RegistrationResultEnt>> response) {
                 if (response.body().getResponse().equals("2000")) {
+                    loadingFinished();
                     prefHelper.setUserType("technician");
                     prefHelper.setUsrId(String.valueOf(response.body().getResult().getId()));
                     prefHelper.setUsrName(response.body().getResult().getFullName());
@@ -120,22 +125,20 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
                     getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragmnet");
                 }
                 else{
+                    loadingFinished();
                     UIHelper.showShortToastInCenter(getDockActivity(),response.body().getMessage());
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
+                loadingFinished();
                 Log.e("UserSignupFragment", t.toString());
-                UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+              //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+
 
     private boolean isvalidate() {
 
@@ -155,7 +158,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder1 = ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
         return rootView;
     }
 }

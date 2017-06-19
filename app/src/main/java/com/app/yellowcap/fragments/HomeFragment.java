@@ -15,6 +15,7 @@ import com.app.yellowcap.R;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
+import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.TitleBar;
 
@@ -67,7 +68,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     LinearLayout llItemsThirdRow;
     @BindView(R.id.ll_ItemsParent)
     LinearLayout llItemsParent;
-    Unbinder unbinder;
+
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -90,7 +91,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
 
-        unbinder = ButterKnife.bind(this, view);
+      ButterKnife.bind(this, view);
         return view;
 
     }
@@ -160,12 +161,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-
-    }
 
     @Override
     public void onClick(View v) {
@@ -189,26 +184,27 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 break;
 
             case ll_logout:
-                Call<ResponseWrapper> call = webService.logoutTechnician(prefHelper.getUserId());
-                call.enqueue(new Callback<ResponseWrapper>() {
-                    @Override
-                    public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
-                        if (response.body().getResponse().equals("2000")) {
-                            getDockActivity().popBackStackTillEntry(0);
-                            prefHelper.setLoginStatus(false);
-                            getDockActivity().replaceDockableFragment(UserSelectionFragment.newInstance(), "ProfileFragment");
-                        } else {
-                            UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                    Call<ResponseWrapper> call = webService.logoutTechnician(prefHelper.getUserId());
+                    call.enqueue(new Callback<ResponseWrapper>() {
+                        @Override
+                        public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
+                            if (response.body().getResponse().equals("2000")) {
+                                getDockActivity().popBackStackTillEntry(0);
+                                prefHelper.setLoginStatus(false);
+                                getDockActivity().replaceDockableFragment(UserSelectionFragment.newInstance(), "ProfileFragment");
+                            } else {
+                                UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<ResponseWrapper> call, Throwable t) {
-                        Log.e("UserSignupFragment", t.toString());
-                        UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
-                    }
-                });
-
+                        @Override
+                        public void onFailure(Call<ResponseWrapper> call, Throwable t) {
+                            Log.e("UserSignupFragment", t.toString());
+                          //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                        }
+                    });
+                }
                 break;
 
 

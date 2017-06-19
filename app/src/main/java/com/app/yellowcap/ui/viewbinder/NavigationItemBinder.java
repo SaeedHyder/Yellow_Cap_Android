@@ -77,6 +77,7 @@ public class NavigationItemBinder extends ViewBinder<NavigationEnt> implements U
         badgeCount=count;
         badgeHelper.addtoBadge(count);
         badgeHelper.getImgNotificationCounter().invalidate();
+        badgeHelper.showBadge();
     }
 
     public static class NavViewHolder extends BaseViewHolder {

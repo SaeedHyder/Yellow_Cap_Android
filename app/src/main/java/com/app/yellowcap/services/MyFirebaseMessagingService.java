@@ -49,9 +49,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
               /*  JSONObject json = new JSONObject(remoteMessage.getData().toString());
                 Log.e(TAG, "DATA: " + json);*/
-
-            buildNotification(remoteMessage);
             getNotificationCount();
+            buildNotification(remoteMessage);
+
 
         }
     }
@@ -83,12 +83,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             public void onResponse(Call<ResponseWrapper<countEnt>> call, Response<ResponseWrapper<countEnt>> response) {
 
                 preferenceHelper.setBadgeCount(response.body().getResult().getCount());
-                try {
-
-
-                } catch (Exception e) {
-                    Log.e(TAG, "Exception: " + e.getMessage());
-                }
+                Intent pushNotification = new Intent(AppConstants.PUSH_NOTIFICATION);
+                pushNotification.putExtra("message", "");
+                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(pushNotification);
 
                 Log.e(TAG, "aasd" + preferenceHelper.getUserId() + response.body().getResult().getCount());
                 //  SendNotification(response.body().getResult().getCount(), json);
@@ -118,7 +115,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Intent pushNotification = new Intent(AppConstants.PUSH_NOTIFICATION);
         pushNotification.putExtra("message", message);
 
-        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(pushNotification);
+        //LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(pushNotification);
 
         showNotificationMessage(MyFirebaseMessagingService.this, title, message, "", resultIntent);
     }
