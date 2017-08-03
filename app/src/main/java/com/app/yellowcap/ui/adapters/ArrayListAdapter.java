@@ -100,8 +100,15 @@ public class ArrayListAdapter<T> extends BaseAdapter implements SpinnerAdapter {
 		
 		return convertView;
 	}
-	
-	public T getItemFromList( int index ) {
+
+	@Override
+	public int getItemViewType(int position) {
+		return position;
+	}
+
+
+
+	public T getItemFromList(int index ) {
 		return arrayList.get( index );
 	}
 	

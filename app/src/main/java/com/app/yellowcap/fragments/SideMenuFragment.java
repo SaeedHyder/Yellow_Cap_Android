@@ -17,6 +17,7 @@ import com.app.yellowcap.R;
 import com.app.yellowcap.entities.NavigationEnt;
 import com.app.yellowcap.entities.RegistrationResultEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
+import com.app.yellowcap.entities.TechProfileEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.helpers.InternetHelper;
@@ -33,7 +34,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,6 +56,8 @@ public class SideMenuFragment extends BaseFragment  {
     UpdateNotificationsCount updateNotificationsCount;
     private ArrayList<NavigationEnt> navigationItemList = new ArrayList<>();
     private ArrayListAdapter<NavigationEnt> madapter;
+    private ArrayList<NavigationEnt> navigationItemListTech = new ArrayList<>();
+    private ArrayListAdapter<NavigationEnt> madapterTech;
 
     public static SideMenuFragment newInstance() {
         return new SideMenuFragment();
@@ -65,11 +67,16 @@ public class SideMenuFragment extends BaseFragment  {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (prefHelper.getUserType().equals("user")) {
+            madapter = new ArrayListAdapter<NavigationEnt>(getDockActivity(), new NavigationItemBinder(getDockActivity(), this, prefHelper));
+        } else {
+            madapterTech = new ArrayListAdapter<NavigationEnt>(getDockActivity(), new NavigationItemBinder(getDockActivity(), this, prefHelper));
 
-        madapter = new ArrayListAdapter<NavigationEnt>(getDockActivity(), new NavigationItemBinder(getDockActivity(), this,prefHelper));
-
+        }
 
     }
+
+
 
 
     @Override
@@ -81,12 +88,81 @@ public class SideMenuFragment extends BaseFragment  {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setlistItemClickListener();
-        binddata();
-        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-            getUserProfile();
+
+
+        if (prefHelper.getUserType().equals("user")) {
+            binddataUser();
+
+        } else {
+            bindDataTech();
+
         }
+        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+            if (prefHelper.getUserType().equals("user")) {
+                getUserProfile();
+            } else {
+                getTechProfile();
+            }
+        }
+
+
         onNotificationReceived();
 
+
+    }
+
+    private void bindDataTech() {
+
+        navigationItemListTech.add(new NavigationEnt(R.drawable.home_yellow, R.drawable.home, getString(R.string.home)));
+        navigationItemListTech.add(new NavigationEnt(R.drawable.profile_yellow, R.drawable.profile, getString(R.string.profile)));
+        navigationItemListTech.add(new NavigationEnt(R.drawable.notification_yellow, R.drawable.notification,
+                getString(R.string.notifications), notificationCount));
+        navigationItemListTech.add(new NavigationEnt(R.drawable.jobs_technician, R.drawable.jobs_technician, getString(R.string.New_Jobs)));
+        navigationItemListTech.add(new NavigationEnt(R.drawable.language1,R.drawable.language, getResources().getString(R.string.english)));
+        navigationItemListTech.add(new NavigationEnt(R.drawable.about_yellow, R.drawable.about, getString(R.string.about_app)));
+        navigationItemListTech.add(new NavigationEnt(R.drawable.logout, R.drawable.logout, getString(R.string.logout)));
+        bindviewTech();
+
+    }
+
+    private void bindviewTech() {
+
+        madapterTech.clearList();
+        navListview.setAdapter(madapterTech);
+        madapterTech.addAll(navigationItemListTech);
+        madapterTech.notifyDataSetChanged();
+    }
+
+    private void getTechProfile() {
+        if (prefHelper.isLogin() && prefHelper.getUserType().equals("technician")) {
+        getDockActivity().onLoadingStarted();
+        Call<ResponseWrapper<TechProfileEnt>> call = webService.techProfile(Integer.parseInt(prefHelper.getUserId()));
+
+        call.enqueue(new Callback<ResponseWrapper<TechProfileEnt>>() {
+            @Override
+            public void onResponse(Call<ResponseWrapper<TechProfileEnt>> call, Response<ResponseWrapper<TechProfileEnt>> response) {
+                getDockActivity().onLoadingFinished();
+                if (response.body().getResponse().equals("2000")) {
+                    setProfileData(response.body().getResult());
+                } else {
+                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWrapper<TechProfileEnt>> call, Throwable t) {
+                Log.e("EntryCodeFragment", t.toString());
+                // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+            }
+        });
+
+    }}
+
+    private void setProfileData(TechProfileEnt result) {
+        //prefHelper.putRegistrationResult(result);
+        Picasso.with(getDockActivity()).load(result.getProfile_image()).into(CircularImageSharePop);
+        txtUserName.setText(result.getFull_name());
+        txtUseremail.setText(result.getEmail());
 
     }
 
@@ -183,47 +259,89 @@ public class SideMenuFragment extends BaseFragment  {
         navListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               /* madapter.notifyDataSetChanged();
-                AnyTextView textview = (AnyTextView)view.findViewById(R.id.txt_home);
-                textview.setTextColor(getResources().getColor(R.color.text_color));
-                ImageView img = (ImageView)view.findViewById(R.id.img_unselected);
-                NavigationEnt entity = (NavigationEnt)madapter.getItem(position);
-                img.setImageResource(entity.getSelectedDrawable());*/
 
+                if(prefHelper.getUserType().equals("user")){
                 if (navigationItemList.get(position).getItem_text().equals(getString(R.string.home))) {
                     getDockActivity().popBackStackTillEntry(0);
                     getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
-                } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.notifications))) {
+                }else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.profile))) {
+                    getDockActivity().replaceDockableFragment(UserProfileFragment.newInstance(), "UserProfileFragment");
+                }  else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.notifications))) {
                     getDockActivity().replaceDockableFragment(UserNotificationsFragment.newInstance(), "UserHomeFragment");
                 } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.my_job))) {
                     getDockActivity().replaceDockableFragment(UserJobsFragment.newInstance(), "UserjobsFragment");
-                } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.profile))) {
-                    getDockActivity().replaceDockableFragment(UserProfileFragment.newInstance(), "UserProfileFragment");
-                } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.about_app))) {
+                } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.english))) {
+                    if (prefHelper.isLanguageArabic()) {
+                        prefHelper.putLang(getDockActivity(), "en");
+
+                    } else {
+                        prefHelper.putLang(getDockActivity(), "ar");
+
+                    }
+                }else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.about_app))) {
                     getDockActivity().replaceDockableFragment(AboutAppFragment.newInstance(), "UserAboutFragment");
                 }
 
+            }
+            else
+                {
+                    if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.home))) {
+                        getDockActivity().popBackStackTillEntry(0);
+                        getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
+                    } else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.notifications))) {
+                        getDockActivity().replaceDockableFragment(TechNotificationsFragment.newInstance(), "TechNotificationsFragment");
+                    }else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.profile))) {
+                        getDockActivity().replaceDockableFragment(ProfileFragment.newInstance(), "ProfileFragment");
+                    }else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.New_Jobs))) {
+                        getDockActivity().replaceDockableFragment(NewJobsFragment.newInstance(), "NewJobsFragment");
+                    }  else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.english))) {
+                        if (prefHelper.isLanguageArabic()) {
+                            prefHelper.putLang(getDockActivity(), "en");
+                        } else {
+                            prefHelper.putLang(getDockActivity(), "ar");
+                        }
+                    } else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.about_app))) {
+                        getDockActivity().replaceDockableFragment(AboutAppFragment.newInstance(), "AboutFragment");
+                    }else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.logout))) {
+                        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                            Call<ResponseWrapper> call = webService.logoutTechnician(prefHelper.getUserId());
+                            call.enqueue(new Callback<ResponseWrapper>() {
+                                @Override
+                                public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
+                                    if (response.body().getResponse().equals("2000")) {
+                                        getDockActivity().popBackStackTillEntry(0);
+                                        prefHelper.setLoginStatus(false);
+                                        getDockActivity().replaceDockableFragment(UserSelectionFragment.newInstance(), "ProfileFragment");
+                                    } else {
+                                        UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseWrapper> call, Throwable t) {
+                                    Log.e("UserSignupFragment", t.toString());
+                                    //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                                }
+                            });
+                        }
+                    }
+
+                }
 
             }
         });
     }
 
 
-    @Override
-    public void setTitleBar(TitleBar titleBar) {
-        super.setTitleBar(titleBar);
-        titleBar.hideTitleBar();
-    }
-
-
-
-    private void binddata() {
+    private void binddataUser() {
         navigationItemList.add(new NavigationEnt(R.drawable.home_yellow, R.drawable.home, getString(R.string.home)));
         navigationItemList.add(new NavigationEnt(R.drawable.profile_yellow, R.drawable.profile, getString(R.string.profile)));
         navigationItemList.add(new NavigationEnt(R.drawable.notification_yellow, R.drawable.notification,
                 getString(R.string.notifications), notificationCount));
         navigationItemList.add(new NavigationEnt(R.drawable.jobs_yellow, R.drawable.jobs, getString(R.string.my_job)));
+        navigationItemList.add(new NavigationEnt(R.drawable.language1,R.drawable.language,getString(R.string.english)));
         navigationItemList.add(new NavigationEnt(R.drawable.about_yellow, R.drawable.about, getString(R.string.about_app)));
+
         bindview();
     }
 
@@ -242,21 +360,10 @@ public class SideMenuFragment extends BaseFragment  {
         return rootView;
     }
 
-   /* @Override
-    public void updateCount(int count, int position) {
+    @Override
+    public void setTitleBar(TitleBar titleBar) {
+        super.setTitleBar(titleBar);
+        titleBar.hideTitleBar();
+    }
 
-        if (notificationCount != count) {
-
-            NavigationEnt updatedItem = (NavigationEnt) madapter.getItem(position);
-            updatedItem.setNotificationCount(notificationCount);
-
-            navigationItemList.remove(position);
-            navigationItemList.add(position, updatedItem);
-            madapter.clearList();
-            madapter.addAll(navigationItemList);
-            madapter.notifyDataSetChanged();
-
-        }
-
-    }*/
 }

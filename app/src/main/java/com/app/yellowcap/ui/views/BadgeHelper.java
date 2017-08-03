@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.activities.DockActivity;
@@ -80,7 +82,14 @@ public class BadgeHelper {
             e.printStackTrace();
         }
     }
+    public void  changeBadgeGravity(int GravitySide){
+        RelativeLayout.LayoutParams params =
+                new RelativeLayout.LayoutParams(imgNotificationCounter.getWidth(),
+                        imgNotificationCounter.getHeight());
+        params.addRule(GravitySide);
 
+        imgNotificationCounter.setLayoutParams(params);
+    }
     public boolean isBadgeVisible() {
         return imgNotificationCounter.getVisibility() == View.VISIBLE;
     }

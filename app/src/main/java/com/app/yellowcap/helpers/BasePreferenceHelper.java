@@ -2,11 +2,18 @@ package com.app.yellowcap.helpers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
+import android.util.Log;
 
+import com.app.yellowcap.activities.MainActivity;
 import com.app.yellowcap.entities.RegistrationResultEnt;
 import com.app.yellowcap.entities.UserEnt;
 import com.app.yellowcap.retrofit.GsonFactory;
+
+import java.util.Locale;
 
 
 public class BasePreferenceHelper extends PreferenceHelper {
@@ -23,6 +30,7 @@ public class BasePreferenceHelper extends PreferenceHelper {
     private static final String FILENAME = "preferences";
     private static final String PHONENUMBER = "PHONENUMBER";
     private Context context;
+    protected static final String KEY_DEFAULT_LANG = "keyLanguage";
 
 
     public BasePreferenceHelper(Context c) {
@@ -129,4 +137,39 @@ public class BasePreferenceHelper extends PreferenceHelper {
     public void setPhonenumber(String phonenumber) {
         putStringPreference(context, FILENAME, PHONENUMBER, phonenumber);
     }
+
+    public void putLang(Activity activity, String lang) {
+        Log.v("lang", "|" + lang);
+        Resources resources = context.getResources();
+
+        if (lang.equals("ar"))
+            lang = "ar";
+        else
+            lang = "en";
+
+        putStringPreference(context, FILENAME, KEY_DEFAULT_LANG, lang);
+        //Resources resources = context.getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        android.content.res.Configuration conf = resources.getConfiguration();
+        conf.locale = new Locale(lang);
+        resources.updateConfiguration(conf, dm);
+        ((MainActivity) activity).restartActivity();
+    }
+
+    public void PutLang(MainActivity activity,String lang){
+        putStringPreference(context, FILENAME, KEY_DEFAULT_LANG, lang);
+
+    }
+
+
+    public String getLang() {
+        return getStringPreference(context, FILENAME, KEY_DEFAULT_LANG);
+    }
+
+    public boolean isLanguageArabic() {
+        return getLang().equalsIgnoreCase("ar");
+    }
+
+
+
 }
