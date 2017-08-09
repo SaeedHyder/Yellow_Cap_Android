@@ -12,7 +12,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class SplashActivity extends AppCompatActivity {
+public class
+SplashActivity extends AppCompatActivity {
 
     final int TIME_INTERVAL_TO_CHECK = 500;// in millis
     final int MIN_TIME_INTERVAL_FOR_SPLASH = 2500; // in millis

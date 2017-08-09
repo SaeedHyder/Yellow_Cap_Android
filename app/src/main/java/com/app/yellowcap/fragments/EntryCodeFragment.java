@@ -54,7 +54,7 @@ public class EntryCodeFragment extends BaseFragment implements View.OnClickListe
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setlistener();
-        insertPin();
+       // insertPin();
         // initPinEnrty();
     }
 
