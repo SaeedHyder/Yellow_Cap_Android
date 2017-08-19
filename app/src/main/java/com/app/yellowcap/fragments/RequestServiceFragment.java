@@ -271,6 +271,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         bindSelectedJobview(selectedJobs);
     }
 
+
     private void setListener() {
         btnPreferreddate.setOnClickListener(this);
         btnPreferredtime.setOnClickListener(this);

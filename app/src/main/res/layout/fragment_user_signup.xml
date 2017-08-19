@@ -9,11 +9,10 @@
         android:id="@+id/iv_logo"
         android:layout_width="@dimen/x150"
         android:layout_height="0dp"
-        android:layout_weight="0.4"
-        android:layout_marginTop="@dimen/x60"
-        android:src="@drawable/logo"
         android:layout_gravity="center"
-        />
+        android:layout_marginTop="@dimen/x60"
+        android:layout_weight="0.4"
+        android:src="@drawable/logo" />
 
     <LinearLayout
         android:id="@+id/ll_textFields"
