@@ -1,20 +1,27 @@
 package com.app.yellowcap.ui.viewbinder;
 
 import android.app.Activity;
+import android.graphics.Typeface;
+import android.text.Html;
+import android.text.SpannableStringBuilder;
+import android.text.TextPaint;
+import android.text.style.ClickableSpan;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.activities.DockActivity;
 import com.app.yellowcap.entities.NavigationEnt;
 import com.app.yellowcap.fragments.SideMenuFragment;
 import com.app.yellowcap.helpers.BasePreferenceHelper;
+import com.app.yellowcap.helpers.ClickableSpanHelper;
 import com.app.yellowcap.interfaces.UpdateNotificationsCount;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.BadgeHelper;
-import com.google.android.gms.plus.model.people.Person;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,8 +30,8 @@ import butterknife.ButterKnife;
  * Created on 5/24/2017.
  */
 
-public class NavigationItemBinder extends ViewBinder<NavigationEnt> implements UpdateNotificationsCount{
-    DockActivity activity;
+public class NavigationItemBinder extends ViewBinder<NavigationEnt> implements UpdateNotificationsCount {
+    DockActivity dockActivity;
     BadgeHelper badgeHelper;
     BasePreferenceHelper prefHelper;
     UpdateNotificationsCount count;
@@ -32,10 +39,10 @@ public class NavigationItemBinder extends ViewBinder<NavigationEnt> implements U
     ImageView countView;
 
 
-    public NavigationItemBinder(DockActivity activity,  SideMenuFragment fragment,BasePreferenceHelper prefHelper) {
+    public NavigationItemBinder(DockActivity activity, SideMenuFragment fragment, BasePreferenceHelper prefHelper) {
         super(R.layout.row_item_nav);
-        this.activity = activity;
-        this.prefHelper=prefHelper;
+        this.dockActivity = activity;
+        this.prefHelper = prefHelper;
 
         fragment.setInterface(this);
 
@@ -48,14 +55,14 @@ public class NavigationItemBinder extends ViewBinder<NavigationEnt> implements U
 
     @Override
     public void bindView(NavigationEnt entity, int position, int grpPosition, View view, Activity activity) {
-        NavViewHolder viewHolder = (NavViewHolder)view.getTag();
+        NavViewHolder viewHolder = (NavViewHolder) view.getTag();
         badgeHelper = new BadgeHelper(viewHolder.imgNotificationCount, (DockActivity) activity);
-        if  (entity.getItem_text().equals(activity.getString(R.string.home))){
+        if (entity.getItem_text().equals(activity.getString(R.string.home)) && !entity.getItem_text().equals(activity.getString(R.string.english))) {
             viewHolder.txtHome.setText(entity.getItem_text());
             viewHolder.imgUnselected.setImageResource(entity.getSelectedDrawable());
             viewHolder.txtHome.setTextColor(activity.getResources().getColor(R.color.text_color));
             badgeHelper.hideBadge();
-        }else {
+        } else {
             viewHolder.txtHome.setText(entity.getItem_text());
             viewHolder.txtHome.setTextColor(activity.getResources().getColor(R.color.black));
             viewHolder.imgUnselected.setImageResource(entity.getUnselectedDrawable());
@@ -63,18 +70,86 @@ public class NavigationItemBinder extends ViewBinder<NavigationEnt> implements U
             if (entity.getItem_text().equals(activity.getString(R.string.notifications))) {
                 badgeHelper.initBadge(activity);
                 badgeHelper.addtoBadge(prefHelper.getBadgeCount());
+                if (prefHelper.getLang().equals("ar")) {
+                    badgeHelper.changeBadgeGravity(RelativeLayout.ALIGN_PARENT_START);
+                } else {
+                    badgeHelper.changeBadgeGravity(RelativeLayout.ALIGN_PARENT_END);
+                }
                 badgeHelper.showBadge();
-            }
-        }
-       //count.updateCount(entity.getNotificationCount(),position);
+            } else if (entity.getItem_text().equals(activity.getString(R.string.english)) && !entity.getItem_text().equals(activity.getString(R.string.home))) {
+                //LanguageChange(view);
+                if (prefHelper.isLanguageArabic()) {
+                    String sourceString = "<b> <font color='#fcc739'>" + dockActivity.getResources().getString(R.string.arabic) + "</font> </b> " + " - " +
+                            dockActivity.getResources().getString(R.string.english);
+                    viewHolder.txtHome.setText(Html.fromHtml(sourceString));
+                    // viewHolder.txtHome.setText(dockActivity.getResources().getString(R.string.arabic_english));
+                    // setSignupSpan(dockActivity.getResources().getString(R.string.arabic_english), dockActivity.getResources().getString(R.string.arabic), viewHolder.txtHome);
+                    viewHolder.txtHome.setGravity(Gravity.RIGHT);
+                } else {
+                    // viewHolder.txtHome.setText(dockActivity.getResources().getString(R.string.arabic_english));
+                    String sourceString = "<b><font color='#fcc739'>" + dockActivity.getResources().getString(R.string.english) + "</font></b> " + " - " +
+                            dockActivity.getResources().getString(R.string.arabic);
+                    viewHolder.txtHome.setText(Html.fromHtml(sourceString));
+                    // setSignupSpan(dockActivity.getResources().getString(R.string.arabic_english), dockActivity.getResources().getString(R.string.english), viewHolder.txtHome);
+                    viewHolder.txtHome.setGravity(Gravity.LEFT);
 
+                }
+
+            }
+
+        }
+        //count.updateCount(entity.getNotificationCount(),position);
 
 
     }
 
+    private void setSignupSpan(String text, String spanText, AnyTextView txtview) {
+
+        SpannableStringBuilder stringBuilder = ClickableSpanHelper.initSpan(text);
+        ClickableSpanHelper.setSpan(stringBuilder, text, spanText, new ClickableSpan() {
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                //  ds.setColor(getResources().getColor(R.color.white));    // you can use custom color
+                ds.setTypeface(Typeface.DEFAULT_BOLD);
+                ds.setUnderlineText(false);    // this remove the underline
+            }
+
+            @Override
+            public void onClick(View widget) {
+                if (prefHelper.isLanguageArabic()) {
+                    prefHelper.putLang(dockActivity, "en");
+
+                } else {
+                    prefHelper.putLang(dockActivity, "ar");
+
+                }
+            }
+        });
+        ClickableSpanHelper.setColor(stringBuilder, text, spanText, "#fcc739");
+
+        ClickableSpanHelper.setClickableSpan(txtview, stringBuilder);
+
+    }
+
+    private void LanguageChange(final View txtHome) {
+        txtHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (prefHelper.isLanguageArabic()) {
+                    prefHelper.putLang(dockActivity, "en");
+
+                } else {
+                    prefHelper.putLang(dockActivity, "ar");
+
+                }
+            }
+        });
+    }
+
+
     @Override
     public void updateCount(int count) {
-        badgeCount=count;
+        badgeCount = count;
         badgeHelper.addtoBadge(count);
         badgeHelper.getImgNotificationCounter().invalidate();
         badgeHelper.showBadge();
@@ -89,10 +164,11 @@ public class NavigationItemBinder extends ViewBinder<NavigationEnt> implements U
         AnyTextView txtHome;
         @BindView(R.id.txt_line)
         View txtLine;
-       @BindView(R.id.ll_item_container)
-       LinearLayout container;
-       @BindView(R.id.imgNotificationCount)
-       ImageView imgNotificationCount;
+        @BindView(R.id.ll_item_container)
+        LinearLayout container;
+        @BindView(R.id.imgNotificationCount)
+        ImageView imgNotificationCount;
+
         NavViewHolder(View view) {
             ButterKnife.bind(this, view);
         }

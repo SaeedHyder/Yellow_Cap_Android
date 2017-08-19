@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 import com.app.yellowcap.R;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class

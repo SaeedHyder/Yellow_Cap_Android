@@ -110,7 +110,7 @@ public abstract class BaseFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (prefHelper.getUserType().equals("technician")) {
-            getDockActivity().lockDrawer();
+            getDockActivity().releaseDrawer();
         }
         if (getMainActivity() != null && getMainActivity().getWindow().getDecorView() != null) {
             KeyboardHide.hideSoftKeyboard(getMainActivity(), getMainActivity().getWindow().getDecorView());

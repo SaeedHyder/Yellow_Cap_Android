@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -19,6 +21,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -86,6 +89,8 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         Log.i("Screen Density", ScreenHelper.getDensity(this) + "");
 
         settingSideMenu();
+        setCurrentLocale();
+        //  prefHelper.putLang(this,prefHelper.getLang());
 
         if(getIntent().getExtras()!=null) {
             string = getIntent().getExtras().getString("mystring");
@@ -128,6 +133,27 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
 
     }
 
+    private void setCurrentLocale() {
+        if (prefHelper.isLanguageArabic()){
+            Resources resources = getResources();
+            DisplayMetrics dm = resources.getDisplayMetrics();
+            Configuration conf = resources.getConfiguration();
+            conf.locale = new Locale("ar");
+            resources.updateConfiguration(conf, dm);
+        }else{
+            Resources resources = getResources();
+            DisplayMetrics dm = resources.getDisplayMetrics();
+            Configuration conf = resources.getConfiguration();
+            conf.locale = new Locale("en");
+            resources.updateConfiguration(conf, dm);
+        }
+    }
+
+    /* @Override
+     public void onConfigurationChanged(Configuration newConfig) {
+         // refresh your views here
+         super.onConfigurationChanged(newConfig);
+     }*/
     public void notificationIntent() {
 
         if (getIntent() != null) {
@@ -163,7 +189,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         return getLayoutInflater().inflate(getSideMenuFrameLayoutId(), null);
     }
 
-    private void settingSideMenu() {
+    public void settingSideMenu() {
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -189,7 +215,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
 
     public void initFragment() {
 
-
+        //prefHelper.putLang(this, prefHelper.getLang());
         getSupportFragmentManager().addOnBackStackChangedListener(getListener());
 
         if (prefHelper.isLogin()) {
@@ -203,7 +229,11 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
             replaceDockableFragment(UserSelectionFragment.newInstance(), "UserSelectionFragement");
         }
     }
-
+    public void restartActivity() {
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
     private FragmentManager.OnBackStackChangedListener getListener() {
         FragmentManager.OnBackStackChangedListener result = new FragmentManager.OnBackStackChangedListener() {
             public void onBackStackChanged() {

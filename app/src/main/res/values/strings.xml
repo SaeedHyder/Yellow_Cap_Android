@@ -121,6 +121,11 @@
     <string name="no_result_found">No Result Found</string>
     <string name="job">Job:</string>
     <string name="my_job">My Jobs</string>
+    <string name="new_job">New Jobs</string>
+    <string name="arabic_english">عربى - English</string>
+    <string name="english">English</string>
+    <string name="arabic">عربى</string>
+
     <string name="about_app">About App</string>
     <string name="job_completed">Job Completed:</string>
     <string name="client_name">Client Name:</string>

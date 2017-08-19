@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.app.yellowcap.R;
+import com.app.yellowcap.activities.MainActivity;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
@@ -107,6 +108,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
         listners();
         onNotificationReceived();
+        getMainActivity().refreshSideMenu();
     }
 
     private void showNotification() {
@@ -150,6 +152,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         super.setTitleBar(titleBar);
         getDockActivity().lockDrawer();
         titleBar.hideButtons();
+        titleBar.showMenuButton();
         titleBar.showNotificationButton(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

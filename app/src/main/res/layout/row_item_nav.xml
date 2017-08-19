@@ -28,6 +28,8 @@
             android:src="@drawable/home"
 
             android:layout_centerVertical="true"/>
+
+
       <RelativeLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -46,7 +48,17 @@
             android:textSize="15sp"
             android:textStyle="normal"
             app:typeface="Roboto-Regular.ttf"
-            android:layout_toStartOf="@+id/imgNotificationCount" />
+            android:layout_toStartOf="@+id/dummyView" />
+
+          <View
+              android:id="@+id/dummyView"
+              android:layout_width="@dimen/x30"
+              android:layout_height="@dimen/x30"
+              android:layout_centerVertical="true"
+              android:layout_alignParentEnd="true"
+              android:foregroundGravity="top"
+              android:scaleType="centerInside"
+              />
         <ImageView
             android:id="@+id/imgNotificationCount"
             android:layout_width="@dimen/x30"
@@ -55,7 +67,7 @@
             android:layout_alignParentEnd="true"
             android:foregroundGravity="top"
             android:scaleType="centerInside"
-            android:visibility="gone"/>
+            android:visibility="visible"/>
       </RelativeLayout>
     </LinearLayout>
 
@@ -66,7 +78,6 @@
         android:layout_marginBottom="@dimen/x3"
         android:layout_marginLeft="@dimen/x10"
         android:layout_marginRight="@dimen/x10"
-
         android:alpha="0.6"
         android:background="@drawable/text"/>
 </LinearLayout>
