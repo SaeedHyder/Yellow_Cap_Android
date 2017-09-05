@@ -223,6 +223,7 @@
             android:layout_marginTop="@dimen/x15"
             android:background="@drawable/btn_backgroundblack"
             android:text="@string/edit_card"
+            android:visibility="gone"
             android:textColor="@color/white" />
 
         <Button
