@@ -224,10 +224,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
         } else if (edtLocationgps.getText().toString().isEmpty()) {
             edtLocationgps.setError(getString(R.string.address_empty_error));
             return false;
-        } else if (edtLocationspecific.getText().toString().isEmpty()) {
-            edtLocationspecific.setError(getString(R.string.address_empty_error));
-            return false;
-        } else {
+        }  else {
             return true;
         }
     }

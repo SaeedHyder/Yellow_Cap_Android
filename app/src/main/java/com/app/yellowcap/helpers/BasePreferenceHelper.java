@@ -142,10 +142,10 @@ public class BasePreferenceHelper extends PreferenceHelper {
         Log.v("lang", "|" + lang);
         Resources resources = context.getResources();
 
-        if (lang.equals("ar"))
-            lang = "ar";
-        else
-            lang = "en";
+        if (lang.equals("ar")){
+            lang = "ar";}
+        else{
+            lang = "en";}
 
         putStringPreference(context, FILENAME, KEY_DEFAULT_LANG, lang);
         //Resources resources = context.getResources();

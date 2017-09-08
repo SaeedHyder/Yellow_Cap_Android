@@ -618,10 +618,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         if (edtLocationgps.getText().toString().isEmpty()) {
             edtLocationgps.setError("Enter Address");
             return false;
-        } else if (edtLocationspecific.getText().toString().isEmpty()) {
-            edtLocationspecific.setError("Enter Address");
-            return false;
-        } else if (btnPreferreddate.getText().toString().isEmpty()) {
+        }  else if (btnPreferreddate.getText().toString().isEmpty()) {
             UIHelper.showShortToastInCenter(getDockActivity(), "Select Date");
             return false;
         } else if (btnPreferredtime.getText().toString().isEmpty()) {
