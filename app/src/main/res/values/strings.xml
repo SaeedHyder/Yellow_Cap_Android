@@ -262,7 +262,7 @@
     <string name="between_aed">Between AED  </string>
     <string name="select_date_error">Select Date First</string>
     <string name="connection_lost">No Internet Found</string>
-
+    <string name="delete_account">You are about to permanently delete your account. To Sign Up again you will be requested to verify your Contact Details. Do you wish to delete your account?</string>
 
 
 </resources>

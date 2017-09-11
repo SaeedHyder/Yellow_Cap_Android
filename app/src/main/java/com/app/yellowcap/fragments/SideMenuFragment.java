@@ -20,6 +20,7 @@ import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.TechProfileEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
+import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.TokenUpdater;
 import com.app.yellowcap.helpers.UIHelper;
@@ -38,6 +39,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.app.yellowcap.R.string.call;
 
 public class SideMenuFragment extends BaseFragment  {
 
@@ -282,27 +285,26 @@ public class SideMenuFragment extends BaseFragment  {
                     getDockActivity().replaceDockableFragment(AboutAppFragment.newInstance(), "UserAboutFragment");
                 }
                 else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.logout))) {
-                    if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                        Call<ResponseWrapper> call = webService.logoutUser(prefHelper.getUserId());
-                        call.enqueue(new Callback<ResponseWrapper>() {
-                            @Override
-                            public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
-                                if (response.body().getResponse().equals("2000")) {
-                                    getDockActivity().popBackStackTillEntry(0);
-                                    prefHelper.setLoginStatus(false);
-                                    getDockActivity().replaceDockableFragment(UserSelectionFragment.newInstance(), "UserSelectionFragment");
-                                } else {
-                                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
-                                }
-                            }
 
-                            @Override
-                            public void onFailure(Call<ResponseWrapper> call, Throwable t) {
-                                Log.e("SideMenuFragment", t.toString());
-                                //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
-                            }
-                        });
-                    }
+                    final DialogHelper deleteAccount = new DialogHelper(getDockActivity());
+                    deleteAccount.deteleAccountDialoge(R.layout.delete_account_dialog, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            logOutService(deleteAccount);
+
+                        }
+                    }, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            deleteAccount.hideDialog();
+                            getMainActivity().closeDrawer();
+                        }
+                    });
+
+                    deleteAccount.setCancelable(true);
+                    deleteAccount.showDialog();
+
+
                 }
 
             }
@@ -353,6 +355,35 @@ public class SideMenuFragment extends BaseFragment  {
 
             }
         });
+    }
+
+    private void logOutService(final DialogHelper deleteAccount) {
+        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+            getMainActivity().onLoadingStarted();
+            Call<ResponseWrapper> call = webService.logoutUser(prefHelper.getUserId());
+            call.enqueue(new Callback<ResponseWrapper>() {
+                @Override
+                public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
+                    if (response.body().getResponse().equals("2000")) {
+                        getMainActivity().onLoadingFinished();
+                        getDockActivity().popBackStackTillEntry(0);
+                        prefHelper.setLoginStatus(false);
+                        deleteAccount.hideDialog();
+                        getDockActivity().replaceDockableFragment(UserSelectionFragment.newInstance(), "ProfileFragment");
+                    } else {
+                        getMainActivity().onLoadingFinished();
+                        UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseWrapper> call, Throwable t) {
+                    getMainActivity().onLoadingFinished();
+                    Log.e("SideMenuFragment", t.toString());
+                    //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                }
+            });
+        }
     }
 
 

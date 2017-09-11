@@ -257,7 +257,8 @@
     <string name="between_aed">بين درهم</string>
     <string name="select_date_error">حدد التاريخ أولا</string>
     <string name="connection_lost">الشبكة تعبانة.</string>
-    >>>>>>> 26601661599e29fc71be7dc73340ccaded6d53a8
+    <string name="delete_account">أنت على وشك حذف حسابك نهائيا. للتسجيل مرة أخرى سوف يطلب منك التحقق من تفاصيل الاتصال الخاصة بك. هل ترغب في حذف حسابك؟</string>
+
 
 
 </resources>

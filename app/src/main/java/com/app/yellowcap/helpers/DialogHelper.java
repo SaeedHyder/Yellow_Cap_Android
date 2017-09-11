@@ -49,6 +49,16 @@ public class DialogHelper {
         closeButton.setOnClickListener(onclicklistener);
         return this.dialog;
     }
+    public Dialog deteleAccountDialoge(int layoutID , View.OnClickListener yes, View.OnClickListener no) {
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        this.dialog.setContentView(layoutID);
+        Button Yes =(Button) dialog.findViewById(R.id.btn_yes);
+        Yes.setOnClickListener(yes);
+        Button No =(Button) dialog.findViewById(R.id.btn_no);
+        No.setOnClickListener(no);
+        return this.dialog;
+    }
     public Dialog initCancelJobDialog(int layoutID , View.OnClickListener onokclicklistener ,View.OnClickListener oncancelclicklistener) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
