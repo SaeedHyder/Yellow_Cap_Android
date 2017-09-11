@@ -16,6 +16,9 @@ public class ServiceEnt {
     @SerializedName("title")
     @Expose
     private String title;
+    @SerializedName("ar_title")
+    @Expose
+    private String arTitle;
     @SerializedName("image")
     @Expose
     private String image;
@@ -107,6 +110,14 @@ public class ServiceEnt {
 
     public void setServiceImage(String serviceImage) {
         this.serviceImage = serviceImage;
+    }
+
+    public String getArTitle() {
+        return arTitle;
+    }
+
+    public void setArTitle(String arTitle) {
+        this.arTitle = arTitle;
     }
 
     @Override

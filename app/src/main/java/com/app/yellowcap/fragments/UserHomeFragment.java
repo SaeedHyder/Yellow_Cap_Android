@@ -5,17 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridLayout;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.entities.ResponseWrapper;
@@ -27,13 +24,14 @@ import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.adapters.HomeServiceAdapter;
 import com.app.yellowcap.ui.viewbinder.HomeServiceBinder;
+import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.TitleBar;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,31 +41,77 @@ import retrofit2.Response;
  */
 
 public class UserHomeFragment extends BaseFragment implements View.OnClickListener {
-    /* @BindView(R.id.ll_ac)
-     LinearLayout llAc;
-     @BindView(R.id.ll_electrical)
-     LinearLayout llElectrical;
-     @BindView(R.id.ll_plumbing)
-     LinearLayout llPlumbing;
-     @BindView(R.id.ll_furniture)
-     LinearLayout llFurniture;
-     @BindView(R.id.ll_pest)
-     LinearLayout llPest;
-     @BindView(R.id.ll_cleaning)
-     LinearLayout llCleaning;
-     @BindView(R.id.ll_move)
-     LinearLayout llMove;
-     @BindView(R.id.ll_custom)
-     LinearLayout llCustom;*/
+
     public boolean isNotification = false;
     protected BroadcastReceiver broadcastReceiver;
 
     @BindView(R.id.filter_subtypes)
     GridView filterSubtypes;
+    @BindView(R.id.iv_ac)
+    ImageView ivAc;
+    @BindView(R.id.ll_ac)
+    LinearLayout llAc;
+    @BindView(R.id.iv_electrical)
+    ImageView ivElectrical;
+    @BindView(R.id.ll_electrical)
+    LinearLayout llElectrical;
+    @BindView(R.id.iv_plumbing)
+    ImageView ivPlumbing;
+    @BindView(R.id.ll_plumbing)
+    LinearLayout llPlumbing;
+    @BindView(R.id.ll_ItemsFirstRow)
+    LinearLayout llItemsFirstRow;
+    @BindView(R.id.iv_furniture)
+    ImageView ivFurniture;
+    @BindView(R.id.ll_furniture)
+    LinearLayout llFurniture;
+    @BindView(R.id.iv_pest)
+    ImageView ivPest;
+    @BindView(R.id.ll_pest)
+    LinearLayout llPest;
+    @BindView(R.id.iv_cleaning)
+    ImageView ivCleaning;
+    @BindView(R.id.ll_cleaning)
+    LinearLayout llCleaning;
+    @BindView(R.id.ll_ItemsSecondtRow)
+    LinearLayout llItemsSecondtRow;
+    @BindView(R.id.iv_move)
+    ImageView ivMove;
+    @BindView(R.id.ll_move)
+    LinearLayout llMove;
+    @BindView(R.id.iv_custom)
+    ImageView ivCustom;
+    @BindView(R.id.ll_custom)
+    LinearLayout llCustom;
+    @BindView(R.id.ll_ItemsThirdRow)
+    LinearLayout llItemsThirdRow;
+    @BindView(R.id.ll_ItemsParent)
+    LinearLayout llItemsParent;
+    @BindView(R.id.ll_ItemsParent1)
+    LinearLayout llItemsParent1;
+    @BindView(R.id.txt_ac)
+    AnyTextView txtAc;
+    @BindView(R.id.txt_electrical)
+    AnyTextView txtElectrical;
+    @BindView(R.id.txt_plumbing)
+    AnyTextView txtPlumbing;
+    @BindView(R.id.txt_furniture)
+    AnyTextView txtFurniture;
+    @BindView(R.id.txt_pest)
+    AnyTextView txtPest;
+    @BindView(R.id.txt_cleaning)
+    AnyTextView txtCleaning;
+    @BindView(R.id.txt_move)
+    AnyTextView txtMove;
+    @BindView(R.id.txt_jobs)
+    AnyTextView txtJobs;
+    @BindView(R.id.mainFrame)
+    LinearLayout mainFrame;
     private ArrayList<ServiceEnt> userservices;
     private HomeServiceAdapter madapter;
-    private ArrayListAdapter<ServiceEnt>mServiceAdapter;
+    private ArrayListAdapter<ServiceEnt> mServiceAdapter;
     private int TOTAL_CELLS_PER_ROW = 3;
+    private ImageLoader imageLoader;
 
     public static UserHomeFragment newInstance() {
         return new UserHomeFragment();
@@ -76,7 +120,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mServiceAdapter = new ArrayListAdapter<ServiceEnt>(getDockActivity(),new HomeServiceBinder(getDockActivity()));
+        mServiceAdapter = new ArrayListAdapter<ServiceEnt>(getDockActivity(), new HomeServiceBinder(getDockActivity()));
 
     }
 
@@ -88,6 +132,10 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        imageLoader = ImageLoader.getInstance();
+
+        mainFrame.setVisibility(View.GONE);
 
         if (getMainActivity().isNotification) {
             getMainActivity().isNotification = false;
@@ -125,7 +173,6 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
     }
 
 
-
     private void gethomeData() {
         Call<ResponseWrapper<ArrayList<ServiceEnt>>> call = webService.getHomeServices();
         call.enqueue(new Callback<ResponseWrapper<ArrayList<ServiceEnt>>>() {
@@ -134,6 +181,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
                 loadingFinished();
                 if (response.body().getResponse().equals("2000")) {
                     bindData(response.body().getResult());
+                    setHomedata(response.body().getResult());
                 } else {
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
                 }
@@ -143,12 +191,94 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
             public void onFailure(Call<ResponseWrapper<ArrayList<ServiceEnt>>> call, Throwable t) {
                 loadingFinished();
                 Log.e("UserHome", t.toString());
-             //   UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                //   UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }
 
+    private void setHomedata(ArrayList<ServiceEnt> result) {
+        if (result.size() > 0) {
+            try {
+                if (!prefHelper.isLanguageArabic()) {
+                    imageLoader.displayImage(result.get(0).getServiceImage(), ivAc);
+                    txtAc.setText(result.get(0).getTitle());
+                    txtAc.setTag(result.get(0));
+
+                    imageLoader.displayImage(result.get(1).getServiceImage(), ivElectrical);
+                    txtElectrical.setText(result.get(1).getTitle());
+                    txtElectrical.setTag(result.get(1));
+
+                    imageLoader.displayImage(result.get(2).getServiceImage(), ivPlumbing);
+                    txtPlumbing.setText(result.get(2).getTitle());
+                    txtPlumbing.setTag(result.get(2));
+
+                    imageLoader.displayImage(result.get(3).getServiceImage(), ivFurniture);
+                    txtFurniture.setText(result.get(3).getTitle());
+                    txtFurniture.setTag(result.get(3));
+
+                    imageLoader.displayImage(result.get(4).getServiceImage(), ivPest);
+                    txtPest.setText(result.get(4).getTitle());
+                    txtPest.setTag(result.get(4));
+
+                    imageLoader.displayImage(result.get(5).getServiceImage(), ivCleaning);
+                    txtCleaning.setText(result.get(5).getTitle());
+                    txtCleaning.setTag(result.get(5));
+
+                    imageLoader.displayImage(result.get(6).getServiceImage(), ivMove);
+                    txtMove.setText(result.get(6).getTitle());
+                    txtMove.setTag(result.get(6));
+
+                    imageLoader.displayImage(result.get(7).getServiceImage(), ivCustom);
+                    txtJobs.setText(result.get(7).getTitle());
+                    txtJobs.setTag(result.get(7));
+
+                } else {
+
+                    imageLoader.displayImage(result.get(0).getServiceImage(), ivAc);
+                    txtAc.setText(result.get(0).getArTitle());
+                    txtAc.setTag(result.get(0));
+
+                    imageLoader.displayImage(result.get(1).getServiceImage(), ivElectrical);
+                    txtElectrical.setText(result.get(1).getArTitle());
+                    txtElectrical.setTag(result.get(1));
+
+                    imageLoader.displayImage(result.get(2).getServiceImage(), ivPlumbing);
+                    txtPlumbing.setText(result.get(2).getArTitle());
+                    txtPlumbing.setTag(result.get(2));
+
+                    imageLoader.displayImage(result.get(3).getServiceImage(), ivFurniture);
+                    txtFurniture.setText(result.get(3).getArTitle());
+                    txtFurniture.setTag(result.get(3));
+
+                    imageLoader.displayImage(result.get(4).getServiceImage(), ivPest);
+                    txtPest.setText(result.get(4).getArTitle());
+                    txtPest.setTag(result.get(4));
+
+                    imageLoader.displayImage(result.get(5).getServiceImage(), ivCleaning);
+                    txtCleaning.setText(result.get(5).getArTitle());
+                    txtCleaning.setTag(result.get(5));
+
+                    imageLoader.displayImage(result.get(6).getServiceImage(), ivMove);
+                    txtMove.setText(result.get(6).getArTitle());
+                    txtMove.setTag(result.get(6));
+
+                    imageLoader.displayImage(result.get(7).getServiceImage(), ivCustom);
+                    txtJobs.setText(result.get(7).getArTitle());
+                    txtJobs.setTag(result.get(7));
+                }
+
+                mainFrame.setVisibility(View.VISIBLE);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
     private void bindData(ArrayList<ServiceEnt> result) {
+
         userservices = new ArrayList<>();
         userservices.addAll(result);
         bindview(userservices);
@@ -156,7 +286,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
 
     private void bindview(ArrayList<ServiceEnt> userservices) {
         mServiceAdapter.clearList();
-        if (filterSubtypes!=null) {
+        if (filterSubtypes != null) {
             //filterSubtypes.setLayoutParams(new GridLayoutManager.LayoutParams(GridLayout.LayoutParams.FILL_PARENT, GridLayoutManager.LayoutParams.FILL_PARENT));
           /*  filterSubtypes.setNumColumns(GridView.AUTO_FIT);
             filterSubtypes.setColumnWidth(GridView.AUTO_FIT);
@@ -169,7 +299,6 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
     }
 
 
-
     private void setListener() {
         filterSubtypes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -177,14 +306,15 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
                 addRequestServiceFragment(userservices.get(position));
             }
         });
-      /*  llAc.setOnClickListener(this);
+
+        llAc.setOnClickListener(this);
         llCleaning.setOnClickListener(this);
         llCustom.setOnClickListener(this);
         llElectrical.setOnClickListener(this);
         llFurniture.setOnClickListener(this);
         llMove.setOnClickListener(this);
         llPest.setOnClickListener(this);
-        llPlumbing.setOnClickListener(this);*/
+        llPlumbing.setOnClickListener(this);
 
 
     }
@@ -210,76 +340,43 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-      ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
         return rootView;
     }
 
 
     private void addRequestServiceFragment(ServiceEnt type) {
-        getDockActivity().replaceDockableFragment(RequestServiceFragment.newInstance(type,null), "RequestServiceFragment");
+        getDockActivity().replaceDockableFragment(RequestServiceFragment.newInstance(type, null), "RequestServiceFragment");
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-          /*  case R.id.ll_ac:
-                addRequestServiceFragment("ac");
+            case R.id.ll_ac:
+                addRequestServiceFragment((ServiceEnt) txtAc.getTag());
                 break;
             case R.id.ll_electrical:
-                addRequestServiceFragment("electrical");
+                addRequestServiceFragment((ServiceEnt) txtElectrical.getTag());
                 break;
             case R.id.ll_plumbing:
-                addRequestServiceFragment("plumbing");
+                addRequestServiceFragment((ServiceEnt) txtPlumbing.getTag());
                 break;
             case R.id.ll_furniture:
-                addRequestServiceFragment("furniture");
+                addRequestServiceFragment((ServiceEnt) txtFurniture.getTag());
                 break;
             case R.id.ll_pest:
-                addRequestServiceFragment("pest");
+                addRequestServiceFragment((ServiceEnt) txtPest.getTag());
                 break;
             case R.id.ll_cleaning:
-                addRequestServiceFragment("cleaning");
+                addRequestServiceFragment((ServiceEnt) txtCleaning.getTag());
                 break;
             case R.id.ll_move:
-                addRequestServiceFragment("move");
+                addRequestServiceFragment((ServiceEnt) txtMove.getTag());
                 break;
             case R.id.ll_custom:
-                addRequestServiceFragment("custom");
-                break;*/
+                addRequestServiceFragment((ServiceEnt) txtJobs.getTag());
+                break;
         }
     }
+
 }
-/* private void bindviewRecyler(final ArrayList<ServiceEnt> userservices) {
-        final GridLayoutManager mng_layout = new GridLayoutManager(getDockActivity(), TOTAL_CELLS_PER_ROW*//*In your case 4*//*);
-        madapter = new HomeServiceAdapter(getDockActivity(), userservices);
-        mng_layout.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                int remainder = userservices.size() % TOTAL_CELLS_PER_ROW;
-                int secondlastposition = -1;
-                int lastposition = userservices.size() - remainder;
-                if (remainder !=0) {
-                    if (remainder > 1) {
-                        secondlastposition = userservices.size() - remainder - 1;
-                    }
-                    if (lastposition == position) {
-                        return remainder;
-                    } else if (secondlastposition == position) {
-                        return remainder - 1;
-                    } else {
-                        return 1;
-                    }
-                }else {
-                    return 1;
-                }
-
-            }
-        });
-        madapter.notifyDataSetChanged();
-        filterSubtypes.setLayoutManager(mng_layout);
-        filterSubtypes.setItemAnimator(new DefaultItemAnimator());
-        filterSubtypes.setAdapter(madapter);
-
-        madapter.notifyDataSetChanged();
-
-    }*/
