@@ -281,6 +281,29 @@ public class SideMenuFragment extends BaseFragment  {
                 }else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.about_app))) {
                     getDockActivity().replaceDockableFragment(AboutAppFragment.newInstance(), "UserAboutFragment");
                 }
+                else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.logout))) {
+                    if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                        Call<ResponseWrapper> call = webService.logoutUser(prefHelper.getUserId());
+                        call.enqueue(new Callback<ResponseWrapper>() {
+                            @Override
+                            public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
+                                if (response.body().getResponse().equals("2000")) {
+                                    getDockActivity().popBackStackTillEntry(0);
+                                    prefHelper.setLoginStatus(false);
+                                    getDockActivity().replaceDockableFragment(UserSelectionFragment.newInstance(), "UserSelectionFragment");
+                                } else {
+                                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseWrapper> call, Throwable t) {
+                                Log.e("SideMenuFragment", t.toString());
+                                //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                            }
+                        });
+                    }
+                }
 
             }
             else
@@ -311,7 +334,7 @@ public class SideMenuFragment extends BaseFragment  {
                                     if (response.body().getResponse().equals("2000")) {
                                         getDockActivity().popBackStackTillEntry(0);
                                         prefHelper.setLoginStatus(false);
-                                        getDockActivity().replaceDockableFragment(UserSelectionFragment.newInstance(), "ProfileFragment");
+                                        getDockActivity().replaceDockableFragment(UserSelectionFragment.newInstance(), "UserSelectionFragment");
                                     } else {
                                         UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
                                     }
@@ -319,7 +342,7 @@ public class SideMenuFragment extends BaseFragment  {
 
                                 @Override
                                 public void onFailure(Call<ResponseWrapper> call, Throwable t) {
-                                    Log.e("UserSignupFragment", t.toString());
+                                    Log.e("SideMenuFragment", t.toString());
                                     //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
                                 }
                             });
@@ -341,6 +364,7 @@ public class SideMenuFragment extends BaseFragment  {
         navigationItemList.add(new NavigationEnt(R.drawable.jobs_yellow, R.drawable.jobs, getString(R.string.my_job)));
         navigationItemList.add(new NavigationEnt(R.drawable.language1,R.drawable.language,getString(R.string.english)));
         navigationItemList.add(new NavigationEnt(R.drawable.about_yellow, R.drawable.about, getString(R.string.about_app)));
+        navigationItemList.add(new NavigationEnt(R.drawable.logout_yellow, R.drawable.logout, getString(R.string.logout)));
 
         bindview();
     }
