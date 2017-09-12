@@ -38,7 +38,7 @@
             android:layout_gravity="center"
             android:alpha="0.9"
             android:gravity="center"
-            android:text="@string/delete_account"
+            android:text="@string/are_you_sure_you_want_to_logout"
             android:textColor="@color/dark_grey"
             android:textSize="16sp"
             app:typeface="Roboto-Regular.ttf" />
@@ -60,7 +60,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-           android:background="@color/transparent"
+            android:background="@color/transparent"
             android:text="@string/yes"
             android:textAllCaps="false"
             android:textColor="@color/white"

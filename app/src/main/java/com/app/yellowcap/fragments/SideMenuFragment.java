@@ -328,33 +328,54 @@ public class SideMenuFragment extends BaseFragment  {
                     } else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.about_app))) {
                         getDockActivity().replaceDockableFragment(AboutAppFragment.newInstance(), "AboutFragment");
                     }else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.logout))) {
-                        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                            Call<ResponseWrapper> call = webService.logoutTechnician(prefHelper.getUserId());
-                            call.enqueue(new Callback<ResponseWrapper>() {
-                                @Override
-                                public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
-                                    if (response.body().getResponse().equals("2000")) {
-                                        getDockActivity().popBackStackTillEntry(0);
-                                        prefHelper.setLoginStatus(false);
-                                        getDockActivity().replaceDockableFragment(UserSelectionFragment.newInstance(), "UserSelectionFragment");
-                                    } else {
-                                        UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
-                                    }
-                                }
+                        final DialogHelper techLogoutDialog = new DialogHelper(getDockActivity());
+                        techLogoutDialog.logoutDialoge(R.layout.logout_technician_dialog, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                techLogout(techLogoutDialog);
+                            }
+                        }, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                techLogoutDialog.hideDialog();
+                                getMainActivity().closeDrawer();
 
-                                @Override
-                                public void onFailure(Call<ResponseWrapper> call, Throwable t) {
-                                    Log.e("SideMenuFragment", t.toString());
-                                    //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
-                                }
-                            });
-                        }
+                            }
+                        });
+                        techLogoutDialog.setCancelable(true);
+                        techLogoutDialog.showDialog();
+
                     }
 
                 }
 
             }
         });
+    }
+
+    private void techLogout(final DialogHelper techLogoutDialog) {
+        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+            Call<ResponseWrapper> call = webService.logoutTechnician(prefHelper.getUserId());
+            call.enqueue(new Callback<ResponseWrapper>() {
+                @Override
+                public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
+                    if (response.body().getResponse().equals("2000")) {
+                        getDockActivity().popBackStackTillEntry(0);
+                        prefHelper.setLoginStatus(false);
+                        getDockActivity().replaceDockableFragment(UserSelectionFragment.newInstance(), "UserSelectionFragment");
+                        techLogoutDialog.hideDialog();
+                    } else {
+                        UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseWrapper> call, Throwable t) {
+                    Log.e("SideMenuFragment", t.toString());
+                    //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                }
+            });
+        }
     }
 
     private void logOutService(final DialogHelper deleteAccount) {

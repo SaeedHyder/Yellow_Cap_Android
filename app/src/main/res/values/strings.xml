@@ -197,6 +197,7 @@
     <string name="address_1">Address 1</string>
     <string name="edit_card">Edit Card</string>
     <string name="are_you_sure_you_want_to_cancel_the_job">Are you sure you want to\n cancel the Job ?</string>
+    <string name="are_you_sure_you_want_to_logout">Are you sure you want to\n Logout ?</string>
     <string name="enter_your_message_here">Enter your message here</string>
     <string name="we_d_love_to_here_from_you">We\'d love to here from you</string>
     <string name="sink_broken">Sink Broken</string>
@@ -263,6 +264,8 @@
     <string name="select_date_error">Select Date First</string>
     <string name="connection_lost">No Internet Found</string>
     <string name="delete_account">You are about to permanently delete your account. To Sign Up again you will be requested to verify your Contact Details. Do you wish to delete your account?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 
 
 </resources>
