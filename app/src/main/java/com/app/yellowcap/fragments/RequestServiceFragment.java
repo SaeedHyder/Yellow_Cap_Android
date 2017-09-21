@@ -710,6 +710,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         if (DateSelected != null) {
             Calendar calendar = Calendar.getInstance();
             final TimePickerHelper timePicker = new TimePickerHelper();
+
             timePicker.initTimeDialog(getDockActivity(), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -727,7 +728,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                     }
 
                 }
-            }, DateFormat.is24HourFormat(getMainActivity()));
+            },true);
 
             timePicker.showTime();
         } else {

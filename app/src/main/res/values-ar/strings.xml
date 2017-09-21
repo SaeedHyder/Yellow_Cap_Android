@@ -6,7 +6,7 @@
     <string name="successful">تم التخزين في "المفضلة" بنجاح</string>
 
     <string name="drawer_open">افتح</string>
-    <string name="drawer_close">بند</string>
+    <string name="drawer_close">أغلق</string>
 
     <string name="api_key">AIzaSyAKCODXR2MQU8kd30dNwZ8iFybv9btnMbE  </string>
     <string name="app_name">يلو كاب</string>
@@ -55,7 +55,7 @@
     <string name="user_name">الاسم المستعار</string>
     <string name="first_name">الاسم الاول</string>
     <string name="last_name">القبيلة</string>
-    <string name="home">نقطة البداية</string>
+    <string name="home">الصفحة الرئيسية</string>
     <string name="profile">ملفي الشخصي</string>
     <string name="categories">الاقسام</string>
     <string name="messages">رسايل</string>
@@ -264,7 +264,7 @@
     <string name="yes">نعم فعلا</string>
     <string name="Quotation">Quotation</string>
     <string name="enter_message">Enter Your Message</string>
-    <string name="selectjob">Select a Job</string>
+    <string name="selectjob">حدد الوظيفة</string>
     <string name="payment_type">حدد كيفية الدفع</string>
     <string name="select_time">حدد الوقت</string>
     <string name="select_date">حدد التاريخ</string>

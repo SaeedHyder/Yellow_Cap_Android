@@ -318,7 +318,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                     e.printStackTrace();
                 }
             }
-        }, DateFormat.is24HourFormat(getMainActivity()));
+        },true);
         timePicker.showTime();
     }
 
