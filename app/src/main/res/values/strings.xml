@@ -90,10 +90,10 @@
     <string name="job_posted">Job Posted : 02-05-17</string>
     <string name="select_job_type">Select Job Type</string>
     <string name="selected_jobs">Selected Jobs</string>
-    <string name="additional_job">Additional Job</string>
-    <string name="addtional_job_description">Write your Addtional job\'s description here</string>
-
+    <string name="additional_job">Additional Details</string>
+    <string name="addtional_job_description">Write your addtional job\'s description here</string>
     <string name="dummyAddress">795 Dubai Marina,UAE</string>
+    <string name="secondAddress">Enter unit or flat number</string>
     <string name="dummydate">02-02-17</string>
     <string name="preferred_date">Preferred Date</string>
     <string name="preferred_time">Preferred Time</string>
@@ -126,7 +126,7 @@
     <string name="english">English</string>
     <string name="arabic">عربى</string>
 
-    <string name="about_app">About App</string>
+    <string name="about_app">About Us</string>
     <string name="job_completed">Job Completed:</string>
     <string name="client_name">Client Name:</string>
     <string name="job_title">Job:</string>
@@ -266,7 +266,17 @@
     <string name="delete_account">You are about to permanently delete your account. To Sign Up again you will be requested to verify your Contact Details. Do you wish to delete your account?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+
     <string name="uae_country_code">AE</string>
+
+    <string name="Quotation">Quotation</string>
+    <string name="enter_message">Enter Your Message</string>
+    <string name="selectjob">Select a Job</string>
+    <string name="payment_type">Select Payment Type</string>
+    <string name="select_time">Select Time</string>
+    <string name="select_date">Select Date</string>
+    <string name="enter_address">Enter Address</string>
+
 
 
 </resources>

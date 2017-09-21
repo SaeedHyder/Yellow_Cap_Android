@@ -89,9 +89,10 @@
     <string name="job_posted">Job Posted : 02-05-17</string>
     <string name="select_job_type">اختار المهام</string>
     <string name="selected_jobs">المهام المختارة</string>
-    <string name="additional_job">مهمة اضافية</string>
+    <string name="additional_job">تفاصيل اضافية</string>
     <string name="addtional_job_description">عطنا العلوم</string>
     <string name="dummyAddress">795 دبي مارينا، الإمارات العربية المتحدة</string>
+    <string name="secondAddress">Enter unit or flat number</string>
     <string name="dummydate">02-02-17</string>
     <string name="preferred_date">اي يوم؟</string>
     <string name="preferred_time">أي وقت؟</string>
@@ -261,6 +262,13 @@
     <string name="delete_account">أنت على وشك حذف حسابك نهائيا. للتسجيل مرة أخرى سوف يطلب منك التحقق من تفاصيل الاتصال الخاصة بك. هل ترغب في حذف حسابك؟</string>
     <string name="no">لا</string>
     <string name="yes">نعم فعلا</string>
+    <string name="Quotation">Quotation</string>
+    <string name="enter_message">Enter Your Message</string>
+    <string name="selectjob">Select a Job</string>
+    <string name="payment_type">حدد كيفية الدفع</string>
+    <string name="select_time">حدد الوقت</string>
+    <string name="select_date">حدد التاريخ</string>
+    <string name="enter_address">اكتب العنوان</string>
 
 
 </resources>

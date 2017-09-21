@@ -13,11 +13,8 @@ import com.app.yellowcap.entities.NotificationEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.countEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
-import com.app.yellowcap.global.WebServiceConstants;
-import com.app.yellowcap.helpers.BasePreferenceHelper;
 import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.UIHelper;
-import com.app.yellowcap.retrofit.WebServiceFactory;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.viewbinder.UserNotificationitemBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
@@ -27,12 +24,9 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by saeedhyder on 5/24/2017.
@@ -55,7 +49,7 @@ public class UserNotificationsFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new ArrayListAdapter<NotificationEnt>(getDockActivity(), new UserNotificationitemBinder(getDockActivity(),webService,prefHelper));
+        adapter = new ArrayListAdapter<NotificationEnt>(getDockActivity(), new UserNotificationitemBinder(getDockActivity(), webService, prefHelper));
     }
 
     @Override
@@ -70,9 +64,12 @@ public class UserNotificationsFragment extends BaseFragment {
         ButterKnife.bind(this, rootView);
         return rootView;
     }
+
     private void getNotificationCount() {
         prefHelper.setBadgeCount(0);
         getMainActivity().refreshSideMenu();
+        getMainActivity().titleBar.invalidate();
+        getMainActivity().titleBar.getImageView().invalidate();
 
         Call<ResponseWrapper<countEnt>> callback = webService.getNotificationCount(prefHelper.getUserId());
         callback.enqueue(new Callback<ResponseWrapper<countEnt>>() {

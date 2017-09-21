@@ -26,7 +26,6 @@ import com.google.gson.Gson;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -165,7 +164,11 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
                     @Override
                     public void onClick(View v) {
                         if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                            cancelQuotation(cancelJobDialog);
+                            if (cancelJobDialog.getEditTextView(R.id.ed_msg).getText().toString().trim().equals("")){
+                                cancelJobDialog.getEditTextView(R.id.ed_msg).setError(getDockActivity().getResources().getString(R.string.enter_message));
+                            }else{
+                                cancelQuotation(cancelJobDialog);
+                            }
                         }
                     }
                 });
@@ -205,7 +208,7 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
             public void onFailure(Call<ResponseWrapper<RequestEnt>> call, Throwable t) {
                 getDockActivity().onLoadingFinished();
                 Log.e("UserSignupFragment", t.toString());
-               // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }
@@ -229,7 +232,7 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
             public void onFailure(Call<ResponseWrapper<RequestEnt>> call, Throwable t) {
                 getDockActivity().onLoadingFinished();
                 Log.e("UserSignupFragment", t.toString());
-              //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }
@@ -240,10 +243,14 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
         getDockActivity().lockDrawer();
         titleBar.hideButtons();
         titleBar.showBackButton();
-        if (QuotationData!=null)
-        titleBar.setSubHeading(QuotationData.getRequestDetail().getServiceDetail().getTitle());
+        if (QuotationData != null)
+            if (!prefHelper.isLanguageArabic())
+                titleBar.setSubHeading(QuotationData.getRequestDetail().getServiceDetail().getTitle() + "");
+            else {
+                titleBar.setSubHeading(QuotationData.getRequestDetail().getServiceDetail().getArTitle() + "");
+            }
         else
-            titleBar.setSubHeading("Quotation");
+            titleBar.setSubHeading(getString(R.string.Quotation));
 
     }
 

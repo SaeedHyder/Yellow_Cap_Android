@@ -9,119 +9,140 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.app.yellowcap.R;
+import com.app.yellowcap.helpers.BasePreferenceHelper;
 
 public class TitleBar extends RelativeLayout {
 
-	private TextView txtTitle;
-	private ImageView btnLeft;
-	private ImageView btnRight;
+    private TextView txtTitle;
+    private ImageView btnLeft;
+    private ImageView btnRight;
+    private ImageView imgBadge;
 
 
-	private View.OnClickListener menuButtonListener;
-	private OnClickListener backButtonListener;
+    private View.OnClickListener menuButtonListener;
+    private OnClickListener backButtonListener;
 
-	private Context context;
-
-
-	public TitleBar(Context context) {
-		super(context);
-		this.context = context;
-		initLayout(context);
-	}
-
-	public TitleBar(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		initLayout(context);
-		if (attrs != null)
-			initAttrs(context, attrs);
-	}
-
-	public TitleBar(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		initLayout(context);
-		if (attrs != null)
-			initAttrs(context, attrs);
-	}
-
-	private void initAttrs(Context context, AttributeSet attrs) {
-	}
-
-	private void bindViews() {
-
-		txtTitle = (TextView) this.findViewById(R.id.txt_subHead);
-		btnRight = (ImageView) this.findViewById(R.id.btnRight);
-		btnLeft = (ImageView) this.findViewById(R.id.btnLeft);
+    private Context context;
+    private BadgeHelper badgeHelper;
 
 
-	}
+    public TitleBar(Context context) {
+        super(context);
+        this.context = context;
+        initLayout(context);
+    }
 
-	private void initLayout(Context context) {
-		LayoutInflater inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		inflater.inflate(R.layout.header_main, this);
-		bindViews();
-	}
+    public TitleBar(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initLayout(context);
+        if (attrs != null)
+            initAttrs(context, attrs);
+    }
 
-	public void hideButtons() {
-		txtTitle.setVisibility(View.GONE);
-		btnLeft.setVisibility(View.GONE);
-		btnRight.setVisibility(View.GONE);
+    public TitleBar(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        initLayout(context);
+        if (attrs != null)
+            initAttrs(context, attrs);
+    }
 
-	}
+    private void initAttrs(Context context, AttributeSet attrs) {
+    }
 
-	public void showBackButton() {
-		btnLeft.setVisibility(View.VISIBLE);
-		btnLeft.setImageResource(R.drawable.back);
-		btnLeft.setOnClickListener(backButtonListener);
+    private void bindViews() {
 
-	}
+        txtTitle = (TextView) this.findViewById(R.id.txt_subHead);
+        btnRight = (ImageView) this.findViewById(R.id.btnRight);
+        btnLeft = (ImageView) this.findViewById(R.id.btnLeft);
+        imgBadge = (ImageView) this.findViewById(R.id.img_badge);
 
-	public void showNotificationButton(OnClickListener onClickListener) {
-		btnRight.setVisibility(View.VISIBLE);
-		btnRight.setImageResource(R.drawable.bell);
-		btnRight.setOnClickListener(onClickListener);
-		//btnRight.setOnClickListener(backButtonListener);
+    }
 
-	}
-	public void showsaveButton(OnClickListener onClickListener) {
-		btnRight.setVisibility(View.VISIBLE);
-		btnRight.setImageResource(R.drawable.tick);
-		btnRight.setOnClickListener(onClickListener);
-		//btnRight.setOnClickListener(backButtonListener);
+    private void initLayout(Context context) {
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.header_main, this);
+        bindViews();
+    }
 
-	}
+    public void hideButtons() {
+        txtTitle.setVisibility(View.GONE);
+        btnLeft.setVisibility(View.GONE);
+        btnRight.setVisibility(View.GONE);
+        imgBadge.setVisibility(View.GONE);
 
-	public void showMenuButton() {
-		btnLeft.setVisibility(View.VISIBLE);
-		btnLeft.setOnClickListener(menuButtonListener);
-		btnLeft.setImageResource(R.drawable.sidebar);
-	}
+    }
 
-	public void setSubHeading(String heading) {
-		txtTitle.setVisibility(View.VISIBLE);
-		txtTitle.setText(heading);
+    public void showBackButton() {
+        btnLeft.setVisibility(View.VISIBLE);
+        btnLeft.setImageResource(R.drawable.back);
+        btnLeft.setOnClickListener(backButtonListener);
 
-	}
-	public TextView getTxtTitle(){
-		return txtTitle;
-	}
+    }
 
-	public void showTitleBar() {
-		this.setVisibility(View.VISIBLE);
-	}
+    public void showNotificationButton(OnClickListener onClickListener, BasePreferenceHelper prefHelper) {
+        btnRight.setVisibility(View.VISIBLE);
+        imgBadge.setVisibility(View.VISIBLE);
+        btnRight.setImageResource(R.drawable.bell);
+        btnRight.setOnClickListener(onClickListener);
+        if (prefHelper.getUserType().equals("user")) {
+            badgeHelper = new BadgeHelper(imgBadge, getContext());
+            badgeHelper.initBadge(context);
+            badgeHelper.addtoBadge(prefHelper.getBadgeCount());
+           /* if (prefHelper.getLang().equals("ar")) {
+                badgeHelper.changeBadgeGravity(RelativeLayout.ALIGN_PARENT_START);
+            } else {
+                badgeHelper.changeBadgeGravity(RelativeLayout.ALIGN_PARENT_END);
+            }*/
+            badgeHelper.showBadge();
+        }
+        //btnRight.setOnClickListener(backButtonListener);
 
-	public void hideTitleBar() {
-		this.setVisibility(View.GONE);
-	}
+    }
 
-	public void setMenuButtonListener(View.OnClickListener listener) {
-		menuButtonListener = listener;
-	}
+    public ImageView getImageView() {
+        return imgBadge;
+    }
 
-	public void setBackButtonListener(View.OnClickListener listener) {
-		backButtonListener = listener;
-	}
+    public void showsaveButton(OnClickListener onClickListener) {
+        btnRight.setVisibility(View.VISIBLE);
+        btnRight.setImageResource(R.drawable.tick);
+        btnRight.setOnClickListener(onClickListener);
+        //btnRight.setOnClickListener(backButtonListener);
 
+    }
+
+    public void showMenuButton() {
+        btnLeft.setVisibility(View.VISIBLE);
+        btnLeft.setOnClickListener(menuButtonListener);
+        btnLeft.setImageResource(R.drawable.sidebar);
+    }
+
+    public void setSubHeading(String heading) {
+        txtTitle.setVisibility(View.VISIBLE);
+        txtTitle.setText(heading);
+
+    }
+
+    public TextView getTxtTitle() {
+        return txtTitle;
+    }
+
+    public void showTitleBar() {
+        this.setVisibility(View.VISIBLE);
+    }
+
+    public void hideTitleBar() {
+        this.setVisibility(View.GONE);
+    }
+
+    public void setMenuButtonListener(View.OnClickListener listener) {
+        menuButtonListener = listener;
+    }
+
+    public void setBackButtonListener(View.OnClickListener listener) {
+        backButtonListener = listener;
+    }
 
 
 }

@@ -41,6 +41,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x20"
                 android:layout_marginRight="@dimen/x20"
+                android:paddingTop="@dimen/x15"
+                android:paddingBottom="@dimen/x15"
                 android:layout_toEndOf="@+id/img_profile"
                 android:layout_toRightOf="@+id/img_profile"
                 android:background="@android:color/transparent"
@@ -56,21 +58,19 @@
                 app:testType="email"
                 app:typeface="Roboto-Regular.ttf" />
         </RelativeLayout>
-        .
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/x1"
-            android:layout_marginBottom="@dimen/x15"
             android:layout_marginLeft="@dimen/x20"
             android:layout_marginRight="@dimen/x20"
-            android:layout_marginTop="@dimen/x10"
             android:alpha="0.6"
             android:background="@drawable/text" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:layout_marginLeft="@dimen/x20"
             android:layout_marginRight="@dimen/x20">
 
@@ -87,6 +87,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x20"
                 android:layout_marginRight="@dimen/x20"
+                android:paddingTop="@dimen/x15"
+                android:paddingBottom="@dimen/x15"
                 android:layout_toEndOf="@+id/img_email"
                 android:layout_toRightOf="@+id/img_email"
                 android:background="@android:color/transparent"
@@ -102,12 +104,57 @@
                 app:typeface="Roboto-Regular.ttf" />
         </RelativeLayout>
 
+
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/x1"
             android:layout_marginLeft="@dimen/x20"
             android:layout_marginRight="@dimen/x20"
-            android:layout_marginTop="@dimen/x10"
+            android:alpha="0.6"
+            android:background="@drawable/text" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginRight="@dimen/x20">
+
+            <ImageView
+                android:id="@+id/img_phone"
+                android:layout_width="@dimen/x20"
+                android:layout_height="@dimen/x20"
+                android:layout_centerVertical="true"
+                android:src="@drawable/phone" />
+
+            <com.app.yellowcap.ui.views.AnyEditTextView
+                android:id="@+id/edtPhoneNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+                android:paddingTop="@dimen/x15"
+                android:paddingBottom="@dimen/x15"
+                android:layout_toEndOf="@+id/img_phone"
+                android:layout_toRightOf="@+id/img_phone"
+                android:background="@android:color/transparent"
+                android:drawablePadding="@dimen/x10"
+                android:hint="@string/phone_number"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="50"
+                android:singleLine="true"
+                android:textColor="@color/dark_grey"
+                android:textSize="@dimen/x14"
+                app:typeface="Roboto-Regular.ttf" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x1"
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginRight="@dimen/x20"
             android:alpha="0.6"
             android:background="@drawable/text" />
 
@@ -179,7 +226,9 @@
             <com.app.yellowcap.ui.views.AnyEditTextView
                 android:id="@+id/edt_locationspecific"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/x35"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/x15"
+                android:paddingBottom="@dimen/x15"
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="@dimen/x20"
                 android:layout_marginRight="@dimen/x20"
@@ -201,7 +250,6 @@
             android:layout_marginBottom="@dimen/x15"
             android:layout_marginLeft="@dimen/x20"
             android:layout_marginRight="@dimen/x20"
-
             android:alpha="0.6"
             android:background="@drawable/text" />
 
