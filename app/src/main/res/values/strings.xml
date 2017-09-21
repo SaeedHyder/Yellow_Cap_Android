@@ -266,6 +266,7 @@
     <string name="delete_account">You are about to permanently delete your account. To Sign Up again you will be requested to verify your Contact Details. Do you wish to delete your account?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="uae_country_code">AE</string>
 
 
 </resources>

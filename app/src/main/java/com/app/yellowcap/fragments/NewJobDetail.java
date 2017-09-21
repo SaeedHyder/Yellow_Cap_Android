@@ -328,7 +328,8 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
 
         switch (v.getId()) {
             case btn_accept:
-                String request = "";
+                jobAccept(arriveTime, completeTime);
+       /*         String request = "";
                 String userName = "";
                 if (newJobJson.getRequest_detail().getService_detail() != null) {
                     request = newJobJson.getRequest_detail().getService_detail().getTitle();
@@ -374,7 +375,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                 arriveTime = JobDetailDialog.getTimeTextview(R.id.txt_arrval_time);
                 completeTime = JobDetailDialog.getTimeTextview(R.id.txt_complete_time);
                 JobDetailDialog.setCancelable(true);
-                JobDetailDialog.showDialog();
+                JobDetailDialog.showDialog();*/
 
                 break;
 
@@ -385,7 +386,12 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                     @Override
                     public void onClick(View v) {
                         if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                            jobReject(RefusalDialog.getEditText(R.id.ed_msg), RefusalDialog);
+                           if (RefusalDialog.getEditTextView(R.id.ed_msg).getText().toString().trim().equals("")){
+                               RefusalDialog.getEditTextView(R.id.ed_msg).setError("Enter Your Message");
+                           }
+                           else {
+                               jobReject(RefusalDialog.getEditText(R.id.ed_msg), RefusalDialog);
+                           }
                         }
 
                         //RefusalDialog.hideDialog();
@@ -433,7 +439,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
 
     }
 
-    private void jobAccept(AnyTextView arriveTime, AnyTextView completeTime, final DialogHelper jobDetailDialog) {
+    private void jobAccept(AnyTextView arriveTime, AnyTextView completeTime) {
         getDockActivity().onLoadingStarted();
         Call<ResponseWrapper<JobRequestEnt>> call = webService.acceptJob(newJobJson.getId(), prefHelper.getUserId(), newJobJson.getRequest_id(),
                 AppConstants.TECH_ACCEPT_JOB, arriveTime.getText().toString(), completeTime.getText().toString());
@@ -442,7 +448,6 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
             public void onResponse(Call<ResponseWrapper<JobRequestEnt>> call, Response<ResponseWrapper<JobRequestEnt>> response) {
                 getDockActivity().onLoadingFinished();
                 if (response.body().getResponse().equals("2000")) {
-                    jobDetailDialog.hideDialog();
                     getDockActivity().popBackStackTillEntry(1);
                     getDockActivity().replaceDockableFragment(OrderHistoryFragment.newInstance(), "HomeFragment");
                 } else {

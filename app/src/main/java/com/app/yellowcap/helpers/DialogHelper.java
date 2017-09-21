@@ -49,6 +49,10 @@ public class DialogHelper {
         closeButton.setOnClickListener(onclicklistener);
         return this.dialog;
     }
+    public AnyEditTextView getEditTextView(int ResID){
+        return (AnyEditTextView) dialog.findViewById(ResID);
+// return !msg.getText().toString().trim().equals("");
+    }
     public Dialog logoutDialoge(int layoutID , View.OnClickListener yes, View.OnClickListener no) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
