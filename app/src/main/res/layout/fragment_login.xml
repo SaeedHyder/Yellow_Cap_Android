@@ -33,7 +33,7 @@
                 android:id="@+id/iv_emailIcon"
                 android:layout_width="@dimen/x20"
                 android:layout_height="@dimen/x20"
-                android:layout_marginLeft="@dimen/x27"
+                android:layout_marginStart="@dimen/x27"
                 android:layout_gravity="center_vertical"
 
                 android:src="@drawable/email" />
@@ -42,8 +42,8 @@
                 android:id="@+id/edtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/x12"
-                android:layout_marginRight="@dimen/x20"
+                android:layout_marginStart="@dimen/x12"
+                android:layout_marginEnd="@dimen/x20"
                 android:layout_marginTop="@dimen/x2"
                 android:background="@android:color/transparent"
                 android:hint="@string/email"
@@ -78,26 +78,31 @@
                 android:id="@+id/iv_passwordIcon"
                 android:layout_width="@dimen/x25"
                 android:layout_height="@dimen/x20"
-                android:layout_marginLeft="@dimen/x25"
+                android:layout_marginStart="@dimen/x25"
+
                 android:src="@drawable/lock" />
 
 
             <com.app.yellowcap.ui.views.AnyEditTextView
                 android:id="@+id/edtPassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginRight="@dimen/x20"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/x10"
+                android:layout_marginEnd= "@dimen/x20"
                 android:background="@android:color/transparent"
                 android:drawablePadding="@dimen/x10"
                 android:hint="@string/password"
+                android:layout_gravity="start"
+                android:gravity="start"
                 android:inputType="textPassword"
+                android:textAlignment="gravity"
                 android:maxLength="50"
                 android:singleLine="true"
                 android:textColor="@color/dark_grey"
                 android:textSize="@dimen/x14"
                 app:testType="alphaNumeric"
                 app:typeface="Roboto-Regular.ttf" />
+
         </LinearLayout>
 
         <View
@@ -135,12 +140,14 @@
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_marginTop="@dimen/x15"
             android:background="@drawable/button_background"
             android:textColor="@color/white"
+            android:textAllCaps="false"
             android:layout_marginLeft="@dimen/x40"
             android:layout_marginRight="@dimen/x40"
-            android:text="Login" />
+            android:text="@string/login" />
 
     </LinearLayout>
 

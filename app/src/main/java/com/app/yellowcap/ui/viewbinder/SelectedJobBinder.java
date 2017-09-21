@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.entities.ServiceEnt;
+import com.app.yellowcap.helpers.BasePreferenceHelper;
 import com.app.yellowcap.interfaces.onDeleteImage;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
@@ -19,10 +20,12 @@ import butterknife.ButterKnife;
 
 public class SelectedJobBinder extends ViewBinder<ServiceEnt> {
     private onDeleteImage onDeleteImage;
+    BasePreferenceHelper preferenceHelper;
 
-    public SelectedJobBinder(onDeleteImage onDeleteImage) {
+    public SelectedJobBinder(onDeleteImage onDeleteImage, BasePreferenceHelper preferenceHelper) {
         super(R.layout.selectedjobs_row_item);
         this.onDeleteImage = onDeleteImage;
+        this.preferenceHelper=preferenceHelper;
     }
 
 
@@ -34,7 +37,12 @@ public class SelectedJobBinder extends ViewBinder<ServiceEnt> {
     @Override
     public void bindView(ServiceEnt entity, final int position, int grpPosition, View view, Activity activity) {
         SelectedJobsViewHolder viewHolder = (SelectedJobsViewHolder)view.getTag();
-        viewHolder.txtJobselectedtext.setText(entity.getTitle());
+        if (!preferenceHelper.isLanguageArabic()) {
+            viewHolder.txtJobselectedtext.setText(entity.getTitle());
+        }
+        else {
+            viewHolder.txtJobselectedtext.setText(entity.getArTitle());
+        }
         viewHolder.deleteText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

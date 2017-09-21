@@ -20,6 +20,7 @@ import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.TechProfileEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
+import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.TokenUpdater;
 import com.app.yellowcap.helpers.UIHelper;
@@ -38,6 +39,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.app.yellowcap.R.string.call;
 
 public class SideMenuFragment extends BaseFragment  {
 
@@ -281,6 +284,28 @@ public class SideMenuFragment extends BaseFragment  {
                 }else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.about_app))) {
                     getDockActivity().replaceDockableFragment(AboutAppFragment.newInstance(), "UserAboutFragment");
                 }
+                else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.logout))) {
+
+                    final DialogHelper deleteAccount = new DialogHelper(getDockActivity());
+                    deleteAccount.deteleAccountDialoge(R.layout.delete_account_dialog, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            logOutService(deleteAccount);
+
+                        }
+                    }, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            deleteAccount.hideDialog();
+                            getMainActivity().closeDrawer();
+                        }
+                    });
+
+                    deleteAccount.setCancelable(true);
+                    deleteAccount.showDialog();
+
+
+                }
 
             }
             else
@@ -303,33 +328,83 @@ public class SideMenuFragment extends BaseFragment  {
                     } else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.about_app))) {
                         getDockActivity().replaceDockableFragment(AboutAppFragment.newInstance(), "AboutFragment");
                     }else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.logout))) {
-                        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                            Call<ResponseWrapper> call = webService.logoutTechnician(prefHelper.getUserId());
-                            call.enqueue(new Callback<ResponseWrapper>() {
-                                @Override
-                                public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
-                                    if (response.body().getResponse().equals("2000")) {
-                                        getDockActivity().popBackStackTillEntry(0);
-                                        prefHelper.setLoginStatus(false);
-                                        getDockActivity().replaceDockableFragment(UserSelectionFragment.newInstance(), "ProfileFragment");
-                                    } else {
-                                        UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
-                                    }
-                                }
+                        final DialogHelper techLogoutDialog = new DialogHelper(getDockActivity());
+                        techLogoutDialog.logoutDialoge(R.layout.logout_technician_dialog, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                techLogout(techLogoutDialog);
+                            }
+                        }, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                techLogoutDialog.hideDialog();
+                                getMainActivity().closeDrawer();
 
-                                @Override
-                                public void onFailure(Call<ResponseWrapper> call, Throwable t) {
-                                    Log.e("UserSignupFragment", t.toString());
-                                    //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
-                                }
-                            });
-                        }
+                            }
+                        });
+                        techLogoutDialog.setCancelable(true);
+                        techLogoutDialog.showDialog();
+
                     }
 
                 }
 
             }
         });
+    }
+
+    private void techLogout(final DialogHelper techLogoutDialog) {
+        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+            Call<ResponseWrapper> call = webService.logoutTechnician(prefHelper.getUserId());
+            call.enqueue(new Callback<ResponseWrapper>() {
+                @Override
+                public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
+                    if (response.body().getResponse().equals("2000")) {
+                        getDockActivity().popBackStackTillEntry(0);
+                        prefHelper.setLoginStatus(false);
+                        getDockActivity().replaceDockableFragment(UserSelectionFragment.newInstance(), "UserSelectionFragment");
+                        techLogoutDialog.hideDialog();
+                    } else {
+                        UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseWrapper> call, Throwable t) {
+                    Log.e("SideMenuFragment", t.toString());
+                    //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                }
+            });
+        }
+    }
+
+    private void logOutService(final DialogHelper deleteAccount) {
+        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+            getMainActivity().onLoadingStarted();
+            Call<ResponseWrapper> call = webService.logoutUser(prefHelper.getUserId());
+            call.enqueue(new Callback<ResponseWrapper>() {
+                @Override
+                public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
+                    if (response.body().getResponse().equals("2000")) {
+                        getMainActivity().onLoadingFinished();
+                        getDockActivity().popBackStackTillEntry(0);
+                        prefHelper.setLoginStatus(false);
+                        deleteAccount.hideDialog();
+                        getDockActivity().replaceDockableFragment(UserSelectionFragment.newInstance(), "ProfileFragment");
+                    } else {
+                        getMainActivity().onLoadingFinished();
+                        UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseWrapper> call, Throwable t) {
+                    getMainActivity().onLoadingFinished();
+                    Log.e("SideMenuFragment", t.toString());
+                    //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                }
+            });
+        }
     }
 
 
@@ -341,6 +416,7 @@ public class SideMenuFragment extends BaseFragment  {
         navigationItemList.add(new NavigationEnt(R.drawable.jobs_yellow, R.drawable.jobs, getString(R.string.my_job)));
         navigationItemList.add(new NavigationEnt(R.drawable.language1,R.drawable.language,getString(R.string.english)));
         navigationItemList.add(new NavigationEnt(R.drawable.about_yellow, R.drawable.about, getString(R.string.about_app)));
+        navigationItemList.add(new NavigationEnt(R.drawable.logout_yellow, R.drawable.logout, getString(R.string.logout)));
 
         bindview();
     }

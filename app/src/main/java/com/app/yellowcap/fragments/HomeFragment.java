@@ -16,6 +16,7 @@ import com.app.yellowcap.activities.MainActivity;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
+import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.TitleBar;
@@ -187,30 +188,51 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 break;
 
             case ll_logout:
-                if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                    Call<ResponseWrapper> call = webService.logoutTechnician(prefHelper.getUserId());
-                    call.enqueue(new Callback<ResponseWrapper>() {
-                        @Override
-                        public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
-                            if (response.body().getResponse().equals("2000")) {
-                                getDockActivity().popBackStackTillEntry(0);
-                                prefHelper.setLoginStatus(false);
-                                getDockActivity().replaceDockableFragment(UserSelectionFragment.newInstance(), "ProfileFragment");
-                            } else {
-                                UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
-                            }
-                        }
+                final DialogHelper techLogoutDialog = new DialogHelper(getDockActivity());
+                techLogoutDialog.logoutDialoge(R.layout.logout_technician_dialog, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        logoutTechnician(techLogoutDialog);
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        techLogoutDialog.hideDialog();
+                        getMainActivity().closeDrawer();
 
-                        @Override
-                        public void onFailure(Call<ResponseWrapper> call, Throwable t) {
-                            Log.e("UserSignupFragment", t.toString());
-                          //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
-                        }
-                    });
-                }
+                    }
+                });
+                techLogoutDialog.setCancelable(true);
+                techLogoutDialog.showDialog();
+
                 break;
 
 
+        }
+    }
+
+    private void logoutTechnician(final DialogHelper techLogoutDialog) {
+        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+            Call<ResponseWrapper> call = webService.logoutTechnician(prefHelper.getUserId());
+            call.enqueue(new Callback<ResponseWrapper>() {
+                @Override
+                public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
+                    if (response.body().getResponse().equals("2000")) {
+                        getDockActivity().popBackStackTillEntry(0);
+                        prefHelper.setLoginStatus(false);
+                        getDockActivity().replaceDockableFragment(UserSelectionFragment.newInstance(), "ProfileFragment");
+                        techLogoutDialog.hideDialog();
+                    } else {
+                        UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseWrapper> call, Throwable t) {
+                    Log.e("UserSignupFragment", t.toString());
+                  //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                }
+            });
         }
     }
 }

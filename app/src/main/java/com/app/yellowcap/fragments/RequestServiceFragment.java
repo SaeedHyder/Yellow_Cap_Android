@@ -184,7 +184,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 previousRequestData = new Gson().fromJson(SCREENFROM, UserInProgressEnt.class);
 
         }
-        selectedJobsadapter = new ArrayListAdapter<ServiceEnt>(getDockActivity(), new SelectedJobBinder(this));
+        selectedJobsadapter = new ArrayListAdapter<ServiceEnt>(getDockActivity(), new SelectedJobBinder(this,prefHelper));
     }
 
     @Override
@@ -353,7 +353,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             @Override
             public void onFailure(Call<ResponseWrapper<ArrayList<ServiceEnt>>> call, Throwable t) {
                 Log.e("TermAndCondition", t.toString());
-               // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
 
@@ -364,7 +364,11 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         final ArrayList<String> jobtypearraylist = new ArrayList<String>();
         for (ServiceEnt item : jobcollection
                 ) {
-            jobtypearraylist.add(item.getTitle());
+            if (!prefHelper.isLanguageArabic()) {
+                jobtypearraylist.add(item.getTitle());
+            } else {
+                jobtypearraylist.add(item.getArTitle());
+            }
         }
 
 
@@ -372,7 +376,13 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnJobtype.setAdapter(categoryAdapter);
         if (homeSelectedService != null && jobcollection.size() > 0) {
-            if (jobtypearraylist.contains(homeSelectedService.getTitle())) {
+            if (jobtypearraylist.contains(homeSelectedService.getArTitle())) {
+                spnJobtype.setSelection(jobtypearraylist.indexOf(homeSelectedService.getArTitle()));
+                jobtype = jobcollection.get(jobtypearraylist.indexOf(homeSelectedService.getArTitle()));
+                if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                    initJobDescriptionSpinner(jobtype);
+                }
+            } else if (jobtypearraylist.contains(homeSelectedService.getTitle())) {
                 spnJobtype.setSelection(jobtypearraylist.indexOf(homeSelectedService.getTitle()));
                 jobtype = jobcollection.get(jobtypearraylist.indexOf(homeSelectedService.getTitle()));
                 if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
@@ -481,7 +491,11 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         final ArrayList<String> jobdescriptionarraylist = new ArrayList<String>();
         for (ServiceEnt item : jobChildcollection
                 ) {
-            jobdescriptionarraylist.add(item.getTitle());
+            if(!prefHelper.isLanguageArabic()){
+            jobdescriptionarraylist.add(item.getTitle());}
+            else {
+                jobdescriptionarraylist.add(item.getArTitle());
+            }
         }
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, jobdescriptionarraylist);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -618,9 +632,6 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         if (edtLocationgps.getText().toString().isEmpty()) {
             edtLocationgps.setError("Enter Address");
             return false;
-        } else if (edtLocationspecific.getText().toString().isEmpty()) {
-            edtLocationspecific.setError("Enter Address");
-            return false;
         } else if (btnPreferreddate.getText().toString().isEmpty()) {
             UIHelper.showShortToastInCenter(getDockActivity(), "Select Date");
             return false;
@@ -696,14 +707,14 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     }
 
     private void initTimePicker(final TextView textView) {
-        if (DateSelected !=null) {
+        if (DateSelected != null) {
             Calendar calendar = Calendar.getInstance();
             final TimePickerHelper timePicker = new TimePickerHelper();
             timePicker.initTimeDialog(getDockActivity(), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                     Date date = new Date();
-                    if (DateHelper.isSameDay(DateSelected,date)&&!DateHelper.isTimeAfter(date.getHours(), date.getMinutes(), hourOfDay, minute)) {
+                    if (DateHelper.isSameDay(DateSelected, date) && !DateHelper.isTimeAfter(date.getHours(), date.getMinutes(), hourOfDay, minute)) {
                         UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.less_time_error));
                     } else {
                         Calendar c = Calendar.getInstance();
@@ -719,8 +730,8 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             }, DateFormat.is24HourFormat(getMainActivity()));
 
             timePicker.showTime();
-        }else{
-            UIHelper.showShortToastInCenter(getDockActivity(),getString(R.string.select_date_error));
+        } else {
+            UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.select_date_error));
         }
     }
 

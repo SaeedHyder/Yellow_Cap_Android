@@ -201,4 +201,8 @@ public interface WebService {
     @FormUrlEncoded
     @POST("user/logout")
     Call<ResponseWrapper>logoutTechnician(@Field("user_id")String userID);
+
+    @FormUrlEncoded
+    @POST("user/userdeleted")
+    Call<ResponseWrapper>logoutUser(@Field("user_id")String userID);
 }

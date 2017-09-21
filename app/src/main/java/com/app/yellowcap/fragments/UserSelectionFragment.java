@@ -5,7 +5,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
@@ -25,6 +28,11 @@ public class UserSelectionFragment extends BaseFragment implements View.OnClickL
     LinearLayout usercontainer;
     @BindView(R.id.techniciancontainer)
     LinearLayout techniciancontainer;
+    @BindView(R.id.cb_english)
+    RadioButton cb_english;
+    @BindView(R.id.cb_arabic)
+    RadioButton cb_arabic;
+
 
 
     public static UserSelectionFragment newInstance() {
@@ -53,12 +61,35 @@ public class UserSelectionFragment extends BaseFragment implements View.OnClickL
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if(prefHelper.isLanguageArabic())
+        {
+            cb_arabic.setChecked(true);
+        }
+        else
+        {
+            cb_english.setChecked(true);
+        }
         setlistener();
     }
 
     private void setlistener() {
         usercontainer.setOnClickListener(this);
         techniciancontainer.setOnClickListener(this);
+
+       cb_english.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               prefHelper.putLang(getDockActivity(),"en");
+           }
+       });
+      cb_arabic.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              prefHelper.putLang(getDockActivity(),"ar");
+          }
+      });
+
     }
 
     @Override

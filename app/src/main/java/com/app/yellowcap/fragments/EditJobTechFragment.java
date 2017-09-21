@@ -162,7 +162,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
 
 
         }
-        selectedJobsadapter = new ArrayListAdapter<ServiceEnt>(getDockActivity(), new SelectedJobBinder(this));
+        selectedJobsadapter = new ArrayListAdapter<ServiceEnt>(getDockActivity(), new SelectedJobBinder(this,prefHelper));
     }
 
     @Override

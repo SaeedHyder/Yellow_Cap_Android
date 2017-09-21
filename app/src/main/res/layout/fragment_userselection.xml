@@ -27,7 +27,7 @@
   </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="0.9"
         android:layout_height="match_parent">
 
         <TextView
@@ -43,12 +43,12 @@
             android:textColor="@color/lightBlack"
             android:layout_above="@+id/view"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/x7" />
+          />
 
     <LinearLayout
         android:id="@+id/ll_selection"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x150"
+        android:layout_height="@dimen/x140"
         android:weightSum="2"
         android:orientation="horizontal"
         android:layout_marginTop="@dimen/x30"
@@ -157,6 +157,81 @@
 
         </LinearLayout>
     </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_language"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_selection"
+            android:layout_alignStart="@+id/ll_selection"
+            android:layout_alignEnd="@+id/ll_selection"
+            android:background="@drawable/box_backgrounds"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/x5"
+                >
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:layout_weight="1">
+
+                <RadioButton
+                    android:id="@+id/cb_english"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginRight="@dimen/x10"
+                    android:button="@drawable/selector_chkbox"
+                    android:drawablePadding="@dimen/x10"
+                    android:checked="false"
+                    android:paddingBottom="@dimen/x7"
+                    android:paddingLeft="@dimen/x7"
+                    android:paddingRight="@dimen/x7"
+                    android:paddingTop="@dimen/x7"
+                    android:text="@string/english"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="@dimen/x14" />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:layout_weight="1">
+
+                <RadioButton
+                    android:id="@+id/cb_arabic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left|center_vertical"
+                    android:button="@drawable/selector_chkbox"
+                    android:drawablePadding="@dimen/x10"
+                  android:layout_marginLeft="@dimen/x15"
+                    android:checked="false"
+                    android:paddingBottom="@dimen/x7"
+                    android:paddingLeft="@dimen/x7"
+                    android:paddingRight="@dimen/x7"
+                    android:paddingTop="@dimen/x7"
+                    android:text="@string/arabic"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="@dimen/x14" />
+
+                </RelativeLayout>
+
+            </RadioGroup>
+
+
+
+        </LinearLayout>
         <View
             android:id="@+id/view"
             android:layout_width="@dimen/x2"
@@ -164,7 +239,19 @@
             android:paddingTop= "@dimen/x30"
             android:background="@color/job_posted_background"
             android:layout_centerInParent="true"
+
            />
+        <View
+            android:id="@+id/view1"
+            android:layout_width="@dimen/x2"
+            android:layout_height="wrap_content"
+            android:paddingTop= "@dimen/x30"
+            android:background="@color/job_posted_background"
+           android:layout_below="@+id/view"
+           android:layout_marginBottom="@dimen/x10"
+            android:layout_alignBottom="@+id/ll_language"
+            android:layout_alignStart="@+id/view"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 </LinearLayout>
