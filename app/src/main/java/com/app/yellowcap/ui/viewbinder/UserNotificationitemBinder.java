@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.activities.DockActivity;
@@ -55,7 +56,7 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
 
         UserNotificationitemBinder.ViewHolder viewHolder = (UserNotificationitemBinder.ViewHolder) view.getTag();
         viewHolder.txt_jobNotification.setText(entity.getMessage());
-        viewHolder.iv_next.setOnClickListener(new View.OnClickListener() {
+        viewHolder.mainFrame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (entity.getActionType()) {
@@ -76,8 +77,19 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
 
     private void openRatingPopup(final NotificationEnt entity) {
         String message="";
+        String title="";
         if (entity.getRequestDetail().getServicsList().size()>0){
-            message = entity.getRequestDetail().getServicsList().get(0).getServiceEnt().getTitle();
+            if(!prefhelper.isLanguageArabic()){
+            message = entity.getRequestDetail().getServicsList().get(0).getServiceEnt().getTitle();}
+            else{
+                message = entity.getRequestDetail().getServicsList().get(0).getServiceEnt().getArTitle();
+            }
+        }
+        if(!prefhelper.isLanguageArabic()){
+            title=entity.getRequestDetail().getServiceDetail().getTitle();
+        }
+        else {
+            title=entity.getRequestDetail().getServiceDetail().getArTitle();
         }
         final DialogHelper dialogHelper = new DialogHelper(dockActivity);
         dialogHelper.initRatingDialog(R.layout.rating_pop_up_dialog, new View.OnClickListener() {
@@ -88,7 +100,7 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
                     submitFeedback(entity, dialogHelper);
                 }
             }
-        }, entity.getRequestDetail().getServiceDetail().getTitle(),message
+        }, title,message
                 );
         dialogHelper.setCancelable(true);
         dialogHelper.showDialog();
@@ -128,11 +140,13 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
         private ImageView iv_Notificationlogo;
         private AnyTextView txt_jobNotification;
         private ImageView iv_next;
+        private LinearLayout mainFrame;
 
         public ViewHolder(View view) {
             iv_Notificationlogo = (ImageView) view.findViewById(R.id.iv_Notificationlogo);
             txt_jobNotification = (AnyTextView) view.findViewById(R.id.txt_jobNotification);
             iv_next = (ImageView) view.findViewById(R.id.iv_next);
+            mainFrame=(LinearLayout) view.findViewById(R.id.ll_mainFrame);
         }
     }
 }

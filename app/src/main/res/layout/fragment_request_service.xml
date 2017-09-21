@@ -219,7 +219,7 @@
                     android:background="@null"
                     android:maxLength="50"
                     android:drawablePadding="@dimen/x10"
-                    android:hint="@string/dummyAddress"
+                    android:hint="@string/secondAddress"
                     android:imeOptions="actionDone"
                     android:maxLines="1"
                     android:textSize="@dimen/x15"

@@ -630,19 +630,19 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
     private boolean validate() {
         if (edtLocationgps.getText().toString().isEmpty()) {
-            edtLocationgps.setError("Enter Address");
+            edtLocationgps.setError(getString(R.string.enter_address));
             return false;
         } else if (btnPreferreddate.getText().toString().isEmpty()) {
-            UIHelper.showShortToastInCenter(getDockActivity(), "Select Date");
+            UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.select_date));
             return false;
         } else if (btnPreferredtime.getText().toString().isEmpty()) {
-            UIHelper.showShortToastInCenter(getDockActivity(), "Select Time");
+            UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.select_time));
             return false;
         } else if (paymentType.isEmpty()) {
-            UIHelper.showShortToastInCenter(getDockActivity(), "Select Payment Type");
+            UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.payment_type));
             return false;
         } else if (selectedJobs.isEmpty()) {
-            UIHelper.showShortToastInCenter(getDockActivity(), "Select a Job");
+            UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.selectjob));
             return false;
         } else {
             return true;

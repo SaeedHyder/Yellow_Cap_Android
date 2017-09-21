@@ -21,7 +21,6 @@ import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.AnyEditTextView;
 import com.app.yellowcap.ui.views.TitleBar;
-import com.bumptech.glide.Glide;
 import com.google.android.gms.location.places.Place;
 import com.jota.autocompletelocation.AutoCompleteLocation;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -31,7 +30,6 @@ import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -62,6 +60,8 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     Button btnEditcard;
     @BindView(R.id.btn_submit)
     Button btnsubmit;
+    @BindView(R.id.edtPhoneNo)
+    AnyEditTextView edtPhoneNo;
 
 
     public static UserProfileFragment newInstance() {
@@ -77,7 +77,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-       ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
         return rootView;
     }
 
@@ -107,7 +107,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
             @Override
             public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
                 Log.e("EntryCodeFragment", t.toString());
-               // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }
@@ -118,6 +118,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
                 placeholder(R.drawable.profileimage).into(CircularImageSharePop);
         edtname.setText(result.getFullName());
         edtemail.setText(result.getEmail());
+        edtPhoneNo.setText(result.getPhoneNo());
         edtLocationgps.setText(result.getAddress());
         edtLocationspecific.setText(result.getFullAddress());
 
@@ -161,7 +162,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
                 getLocation(edtLocationgps);
                 break;
             case R.id.btn_editcard:
-                UIHelper.showShortToastInCenter(getDockActivity(),"Will be Implemented Later");
+                UIHelper.showShortToastInCenter(getDockActivity(), "Will be Implemented Later");
                 //getDockActivity().replaceDockableFragment(CreditCardFragment.newInstance(), "CreditCardFargment");
                 break;
             case R.id.btn_submit:
@@ -177,10 +178,10 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
 
     private void updateProfile() {
         MultipartBody.Part filePart;
-        if (profilePic!=null) {
-            filePart  = MultipartBody.Part.createFormData("profile_picture",
+        if (profilePic != null) {
+            filePart = MultipartBody.Part.createFormData("profile_picture",
                     profilePic.getName(), RequestBody.create(MediaType.parse("image/*"), profilePic));
-        }else{
+        } else {
             filePart = MultipartBody.Part.createFormData("profile_picture", "",
                     RequestBody.create(MediaType.parse("*/*"), ""));
         }
@@ -209,7 +210,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
             public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
                 loadingFinished();
                 Log.e("UserProfileDFragment", t.toString());
-               // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }
@@ -224,7 +225,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
         } else if (edtLocationgps.getText().toString().isEmpty()) {
             edtLocationgps.setError(getString(R.string.address_empty_error));
             return false;
-        }  else {
+        } else {
             return true;
         }
     }
@@ -257,4 +258,5 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     public void setVideo(String videoPath) {
 
     }
+
 }
