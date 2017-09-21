@@ -159,7 +159,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             public void onClick(View v) {
                 getDockActivity().replaceDockableFragment(TechNotificationsFragment.newInstance(), "TechNotificationsFragment");
             }
-        });
+        },prefHelper);
         titleBar.setSubHeading(getString(R.string.home));
 
     }

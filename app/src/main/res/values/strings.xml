@@ -266,6 +266,9 @@
     <string name="delete_account">You are about to permanently delete your account. To Sign Up again you will be requested to verify your Contact Details. Do you wish to delete your account?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+
+    <string name="uae_country_code">AE</string>
+
     <string name="Quotation">Quotation</string>
     <string name="enter_message">Enter Your Message</string>
     <string name="selectjob">Select a Job</string>
@@ -273,6 +276,7 @@
     <string name="select_time">Select Time</string>
     <string name="select_date">Select Date</string>
     <string name="enter_address">Enter Address</string>
+
 
 
 </resources>

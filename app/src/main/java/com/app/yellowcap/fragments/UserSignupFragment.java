@@ -18,10 +18,12 @@ import com.app.yellowcap.helpers.TokenUpdater;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.AnyEditTextView;
 import com.app.yellowcap.ui.views.TitleBar;
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,7 +41,7 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
 
     @BindView(R.id.btn_signup)
     Button btnsignup;
-
+    PhoneNumberUtil phoneUtil;
 
     public static UserSignupFragment newInstance() {
         return new UserSignupFragment();
@@ -55,6 +57,7 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setlistener();
+        phoneUtil = PhoneNumberUtil.getInstance();
     }
 
     private void setlistener() {
@@ -70,25 +73,53 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
     }
 
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_signup:
                 if (isvalidated()) {
-                    if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                        loadingStarted();
-                        registerUser();
-                    }
+                    if (isPhoneNumberValid())
+                        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                            try {
+                                loadingStarted();
+                                registerUser(phoneUtil.format(phoneUtil.parse(edtnumber.getText().toString(), getString(R.string.uae_country_code)),
+                                        PhoneNumberUtil.PhoneNumberFormat.E164));
+
+                            } catch (Exception e) {
+
+                            }
+
+
+                        }
 
                 }
                 break;
         }
     }
 
-    private void registerUser() {
+    private boolean isPhoneNumberValid() {
+
+
+        try {
+            Phonenumber.PhoneNumber number = phoneUtil.parse(edtnumber.getText().toString(), getString(R.string.uae_country_code));
+            if (phoneUtil.isValidNumber(number)) {
+                return true;
+            } else {
+                edtnumber.setError(getString(R.string.enter_valid_number_error));
+                return false;
+            }
+        } catch (NumberParseException e) {
+            System.err.println("NumberParseException was thrown: " + e.toString());
+            edtnumber.setError(getString(R.string.enter_valid_number_error));
+            return false;
+
+        }
+    }
+
+    private void registerUser(String number) {
+
         Call<ResponseWrapper<RegistrationResultEnt>> call = webService.registerUser(edtname.getText().toString()
-                , edtnumber.getText().toString());
+                , number + "");
         call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
             @Override
             public void onResponse(Call<ResponseWrapper<RegistrationResultEnt>> call, Response<ResponseWrapper<RegistrationResultEnt>> response) {
@@ -127,17 +158,20 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
 
 
     private boolean isvalidated() {
+
         if (edtname.getText().toString().isEmpty()) {
             edtname.setError(getString(R.string.enter_name));
             return false;
         } else if (edtnumber.getText().toString().isEmpty()) {
             edtnumber.setError(getString(R.string.enter_number));
             return false;
-        } else if (edtnumber.getText().toString().length() < 10 || edtnumber.getText().toString().length() > 16) {
+        } else if (edtnumber.getText().toString().length() < 9 || edtnumber.getText().toString().length() > 10) {
             edtnumber.setError(getString(R.string.enter_valid_number_error));
             return false;
         } else {
             return true;
         }
+
+
     }
 }

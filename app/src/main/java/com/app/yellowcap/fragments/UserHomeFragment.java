@@ -3,8 +3,10 @@ package com.app.yellowcap.fragments;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import com.app.yellowcap.entities.ServiceEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.helpers.InternetHelper;
+import com.app.yellowcap.helpers.TokenUpdater;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.adapters.HomeServiceAdapter;
@@ -136,7 +139,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
         imageLoader = ImageLoader.getInstance();
 
         mainFrame.setVisibility(View.GONE);
-
+        onNotificationReceived();
         if (getMainActivity().isNotification) {
             getMainActivity().isNotification = false;
             getDockActivity().addDockableFragment(UserNotificationsFragment.newInstance(), "UserNotificationsFragment");
@@ -149,6 +152,25 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
         }
 
 
+    }
+    @Override
+    public void onResume() {
+
+        super.onResume();
+       // TokenUpdater.getInstance().UpdateToken(getDockActivity(), prefHelper.getUserId(), "android", prefHelper.getFirebase_TOKEN());
+
+        LocalBroadcastManager.getInstance(getDockActivity()).registerReceiver(broadcastReceiver,
+                new IntentFilter(AppConstants.REGISTRATION_COMPLETE));
+
+        LocalBroadcastManager.getInstance(getDockActivity()).registerReceiver(broadcastReceiver,
+                new IntentFilter(AppConstants.PUSH_NOTIFICATION));
+
+    }
+
+    @Override
+    public void onPause() {
+        LocalBroadcastManager.getInstance(getDockActivity()).unregisterReceiver(broadcastReceiver);
+        super.onPause();
     }
 
     private void onNotificationReceived() {
@@ -165,12 +187,25 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
 
                 } else if (intent.getAction().equals(AppConstants.PUSH_NOTIFICATION)) {
                     // new push notification is received
-                    isNotification = true;
+                    // getMainActivity().isNotification = true;
+                    getMainActivity().refreshSideMenu();
+                    getMainActivity().titleBar.invalidate();
+                    getMainActivity().titleBar.getImageView().invalidate();
+                   /* getMainActivity().notificationIntent();
+                    if (getMainActivity().isNotification) {
+                       getMainActivity().isNotification = false;
+                       getDockActivity().addDockableFragment(UserNotificationsFragment.newInstance(), "UserNotificationsFragment");
+                    }*/
+
                     System.out.println(prefHelper.getFirebase_TOKEN());
+
+
                 }
             }
         };
     }
+
+
 
 
     private void gethomeData() {
@@ -331,7 +366,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
                 getDockActivity().replaceDockableFragment(UserNotificationsFragment.newInstance(), "UserNotificationsFragment");
 
             }
-        });
+        },prefHelper);
         titleBar.showMenuButton();
         titleBar.setSubHeading(getString(R.string.requesr_service_home));
     }

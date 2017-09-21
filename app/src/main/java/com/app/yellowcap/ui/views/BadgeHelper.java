@@ -19,11 +19,11 @@ import berlin.volders.badger.CountBadge;
  */
 
 public class BadgeHelper {
-    ImageView imgNotificationCounter;
-    DockActivity dockActivity;
+    private ImageView imgNotificationCounter;
+    private Context dockActivity;
     private CountBadge badge;
 
-    public BadgeHelper(ImageView imgNotificationCounter, DockActivity activity) {
+    public BadgeHelper(ImageView imgNotificationCounter, Context activity) {
         this.imgNotificationCounter = imgNotificationCounter;
         dockActivity = activity;
     }

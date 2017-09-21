@@ -68,11 +68,11 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
             parentViewHolder.llBottomBtns.setVisibility(View.GONE);
         }
         parentViewHolder.txtJobNoText.setText(String.valueOf(position + 1));
-        parentViewHolder.txtJobPostedText.setText(entity.getDate());
-        parentViewHolder.txtClientNameText.setText(entity.getUser_detail().getFull_name());
+        parentViewHolder.txtJobPostedText.setText(entity.getDate()+"");
+        parentViewHolder.txtClientNameText.setText(entity.getUser_detail().getFull_name()+"");
         parentViewHolder.txtEstimatedQuotationText.setText(context.getString(R.string.between_aed) +" "+ entity.getEstimate_to() + " to " + entity.getEstimate_from());
         if (entity.getService_detail() != null) {
-            parentViewHolder.txtJobTitleText.setText(entity.getService_detail().getTitle());
+            parentViewHolder.txtJobTitleText.setText(entity.getService_detail().getTitle()+"");
         } else {
             parentViewHolder.txtJobTitleText.setText("");
         }
@@ -81,7 +81,7 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         } else {
             parentViewHolder.txtEarningText.setText(entity.getTotal());
         }
-        parentViewHolder.txtAddressText.setText(entity.getAddress());
+        parentViewHolder.txtAddressText.setText(entity.getAddress()+"");
 
         setTextStyle(parentViewHolder);
 

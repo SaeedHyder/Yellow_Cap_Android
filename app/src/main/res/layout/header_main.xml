@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/header_layout"
     android:layout_width="fill_parent"
-    android:layout_height="@dimen/x50"
-    >
+    android:layout_height="@dimen/x50">
 
 
     <ImageView
@@ -37,10 +36,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:padding="@dimen/x10"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/x10"
+        android:padding="@dimen/x10"
         android:src="@drawable/ic_launcher"
         android:visibility="visible" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/btnRight"
+        android:layout_alignEnd="@+id/btnRight"
+        android:layout_alignStart="@+id/btnRight"
+        android:layout_alignTop="@+id/btnRight">
+
+        <ImageView
+            android:id="@+id/img_badge"
+            android:layout_width="@dimen/x25"
+            android:layout_height="@dimen/x25"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_launcher" />
+    </RelativeLayout>
+
 
 </RelativeLayout>

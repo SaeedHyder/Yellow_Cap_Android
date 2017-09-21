@@ -52,7 +52,7 @@ public class DialogHelper {
     }
     public AnyEditTextView getEditTextView(int ResID){
         return (AnyEditTextView) dialog.findViewById(ResID);
-      //  return !msg.getText().toString().trim().equals("");
+
     }
     public Dialog logoutDialoge(int layoutID , View.OnClickListener yes, View.OnClickListener no) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

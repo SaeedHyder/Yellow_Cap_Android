@@ -68,13 +68,16 @@ public class NavigationItemBinder extends ViewBinder<NavigationEnt> implements U
             viewHolder.imgUnselected.setImageResource(entity.getUnselectedDrawable());
             badgeHelper.hideBadge();
             if (entity.getItem_text().equals(activity.getString(R.string.notifications))) {
+                //badgeHelper = new BadgeHelper(viewHolder.imgNotificationCount, (DockActivity) activity);
                 badgeHelper.initBadge(activity);
                 badgeHelper.addtoBadge(prefHelper.getBadgeCount());
-                if (prefHelper.getLang().equals("ar")) {
+                /*if (prefHelper.isLanguageArabic()) {
+                    //changeBadgeSide(RelativeLayout.ALIGN_PARENT_START,viewHolder.imgNotificationCount);
                     badgeHelper.changeBadgeGravity(RelativeLayout.ALIGN_PARENT_START);
                 } else {
+                    //changeBadgeSide(RelativeLayout.ALIGN_PARENT_END,viewHolder.imgNotificationCount);
                     badgeHelper.changeBadgeGravity(RelativeLayout.ALIGN_PARENT_END);
-                }
+                }*/
                 badgeHelper.showBadge();
             } else if (entity.getItem_text().equals(activity.getString(R.string.english)) && !entity.getItem_text().equals(activity.getString(R.string.home))) {
                 //LanguageChange(view);
@@ -101,6 +104,15 @@ public class NavigationItemBinder extends ViewBinder<NavigationEnt> implements U
         //count.updateCount(entity.getNotificationCount(),position);
 
 
+    }
+
+    private void changeBadgeSide(int GravitySide, ImageView imgBadge) {
+        RelativeLayout.LayoutParams params =
+                new RelativeLayout.LayoutParams(imgBadge.getWidth(),
+                        imgBadge.getHeight());
+        params.addRule(GravitySide);
+
+        imgBadge.setLayoutParams(params);
     }
 
     private void setSignupSpan(String text, String spanText, AnyTextView txtview) {
