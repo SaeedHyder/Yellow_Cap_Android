@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -63,6 +62,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -80,7 +80,6 @@ import static com.app.yellowcap.R.id.edt_addtional_job;
 /**
  * Created on 5/22/2017.
  */
-
 public class RequestServiceFragment extends BaseFragment implements View.OnClickListener, MainActivity.ImageSetter, onDeleteImage, AutoCompleteLocation.AutoCompleteLocationListener {
     public static String TYPE = "TYPE";
     public static String SCREENFROM = "SCREENFROM";
@@ -184,7 +183,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 previousRequestData = new Gson().fromJson(SCREENFROM, UserInProgressEnt.class);
 
         }
-        selectedJobsadapter = new ArrayListAdapter<ServiceEnt>(getDockActivity(), new SelectedJobBinder(this,prefHelper));
+        selectedJobsadapter = new ArrayListAdapter<ServiceEnt>(getDockActivity(), new SelectedJobBinder(this, prefHelper));
     }
 
     @Override
@@ -491,9 +490,9 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         final ArrayList<String> jobdescriptionarraylist = new ArrayList<String>();
         for (ServiceEnt item : jobChildcollection
                 ) {
-            if(!prefHelper.isLanguageArabic()){
-            jobdescriptionarraylist.add(item.getTitle());}
-            else {
+            if (!prefHelper.isLanguageArabic()) {
+                jobdescriptionarraylist.add(item.getTitle());
+            } else {
                 jobdescriptionarraylist.add(item.getArTitle());
             }
         }
@@ -695,9 +694,12 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                             UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.date_before_error));
                         } else {
                             DateSelected = dateSpecified;
-                            predate = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
+                            if (prefHelper.isLanguageArabic())
+                                textView.setText(new SimpleDateFormat("yyyy-MM-dd", new Locale("ar")).format(c.getTime()));
+                            else
+                                textView.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(c.getTime()));
+                            predate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(c.getTime());
 
-                            textView.setText(predate);
                         }
 
                     }
@@ -723,12 +725,15 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                         int month = c.get(Calendar.MONTH);
                         int day = c.get(Calendar.DAY_OF_MONTH);
                         c.set(year, month, day, hourOfDay, minute);
-                        preTime = new SimpleDateFormat("HH:mm").format(c.getTime());
-                        textView.setText(preTime);
+                        preTime = new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(c.getTime());
+                        if (prefHelper.isLanguageArabic())
+                            textView.setText(new SimpleDateFormat("HH:mm", new Locale("ar")).format(c.getTime()));
+                        else
+                            textView.setText(new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(c.getTime()));
                     }
 
                 }
-            },true);
+            }, true);
 
             timePicker.showTime();
         } else {

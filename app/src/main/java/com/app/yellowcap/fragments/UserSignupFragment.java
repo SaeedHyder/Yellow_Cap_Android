@@ -3,6 +3,7 @@ package com.app.yellowcap.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,8 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
     AnyEditTextView edtname;
     @BindView(R.id.edtnumber)
     AnyEditTextView edtnumber;
+    @BindView(R.id.edtEmail)
+    AnyEditTextView edtEmail;
 
 
     @BindView(R.id.btn_signup)
@@ -162,16 +165,21 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
         if (edtname.getText().toString().isEmpty()) {
             edtname.setError(getString(R.string.enter_name));
             return false;
-        } else if (edtnumber.getText().toString().isEmpty()) {
+        }  else if (edtEmail.getText() == null || (edtEmail.getText().toString().isEmpty()) ||
+                (!Patterns.EMAIL_ADDRESS.matcher(edtEmail.getText().toString()).matches())) {
+            edtEmail.setError(getString(R.string.enter_email));
+            return false;
+        }
+        else if(edtnumber.getText().toString().equals("") && edtnumber.getText().toString().isEmpty()){
             edtnumber.setError(getString(R.string.enter_number));
             return false;
-        } else if (edtnumber.getText().toString().length() < 9 || edtnumber.getText().toString().length() > 10) {
+        }
+        else if (edtnumber.getText().toString().length() < 9 || edtnumber.getText().toString().length() > 10) {
             edtnumber.setError(getString(R.string.enter_valid_number_error));
             return false;
         } else {
             return true;
         }
-
 
     }
 }

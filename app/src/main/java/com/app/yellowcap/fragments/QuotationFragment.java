@@ -148,6 +148,7 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
             txtUserAddress.setText(QuotationData.getRequestDetail().getAddress() + " " + QuotationData.getRequestDetail().getFullAddress());
             txtEstimatedQuote.setText("Between AED " + QuotationData.getRequestDetail().getEstimateFrom()
                     + " to " + QuotationData.getRequestDetail().getEstimateTo());
+            txtQuotationValid.setText(QuotationData.getRequestDetail().getTime() + " " +QuotationData.getRequestDetail().getDate());
 
             getMainActivity().titleBar.setSubHeading(QuotationData.getRequestDetail().getServiceDetail().getTitle());
             getMainActivity().titleBar.getTxtTitle().invalidate();
