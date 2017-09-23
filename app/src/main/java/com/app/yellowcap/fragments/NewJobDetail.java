@@ -315,7 +315,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                     e.printStackTrace();
                 }
             }
-        }, DateFormat.is24HourFormat(getMainActivity()));
+        },true);
         timePicker.showTime();
     }
 
@@ -325,7 +325,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
 
         switch (v.getId()) {
             case btn_accept:
-                jobAccept(arriveTime, completeTime);
+                jobAccept();
        /*         String request = "";
                 String userName = "";
                 if (newJobJson.getRequest_detail().getService_detail() != null) {
@@ -407,7 +407,8 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
 
         if (!reason.equals("")) {
             getDockActivity().onLoadingStarted();
-            Call<ResponseWrapper<JobRequestEnt>> call = webService.rejectJob(newJobJson.getId(), prefHelper.getUserId(), newJobJson.getRequest_id(), AppConstants.TECH_REJECT_JOB, reason);
+            Call<ResponseWrapper<JobRequestEnt>> call = webService.rejectJob(newJobJson.getId(),
+                    prefHelper.getUserId(), newJobJson.getRequest_id(), AppConstants.TECH_REJECT_JOB, reason);
             call.enqueue(new Callback<ResponseWrapper<JobRequestEnt>>() {
                 @Override
                 public void onResponse(Call<ResponseWrapper<JobRequestEnt>> call, Response<ResponseWrapper<JobRequestEnt>> response) {
@@ -435,10 +436,10 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
 
     }
 
-    private void jobAccept(AnyTextView arriveTime, AnyTextView completeTime) {
+    private void jobAccept() {
         getDockActivity().onLoadingStarted();
         Call<ResponseWrapper<JobRequestEnt>> call = webService.acceptJob(newJobJson.getId(), prefHelper.getUserId(), newJobJson.getRequest_id(),
-                AppConstants.TECH_ACCEPT_JOB, arriveTime.getText().toString(), completeTime.getText().toString());
+                AppConstants.TECH_ACCEPT_JOB);
         call.enqueue(new Callback<ResponseWrapper<JobRequestEnt>>() {
             @Override
             public void onResponse(Call<ResponseWrapper<JobRequestEnt>> call, Response<ResponseWrapper<JobRequestEnt>> response) {

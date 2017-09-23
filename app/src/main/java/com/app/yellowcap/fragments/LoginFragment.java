@@ -57,12 +57,10 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
         // TODO Auto-generated method stub
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        if(prefHelper.isLanguageArabic())
-        {
+        if (prefHelper.isLanguageArabic()) {
             edtPassword.setGravity(Gravity.RIGHT);
-        }
-        else {
-            edtPassword.setGravity(Gravity.LEFT);
+        } else {
+            edtPassword.setGravity(Gravity.START);
         }
         edtPassword.addTextChangedListener(new TextWatcher() {
             @Override
@@ -72,9 +70,9 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(!edtPassword.getText().toString().isEmpty()){
-            edtPassword.setGravity(Gravity.LEFT);}
-                else{
+                if (!edtPassword.getText().toString().isEmpty()) {
+                    edtPassword.setGravity(Gravity.START);
+                } else {
                     edtPassword.setGravity(Gravity.RIGHT);
                 }
             }
@@ -133,7 +131,8 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 
         }
     }
-    private void loginTechnician(){
+
+    private void loginTechnician() {
         Call<ResponseWrapper<RegistrationResultEnt>> call = webService.loginTechnician(edtEmail.getText().toString(),
                 edtPassword.getText().toString());
         call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
@@ -153,10 +152,9 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
                     prefHelper.setLoginStatus(true);
                     getDockActivity().popBackStackTillEntry(0);
                     getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragmnet");
-                }
-                else{
+                } else {
                     loadingFinished();
-                    UIHelper.showShortToastInCenter(getDockActivity(),response.body().getMessage());
+                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
                 }
             }
 
@@ -164,7 +162,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
             public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
                 loadingFinished();
                 Log.e("UserSignupFragment", t.toString());
-              //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }
@@ -176,8 +174,8 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
                 (!Patterns.EMAIL_ADDRESS.matcher(edtEmail.getText().toString()).matches())) {
             edtEmail.setError(getString(R.string.valid_email));
             return false;
-        } else if (edtPassword.getText() == null || (edtPassword.getText().toString().isEmpty())||edtPassword.getText().toString().length()<6) {
-                edtPassword.setError(getString(R.string.valid_password));
+        } else if (edtPassword.getText() == null || (edtPassword.getText().toString().isEmpty()) || edtPassword.getText().toString().length() < 6) {
+            edtPassword.setError(getString(R.string.valid_password));
             return false;
         } else
             return true;

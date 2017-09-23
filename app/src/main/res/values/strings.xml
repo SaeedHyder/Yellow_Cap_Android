@@ -94,10 +94,10 @@
     <string name="addtional_job_description">Write your addtional job\'s description here</string>
     <string name="dummyAddress">795 Dubai Marina,UAE</string>
     <string name="secondAddress">Enter unit or flat number</string>
-    <string name="dummydate">02-02-17</string>
+    <string name="dummydate">Date</string>
     <string name="preferred_date">Preferred Date</string>
     <string name="preferred_time">Preferred Time</string>
-    <string name="dummytime">15:25</string>
+    <string name="dummytime">Time</string>
     <string name="take_photo">Take Photo</string>
     <string name="add_photo">Add Photos</string>
     <string name="payment_method">Payment Mode</string>
@@ -266,16 +266,15 @@
     <string name="delete_account">You are about to permanently delete your account. To Sign Up again you will be requested to verify your Contact Details. Do you wish to delete your account?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
-
     <string name="uae_country_code">AE</string>
-
     <string name="Quotation">Quotation</string>
-    <string name="enter_message">Enter Your Message</string>
+    <string name="enter_message">Enter your message here</string>
     <string name="selectjob">Select a Job</string>
     <string name="payment_type">Select Payment Type</string>
     <string name="select_time">Select Time</string>
     <string name="select_date">Select Date</string>
     <string name="enter_address">Enter Address</string>
+    <string name="enter_email">Enter Valid Email</string>
 
 
 

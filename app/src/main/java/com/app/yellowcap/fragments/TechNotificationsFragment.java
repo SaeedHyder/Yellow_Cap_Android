@@ -83,7 +83,7 @@ public class TechNotificationsFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
              //   UIHelper.showShortToastInCenter(getDockActivity(), "Will be implemented in beta version");
-              /*  getDockActivity().replaceDockableFragment(NewJobDetail.newInstance(), "NewJobDetail");*/
+                  getDockActivity().replaceDockableFragment(NewJobsFragment.newInstance(), "NewJobDetail");
             }
         });
 

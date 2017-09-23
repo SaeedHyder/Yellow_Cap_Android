@@ -36,7 +36,6 @@ import com.app.yellowcap.entities.LocationModel;
 import com.app.yellowcap.fragments.HomeFragment;
 import com.app.yellowcap.fragments.SideMenuFragment;
 import com.app.yellowcap.fragments.UserHomeFragment;
-import com.app.yellowcap.fragments.UserNotificationsFragment;
 import com.app.yellowcap.fragments.UserSelectionFragment;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.helpers.ScreenHelper;
@@ -70,7 +69,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
     private ImageChooserManager imageChooserManager;
     private String filePath;
     private int chooserType;
-    String string="";
+    String string = "";
     private boolean isActivityResultOver = false;
     private String originalFilePath;
     private String thumbnailFilePath;
@@ -78,6 +77,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
     private float lastTranslate = 0.0f;
     private ImageSetter imageSetter;
     private final static String TAG = "ICA";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +92,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         setCurrentLocale();
         //  prefHelper.putLang(this,prefHelper.getLang());
 
-        if(getIntent().getExtras()!=null) {
+        if (getIntent().getExtras() != null) {
             string = getIntent().getExtras().getString("mystring");
         }
 
@@ -134,13 +134,13 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
     }
 
     private void setCurrentLocale() {
-        if (prefHelper.isLanguageArabic()){
+        if (prefHelper.isLanguageArabic()) {
             Resources resources = getResources();
             DisplayMetrics dm = resources.getDisplayMetrics();
             Configuration conf = resources.getConfiguration();
             conf.locale = new Locale("ar");
             resources.updateConfiguration(conf, dm);
-        }else{
+        } else {
             Resources resources = getResources();
             DisplayMetrics dm = resources.getDisplayMetrics();
             Configuration conf = resources.getConfiguration();
@@ -169,22 +169,23 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         int PERMISSION_ALL = 1;
         String[] PERMISSIONS = new String[0];
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                PERMISSIONS = new String[]{
-                        Manifest.permission.ACCESS_NETWORK_STATE,
-                        Manifest.permission.VIBRATE,
-                        Manifest.permission.CAMERA,
-                        Manifest.permission_group.STORAGE,
-                        Manifest.permission_group.CAMERA,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                };
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            PERMISSIONS = new String[]{
+                    Manifest.permission.ACCESS_NETWORK_STATE,
+                    Manifest.permission.VIBRATE,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission_group.STORAGE,
+                    Manifest.permission_group.CAMERA,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+            };
 
         }
 
-        if(!hasPermissions(this, PERMISSIONS)){
+        if (!hasPermissions(this, PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         }
     }
+
     public View getDrawerView() {
         return getLayoutInflater().inflate(getSideMenuFrameLayoutId(), null);
     }
@@ -200,13 +201,18 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
 
         drawerLayout.closeDrawers();
     }
-    public void refreshSideMenu(){
-        sideMenuFragment = SideMenuFragment.newInstance();
+
+    public void refreshSideMenu() {
+       /* sideMenuFragment = SideMenuFragment.newInstance();
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction();
         transaction.remove(sideMenuFragment).commit();
-        settingSideMenu();
+        settingSideMenu();*/
+        if (sideMenuFragment != null) {
+            sideMenuFragment.refreshMenuOption();
+        }
     }
+
     private int getSideMenuFrameLayoutId() {
         return R.id.sideMneuFragmentContainer;
 
@@ -219,9 +225,9 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         getSupportFragmentManager().addOnBackStackChangedListener(getListener());
 
         if (prefHelper.isLogin()) {
-            if (prefHelper.getUserType().equals("user")){
-                replaceDockableFragment(UserHomeFragment.newInstance(), "HomeFragment");            }
-            else{
+            if (prefHelper.getUserType().equals("user")) {
+                replaceDockableFragment(UserHomeFragment.newInstance(), "HomeFragment");
+            } else {
                 replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
             }
 
@@ -229,11 +235,13 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
             replaceDockableFragment(UserSelectionFragment.newInstance(), "UserSelectionFragement");
         }
     }
+
     public void restartActivity() {
         Intent intent = getIntent();
         finish();
         startActivity(intent);
     }
+
     private FragmentManager.OnBackStackChangedListener getListener() {
         FragmentManager.OnBackStackChangedListener result = new FragmentManager.OnBackStackChangedListener() {
             public void onBackStackChanged() {
@@ -250,7 +258,6 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
 
         return result;
     }
-
 
 
     @Override
@@ -326,13 +333,14 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
     private void notImplemented() {
         UIHelper.showLongToastInCenter(this, "Coming Soon");
     }
+
     public void chooseImage() {
         //askPermission();
         chooserType = ChooserType.REQUEST_PICK_PICTURE;
         imageChooserManager = new ImageChooserManager(this,
                 ChooserType.REQUEST_PICK_PICTURE, true);
         Bundle bundle = new Bundle();
-       // bundle.putBoolean(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        // bundle.putBoolean(Intent.EXTRA_ALLOW_MULTIPLE, true);
         imageChooserManager.setExtras(bundle);
         imageChooserManager.setImageChooserListener(this);
         imageChooserManager.clearOldFiles();
@@ -362,6 +370,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
             e.printStackTrace();
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.i(TAG, "OnActivityResult");
@@ -389,6 +398,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
             }
         }
     }
+
     private void reinitializeImageChooser() {
         imageChooserManager = new ImageChooserManager(this, chooserType, true);
         Bundle bundle = new Bundle();
@@ -397,6 +407,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         imageChooserManager.setImageChooserListener(this);
         imageChooserManager.reinitialize(filePath);
     }
+
     @Override
     public void onImageChosen(final ChosenImage image) {
         runOnUiThread(new Runnable() {
@@ -453,6 +464,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
             }
         });
     }
+
     public void setImageSetter(ImageSetter imageSetter) {
         this.imageSetter = imageSetter;
     }
@@ -466,6 +478,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         public void setVideo(String videoPath);
 
     }
+
     public static boolean hasPermissions(Context context, String... permissions) {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
             for (String permission : permissions) {
@@ -476,6 +489,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         }
         return true;
     }
+
     public LocationModel getMyCurrentLocation() {
 
         LocationModel locationObj = null;
@@ -495,32 +509,31 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         Location locationchangelocation = locationManager.getLastKnownLocation(LocationManager.KEY_LOCATION_CHANGED);
 
 
+        if (gpslocation != null) {
 
-        if(gpslocation != null){
-
-            Log.d("Location", "GPS::"+gpslocation.getLatitude()+ "," +gpslocation.getLongitude());
+            Log.d("Location", "GPS::" + gpslocation.getLatitude() + "," + gpslocation.getLongitude());
             address = getCurrentAddress(gpslocation.getLatitude(), gpslocation.getLongitude());
             locationObj = new LocationModel(address, gpslocation.getLatitude(), gpslocation.getLongitude());
 
             return locationObj;
 
-        }else if(networklocation != null){
+        } else if (networklocation != null) {
 
-            Log.d("Location", "NETWORK::"+networklocation.getLatitude()+ "," +networklocation.getLongitude());
+            Log.d("Location", "NETWORK::" + networklocation.getLatitude() + "," + networklocation.getLongitude());
             address = getCurrentAddress(networklocation.getLatitude(), networklocation.getLongitude());
             locationObj = new LocationModel(address, networklocation.getLatitude(), networklocation.getLongitude());
 
             return locationObj;
-        }else if(passivelocation != null){
+        } else if (passivelocation != null) {
 
-            Log.d("Location", "PASSIVE::"+passivelocation.getLatitude()+ "," +passivelocation.getLongitude());
+            Log.d("Location", "PASSIVE::" + passivelocation.getLatitude() + "," + passivelocation.getLongitude());
             address = getCurrentAddress(passivelocation.getLatitude(), passivelocation.getLongitude());
             locationObj = new LocationModel(address, passivelocation.getLatitude(), passivelocation.getLongitude());
 
             return locationObj;
-        }else if(locationchangelocation != null){
+        } else if (locationchangelocation != null) {
 
-            Log.d("Location", "CHAGELOCATION::"+locationchangelocation.getLatitude()+ "," +locationchangelocation.getLongitude());
+            Log.d("Location", "CHAGELOCATION::" + locationchangelocation.getLatitude() + "," + locationchangelocation.getLongitude());
             address = getCurrentAddress(locationchangelocation.getLatitude(), locationchangelocation.getLongitude());
             locationObj = new LocationModel(address, locationchangelocation.getLatitude(), locationchangelocation.getLongitude());
 
@@ -531,6 +544,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
 
 
     }
+
     public boolean statusCheck() {
         if (isNetworkAvailable()) {
             final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -540,17 +554,19 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
             } else {
                 return true;
             }
-        }else{
-            UIHelper.showShortToastInCenter(this,getString(R.string.internet_not_connected));
+        } else {
+            UIHelper.showShortToastInCenter(this, getString(R.string.internet_not_connected));
             return false;
         }
     }
+
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
+
     private void buildAlertMessageNoGps() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.gps_question))
@@ -581,7 +597,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
             String country = addresses.get(0).getCountryName();
 // String postalCode = addresses.get(0).getPostalCode();
 // String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
-            return address+", "+country;
+            return address + ", " + country;
 
         } catch (IOException e) {
             e.printStackTrace();

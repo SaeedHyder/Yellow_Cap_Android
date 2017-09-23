@@ -32,6 +32,7 @@ public interface WebService {
     @FormUrlEncoded
     @POST("user/register")
     Call<ResponseWrapper<RegistrationResultEnt>> registerUser(@Field("full_name") String userName,
+                                                              @Field("email") String email,
                                                               @Field("phone_no") String UserPhone);
 
     @FormUrlEncoded
@@ -55,6 +56,7 @@ public interface WebService {
                                                                @Part("email") RequestBody useremail,
                                                                @Part("address") RequestBody useraddress,
                                                                @Part("full_address") RequestBody userfulladdress,
+                                                               @Part("phone_no") RequestBody phone_number,
                                                                @Part MultipartBody.Part userprofileImage
     );
 
@@ -128,9 +130,8 @@ public interface WebService {
     Call<ResponseWrapper<JobRequestEnt>> acceptJob(@Field("assign_id") Integer assign_id,
                                                    @Field("technician_id") String technician_id,
                                                    @Field("request_id") Integer request_id,
-                                                   @Field("status") Integer status,
-                                                   @Field("arrival_time") String arrival_time,
-                                                   @Field("completion_time") String completion_time);
+                                                   @Field("status") Integer status
+    );
 
     @FormUrlEncoded
     @POST("request/technicianrequeststatus")
@@ -198,11 +199,12 @@ public interface WebService {
                                      @Field("services_ids") String services_ids,
                                      @Field("discription") String discription,
                                      @Field("total") String total);
+
     @FormUrlEncoded
     @POST("user/logout")
-    Call<ResponseWrapper>logoutTechnician(@Field("user_id")String userID);
+    Call<ResponseWrapper> logoutTechnician(@Field("user_id") String userID);
 
     @FormUrlEncoded
     @POST("user/userdeleted")
-    Call<ResponseWrapper>logoutUser(@Field("user_id")String userID);
+    Call<ResponseWrapper> logoutUser(@Field("user_id") String userID);
 }

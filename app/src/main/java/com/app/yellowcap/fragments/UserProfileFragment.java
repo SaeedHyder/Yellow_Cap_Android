@@ -22,6 +22,9 @@ import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.AnyEditTextView;
 import com.app.yellowcap.ui.views.TitleBar;
 import com.google.android.gms.location.places.Place;
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 import com.jota.autocompletelocation.AutoCompleteLocation;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
@@ -62,6 +65,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     Button btnsubmit;
     @BindView(R.id.edtPhoneNo)
     AnyEditTextView edtPhoneNo;
+    private PhoneNumberUtil phoneUtil;
 
 
     public static UserProfileFragment newInstance() {
@@ -88,6 +92,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
         if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
             getUserProfile();
         }
+        phoneUtil = PhoneNumberUtil.getInstance();
         getMainActivity().setImageSetter(this);
     }
 
@@ -118,7 +123,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
                 placeholder(R.drawable.profileimage).into(CircularImageSharePop);
         edtname.setText(result.getFullName());
         edtemail.setText(result.getEmail());
-        edtPhoneNo.setText(result.getPhoneNo());
+        edtPhoneNo.setText(getNationalPhoneNumber(result.getPhoneNo() + "", PhoneNumberUtil.PhoneNumberFormat.NATIONAL));
         edtLocationgps.setText(result.getAddress());
         edtLocationspecific.setText(result.getFullAddress());
 
@@ -167,16 +172,23 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
                 break;
             case R.id.btn_submit:
                 if (validate()) {
-                    if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                        loadingStarted();
-                        updateProfile();
-                    }
+                    if (isPhoneNumberValid())
+                        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                            loadingStarted();
+                            try {
+                                updateProfile(getNationalPhoneNumber(edtPhoneNo.getText().toString(),
+                                        PhoneNumberUtil.PhoneNumberFormat.E164));
+                            } catch (Exception e) {
+                                updateProfile("");
+                            }
+
+                        }
                 }
                 break;
         }
     }
 
-    private void updateProfile() {
+    private void updateProfile(String format) {
         MultipartBody.Part filePart;
         if (profilePic != null) {
             filePart = MultipartBody.Part.createFormData("profile_picture",
@@ -191,6 +203,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
                 RequestBody.create(MediaType.parse("text/plain"), edtemail.getText().toString()),
                 RequestBody.create(MediaType.parse("text/plain"), edtLocationgps.getText().toString()),
                 RequestBody.create(MediaType.parse("text/plain"), edtLocationspecific.getText().toString()),
+                RequestBody.create(MediaType.parse("text/plain"), format),
                 filePart);
         call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
             @Override
@@ -225,8 +238,50 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
         } else if (edtLocationgps.getText().toString().isEmpty()) {
             edtLocationgps.setError(getString(R.string.address_empty_error));
             return false;
+        } else if (edtPhoneNo.getText().toString().length() < 9 || edtPhoneNo.getText().toString().length() > 10) {
+            edtPhoneNo.setError(getString(R.string.enter_valid_number_error));
+            return false;
         } else {
             return true;
+        }
+    }
+
+    private boolean isPhoneNumberValid() {
+
+
+        try {
+            Phonenumber.PhoneNumber number = phoneUtil.parse(edtPhoneNo.getText().toString(), getString(R.string.uae_country_code));
+            if (phoneUtil.isValidNumber(number)) {
+                return true;
+            } else {
+                edtPhoneNo.setError(getString(R.string.enter_valid_number_error));
+                return false;
+            }
+        } catch (NumberParseException e) {
+            System.err.println("NumberParseException was thrown: " + e.toString());
+            edtPhoneNo.setError(getString(R.string.enter_valid_number_error));
+            return false;
+
+        }
+    }
+
+    private String getNationalPhoneNumber(String Phonenumber, PhoneNumberUtil.PhoneNumberFormat numberFormat) {
+
+
+        try {
+            Phonenumber.PhoneNumber number = phoneUtil.parse(Phonenumber, getString(R.string.uae_country_code));
+            if (phoneUtil.isValidNumber(number)) {
+                return phoneUtil.format(number,
+                        numberFormat).replaceAll("\\s","");
+            } else {
+                //edtPhoneNo.setError(getString(R.string.enter_valid_number_error));
+                return "";
+            }
+        } catch (NumberParseException e) {
+            System.err.println("NumberParseException was thrown: " + e.toString());
+            //edtPhoneNo.setError(getString(R.string.enter_valid_number_error));
+            return "";
+
         }
     }
 

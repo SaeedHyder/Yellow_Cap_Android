@@ -109,6 +109,15 @@ public class SideMenuFragment extends BaseFragment {
 
     }
 
+    public void refreshMenuOption() {
+        if (madapter != null) {
+            madapter.notifyDataSetChanged();
+        }
+        if (madapterTech != null) {
+            madapterTech.notifyDataSetChanged();
+        }
+    }
+
     private void bindDataTech() {
 
         navigationItemListTech.add(new NavigationEnt(R.drawable.home_yellow, R.drawable.home, getString(R.string.home)));

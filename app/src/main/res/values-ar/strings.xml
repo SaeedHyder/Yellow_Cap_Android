@@ -6,7 +6,7 @@
     <string name="successful">تم التخزين في "المفضلة" بنجاح</string>
 
     <string name="drawer_open">افتح</string>
-    <string name="drawer_close">بند</string>
+    <string name="drawer_close">أغلق</string>
 
     <string name="api_key">AIzaSyAKCODXR2MQU8kd30dNwZ8iFybv9btnMbE  </string>
     <string name="app_name">يلو كاب</string>
@@ -55,7 +55,7 @@
     <string name="user_name">الاسم المستعار</string>
     <string name="first_name">الاسم الاول</string>
     <string name="last_name">القبيلة</string>
-    <string name="home">نقطة البداية</string>
+    <string name="home">الصفحة الرئيسية</string>
     <string name="profile">ملفي الشخصي</string>
     <string name="categories">الاقسام</string>
     <string name="messages">رسايل</string>
@@ -89,14 +89,14 @@
     <string name="job_posted">Job Posted : 02-05-17</string>
     <string name="select_job_type">اختار المهام</string>
     <string name="selected_jobs">المهام المختارة</string>
-    <string name="additional_job">تفاصيل اضافية</string>
+    <string name="additional_job">معلومات اضافية</string>
     <string name="addtional_job_description">عطنا العلوم</string>
     <string name="dummyAddress">795 دبي مارينا، الإمارات العربية المتحدة</string>
-    <string name="secondAddress">Enter unit or flat number</string>
-    <string name="dummydate">02-02-17</string>
+    <string name="secondAddress">رقم الوحدة السكنية</string>
+    <string name="dummydate">تاريخ</string>
     <string name="preferred_date">اي يوم؟</string>
     <string name="preferred_time">أي وقت؟</string>
-    <string name="dummytime">15:25</string>
+    <string name="dummytime">زمن</string>
     <string name="take_photo">صور لنا المشكلة</string>
     <string name="add_photo">ضيف الصورة</string>
     <string name="payment_method">كيف بتحاسبنا؟</string>
@@ -120,7 +120,7 @@
     <string name="no_result_found">ماشي علوم</string>
     <string name="job">مهمة</string>
     <string name="my_job">مهامي</string>
-    <string name="about_app">عنا</string>
+    <string name="about_app">عن التطبيق</string>
     <string name="job_completed">المهمة منتهية</string>
     <string name="client_name">اسم الزبون</string>
     <string name="job_title">مهمة</string>
@@ -128,7 +128,7 @@
     <string name="rating">تقييم</string>
     <string name="my_profile">ملفي</string>
     <string name="email_id">الايميل</string>
-    <string name="phone_number">رقم الهاتف</string>
+    <string name="phone_number"> رقم الهاتف </string>
     <string name="registration_type">نوع التسجيل</string>
     <string name="Registration_Date">تاريخ التسجيل</string>
     <string name="Customer_Name">اسم الزبون</string>
@@ -262,13 +262,14 @@
     <string name="delete_account">أنت على وشك حذف حسابك نهائيا. للتسجيل مرة أخرى سوف يطلب منك التحقق من تفاصيل الاتصال الخاصة بك. هل ترغب في حذف حسابك؟</string>
     <string name="no">لا</string>
     <string name="yes">نعم فعلا</string>
-    <string name="Quotation">Quotation</string>
-    <string name="enter_message">Enter Your Message</string>
-    <string name="selectjob">Select a Job</string>
+    <string name="Quotation">عرض السعر</string>
+    <string name="enter_message">أكتب تعليماتك اهنيه</string>
+    <string name="selectjob">أختار المهمة</string>
     <string name="payment_type">حدد كيفية الدفع</string>
     <string name="select_time">حدد الوقت</string>
     <string name="select_date">حدد التاريخ</string>
     <string name="enter_address">اكتب العنوان</string>
+    <string name="enter_email">أدخل ايميل صحيح</string>
 
 
 </resources>

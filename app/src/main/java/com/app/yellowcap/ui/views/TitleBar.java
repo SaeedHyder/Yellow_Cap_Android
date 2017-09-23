@@ -95,6 +95,8 @@ public class TitleBar extends RelativeLayout {
                 badgeHelper.changeBadgeGravity(RelativeLayout.ALIGN_PARENT_END);
             }*/
             badgeHelper.showBadge();
+        }else {
+            imgBadge.setVisibility(View.GONE);
         }
         //btnRight.setOnClickListener(backButtonListener);
 
