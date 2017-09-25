@@ -32,7 +32,6 @@
             android:digits="1234567890"
             android:inputType="number"
             android:maxLength="4"
-            android:text="1235"
             android:padding="10dp"
             android:imeOptions="actionDone"
             android:textIsSelectable="false"

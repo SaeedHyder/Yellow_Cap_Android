@@ -275,7 +275,7 @@
     <string name="select_date">Select Date</string>
     <string name="enter_address">Enter Address</string>
     <string name="enter_email">Enter Valid Email</string>
-
+    <string name="email_alert_message">A verification code has been send to your Email address</string>
 
 
 </resources>

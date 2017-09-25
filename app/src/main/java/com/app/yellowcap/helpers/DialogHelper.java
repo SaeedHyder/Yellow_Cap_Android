@@ -92,6 +92,14 @@ public class DialogHelper {
         closeButton.setOnClickListener(onclicklistener);
         return this.dialog;
     }
+    public Dialog initSignUpDialog(int layoutID ,View.OnClickListener onclicklistener) {
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        this.dialog.setContentView(layoutID);
+        Button closeButton =(Button) dialog.findViewById(R.id.btn_close);
+        closeButton.setOnClickListener(onclicklistener);
+        return this.dialog;
+    }
 
 
     public Dialog initJobDetailDialog(int layoutID , View.OnClickListener onclicklistener, String title, String person_name,
