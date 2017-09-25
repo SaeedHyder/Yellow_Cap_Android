@@ -49,7 +49,7 @@ public class TechNotificationsFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new ArrayListAdapter<NotificationEnt>(getDockActivity(), new TechNotificationitemBinder());
+        adapter = new ArrayListAdapter<NotificationEnt>(getDockActivity(), new TechNotificationitemBinder(prefHelper));
     }
 
     @Override

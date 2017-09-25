@@ -77,7 +77,8 @@ public class UserNotificationsFragment extends BaseFragment {
             public void onResponse(Call<ResponseWrapper<countEnt>> call, Response<ResponseWrapper<countEnt>> response) {
 
                 prefHelper.setBadgeCount(response.body().getResult().getCount());
-                getMainActivity().refreshSideMenu();
+                if (getMainActivity() != null)
+                    getMainActivity().refreshSideMenu();
                 Log.e(UserNotificationsFragment.class.getSimpleName(), "aasd" + prefHelper.getUserId() + response.body().getResult().getCount());
                 //  SendNotification(response.body().getResult().getCount(), json);
             }

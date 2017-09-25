@@ -25,6 +25,8 @@
         android:layout_width="@dimen/x20"
         android:layout_height="@dimen/x20"
         android:src="@drawable/cross"
+        android:layout_marginStart="@dimen/x15"
+        android:layout_marginEnd="@dimen/x15"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true" />

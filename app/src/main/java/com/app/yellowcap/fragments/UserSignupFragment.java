@@ -14,6 +14,7 @@ import com.app.yellowcap.entities.RegistrationResultEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
+import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.TokenUpdater;
 import com.app.yellowcap.helpers.UIHelper;
@@ -137,7 +138,8 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
                             prefHelper.getUserId(),
                             AppConstants.Device_Type,
                             prefHelper.getFirebase_TOKEN());
-                    getDockActivity().replaceDockableFragment(EntryCodeFragment.newInstance(), "EntryCodeFragment");
+                    showSignupDialog();
+
                 } else {
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
                 }
@@ -150,6 +152,19 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
 
             }
         });
+    }
+
+    private void showSignupDialog() {
+        final DialogHelper signupDialog = new DialogHelper(getDockActivity());
+        signupDialog.initSignUpDialog(R.layout.dialog_signup_alert, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signupDialog.hideDialog();
+                getDockActivity().replaceDockableFragment(EntryCodeFragment.newInstance(), "EntryCodeFragment");
+            }
+        });
+        signupDialog.setCancelable(false);
+        signupDialog.showDialog();
     }
 
     @Override

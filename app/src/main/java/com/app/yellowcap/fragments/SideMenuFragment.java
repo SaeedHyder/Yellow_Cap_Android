@@ -269,7 +269,7 @@ public class SideMenuFragment extends BaseFragment {
         navListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                try{
                 if (prefHelper.getUserType().equals("user")) {
                     if (navigationItemList.get(position).getItem_text().equals(getString(R.string.home))) {
                         getDockActivity().popBackStackTillEntry(0);
@@ -351,6 +351,10 @@ public class SideMenuFragment extends BaseFragment {
 
                     }
 
+                }
+                }
+                catch (Exception e){
+                    refreshMenuOption();
                 }
 
             }

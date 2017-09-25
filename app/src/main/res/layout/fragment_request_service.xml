@@ -434,6 +434,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:src="@drawable/tick"
+                    android:layout_marginStart="@dimen/x15"
+                    android:layout_marginEnd="@dimen/x15"
                     android:visibility="gone" />
 
                 <Button

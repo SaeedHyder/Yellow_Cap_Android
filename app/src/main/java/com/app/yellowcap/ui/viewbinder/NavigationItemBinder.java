@@ -56,6 +56,11 @@ public class NavigationItemBinder extends ViewBinder<NavigationEnt> implements U
     @Override
     public void bindView(NavigationEnt entity, int position, int grpPosition, View view, Activity activity) {
         NavViewHolder viewHolder = (NavViewHolder) view.getTag();
+        if (prefHelper.isLanguageArabic()){
+            viewHolder.rootLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
+        else  viewHolder.rootLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+
         badgeHelper = new BadgeHelper(viewHolder.imgNotificationCount, (DockActivity) activity);
         if (entity.getItem_text().equals(activity.getString(R.string.home)) && !entity.getItem_text().equals(activity.getString(R.string.english))) {
             viewHolder.txtHome.setText(entity.getItem_text());
@@ -180,7 +185,8 @@ public class NavigationItemBinder extends ViewBinder<NavigationEnt> implements U
         LinearLayout container;
         @BindView(R.id.imgNotificationCount)
         ImageView imgNotificationCount;
-
+        @BindView(R.id.root_layout)
+        LinearLayout rootLayout;
         NavViewHolder(View view) {
             ButterKnife.bind(this, view);
         }

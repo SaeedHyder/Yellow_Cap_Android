@@ -69,8 +69,6 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
     LinearLayout llEstimatedQuote;
     @BindView(R.id.btn_accept)
     Button btnAccept;
-    @BindView(btn_reject)
-    Button btnReject;
     @BindView(R.id.ll_buttons)
     LinearLayout llButtons;
 
@@ -86,6 +84,10 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
     AnyTextView txtQuotationValidHeading;
     @BindView(R.id.txt_EstimatedQuoteHeading)
     AnyTextView txtEstimatedQuoteHeading;
+    @BindView(R.id.btn_reject)
+    Button btnReject;
+    @BindView(R.id.root_layout)
+    LinearLayout rootLayout;
     private NotificationEnt QuotationData;
 
     public static QuotationFragment newInstance() {
@@ -121,6 +123,11 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (prefHelper.isLanguageArabic())
+        rootLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        else {
+            rootLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+        }
         setListners();
         setTextStyle();
     }
@@ -148,7 +155,7 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
             txtUserAddress.setText(QuotationData.getRequestDetail().getAddress() + " " + QuotationData.getRequestDetail().getFullAddress());
             txtEstimatedQuote.setText("Between AED " + QuotationData.getRequestDetail().getEstimateFrom()
                     + " to " + QuotationData.getRequestDetail().getEstimateTo());
-            txtQuotationValid.setText(QuotationData.getRequestDetail().getTime() + " " +QuotationData.getRequestDetail().getDate());
+            txtQuotationValid.setText(QuotationData.getRequestDetail().getTime() + " " + QuotationData.getRequestDetail().getDate());
 
             getMainActivity().titleBar.setSubHeading(QuotationData.getRequestDetail().getServiceDetail().getTitle());
             getMainActivity().titleBar.getTxtTitle().invalidate();
@@ -165,9 +172,9 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
                     @Override
                     public void onClick(View v) {
                         if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                            if (cancelJobDialog.getEditTextView(R.id.ed_msg).getText().toString().trim().equals("")){
+                            if (cancelJobDialog.getEditTextView(R.id.ed_msg).getText().toString().trim().equals("")) {
                                 cancelJobDialog.getEditTextView(R.id.ed_msg).setError(getDockActivity().getResources().getString(R.string.enter_message));
-                            }else{
+                            } else {
                                 cancelQuotation(cancelJobDialog);
                             }
                         }
@@ -262,6 +269,7 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
         ButterKnife.bind(this, rootView);
         return rootView;
     }
+
 
 
 }

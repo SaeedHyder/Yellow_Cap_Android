@@ -20,6 +20,9 @@ public class NotificationEnt {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("ar_message")
+    @Expose
+    private String armessage;
     @SerializedName("action_type")
     @Expose
     private String actionType;
@@ -129,5 +132,13 @@ public class NotificationEnt {
 
     public void setRecieverDetail(RegistrationResultEnt recieverDetail) {
         this.recieverDetail = recieverDetail;
+    }
+
+    public String getArmessage() {
+        return armessage;
+    }
+
+    public void setArmessage(String armessage) {
+        this.armessage = armessage;
     }
 }

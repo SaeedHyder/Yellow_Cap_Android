@@ -55,7 +55,13 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
     public void bindView(final NotificationEnt entity, int position, int grpPosition, View view, Activity activity) {
 
         UserNotificationitemBinder.ViewHolder viewHolder = (UserNotificationitemBinder.ViewHolder) view.getTag();
-        viewHolder.txt_jobNotification.setText(entity.getMessage());
+        if (prefhelper.isLanguageArabic()) {
+            view.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            viewHolder.txt_jobNotification.setText(entity.getArmessage() + "");
+        } else {
+            view.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+            viewHolder.txt_jobNotification.setText(entity.getMessage() + "");
+        }
         viewHolder.mainFrame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,40 +82,39 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
     }
 
     private void openRatingPopup(final NotificationEnt entity) {
-        String message="";
-        String title="";
-        if (entity.getRequestDetail().getServicsList().size()>0){
-            if(!prefhelper.isLanguageArabic()){
-            message = entity.getRequestDetail().getServicsList().get(0).getServiceEnt().getTitle();}
-            else{
+        String message = "";
+        String title = "";
+        if (entity.getRequestDetail().getServicsList().size() > 0) {
+            if (!prefhelper.isLanguageArabic()) {
+                message = entity.getRequestDetail().getServicsList().get(0).getServiceEnt().getTitle();
+            } else {
                 message = entity.getRequestDetail().getServicsList().get(0).getServiceEnt().getArTitle();
             }
         }
-        if(!prefhelper.isLanguageArabic()){
-            title=entity.getRequestDetail().getServiceDetail().getTitle();
-        }
-        else {
-            title=entity.getRequestDetail().getServiceDetail().getArTitle();
+        if (!prefhelper.isLanguageArabic()) {
+            title = entity.getRequestDetail().getServiceDetail().getTitle();
+        } else {
+            title = entity.getRequestDetail().getServiceDetail().getArTitle();
         }
         final DialogHelper dialogHelper = new DialogHelper(dockActivity);
         dialogHelper.initRatingDialog(R.layout.rating_pop_up_dialog, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              //  dialogHelper.hideDialog();
-                if (InternetHelper.CheckInternetConectivityandShowToast(dockActivity)) {
-                    submitFeedback(entity, dialogHelper);
-                }
-            }
-        }, title,message
-                );
+                    @Override
+                    public void onClick(View v) {
+                        //  dialogHelper.hideDialog();
+                        if (InternetHelper.CheckInternetConectivityandShowToast(dockActivity)) {
+                            submitFeedback(entity, dialogHelper);
+                        }
+                    }
+                }, title, message
+        );
         dialogHelper.setCancelable(true);
         dialogHelper.showDialog();
     }
 
     private void submitFeedback(NotificationEnt ent, final DialogHelper helper) {
-        Call<ResponseWrapper> call =  service.sendFeedback(prefhelper.getUserId(),
+        Call<ResponseWrapper> call = service.sendFeedback(prefhelper.getUserId(),
                 String.valueOf(ent.getRequestDetail().getId()),
-               String.valueOf( ent.getRequestDetail().getAssign_technician_details().getTechnicianId()),
+                String.valueOf(ent.getRequestDetail().getAssign_technician_details().getTechnicianId()),
                 Math.round(helper.getRating(R.id.rbAddRating)),
                 helper.getEditText(R.id.txt_feedback),
                 helper.getEditText(R.id.txt_tip));
@@ -120,7 +125,7 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
                 helper.hideDialog();
                 if (response.body().getResponse().equals("2000")) {
                     dockActivity.popBackStackTillEntry(0);
-                   dockActivity.replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
+                    dockActivity.replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
                 } else {
                     UIHelper.showShortToastInCenter(dockActivity, response.body().getMessage());
                 }
@@ -130,7 +135,7 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
             public void onFailure(Call<ResponseWrapper> call, Throwable t) {
                 helper.hideDialog();
                 Log.e("EntryCodeFragment", t.toString());
-               // UIHelper.showShortToastInCenter(dockActivity, t.toString());
+                // UIHelper.showShortToastInCenter(dockActivity, t.toString());
             }
         });
     }
@@ -146,7 +151,7 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
             iv_Notificationlogo = (ImageView) view.findViewById(R.id.iv_Notificationlogo);
             txt_jobNotification = (AnyTextView) view.findViewById(R.id.txt_jobNotification);
             iv_next = (ImageView) view.findViewById(R.id.iv_next);
-            mainFrame=(LinearLayout) view.findViewById(R.id.ll_mainFrame);
+            mainFrame = (LinearLayout) view.findViewById(R.id.ll_mainFrame);
         }
     }
 }
