@@ -224,6 +224,7 @@
     <string name="amount_quoted">المبلغ المعروض</string>
     <string name="technician_name">اسم فني</string>
     <string name="dummy_name">الموسى</string>
+    <string name="dummy_names">الموسى</string>
     <string name="technician_rating">تقييم فني</string>
     <string name="amount_paid">المبلغ المدفوع</string>
     <string name="iam_a">أنا...</string>

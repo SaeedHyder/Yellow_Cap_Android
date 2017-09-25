@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -11,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/x3"
-        android:layout_marginLeft="@dimen/x20"
-        android:layout_marginRight="@dimen/x20"
+        android:layout_marginEnd="@dimen/x20"
+        android:layout_marginStart="@dimen/x20"
         android:layout_marginTop="@dimen/x20"
         android:orientation="horizontal">
 
@@ -21,7 +22,7 @@
             android:id="@+id/txt_tech_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/x8"
+            android:layout_marginEnd="@dimen/x8"
             android:layout_weight="0"
             android:text="@string/technician_name"
             android:textColor="@color/lightBlack"
@@ -38,21 +39,31 @@
                 android:id="@+id/txt_tech_name_Text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@+id/iv_editBtn"
+                android:layout_toStartOf="@+id/con"
                 android:layout_weight="1"
+                android:textAlignment="viewStart"
+                android:gravity="start"
                 android:text="@string/dummy_name"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/x15"
                 app:typeface="Roboto-Regular.ttf" />
 
-            <ImageView
-                android:id="@+id/iv_editBtn"
+            <LinearLayout
+                android:id="@+id/con"
                 android:layout_width="@dimen/x15"
                 android:layout_height="@dimen/x15"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:contentDescription="@string/edit_job"
-                android:src="@drawable/edit" />
+                android:layout_alignParentTop="true">
+
+                <ImageView
+                    android:id="@+id/iv_editBtn"
+                    android:layout_width="@dimen/x15"
+                    android:layout_height="@dimen/x15"
+
+                    android:contentDescription="@string/edit_job"
+                    android:src="@drawable/edit"
+                    android:visibility="gone"/>
+            </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
 
@@ -61,8 +72,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/x3"
-        android:layout_marginLeft="@dimen/x20"
-        android:layout_marginRight="@dimen/x20"
+        android:layout_marginEnd="@dimen/x20"
+        android:layout_marginStart="@dimen/x20"
         android:orientation="horizontal">
 
 
@@ -70,7 +81,7 @@
             android:id="@+id/txt_JobTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/x8"
+            android:layout_marginEnd="@dimen/x8"
             android:text="@string/job_title"
             android:textColor="@color/lightBlack"
             android:textSize="@dimen/x15"
@@ -93,8 +104,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/x3"
-        android:layout_marginLeft="@dimen/x20"
-        android:layout_marginRight="@dimen/x20"
+        android:layout_marginEnd="@dimen/x20"
+        android:layout_marginStart="@dimen/x20"
         android:orientation="horizontal">
 
 
@@ -125,8 +136,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/x3"
-        android:layout_marginLeft="@dimen/x20"
-        android:layout_marginRight="@dimen/x20"
+        android:layout_marginEnd="@dimen/x20"
+        android:layout_marginStart="@dimen/x20"
         android:orientation="horizontal">
 
 
