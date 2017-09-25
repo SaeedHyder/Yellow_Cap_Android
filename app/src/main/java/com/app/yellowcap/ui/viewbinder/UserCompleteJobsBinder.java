@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.text.Html;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.entities.UserComleteJobsEnt;
+import com.app.yellowcap.helpers.BasePreferenceHelper;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.CustomRatingBar;
@@ -19,8 +21,11 @@ import butterknife.ButterKnife;
  */
 
 public class UserCompleteJobsBinder extends ViewBinder<UserComleteJobsEnt> {
-    public UserCompleteJobsBinder() {
+    private BasePreferenceHelper preferenceHelper;
+
+    public UserCompleteJobsBinder(BasePreferenceHelper prefhelper) {
         super(R.layout.row_item_user_complete_jobs);
+        preferenceHelper = prefhelper;
     }
 
     @Override
@@ -31,13 +36,19 @@ public class UserCompleteJobsBinder extends ViewBinder<UserComleteJobsEnt> {
     @Override
     public void bindView(UserComleteJobsEnt entity, int position, int grpPosition, View view, Activity activity) {
         final ViewHolder viewHolder = (ViewHolder) view.getTag();
-        viewHolder.txtJobNoText.setText(String.valueOf(position+1));
+        if(preferenceHelper.isLanguageArabic()){
+            viewHolder.root_layout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
+        else
+            viewHolder.root_layout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+
+        viewHolder.txtJobNoText.setText(String.valueOf(position + 1));
         if (entity.getServicsList().size() > 0)
             viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getTitle());
-        if (entity.getAssign_technician_details()!=null)
+        if (entity.getAssign_technician_details() != null)
             viewHolder.txtClientNameText.setText(entity.getAssign_technician_details().getTechnician_details().getFullName());
         viewHolder.txtEarningText.setText(entity.getTotal_amount());
-        String sourceString = "<b>" + "Description:" + "</b> " + entity.getDiscription();
+        String sourceString = "<b>" + view.getContext().getResources().getString(R.string.description) + "</b> " + entity.getDiscription();
         viewHolder.txtDescriptionText.setText(Html.fromHtml(sourceString));
         if (entity.getFeedbackdetail() != null)
             viewHolder.rbAddRating.setScore(entity.getFeedbackdetail().getRate());
@@ -66,7 +77,8 @@ public class UserCompleteJobsBinder extends ViewBinder<UserComleteJobsEnt> {
         AnyTextView txtEarningText;
         @BindView(R.id.txt_description_text)
         AnyTextView txtDescriptionText;
-
+        @BindView(R.id.root_layout)
+        LinearLayout root_layout;
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }

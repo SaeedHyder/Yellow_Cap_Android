@@ -56,7 +56,7 @@ public class CompletedJobsFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        adapter = new ArrayListAdapter<TechInProgressEnt>(getDockActivity(), new CompletedJobsBinder());
+        adapter = new ArrayListAdapter<TechInProgressEnt>(getDockActivity(), new CompletedJobsBinder(prefHelper));
     }
 
     public SetOrderCounts getOrderCounts() {

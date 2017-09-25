@@ -70,7 +70,7 @@ public class UserInProgressFragment extends BaseFragment implements CallUser, on
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new ArrayListAdapter<UserInProgressEnt>(getDockActivity(), new UserInProgressBinder(this, getDockActivity(), this));
+        adapter = new ArrayListAdapter<UserInProgressEnt>(getDockActivity(), new UserInProgressBinder(this, getDockActivity(), this,prefHelper));
     }
 
     @Override

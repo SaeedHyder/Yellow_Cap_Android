@@ -90,6 +90,7 @@
     <string name="select_job_type">اختار المهام</string>
     <string name="selected_jobs">المهام المختارة</string>
     <string name="additional_job">معلومات اضافية</string>
+    <string name="addtional_jobs">معلومات اضافية</string>
     <string name="addtional_job_description">عطنا العلوم</string>
     <string name="dummyAddress">795 دبي مارينا، الإمارات العربية المتحدة</string>
     <string name="secondAddress">رقم الوحدة السكنية</string>
@@ -106,6 +107,8 @@
     <string name="cvv">CVV</string>
     <string name="name_appearing_on_card">الاسم الي على البطاقة</string>
     <string name="cod">الدفع كاش</string>
+    <string name="cod_short">الدفع كاش</string>
+    <string name="to">إلى</string>
     <string name="request_a_quote">اطلب تسعيره</string>
     <string name="gps_question">اللوكيشن امبند, تبغي تبطله؟</string>
     <string name="gps_yes">هيه</string>

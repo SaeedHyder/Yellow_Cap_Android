@@ -58,7 +58,7 @@ public class NewJobsFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new ArrayListAdapter<NewJobsEnt>(getDockActivity(), new NewJobsitemBinder());
+        adapter = new ArrayListAdapter<NewJobsEnt>(getDockActivity(), new NewJobsitemBinder(prefHelper));
     }
 
     @Nullable

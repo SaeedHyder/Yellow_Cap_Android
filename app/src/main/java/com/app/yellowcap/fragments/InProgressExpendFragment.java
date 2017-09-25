@@ -179,7 +179,7 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
              listDataChild.put(collectionGroup.get(2), collectionChild);
           listDataChild.put(collectionGroup.get(3), collectionChild);*/
         orderCounts.setInprogressCount(collectionGroup.size());
-        adapter = new ArrayListExpandableAdapter<>(getDockActivity(), collectionGroup, listDataChild, new InprogressExpandBinder(getDockActivity(),this,this),elvInprogress);
+        adapter = new ArrayListExpandableAdapter<>(getDockActivity(), collectionGroup, listDataChild, new InprogressExpandBinder(getDockActivity(),this,this,prefHelper),elvInprogress);
         bindData();
     }
 

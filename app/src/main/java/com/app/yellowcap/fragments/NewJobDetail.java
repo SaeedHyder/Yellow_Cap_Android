@@ -4,7 +4,6 @@ import android.app.TimePickerDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -163,7 +162,11 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        if (prefHelper.isLanguageArabic()) {
+            mainFrame.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        } else {
+            mainFrame.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+        }
         setJobDetail();
         setListners();
         setImageGallery();
@@ -178,7 +181,11 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
         } else {
             txtCustomerName.setText(" ");
         }
-        txtEstimatedQuote.setText("Between AED " + newJobJson.getRequest_detail().getEstimate_to() + " to " + newJobJson.getRequest_detail().getEstimate_from() + "- COD");
+       /* txtEstimatedQuote.setText("Between AED  " + newJobJson.getRequest_detail().getEstimate_to()
+                + " to " + newJobJson.getRequest_detail().getEstimate_from() + "- COD");*/
+        //For Arabic uncomment this
+        txtEstimatedQuote.setText(getString(R.string.between_aed) + newJobJson.getRequest_detail().getEstimate_to()
+                + getString(R.string.to) + newJobJson.getRequest_detail().getEstimate_from() + "- "+getString(R.string.cod_short));
         //SERVICE remaining
         txtAddress.setText(newJobJson.getRequest_detail().getAddress());
         txtDescription.setText(newJobJson.getRequest_detail().getDiscription().trim());
@@ -315,7 +322,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                     e.printStackTrace();
                 }
             }
-        },true);
+        }, true);
         timePicker.showTime();
     }
 
@@ -470,9 +477,14 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
         titleBar.hideButtons();
         titleBar.showBackButton();
         if (newJobJson != null)
-            titleBar.setSubHeading(newJobJson.getRequest_detail().getService_detail().getTitle());
+            if (prefHelper.isLanguageArabic()) {
+                titleBar.setSubHeading(newJobJson.getRequest_detail().getService_detail().getAr_title());
+            } else {
+                titleBar.setSubHeading(newJobJson.getRequest_detail().getService_detail().getTitle());
+            }
+
         else
-            titleBar.setSubHeading("New Job");
+            titleBar.setSubHeading(getString(R.string.new_jobs));
         // titleBar.setSubHeading(getString(R.string.plumbing));
 
     }

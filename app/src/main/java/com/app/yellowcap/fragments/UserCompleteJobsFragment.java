@@ -17,13 +17,11 @@ import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.interfaces.SetOrderCounts;
 import com.app.yellowcap.ui.adapters.ArrayListAdapter;
 import com.app.yellowcap.ui.viewbinder.UserCompleteJobsBinder;
-import com.app.yellowcap.ui.views.AnyTextView;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,7 +60,7 @@ public class UserCompleteJobsFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        adapter = new ArrayListAdapter<UserComleteJobsEnt>(getDockActivity(), new UserCompleteJobsBinder());
+        adapter = new ArrayListAdapter<UserComleteJobsEnt>(getDockActivity(), new UserCompleteJobsBinder(prefHelper));
     }
 
     @Nullable

@@ -8,6 +8,7 @@ public class ServiceDetail {
 
     int id;
     String title;
+    String ar_title;
     String image;
     int parent_id;
     String created_at;
@@ -78,5 +79,13 @@ public class ServiceDetail {
 
     public void setService_image(String service_image) {
         this.service_image = service_image;
+    }
+
+    public String getAr_title() {
+        return ar_title;
+    }
+
+    public void setAr_title(String ar_title) {
+        this.ar_title = ar_title;
     }
 }
