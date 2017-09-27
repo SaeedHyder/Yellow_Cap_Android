@@ -192,6 +192,7 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
+
     protected MainActivity getMainActivity() {
         return (MainActivity) getActivity();
     }

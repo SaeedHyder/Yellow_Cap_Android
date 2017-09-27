@@ -270,6 +270,6 @@
     <string name="select_date">حدد التاريخ</string>
     <string name="enter_address">اكتب العنوان</string>
     <string name="enter_email">أدخل ايميل صحيح</string>
-
+    <string name="email_alert_message">تم إرسال رمز التحقق إلى عنوان بريدك الإلكتروني</string>
 
 </resources>
