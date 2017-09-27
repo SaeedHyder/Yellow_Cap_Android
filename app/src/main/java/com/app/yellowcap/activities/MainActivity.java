@@ -201,7 +201,13 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
 
         drawerLayout.closeDrawers();
     }
-
+    public void refreshFirstTimeSideMenu(){
+          sideMenuFragment = SideMenuFragment.newInstance();
+        FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction();
+        transaction.remove(sideMenuFragment).commit();
+        settingSideMenu();
+    }
     public void refreshSideMenu() {
        /* sideMenuFragment = SideMenuFragment.newInstance();
         FragmentTransaction transaction = getSupportFragmentManager()

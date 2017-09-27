@@ -57,10 +57,10 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
         UserNotificationitemBinder.ViewHolder viewHolder = (UserNotificationitemBinder.ViewHolder) view.getTag();
         if (prefhelper.isLanguageArabic()) {
            // view.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-            viewHolder.txt_jobNotification.setText(entity.getArmessage() + "");
+            viewHolder.txt_jobNotification.setText((entity.getArmessage() + "").trim());
         } else {
           //  view.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
-            viewHolder.txt_jobNotification.setText(entity.getMessage() + "");
+            viewHolder.txt_jobNotification.setText((entity.getMessage() + "").trim());
         }
         viewHolder.mainFrame.setOnClickListener(new View.OnClickListener() {
             @Override

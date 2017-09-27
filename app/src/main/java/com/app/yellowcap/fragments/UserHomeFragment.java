@@ -135,7 +135,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        getMainActivity().refreshFirstTimeSideMenu();
         imageLoader = ImageLoader.getInstance();
 
         mainFrame.setVisibility(View.GONE);

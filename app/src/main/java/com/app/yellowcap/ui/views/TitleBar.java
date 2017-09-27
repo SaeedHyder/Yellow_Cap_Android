@@ -85,19 +85,17 @@ public class TitleBar extends RelativeLayout {
         imgBadge.setVisibility(View.VISIBLE);
         btnRight.setImageResource(R.drawable.bell);
         btnRight.setOnClickListener(onClickListener);
-        if (prefHelper.getUserType().equals("user")) {
-            badgeHelper = new BadgeHelper(imgBadge, getContext());
-            badgeHelper.initBadge(context);
-            badgeHelper.addtoBadge(prefHelper.getBadgeCount());
+
+        badgeHelper = new BadgeHelper(imgBadge, getContext());
+        badgeHelper.initBadge(context);
+        badgeHelper.addtoBadge(prefHelper.getBadgeCount());
            /* if (prefHelper.getLang().equals("ar")) {
                 badgeHelper.changeBadgeGravity(RelativeLayout.ALIGN_PARENT_START);
             } else {
                 badgeHelper.changeBadgeGravity(RelativeLayout.ALIGN_PARENT_END);
             }*/
-            badgeHelper.showBadge();
-        }else {
-            imgBadge.setVisibility(View.GONE);
-        }
+        badgeHelper.showBadge();
+
         //btnRight.setOnClickListener(backButtonListener);
 
     }

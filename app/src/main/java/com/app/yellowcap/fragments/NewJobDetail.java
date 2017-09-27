@@ -160,6 +160,25 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
     }
 
     @Override
+    public void setTitleBar(TitleBar titleBar) {
+        super.setTitleBar(titleBar);
+        getDockActivity().lockDrawer();
+        titleBar.hideButtons();
+        titleBar.showBackButton();
+        if (newJobJson != null)
+            if (prefHelper.isLanguageArabic()) {
+                titleBar.setSubHeading(newJobJson.getRequest_detail().getService_detail().getAr_title());
+            } else {
+                titleBar.setSubHeading(newJobJson.getRequest_detail().getService_detail().getTitle());
+            }
+
+        else
+            titleBar.setSubHeading(getString(R.string.new_jobs));
+        // titleBar.setSubHeading(getString(R.string.plumbing));
+
+    }
+
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (prefHelper.isLanguageArabic()) {
@@ -175,7 +194,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
     }
 
     private void setJobDetail() {
-        txtJobName.setText(newJobJson.getRequest_detail().getService_detail().getTitle());
+       // txtJobName.setText(newJobJson.getRequest_detail().getService_detail().getTitle());
         if (newJobJson.getRequest_detail().getUser_detail() != null) {
             txtCustomerName.setText(newJobJson.getRequest_detail().getUser_detail().getFull_name());
         } else {
@@ -185,13 +204,27 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                 + " to " + newJobJson.getRequest_detail().getEstimate_from() + "- COD");*/
         //For Arabic uncomment this
         txtEstimatedQuote.setText(getString(R.string.between_aed) + newJobJson.getRequest_detail().getEstimate_to()
-                + getString(R.string.to) + newJobJson.getRequest_detail().getEstimate_from() + "- "+getString(R.string.cod_short));
+                + getString(R.string.to) + newJobJson.getRequest_detail().getEstimate_from() + "- " + getString(R.string.cod_short));
         //SERVICE remaining
+
         txtAddress.setText(newJobJson.getRequest_detail().getAddress());
-        txtDescription.setText(newJobJson.getRequest_detail().getDiscription().trim());
+        txtDescription.setText(newJobJson.getRequest_detail().getDiscription().trim() + "");
         txtPreferredDateTime.setText(newJobJson.getRequest_detail().getDate() + "  " + newJobJson.getRequest_detail().getTime());
         //txtPreferredDateTime.setText("22 Feb 2017" + "    " + "  02:30 PM");
-        getMainActivity().titleBar.setSubHeading(newJobJson.getRequest_detail().getService_detail().getTitle());
+        if (prefHelper.isLanguageArabic()) {
+            txtJobName.setText(newJobJson.getRequest_detail().getService_detail().getAr_title());
+            getMainActivity().titleBar.setSubHeading(newJobJson.getRequest_detail().getService_detail().getAr_title() + "");
+            if (newJobJson.getRequest_detail().getServics_list().size() > 0)
+                txtService.setText(newJobJson.getRequest_detail().getServics_list().get(0).getService_detail().getAr_title() + "");
+
+        } else {
+            txtJobName.setText(newJobJson.getRequest_detail().getService_detail().getTitle());
+
+            getMainActivity().titleBar.setSubHeading(newJobJson.getRequest_detail().getService_detail().getTitle());
+            if (newJobJson.getRequest_detail().getServics_list().size() > 0)
+                txtService.setText(newJobJson.getRequest_detail().getServics_list().get(0).getService_detail().getTitle() + "");
+        }
+
         getMainActivity().titleBar.getTxtTitle().invalidate();
 
     }
@@ -326,6 +359,65 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
         timePicker.showTime();
     }
 
+    private void jobReject(String reason, final DialogHelper refusalDialog) {
+
+        if (!reason.equals("")) {
+            getDockActivity().onLoadingStarted();
+            Call<ResponseWrapper<JobRequestEnt>> call = webService.rejectJob(newJobJson.getId(),
+                    prefHelper.getUserId(), newJobJson.getRequest_id(), AppConstants.TECH_REJECT_JOB, reason);
+            call.enqueue(new Callback<ResponseWrapper<JobRequestEnt>>() {
+                @Override
+                public void onResponse(Call<ResponseWrapper<JobRequestEnt>> call, Response<ResponseWrapper<JobRequestEnt>> response) {
+                    getDockActivity().onLoadingFinished();
+                    if (response.body().getResponse().equals("2000")) {
+                        refusalDialog.hideDialog();
+                        getDockActivity().popBackStackTillEntry(0);
+                        getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
+
+                    } else {
+                        UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseWrapper<JobRequestEnt>> call, Throwable t) {
+                    getDockActivity().onLoadingFinished();
+                    Log.e("EntryCodeFragment", t.toString());
+                    // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                }
+            });
+        } else {
+            UIHelper.showShortToastInCenter(getDockActivity(), "Enter the Reason");
+        }
+
+    }
+
+    private void jobAccept() {
+        getDockActivity().onLoadingStarted();
+        Call<ResponseWrapper<JobRequestEnt>> call = webService.acceptJob(newJobJson.getId(), prefHelper.getUserId(), newJobJson.getRequest_id(),
+                AppConstants.TECH_ACCEPT_JOB);
+        call.enqueue(new Callback<ResponseWrapper<JobRequestEnt>>() {
+            @Override
+            public void onResponse(Call<ResponseWrapper<JobRequestEnt>> call, Response<ResponseWrapper<JobRequestEnt>> response) {
+                getDockActivity().onLoadingFinished();
+                if (response.body().getResponse().equals("2000")) {
+                    getDockActivity().popBackStackTillEntry(1);
+                    getDockActivity().replaceDockableFragment(OrderHistoryFragment.newInstance(), "HomeFragment");
+                } else {
+                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWrapper<JobRequestEnt>> call, Throwable t) {
+                getDockActivity().onLoadingFinished();
+                Log.e("EntryCodeFragment", t.toString());
+                //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+            }
+        });
+
+
+    }
 
     @Override
     public void onClick(View v) {
@@ -407,85 +499,6 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
 
 
         }
-
-    }
-
-    private void jobReject(String reason, final DialogHelper refusalDialog) {
-
-        if (!reason.equals("")) {
-            getDockActivity().onLoadingStarted();
-            Call<ResponseWrapper<JobRequestEnt>> call = webService.rejectJob(newJobJson.getId(),
-                    prefHelper.getUserId(), newJobJson.getRequest_id(), AppConstants.TECH_REJECT_JOB, reason);
-            call.enqueue(new Callback<ResponseWrapper<JobRequestEnt>>() {
-                @Override
-                public void onResponse(Call<ResponseWrapper<JobRequestEnt>> call, Response<ResponseWrapper<JobRequestEnt>> response) {
-                    getDockActivity().onLoadingFinished();
-                    if (response.body().getResponse().equals("2000")) {
-                        refusalDialog.hideDialog();
-                        getDockActivity().popBackStackTillEntry(0);
-                        getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
-
-                    } else {
-                        UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseWrapper<JobRequestEnt>> call, Throwable t) {
-                    getDockActivity().onLoadingFinished();
-                    Log.e("EntryCodeFragment", t.toString());
-                    // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
-                }
-            });
-        } else {
-            UIHelper.showShortToastInCenter(getDockActivity(), "Enter the Reason");
-        }
-
-    }
-
-    private void jobAccept() {
-        getDockActivity().onLoadingStarted();
-        Call<ResponseWrapper<JobRequestEnt>> call = webService.acceptJob(newJobJson.getId(), prefHelper.getUserId(), newJobJson.getRequest_id(),
-                AppConstants.TECH_ACCEPT_JOB);
-        call.enqueue(new Callback<ResponseWrapper<JobRequestEnt>>() {
-            @Override
-            public void onResponse(Call<ResponseWrapper<JobRequestEnt>> call, Response<ResponseWrapper<JobRequestEnt>> response) {
-                getDockActivity().onLoadingFinished();
-                if (response.body().getResponse().equals("2000")) {
-                    getDockActivity().popBackStackTillEntry(1);
-                    getDockActivity().replaceDockableFragment(OrderHistoryFragment.newInstance(), "HomeFragment");
-                } else {
-                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseWrapper<JobRequestEnt>> call, Throwable t) {
-                getDockActivity().onLoadingFinished();
-                Log.e("EntryCodeFragment", t.toString());
-                //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
-            }
-        });
-
-
-    }
-
-    @Override
-    public void setTitleBar(TitleBar titleBar) {
-        super.setTitleBar(titleBar);
-        getDockActivity().lockDrawer();
-        titleBar.hideButtons();
-        titleBar.showBackButton();
-        if (newJobJson != null)
-            if (prefHelper.isLanguageArabic()) {
-                titleBar.setSubHeading(newJobJson.getRequest_detail().getService_detail().getAr_title());
-            } else {
-                titleBar.setSubHeading(newJobJson.getRequest_detail().getService_detail().getTitle());
-            }
-
-        else
-            titleBar.setSubHeading(getString(R.string.new_jobs));
-        // titleBar.setSubHeading(getString(R.string.plumbing));
 
     }
 

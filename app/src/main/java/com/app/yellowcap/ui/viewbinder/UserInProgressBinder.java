@@ -32,12 +32,12 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
     onCancelJobListner onCancelJobListner;
     BasePreferenceHelper preferenceHelper;
 
-    public UserInProgressBinder(CallUser callUser, DockActivity context, onCancelJobListner onCancelJobListner,BasePreferenceHelper preferenceHelper) {
+    public UserInProgressBinder(CallUser callUser, DockActivity context, onCancelJobListner onCancelJobListner, BasePreferenceHelper preferenceHelper) {
         super(R.layout.row_item_user_inprogress);
         this.callUser = callUser;
         this.context = context;
         this.onCancelJobListner = onCancelJobListner;
-        this.preferenceHelper=preferenceHelper;
+        this.preferenceHelper = preferenceHelper;
     }
 
     @Override
@@ -50,16 +50,15 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
         InProgressViewHolder viewHolder = (InProgressViewHolder) view.getTag();
         RequestTechnicianEnt technicianEnt = null;
 
-        if(preferenceHelper.isLanguageArabic()){
+        if (preferenceHelper.isLanguageArabic()) {
             viewHolder.root_layout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-        }
-        else
+        } else
             viewHolder.root_layout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
 
-        if (entity.getAssign_technician_details()!=null) {
+        if (entity.getAssign_technician_details() != null) {
             technicianEnt = entity.getAssign_technician_details();
         }
-        if (technicianEnt != null&&entity.getStatus()== AppConstants.TECH_ACCEPT_ASSIGN_JOB) {
+        if (technicianEnt != null && entity.getStatus() == AppConstants.TECH_ACCEPT_ASSIGN_JOB) {
             viewHolder.ivEditBtn.setVisibility(View.GONE);
             viewHolder.txtTechNameText.setText(technicianEnt.getTechnician_details().getFullName());
             viewHolder.txtNumberText.setText(technicianEnt.getTechnician_details().getPhoneNo());
@@ -71,10 +70,15 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
             viewHolder.btnCallUser.setBackground(context.getResources().getDrawable(R.drawable.button_blackbackground));
 
         }
-        if (entity.getServicsList().size() > 0)
-            viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getTitle());
+        if (entity.getServicsList().size() > 0) {
+            if (preferenceHelper.isLanguageArabic()) {
+                viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getArTitle());
+            } else {
+                viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getTitle());
+            }
+        }
         if (entity.getTotal().equals("")) {
-            viewHolder.txtAmountText.setText(context.getString(R.string.aed) + " " + entity.getEstimateFrom()+" To "+entity.getEstimateTo());
+            viewHolder.txtAmountText.setText(context.getString(R.string.aed) + " " + entity.getEstimateFrom() + " " + activity.getResources().getString(R.string.to) + " " + entity.getEstimateTo());
         } else {
             viewHolder.txtAmountText.setText(context.getString(R.string.aed) + " " + entity.getTotal_amount());
 
@@ -99,7 +103,7 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
         viewHolder.btnCallUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (finalTechnicianEnt != null&&entity.getStatus()==AppConstants.TECH_ACCEPT_ASSIGN_JOB) {
+                if (finalTechnicianEnt != null && entity.getStatus() == AppConstants.TECH_ACCEPT_ASSIGN_JOB) {
                     callUser.CallOnUserNumber(finalTechnicianEnt.getTechnician_details().getPhoneNo());
                 } else {
                     UIHelper.showShortToastInCenter(context, context.getString(R.string.assignText));

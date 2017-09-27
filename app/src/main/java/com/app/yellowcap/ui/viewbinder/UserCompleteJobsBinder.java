@@ -43,8 +43,13 @@ public class UserCompleteJobsBinder extends ViewBinder<UserComleteJobsEnt> {
             viewHolder.root_layout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
 
         viewHolder.txtJobNoText.setText(String.valueOf(position + 1));
-        if (entity.getServicsList().size() > 0)
-            viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getTitle());
+        if (entity.getServicsList().size() > 0) {
+            if (preferenceHelper.isLanguageArabic()) {
+                viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getArTitle());
+            } else {
+                viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getTitle());
+            }
+        }
         if (entity.getAssign_technician_details() != null)
             viewHolder.txtClientNameText.setText(entity.getAssign_technician_details().getTechnician_details().getFullName());
         viewHolder.txtEarningText.setText(entity.getTotal_amount());

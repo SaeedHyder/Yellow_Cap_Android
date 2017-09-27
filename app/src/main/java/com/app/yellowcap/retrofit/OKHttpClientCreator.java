@@ -6,6 +6,7 @@ import android.content.Context;
 import android.support.v4.app.NotificationCompat;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -29,6 +30,7 @@ public class OKHttpClientCreator {
         OkHttpClient client = new OkHttpClient.Builder()
                 .addNetworkInterceptor(new CustomInterceptor(progressListener))
                 .addInterceptor(interceptor)
+                .connectTimeout(30, TimeUnit.SECONDS)
                 .build();
 
 
