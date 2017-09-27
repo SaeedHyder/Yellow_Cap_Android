@@ -4,11 +4,9 @@ import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.app.yellowcap.R;
-import com.app.yellowcap.activities.DockActivity;
 
 import berlin.volders.badger.BadgeShape;
 import berlin.volders.badger.Badger;
@@ -59,7 +57,7 @@ public class BadgeHelper {
                 imgNotificationCounter.setImageDrawable(badger.drawable);
                 badge = badger.badge;
                 badge.setCount(count);
-            } else
+            } else if (count > 0)
                 badge.setCount(count);
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,7 +80,8 @@ public class BadgeHelper {
             e.printStackTrace();
         }
     }
-    public void  changeBadgeGravity(int GravitySide){
+
+    public void changeBadgeGravity(int GravitySide) {
         RelativeLayout.LayoutParams params =
                 new RelativeLayout.LayoutParams(imgNotificationCounter.getWidth(),
                         imgNotificationCounter.getHeight());
@@ -90,6 +89,7 @@ public class BadgeHelper {
 
         imgNotificationCounter.setLayoutParams(params);
     }
+
     public boolean isBadgeVisible() {
         return imgNotificationCounter.getVisibility() == View.VISIBLE;
     }
