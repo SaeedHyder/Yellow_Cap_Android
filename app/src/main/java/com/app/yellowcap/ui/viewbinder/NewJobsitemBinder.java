@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import com.app.yellowcap.R;
 import com.app.yellowcap.entities.NewJobEnt;
 import com.app.yellowcap.entities.NewJobsEnt;
+import com.app.yellowcap.helpers.BasePreferenceHelper;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -20,9 +21,11 @@ public class NewJobsitemBinder  extends ViewBinder<NewJobsEnt> {
     private ImageLoader imageLoader;
     String title="";
     String title1="";
+    BasePreferenceHelper preferenceHelper;
 
-    public NewJobsitemBinder() {
+    public NewJobsitemBinder( BasePreferenceHelper preferenceHelper) {
         super(R.layout.newjobs_item);
+        this.preferenceHelper=preferenceHelper;
 
         imageLoader = ImageLoader.getInstance();
     }
@@ -41,9 +44,20 @@ public class NewJobsitemBinder  extends ViewBinder<NewJobsEnt> {
 
         if(entity.getRequest_detail().getService_detail()!=null) {
             if (entity.getRequest_detail().getService_detail() != null) {
-                title = entity.getRequest_detail().getService_detail().getTitle();
+                if(!preferenceHelper.isLanguageArabic()){
+                title = entity.getRequest_detail().getService_detail().getTitle()+"";}
+                else {
+                    title = entity.getRequest_detail().getService_detail().getAr_title()+"";
+                }
                 if (entity.getRequest_detail().getServics_list().size()>0) {
-                    title1 = entity.getRequest_detail().getServics_list().get(0).getService_detail().getTitle();
+                    if(!preferenceHelper.isLanguageArabic()){
+                        title1 = entity.getRequest_detail().getServics_list().get(0).getService_detail().getTitle()+"";
+                    }
+                    else
+                    {
+                        title1 = entity.getRequest_detail().getServics_list().get(0).getService_detail().getAr_title()+"";
+                    }
+
                 }
                 viewHolder.txt_jobNotification.setText(title + "/" + title1);
             }

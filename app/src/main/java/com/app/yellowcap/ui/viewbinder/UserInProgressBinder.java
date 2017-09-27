@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.activities.DockActivity;
@@ -11,6 +12,7 @@ import com.app.yellowcap.entities.RequestTechnicianEnt;
 import com.app.yellowcap.entities.UserInProgressEnt;
 import com.app.yellowcap.fragments.RequestServiceFragment;
 import com.app.yellowcap.global.AppConstants;
+import com.app.yellowcap.helpers.BasePreferenceHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.interfaces.CallUser;
 import com.app.yellowcap.interfaces.onCancelJobListner;
@@ -28,12 +30,14 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
     DockActivity context;
     CallUser callUser;
     onCancelJobListner onCancelJobListner;
+    BasePreferenceHelper preferenceHelper;
 
-    public UserInProgressBinder(CallUser callUser, DockActivity context, onCancelJobListner onCancelJobListner) {
+    public UserInProgressBinder(CallUser callUser, DockActivity context, onCancelJobListner onCancelJobListner,BasePreferenceHelper preferenceHelper) {
         super(R.layout.row_item_user_inprogress);
         this.callUser = callUser;
         this.context = context;
         this.onCancelJobListner = onCancelJobListner;
+        this.preferenceHelper=preferenceHelper;
     }
 
     @Override
@@ -45,6 +49,13 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
     public void bindView(final UserInProgressEnt entity, final int position, int grpPosition, View view, Activity activity) {
         InProgressViewHolder viewHolder = (InProgressViewHolder) view.getTag();
         RequestTechnicianEnt technicianEnt = null;
+
+        if(preferenceHelper.isLanguageArabic()){
+            viewHolder.root_layout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
+        else
+            viewHolder.root_layout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+
         if (entity.getAssign_technician_details()!=null) {
             technicianEnt = entity.getAssign_technician_details();
         }
@@ -113,6 +124,8 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
         Button btnCallUser;
         @BindView(R.id.btn_cancelJob)
         Button btnCancelJob;
+        @BindView(R.id.root_layout)
+        LinearLayout root_layout;
 
         public InProgressViewHolder(View view) {
             ButterKnife.bind(this, view);

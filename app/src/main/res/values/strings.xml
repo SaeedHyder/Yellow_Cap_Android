@@ -107,6 +107,7 @@
     <string name="cvv">CVV</string>
     <string name="name_appearing_on_card">Name Appearing on the Card</string>
     <string name="cod">Cash on Delivery</string>
+    <string name="cod_short">COD</string>
     <string name="request_a_quote">Request a Quote</string>
     <string name="gps_question">Location is Disabled.Do you want to enable it</string>
     <string name="gps_yes">Yes</string>
@@ -276,6 +277,8 @@
     <string name="enter_address">Enter Address</string>
     <string name="enter_email">Enter Valid Email</string>
     <string name="email_alert_message">A verification code has been send to your Email address</string>
+    <string name="addtional_jobs">Additional Jobs</string>
+    <string name="to">to</string>
 
 
 </resources>

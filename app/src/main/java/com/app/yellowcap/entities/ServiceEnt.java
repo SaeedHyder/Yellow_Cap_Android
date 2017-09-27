@@ -37,7 +37,7 @@ public class ServiceEnt {
     @SerializedName("service_image")
     @Expose
     private String serviceImage;
-    public ServiceEnt(Integer id, String title, String image, Integer parentId, String createdAt, String updatedAt, String deletedAt, String serviceImage) {
+    public ServiceEnt(Integer id, String title, String image, Integer parentId, String createdAt, String updatedAt, String deletedAt, String serviceImage,String arTitle) {
         this.id = id;
         this.title = title;
         this.image = image;
@@ -46,6 +46,7 @@ public class ServiceEnt {
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
         this.serviceImage = serviceImage;
+        setArTitle(arTitle);
     }
 
     public Integer getId() {

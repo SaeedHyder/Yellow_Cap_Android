@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.entities.RequestDetail;
@@ -39,12 +38,10 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.app.yellowcap.R.id.txt_additionDescription;
 import static com.app.yellowcap.R.id.txt_totalPriceText;
 
 /**
@@ -162,7 +159,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
 
 
         }
-        selectedJobsadapter = new ArrayListAdapter<ServiceEnt>(getDockActivity(), new SelectedJobBinder(this,prefHelper));
+        selectedJobsadapter = new ArrayListAdapter<ServiceEnt>(getDockActivity(), new SelectedJobBinder(this, prefHelper));
     }
 
     @Override
@@ -211,7 +208,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
             public boolean onTouch(View v, MotionEvent event) {
 
                 v.getParent().requestDisallowInterceptTouchEvent(true);
-                switch (event.getAction() & MotionEvent.ACTION_MASK){
+                switch (event.getAction() & MotionEvent.ACTION_MASK) {
                     case MotionEvent.ACTION_UP:
                         v.getParent().requestDisallowInterceptTouchEvent(false);
                         break;
@@ -249,7 +246,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
             @Override
             public void onFailure(Call<ResponseWrapper<ArrayList<ServiceEnt>>> call, Throwable t) {
                 Log.e("TermAndCondition", t.toString());
-               // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
 
@@ -260,7 +257,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         final ArrayList<String> jobtypearraylist = new ArrayList<String>();
         for (ServiceEnt item : jobcollection
                 ) {
-            jobtypearraylist.add(item.getTitle());
+            jobtypearraylist.add(prefHelper.isLanguageArabic() ? item.getArTitle() : item.getTitle());
         }
 
 
@@ -270,18 +267,34 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         if (previousData != null) {
             if (jobcollection.size() > 0) {
                 if (previousData.getService_detail() != null) {
-                    if (jobtypearraylist.contains(previousData.getService_detail().getTitle())) {
-                        spnJobtype.setSelection(jobtypearraylist.indexOf(previousData.getService_detail().getTitle()));
-                        jobtype = jobcollection.get(jobtypearraylist.indexOf(previousData.getService_detail().getTitle()));
-                        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                            initJobDescriptionSpinner(jobtype);
+                    if (prefHelper.isLanguageArabic()) {
+                        if (jobtypearraylist.contains(previousData.getService_detail().getAr_title())) {
+                            spnJobtype.setSelection(jobtypearraylist.indexOf(previousData.getService_detail().getAr_title()));
+                            jobtype = jobcollection.get(jobtypearraylist.indexOf(previousData.getService_detail().getAr_title()));
+                            if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                                initJobDescriptionSpinner(jobtype);
+                            }
+                        } else {
+                            spnJobtype.setSelection(0);
+                            jobtype = jobcollection.get(0);
+                            if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                                initJobDescriptionSpinner(jobtype);
+                            }
                         }
-                    }
-                } else {
-                    spnJobtype.setSelection(0);
-                    jobtype = jobcollection.get(0);
-                    if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                        initJobDescriptionSpinner(jobtype);
+                    } else {
+                        if (jobtypearraylist.contains(previousData.getService_detail().getTitle())) {
+                            spnJobtype.setSelection(jobtypearraylist.indexOf(previousData.getService_detail().getTitle()));
+                            jobtype = jobcollection.get(jobtypearraylist.indexOf(previousData.getService_detail().getTitle()));
+                            if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                                initJobDescriptionSpinner(jobtype);
+                            }
+                        } else {
+                            spnJobtype.setSelection(0);
+                            jobtype = jobcollection.get(0);
+                            if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                                initJobDescriptionSpinner(jobtype);
+                            }
+                        }
                     }
                 }
             }
@@ -338,7 +351,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
                 @Override
                 public void onFailure(Call<ResponseWrapper<ArrayList<ServiceEnt>>> call, Throwable t) {
                     Log.e("TermAndCondition", t.toString());
-                  //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                    //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
                 }
             });
 
@@ -349,7 +362,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         final ArrayList<String> jobdescriptionarraylist = new ArrayList<String>();
         for (ServiceEnt item : jobChildcollection
                 ) {
-            jobdescriptionarraylist.add(item.getTitle());
+            jobdescriptionarraylist.add(prefHelper.isLanguageArabic() ? item.getArTitle() : item.getTitle());
         }
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, jobdescriptionarraylist);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -388,7 +401,8 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
                         item.getService_detail().getCreated_at(),
                         item.getService_detail().getUpdated_at(),
                         item.getService_detail().getDeleted_at(),
-                        item.getService_detail().getService_image()));
+                        item.getService_detail().getService_image(),
+                        item.getService_detail().getAr_title()));
             }
         }
 
@@ -447,7 +461,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
             public void onFailure(Call<ResponseWrapper> call, Throwable t) {
                 loadingFinished();
                 Log.e("EntryCodeFragment", t.toString());
-             //   UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                //   UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }
@@ -477,7 +491,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         if (isEdit) {
             titleBar.setSubHeading(getString(R.string.edit_job));
         } else {
-            titleBar.setSubHeading("Add Job");
+            titleBar.setSubHeading(getString(R.string.add_job));
         }
     }
  /*   private void initJobTypeSpinner() {
@@ -532,8 +546,6 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
             }
         });
     }*/
-
-
 
 
     @Override

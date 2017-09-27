@@ -12,6 +12,7 @@ import com.app.yellowcap.activities.DockActivity;
 import com.app.yellowcap.entities.RequestDetail;
 import com.app.yellowcap.entities.serviceList;
 import com.app.yellowcap.fragments.EditJobTechFragment;
+import com.app.yellowcap.helpers.BasePreferenceHelper;
 import com.app.yellowcap.interfaces.CallUser;
 import com.app.yellowcap.interfaces.MarkAsComplete;
 import com.app.yellowcap.ui.viewbinders.abstracts.ExpandableListViewBinder;
@@ -31,14 +32,15 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
     DockActivity context;
     CallUser callUser;
     MarkAsComplete complete;
+    private BasePreferenceHelper preferenceHelper;
 
-
-    public InprogressExpandBinder(DockActivity context, CallUser callUser, MarkAsComplete complete) {
+    public InprogressExpandBinder(DockActivity context, CallUser callUser, MarkAsComplete complete, BasePreferenceHelper prefHelper) {
 
         super(R.layout.inprogress_tech_parent, R.layout.inprogress_chlid);
         this.context = context;
         this.callUser = callUser;
         this.complete = complete;
+        this.preferenceHelper = prefHelper;
 
     }
 
@@ -57,7 +59,11 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
     public void bindGroupView(final RequestDetail entity, final int position, int grpPosition, int childCount, View view, Activity activity) {
 
         parentViewHolder parentViewHolder = (InprogressExpandBinder.parentViewHolder) view.getTag();
-
+        if (preferenceHelper.isLanguageArabic()){
+            parentViewHolder.root_layout_parent.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }else {
+            parentViewHolder.root_layout_parent.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+        }
         if (childCount <= 0) {
             parentViewHolder.hideView.setVisibility(View.GONE);
             parentViewHolder.llEstimatedQuotation.setVisibility(View.VISIBLE);
@@ -70,7 +76,7 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         parentViewHolder.txtJobNoText.setText(String.valueOf(position + 1));
         parentViewHolder.txtJobPostedText.setText(entity.getDate()+"");
         parentViewHolder.txtClientNameText.setText(entity.getUser_detail().getFull_name()+"");
-        parentViewHolder.txtEstimatedQuotationText.setText(context.getString(R.string.between_aed) +" "+ entity.getEstimate_to() + " to " + entity.getEstimate_from());
+        parentViewHolder.txtEstimatedQuotationText.setText(context.getString(R.string.between_aed) +" "+ entity.getEstimate_to() + view.getContext().getResources().getString(R.string.to) + entity.getEstimate_from());
         if (entity.getService_detail() != null) {
             parentViewHolder.txtJobTitleText.setText(entity.getService_detail().getTitle()+"");
         } else {
@@ -132,7 +138,12 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
     public void bindChildView(final RequestDetail entity, final int position, final int grpPosition, int childCount, View view, Activity activity) {
 
         childViewHolder childViewHolder = (InprogressExpandBinder.childViewHolder) view.getTag();
-
+        if (preferenceHelper.isLanguageArabic()){
+            childViewHolder.root_layout_child.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
+        else {
+            childViewHolder.root_layout_child.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+        }
         ArrayList<String> subFieldTitles = new ArrayList<>();
 
         if (position == childCount - 1) {
@@ -142,9 +153,16 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         }
         StringBuilder stringBuilder = new StringBuilder();
         for (serviceList item : entity.getServics_list()) {
-            if (item.getService_detail().getTitle() != null) {
-                stringBuilder.append(item.getService_detail().getTitle() + System.getProperty("line.separator"));
-                subFieldTitles.add(item.getService_detail().getTitle());
+            if (preferenceHelper.isLanguageArabic()){
+                if (item.getService_detail().getAr_title() != null) {
+                    stringBuilder.append(item.getService_detail().getAr_title() + System.getProperty("line.separator"));
+                    subFieldTitles.add(item.getService_detail().getAr_title());
+                }
+            }else {
+                if (item.getService_detail().getTitle() != null) {
+                    stringBuilder.append(item.getService_detail().getTitle() + System.getProperty("line.separator"));
+                    subFieldTitles.add(item.getService_detail().getTitle());
+                }
             }
         }
 
@@ -245,7 +263,8 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         AnyTextView txtEstimatedQuotationText;
         @BindView(R.id.ll_EstimatedQuotation)
         LinearLayout llEstimatedQuotation;
-
+        @BindView(R.id.root_layout_parent)
+        LinearLayout root_layout_parent;
         parentViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
@@ -284,6 +303,8 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         LinearLayout llAdditionalJob;
         @BindView(R.id.ll_BottomEarning)
         LinearLayout llBottomEarning;
+        @BindView(R.id.root_layout_child)
+        LinearLayout root_layout_child;
 
         childViewHolder(View view) {
             ButterKnife.bind(this, view);
