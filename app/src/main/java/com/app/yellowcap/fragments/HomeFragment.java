@@ -99,7 +99,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        getMainActivity().refreshFirstTimeSideMenu();
         if (getMainActivity().isNotification) {
             getMainActivity().isNotification = false;
             showNotification();

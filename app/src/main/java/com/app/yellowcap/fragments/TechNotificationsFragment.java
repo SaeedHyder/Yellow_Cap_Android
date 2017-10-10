@@ -68,7 +68,10 @@ public class TechNotificationsFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        prefHelper.setBadgeCount(0);
+        getMainActivity().refreshSideMenu();
+        getMainActivity().titleBar.invalidate();
+        getMainActivity().titleBar.getImageView().invalidate();
         if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
             loadingStarted();
             getNotification();

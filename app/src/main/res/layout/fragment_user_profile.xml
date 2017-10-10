@@ -234,7 +234,7 @@
                 android:layout_toRightOf="@+id/img_location_image"
                 android:background="@null"
                 android:drawablePadding="@dimen/x10"
-                android:hint="@string/address_2"
+                android:hint="@string/secondAddress"
                 android:imeOptions="actionDone"
                 android:maxLines="1"
                 android:singleLine="true"

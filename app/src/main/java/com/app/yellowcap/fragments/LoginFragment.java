@@ -5,12 +5,12 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.entities.RegistrationResultEnt;
@@ -46,6 +46,8 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
     AnyEditTextView edtEmail;
     @BindView(R.id.edtPassword)
     AnyEditTextView edtPassword;
+    @BindView(R.id.scrollview_bigdaddy)
+    LinearLayout scrollviewBigdaddy;
 
 
     public static LoginFragment newInstance() {
@@ -58,9 +60,11 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         if (prefHelper.isLanguageArabic()) {
-            edtPassword.setGravity(Gravity.RIGHT);
+            scrollviewBigdaddy.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            //edtPassword.setGravity(Gravity.END);
         } else {
-            edtPassword.setGravity(Gravity.START);
+            scrollviewBigdaddy.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+            //  edtPassword.setGravity(Gravity.START);
         }
         edtPassword.addTextChangedListener(new TextWatcher() {
             @Override
@@ -70,11 +74,11 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!edtPassword.getText().toString().isEmpty()) {
+               /* if (!edtPassword.getText().toString().isEmpty()) {
                     edtPassword.setGravity(Gravity.START);
                 } else {
-                    edtPassword.setGravity(Gravity.RIGHT);
-                }
+                    edtPassword.setGravity(Gravity.END);
+                }*/
             }
 
             @Override
@@ -189,4 +193,6 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
         ButterKnife.bind(this, rootView);
         return rootView;
     }
+
+
 }

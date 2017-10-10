@@ -78,7 +78,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/x12"
                 android:textStyle="normal"
-                app:typeface="Roboto-Regular.ttf" />
+                app:typeface="Roboto-Regular.ttf"/>
 
             <com.app.yellowcap.ui.views.AnyTextView
                 android:id="@+id/txt2"
@@ -130,7 +130,7 @@
                 android:layout_weight="1.3"
                 android:alpha="0.7"
                 android:gravity="center"
-                app:stars="0"
+                app:stars="1"
                 android:textSize="@dimen/x15"
                 android:textStyle="bold"
                 app:typeface="Roboto-Regular.ttf" />

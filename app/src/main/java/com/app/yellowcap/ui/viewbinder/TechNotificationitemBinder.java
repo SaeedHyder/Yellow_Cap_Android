@@ -35,10 +35,10 @@ public class TechNotificationitemBinder extends ViewBinder<NotificationEnt> {
         TechNotificationitemBinder.ViewHolder viewHolder = (TechNotificationitemBinder.ViewHolder) view.getTag();
         if (prefhelper.isLanguageArabic()) {
            // view.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-            viewHolder.txt_jobNotification.setText(entity.getArmessage() + "");
+            viewHolder.txt_jobNotification.setText((entity.getArmessage() + "").trim());
         } else {
            // view.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
-            viewHolder.txt_jobNotification.setText(entity.getMessage() + "");
+            viewHolder.txt_jobNotification.setText((entity.getMessage() + "").trim());
         }
         viewHolder.iv_next.setOnClickListener(new View.OnClickListener() {
             @Override
