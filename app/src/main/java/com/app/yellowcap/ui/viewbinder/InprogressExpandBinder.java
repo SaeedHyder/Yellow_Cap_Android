@@ -12,7 +12,9 @@ import com.app.yellowcap.activities.DockActivity;
 import com.app.yellowcap.entities.RequestDetail;
 import com.app.yellowcap.entities.serviceList;
 import com.app.yellowcap.fragments.EditJobTechFragment;
+import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.helpers.BasePreferenceHelper;
+import com.app.yellowcap.helpers.DateHelper;
 import com.app.yellowcap.interfaces.CallUser;
 import com.app.yellowcap.interfaces.MarkAsComplete;
 import com.app.yellowcap.ui.viewbinders.abstracts.ExpandableListViewBinder;
@@ -74,10 +76,20 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
             parentViewHolder.llBottomBtns.setVisibility(View.GONE);
         }
         parentViewHolder.txtJobNoText.setText(String.valueOf(position + 1));
-        parentViewHolder.txtJobPostedText.setText(entity.getDate()+"");
+        //parentViewHolder.txtJobPostedText.setText(entity.getDate()+"");
+        if (!preferenceHelper.isLanguageArabic()) {
+            parentViewHolder.txtJobPostedText.setText(DateHelper.dateFormat(entity.getDate(), AppConstants.DateFormat_DMY, AppConstants.DateFormat_YMD) + "");
+        } else {
+            parentViewHolder.txtJobPostedText.setText(entity.getDate() + "");
+        }
         if(entity.getUser_detail()!=null)
         parentViewHolder.txtClientNameText.setText(entity.getUser_detail().getFull_name()+"");
-        parentViewHolder.txtEstimatedQuotationText.setText(context.getString(R.string.between_aed) +" "+ entity.getEstimate_to() + view.getContext().getResources().getString(R.string.to) + entity.getEstimate_from());
+        if(!preferenceHelper.isLanguageArabic()){
+        parentViewHolder.txtEstimatedQuotationText.setText(context.getString(R.string.between_aed) +" "+ entity.getEstimate_to() +" "+ view.getContext().getResources().getString(R.string.to) +" "+ entity.getEstimate_from());}
+        else
+        {
+            parentViewHolder.txtEstimatedQuotationText.setText(context.getString(R.string.between) +" "+ entity.getEstimate_from() +" "+ view.getContext().getResources().getString(R.string.to) +" "+ entity.getEstimate_to()+" "+context.getResources().getString(R.string.aed));
+    }
         if (entity.getService_detail() != null) {
             if(preferenceHelper.isLanguageArabic()){
                 parentViewHolder.txtJobTitleText.setText(entity.getService_detail().getAr_title()+"");

@@ -79,7 +79,8 @@
                 android:text="@string/job"
                 android:textSize="@dimen/x14"
                 android:textStyle="bold"
-                android:layout_marginRight="@dimen/x3"
+                android:layout_marginEnd="@dimen/x8"
+                android:layout_marginStart="@dimen/x8"
                 app:typeface="Roboto-Regular.ttf" />
 
             <com.app.yellowcap.ui.views.AnyTextView
@@ -109,7 +110,8 @@
                 android:text="@string/Customer_Name"
                 android:textSize="@dimen/x14"
                 android:textStyle="bold"
-                android:layout_marginRight="@dimen/x3"
+                android:layout_marginEnd="@dimen/x8"
+                android:layout_marginStart="@dimen/x8"
                 app:typeface="Roboto-Regular.ttf" />
 
             <com.app.yellowcap.ui.views.AnyTextView
@@ -139,7 +141,8 @@
                 android:text="@string/Estimated_Quote"
                 android:textSize="@dimen/x14"
                 android:textStyle="bold"
-                android:layout_marginRight="@dimen/x3"
+                android:layout_marginEnd="@dimen/x8"
+                android:layout_marginStart="@dimen/x8"
                 app:typeface="Roboto-Regular.ttf" />
 
             <com.app.yellowcap.ui.views.AnyTextView
@@ -169,7 +172,8 @@
                 android:text="@string/Service"
                 android:textSize="@dimen/x14"
                 android:textStyle="bold"
-                android:layout_marginRight="@dimen/x3"
+                android:layout_marginEnd="@dimen/x8"
+                android:layout_marginStart="@dimen/x8"
                 app:typeface="Roboto-Regular.ttf" />
 
             <com.app.yellowcap.ui.views.AnyTextView
@@ -195,11 +199,12 @@
                 android:id="@+id/txt_AddressHeading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/lightBlack"
+                android:layout_marginEnd="@dimen/x8"
+                android:layout_marginStart="@dimen/x8"
                 android:text="@string/address"
+                android:textColor="@color/lightBlack"
                 android:textSize="@dimen/x14"
                 android:textStyle="bold"
-                android:layout_marginRight="@dimen/x3"
                 app:typeface="Roboto-Regular.ttf" />
 
             <com.app.yellowcap.ui.views.AnyTextView
@@ -230,7 +235,8 @@
                 android:layout_marginBottom="@dimen/x5"
                 android:textSize="@dimen/x14"
                 android:textStyle="bold"
-                android:layout_marginRight="@dimen/x3"
+                android:layout_marginEnd="@dimen/x8"
+                android:layout_marginStart="@dimen/x8"
                 app:typeface="Roboto-Regular.ttf" />
 
             <com.app.yellowcap.ui.views.AnyTextView
@@ -256,7 +262,8 @@
                 android:id="@+id/txt_preferred_dateTimeHeading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/x3"
+                android:layout_marginEnd="@dimen/x8"
+                android:layout_marginStart="@dimen/x8"
                 android:text="@string/preferred_date_time"
                 android:textColor="@color/lightBlack"
                 android:textSize="@dimen/x14"

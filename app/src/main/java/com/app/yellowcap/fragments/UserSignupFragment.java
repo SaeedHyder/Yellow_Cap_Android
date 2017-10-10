@@ -138,7 +138,10 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
                             prefHelper.getUserId(),
                             AppConstants.Device_Type,
                             prefHelper.getFirebase_TOKEN());
-                    showSignupDialog();
+                    prefHelper.setLoginStatus(true);
+//                    getDockActivity().popBackStackTillEntry(0);
+                    getDockActivity().replaceDockableFragment(TermAndConditionFragment.newInstance(), "Terms And conditon Fragment");
+                    //showSignupDialog();
 
                 } else {
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());

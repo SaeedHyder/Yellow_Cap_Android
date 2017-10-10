@@ -22,7 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/job"
-            android:layout_marginRight="@dimen/x8"
+            android:layout_marginEnd="@dimen/x8"
+            android:layout_marginStart="@dimen/x8"
             android:textColor="@color/lightBlack"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
@@ -53,7 +54,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/job_completed"
-            android:layout_marginRight="@dimen/x8"
+            android:layout_marginEnd="@dimen/x8"
+            android:layout_marginStart="@dimen/x8"
             android:textColor="@color/lightBlack"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
@@ -84,7 +86,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/technician_name"
-            android:layout_marginRight="@dimen/x8"
+            android:layout_marginEnd="@dimen/x8"
+            android:layout_marginStart="@dimen/x8"
             android:textColor="@color/lightBlack"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
@@ -115,7 +118,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/job_title"
-            android:layout_marginRight="@dimen/x8"
+            android:layout_marginEnd="@dimen/x8"
+            android:layout_marginStart="@dimen/x8"
             android:textColor="@color/lightBlack"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
@@ -146,7 +150,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/technician_rating"
-            android:layout_marginRight="@dimen/x8"
+            android:layout_marginEnd="@dimen/x8"
+            android:layout_marginStart="@dimen/x8"
             android:textColor="@color/lightBlack"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
@@ -186,7 +191,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/amount_paid"
-            android:layout_marginRight="@dimen/x8"
+            android:layout_marginEnd="@dimen/x8"
+            android:layout_marginStart="@dimen/x8"
             android:textColor="@color/lightBlack"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
@@ -213,6 +219,8 @@
             android:id="@+id/txt_description_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/x8"
+            android:layout_marginStart="@dimen/x8"
              android:textColor="@color/gray"
             android:textSize="@dimen/x15"
             android:maxLines="3"

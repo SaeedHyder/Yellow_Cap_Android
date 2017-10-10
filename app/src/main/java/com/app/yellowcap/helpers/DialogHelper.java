@@ -134,10 +134,15 @@ public class DialogHelper {
 
     }
 
-    public Dialog initRatingDialog(int layoutID, View.OnClickListener onclicklistener, String title, String message) {
+    public Dialog initRatingDialog(int layoutID, View.OnClickListener onclicklistener, String title, String message,BasePreferenceHelper preferenceHelper) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         this.dialog.setContentView(layoutID);
+        if(preferenceHelper.isLanguageArabic()){
+        this.dialog.getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);}
+        else{
+            this.dialog.getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+        }
         Button closeButton = (Button) dialog.findViewById(R.id.btn_close);
         closeButton.setOnClickListener(onclicklistener);
         AnyTextView txttitle = (AnyTextView) dialog.findViewById(R.id.txtHeader);

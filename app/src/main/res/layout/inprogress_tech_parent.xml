@@ -10,7 +10,7 @@
         android:id="@+id/ll_job"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginLeft="@dimen/x12"
         android:layout_marginRight="@dimen/x20"
         android:layout_marginTop="@dimen/x20"
         android:layout_marginBottom="@dimen/x3"
@@ -24,6 +24,7 @@
             android:text="@string/job"
             android:layout_weight="0"
             android:layout_marginRight="@dimen/x8"
+            android:layout_marginLeft="@dimen/x8"
             android:textColor="@color/lightBlack"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
@@ -51,7 +52,7 @@
         android:id="@+id/ll_jobPosted"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginLeft="@dimen/x12"
         android:layout_marginRight="@dimen/x20"
         android:layout_marginBottom="@dimen/x3"
         android:orientation="horizontal">
@@ -63,6 +64,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Job_Posted"
             android:layout_marginRight="@dimen/x8"
+            android:layout_marginLeft="@dimen/x8"
             android:textColor="@color/lightBlack"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
@@ -82,7 +84,7 @@
         android:id="@+id/ll_clientName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginLeft="@dimen/x12"
         android:layout_marginRight="@dimen/x20"
         android:layout_marginBottom="@dimen/x3"
         android:orientation="horizontal">
@@ -94,6 +96,7 @@
             android:layout_height="wrap_content"
             android:text="@string/client_name"
             android:layout_marginRight="@dimen/x8"
+            android:layout_marginLeft="@dimen/x8"
             android:textColor="@color/lightBlack"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
@@ -113,7 +116,7 @@
         android:id="@+id/ll_JobTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginLeft="@dimen/x12"
         android:layout_marginRight="@dimen/x20"
         android:layout_marginBottom="@dimen/x3"
         android:orientation="horizontal">
@@ -125,6 +128,7 @@
             android:layout_height="wrap_content"
             android:text="@string/job_title"
             android:layout_marginRight="@dimen/x8"
+            android:layout_marginLeft="@dimen/x8"
             android:textColor="@color/lightBlack"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
@@ -144,7 +148,7 @@
         android:id="@+id/ll_EstimatedQuotation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginLeft="@dimen/x12"
         android:layout_marginRight="@dimen/x20"
         android:layout_marginBottom="@dimen/x3"
         android:orientation="horizontal">
@@ -156,6 +160,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Estimated_Quotation"
             android:layout_marginRight="@dimen/x8"
+            android:layout_marginLeft="@dimen/x8"
             android:textColor="@color/lightBlack"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
@@ -175,7 +180,7 @@
         android:id="@+id/ll_Earning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginLeft="@dimen/x12"
         android:layout_marginRight="@dimen/x20"
         android:layout_marginBottom="@dimen/x3"
         android:orientation="horizontal">
@@ -187,6 +192,7 @@
             android:layout_height="wrap_content"
             android:text="@string/earning"
             android:layout_marginRight="@dimen/x8"
+            android:layout_marginLeft="@dimen/x8"
             android:textColor="@color/lightBlack"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
@@ -206,7 +212,7 @@
         android:id="@+id/ll_Address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginLeft="@dimen/x12"
         android:layout_marginRight="@dimen/x20"
         android:layout_marginBottom="@dimen/x3"
         android:orientation="horizontal">
@@ -218,6 +224,7 @@
             android:layout_height="wrap_content"
             android:text="@string/address"
             android:layout_marginRight="@dimen/x8"
+            android:layout_marginLeft="@dimen/x8"
             android:textColor="@color/lightBlack"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>

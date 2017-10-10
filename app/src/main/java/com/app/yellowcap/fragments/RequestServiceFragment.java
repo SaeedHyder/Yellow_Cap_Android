@@ -118,6 +118,11 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     AnyEditTextView edtAddtionalJob;
     @BindView(R.id.txt_job_posted)
     AnyTextView txtJobPosted;
+    @BindView(R.id.ll_btnDate)
+    LinearLayout llBtnDate;
+    @BindView(R.id.ll_btnTime)
+    LinearLayout llBtnTime;
+
     private ArrayList<String> images = new ArrayList<>();
     private RecyclerViewAdapterImages mAdapter;
     private ArrayList<ServiceEnt> selectedJobs;
@@ -224,6 +229,11 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         super.onViewCreated(view, savedInstanceState);
         selectedJobs = new ArrayList<>();
         deleteimages = new ArrayList<>();
+        if (prefHelper.isLanguageArabic()){
+            view.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }else {
+            view.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+        }
         setListener();
         if (previousRequestData != null) {
             isEdit = true;
@@ -281,15 +291,23 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         getMainActivity().setImageSetter(this);
         edtLocationgps.setAutoCompleteTextListener(this);
         imgGps.setOnClickListener(this);
+        llBtnDate.setOnClickListener(this);
+        llBtnTime.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_preferreddate:
+            /*case R.id.btn_preferreddate:
                 initDatePicker(btnPreferreddate);
                 break;
             case R.id.btn_preferredtime:
+                initTimePicker(btnPreferredtime);
+                break;*/
+            case R.id.ll_btnDate:
+                initDatePicker(btnPreferreddate);
+                break;
+            case R.id.ll_btnTime:
                 initTimePicker(btnPreferredtime);
                 break;
             case R.id.btn_addimage:

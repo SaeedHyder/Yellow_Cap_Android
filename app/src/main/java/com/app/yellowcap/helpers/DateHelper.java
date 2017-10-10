@@ -751,6 +751,35 @@ public class DateHelper {
         }
     }
 
+    public static String getFormatedDate(String Currentformat, String DesiredFormat, String OurDate) {
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat(Currentformat);
+            Date value = formatter.parse(OurDate);
+
+            SimpleDateFormat dateFormatter = new SimpleDateFormat(DesiredFormat); //this format changeable
+
+            OurDate = dateFormatter.format(value);
+
+//Log.d("OurDate", OurDate);
+        } catch (Exception e) {
+            OurDate = "00-00-0000 00:00";
+        }
+        return OurDate;
+    }
+
+    public static String dateFormat(String date, String returnFormat, String initial) {
+        SimpleDateFormat initialFormat = new SimpleDateFormat(initial, Locale.US);
+        SimpleDateFormat outFormat = new SimpleDateFormat(returnFormat, Locale.US);
+        Date newDate;
+        try {
+            newDate = initialFormat.parse(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+        return outFormat.format(newDate);
+    }
+
     public static String getLocalTimeDate(String OurDate) {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

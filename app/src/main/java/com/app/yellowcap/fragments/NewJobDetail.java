@@ -203,13 +203,24 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
        /* txtEstimatedQuote.setText("Between AED  " + newJobJson.getRequest_detail().getEstimate_to()
                 + " to " + newJobJson.getRequest_detail().getEstimate_from() + "- COD");*/
         //For Arabic uncomment this
-        txtEstimatedQuote.setText(getString(R.string.between_aed) + newJobJson.getRequest_detail().getEstimate_to()
-                + getString(R.string.to) + newJobJson.getRequest_detail().getEstimate_from() + "- " + getString(R.string.cod_short));
+      /*  txtEstimatedQuote.setText(getString(R.string.between_aed) + newJobJson.getRequest_detail().getEstimate_to()
+                + getString(R.string.to) + newJobJson.getRequest_detail().getEstimate_from() + "- " + getString(R.string.cod_short));*/
+        if(!prefHelper.isLanguageArabic()){
+            txtEstimatedQuote.setText(getDockActivity().getString(R.string.between_aed) +" "+newJobJson.getRequest_detail().getEstimate_to() +" "+ getResources().getString(R.string.to) +" "+newJobJson.getRequest_detail().getEstimate_from()+ "- " + getString(R.string.cod_short));}
+        else
+        {
+            txtEstimatedQuote.setText(getDockActivity().getString(R.string.between) +" "+ newJobJson.getRequest_detail().getEstimate_from() +" "+ getResources().getString(R.string.to) +" "+newJobJson.getRequest_detail().getEstimate_to()+" "+getDockActivity().getResources().getString(R.string.aed)+ "- " + getString(R.string.cod_short));
+        }
         //SERVICE remaining
 
         txtAddress.setText(newJobJson.getRequest_detail().getAddress());
         txtDescription.setText(newJobJson.getRequest_detail().getDiscription().trim() + "");
-        txtPreferredDateTime.setText(newJobJson.getRequest_detail().getDate() + "  " + newJobJson.getRequest_detail().getTime());
+        //txtPreferredDateTime.setText(newJobJson.getRequest_detail().getDate() + "  " + newJobJson.getRequest_detail().getTime());
+        if (!prefHelper.isLanguageArabic()) {
+            txtPreferredDateTime.setText(DateHelper.dateFormat(newJobJson.getRequest_detail().getDate(), AppConstants.DateFormat_DMY, AppConstants.DateFormat_YMD) + " "+ newJobJson.getRequest_detail().getTime());
+        } else {
+            txtPreferredDateTime.setText(newJobJson.getRequest_detail().getDate() + "  " + newJobJson.getRequest_detail().getTime());
+        }
         //txtPreferredDateTime.setText("22 Feb 2017" + "    " + "  02:30 PM");
         if (prefHelper.isLanguageArabic()) {
             txtJobName.setText(newJobJson.getRequest_detail().getService_detail().getAr_title());

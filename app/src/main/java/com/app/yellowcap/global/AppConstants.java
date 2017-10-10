@@ -23,6 +23,8 @@ public class AppConstants {
     public static String trainer = "trainer";
 
     public static String twitter = "twitter";
+    public static String DateFormat_YMD = "yyyy-MM-dd";
+    public static String DateFormat_DMY = "dd-MM-yyyy";
 
     public static String fixPassword = "123456";
 

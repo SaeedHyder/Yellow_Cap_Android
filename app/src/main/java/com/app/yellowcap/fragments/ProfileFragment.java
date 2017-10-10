@@ -12,6 +12,8 @@ import com.app.yellowcap.R;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.entities.TechProfileEnt;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
+import com.app.yellowcap.global.AppConstants;
+import com.app.yellowcap.helpers.DateHelper;
 import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.UIHelper;
 import com.app.yellowcap.ui.views.AnyTextView;
@@ -114,7 +116,12 @@ public class ProfileFragment extends BaseFragment {
         edtEmailId.setText(result.getEmail());
         edtPhoneNo.setText(result.getPhone_no());
         edtRegistrationType.setText(result.getRegistration_type());
-        edtRegDate.setText(result.getRegistration_date());
+        if (!prefHelper.isLanguageArabic()) {
+            edtRegDate.setText(DateHelper.dateFormat(result.getRegistration_date(), AppConstants.DateFormat_DMY, AppConstants.DateFormat_YMD) + "");
+        } else {
+            edtRegDate.setText(result.getRegistration_date() + "");
+        }
+       // edtRegDate.setText(result.getRegistration_date());
        /* imageLoader.displayImage(prefHelper.getRegistrationResult().getProfileImage(),CircularImageSharePop);
         edtFirstName.setText(prefHelper.getRegistrationResult().getFirstName());
         edtLastName.setText(prefHelper.getRegistrationResult().getLastName());

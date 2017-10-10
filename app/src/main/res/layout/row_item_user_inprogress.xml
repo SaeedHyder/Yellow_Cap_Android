@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/x3"
         android:layout_marginEnd="@dimen/x20"
-        android:layout_marginStart="@dimen/x20"
+        android:layout_marginStart="@dimen/x12"
         android:layout_marginTop="@dimen/x20"
         android:orientation="horizontal">
 
@@ -23,6 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/x8"
+            android:layout_marginStart="@dimen/x8"
             android:layout_weight="0"
             android:text="@string/technician_name"
             android:textColor="@color/lightBlack"
@@ -73,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/x3"
         android:layout_marginEnd="@dimen/x20"
-        android:layout_marginStart="@dimen/x20"
+        android:layout_marginStart="@dimen/x12"
         android:orientation="horizontal">
 
 
@@ -82,6 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/x8"
+            android:layout_marginStart="@dimen/x8"
             android:text="@string/job_title"
             android:textColor="@color/lightBlack"
             android:textSize="@dimen/x15"
@@ -104,8 +106,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/x3"
-        android:layout_marginEnd="@dimen/x20"
-        android:layout_marginStart="@dimen/x20"
+        android:layout_marginEnd="@dimen/x10"
+        android:layout_marginStart="@dimen/x12"
         android:orientation="horizontal">
 
 
@@ -113,7 +115,8 @@
             android:id="@+id/txt_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/x8"
+            android:layout_marginEnd="@dimen/x8"
+            android:layout_marginStart="@dimen/x8"
             android:text="@string/amount_quoted"
             android:textColor="@color/lightBlack"
             android:textSize="@dimen/x15"
@@ -137,7 +140,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/x3"
         android:layout_marginEnd="@dimen/x20"
-        android:layout_marginStart="@dimen/x20"
+        android:layout_marginStart="@dimen/x12"
         android:orientation="horizontal">
 
 
@@ -145,7 +148,8 @@
             android:id="@+id/txt_tech_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/x4"
+            android:layout_marginEnd="@dimen/x8"
+            android:layout_marginStart="@dimen/x8"
             android:text="@string/technician_number"
             android:textColor="@color/lightBlack"
             android:textSize="@dimen/x15"
