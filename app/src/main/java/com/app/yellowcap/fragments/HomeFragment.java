@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.app.yellowcap.R;
-import com.app.yellowcap.activities.MainActivity;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
@@ -23,7 +22,6 @@ import com.app.yellowcap.ui.views.TitleBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -93,7 +91,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
 
-      ButterKnife.bind(this, view);
+        ButterKnife.bind(this, view);
         return view;
 
     }
@@ -109,6 +107,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
         listners();
         onNotificationReceived();
+        getMainActivity().refreshSideMenuWithnewFragment();
         getMainActivity().refreshSideMenu();
     }
 
@@ -159,11 +158,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             public void onClick(View v) {
                 getDockActivity().replaceDockableFragment(TechNotificationsFragment.newInstance(), "TechNotificationsFragment");
             }
-        },prefHelper);
+        }, prefHelper);
         titleBar.setSubHeading(getString(R.string.home));
 
     }
-
 
 
     @Override
@@ -230,7 +228,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 @Override
                 public void onFailure(Call<ResponseWrapper> call, Throwable t) {
                     Log.e("UserSignupFragment", t.toString());
-                  //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                    //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
                 }
             });
         }

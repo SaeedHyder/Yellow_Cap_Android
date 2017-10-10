@@ -75,6 +75,7 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         }
         parentViewHolder.txtJobNoText.setText(String.valueOf(position + 1));
         parentViewHolder.txtJobPostedText.setText(entity.getDate()+"");
+        if(entity.getUser_detail()!=null)
         parentViewHolder.txtClientNameText.setText(entity.getUser_detail().getFull_name()+"");
         parentViewHolder.txtEstimatedQuotationText.setText(context.getString(R.string.between_aed) +" "+ entity.getEstimate_to() + view.getContext().getResources().getString(R.string.to) + entity.getEstimate_from());
         if (entity.getService_detail() != null) {
