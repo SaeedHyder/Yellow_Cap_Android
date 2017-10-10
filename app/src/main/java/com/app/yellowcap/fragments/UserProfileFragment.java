@@ -73,24 +73,16 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-    @Override
     protected int getLayout() {
         return R.layout.fragment_user_profile;
     }
 
     @Override
-    public void setTitleBar(TitleBar titleBar) {
-        super.setTitleBar(titleBar);
-        titleBar.hideButtons();
-        getDockActivity().lockDrawer();
-        titleBar.showBackButton();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
     }
 
     @Override
@@ -144,6 +136,15 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
         imgGps.setOnClickListener(this);
         edtLocationgps.setAutoCompleteTextListener(this);
     }
+
+    @Override
+    public void setTitleBar(TitleBar titleBar) {
+        super.setTitleBar(titleBar);
+        titleBar.hideButtons();
+        getDockActivity().lockDrawer();
+        titleBar.showBackButton();
+    }
+
 
     private void getLocation(AutoCompleteTextView textView) {
         if (getMainActivity().statusCheck()) {
@@ -228,10 +229,10 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     }
 
     private boolean validate() {
-        if (edtemail.getText().toString().isEmpty()) {
+         if (edtemail.getText().toString().isEmpty()) {
             edtemail.setError(getString(R.string.empty_email_error));
             return false;
-        } else if (edtPhoneNo.getText().toString().length() < 9 || edtPhoneNo.getText().toString().length() > 10) {
+        }else if (edtPhoneNo.getText().toString().length() < 9 || edtPhoneNo.getText().toString().length() > 10) {
             edtPhoneNo.setError(getString(R.string.enter_valid_number_error));
             return false;
         } else {
@@ -265,7 +266,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
             Phonenumber.PhoneNumber number = phoneUtil.parse(Phonenumber, getString(R.string.uae_country_code));
             if (phoneUtil.isValidNumber(number)) {
                 return phoneUtil.format(number,
-                        numberFormat).replaceAll("\\s", "");
+                        numberFormat).replaceAll("\\s","");
             } else {
                 //edtPhoneNo.setError(getString(R.string.enter_valid_number_error));
                 return "";
