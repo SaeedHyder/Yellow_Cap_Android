@@ -30,12 +30,12 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:maxLines="1"
-        android:maxLength="18"
+        android:maxLength="21"
         android:gravity="center_horizontal"
         android:layout_gravity="center"
         android:text="Templadfgdfgdfgdfgsdfsdfte"
         android:textColor="@color/job_posted_background"
-        android:textSize="@dimen/x22"
+        android:textSize="@dimen/x19"
         app:typeface="Roboto-Regular.ttf" />
 
 
