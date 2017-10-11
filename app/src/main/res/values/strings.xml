@@ -281,8 +281,7 @@
     <string name="email_alert_message">A verification code has been send to your Email address</string>
     <string name="addtional_jobs">Additional Jobs</string>
     <string name="to">to</string>
-
-
+    <string name="pricing_for_additional_job">Pricing For Additional Jobs</string>
 
 
 </resources>

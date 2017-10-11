@@ -217,7 +217,7 @@
             android:id="@+id/txt_EstimatedQuoteHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/x3"
+            android:layout_marginEnd="@dimen/x5"
             android:layout_marginStart="@dimen/x5"
             android:text="@string/estimated_quote"
             android:textColor="@color/lightBlack"

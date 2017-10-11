@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +32,8 @@ import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.app.yellowcap.R.id.edtnumber;
 
 
 public class LoginFragment extends BaseFragment implements OnClickListener {
@@ -61,7 +64,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
         ButterKnife.bind(this, view);
         if (prefHelper.isLanguageArabic()) {
             scrollviewBigdaddy.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-            //edtPassword.setGravity(Gravity.END);
+           // edtPassword.setGravity(Gravity.END);
         } else {
             scrollviewBigdaddy.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
             //  edtPassword.setGravity(Gravity.START);
@@ -74,11 +77,17 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-               /* if (!edtPassword.getText().toString().isEmpty()) {
+                /*if (!edtPassword.getText().toString().isEmpty()) {
                     edtPassword.setGravity(Gravity.START);
                 } else {
                     edtPassword.setGravity(Gravity.END);
                 }*/
+               /* if(prefHelper.isLanguageArabic()){
+                    if (!edtPassword.getText().toString().isEmpty()) {
+                        edtPassword.setGravity(Gravity.START);
+                    } else {
+                        edtPassword.setGravity(Gravity.END);
+                    }}*/
             }
 
             @Override

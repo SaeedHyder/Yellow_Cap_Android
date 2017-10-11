@@ -19,13 +19,21 @@
         android:visibility="visible" />
 
 
+
+
+
     <com.app.yellowcap.ui.views.AnyTextView
         android:id="@+id/txt_subHead"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:gravity="center"
-        android:text="Template"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:maxLines="1"
+        android:maxLength="18"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center"
+        android:text="Templadfgdfgdfgdfgsdfsdfte"
         android:textColor="@color/job_posted_background"
         android:textSize="@dimen/x22"
         app:typeface="Roboto-Regular.ttf" />

@@ -2,8 +2,11 @@ package com.app.yellowcap.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +32,8 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.app.yellowcap.R.id.edtPassword;
 
 /**
  * Created on 5/23/2017.
@@ -60,12 +65,45 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (prefHelper.isLanguageArabic()) {
+            view.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+           // edtnumber.setGravity(Gravity.END);
+        } else {
+            view.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+         //   edtnumber.setGravity(Gravity.START);
+        }
         setlistener();
         phoneUtil = PhoneNumberUtil.getInstance();
     }
 
     private void setlistener() {
         btnsignup.setOnClickListener(this);
+        edtnumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+              /*  if(prefHelper.isLanguageArabic()){
+                if (!edtnumber.getText().toString().isEmpty()) {
+                    edtnumber.setGravity(Gravity.END);
+                } else {
+                    edtnumber.setGravity(Gravity.START);
+                }}*/
+               /* if (!edtnumber.getText().toString().isEmpty()) {
+                    edtnumber.setGravity(Gravity.START);
+                } else {
+                    edtnumber.setGravity(Gravity.END);
+                }*/
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
