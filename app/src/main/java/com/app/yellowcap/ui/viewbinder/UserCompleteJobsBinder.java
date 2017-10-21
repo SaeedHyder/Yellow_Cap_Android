@@ -8,7 +8,9 @@ import android.widget.LinearLayout;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.entities.UserComleteJobsEnt;
+import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.helpers.BasePreferenceHelper;
+import com.app.yellowcap.helpers.DateHelper;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.CustomRatingBar;
@@ -50,10 +52,15 @@ public class UserCompleteJobsBinder extends ViewBinder<UserComleteJobsEnt> {
                 viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getTitle());
             }
         }
+        if (!preferenceHelper.isLanguageArabic()) {
+            viewHolder.txtJobCompletedText.setText(DateHelper.dateFormat(entity.getDate(), AppConstants.DateFormat_DMY, AppConstants.DateFormat_YMD) + "");
+        } else {
+            viewHolder.txtJobCompletedText.setText(entity.getDate()+ "");
+        }
         if (entity.getAssign_technician_details() != null)
             viewHolder.txtClientNameText.setText(entity.getAssign_technician_details().getTechnician_details().getFullName());
         viewHolder.txtEarningText.setText(entity.getTotal_amount());
-        String sourceString = "<b>" + view.getContext().getResources().getString(R.string.description) + "</b> " + entity.getDiscription();
+        String sourceString = "<b>" + view.getContext().getResources().getString(R.string.description) + "</b> " +"   "+ entity.getDiscription();
         viewHolder.txtDescriptionText.setText(Html.fromHtml(sourceString));
         if (entity.getFeedbackdetail() != null)
             viewHolder.rbAddRating.setScore(entity.getFeedbackdetail().getRate());

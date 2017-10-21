@@ -20,8 +20,8 @@
         android:id="@+id/ll_job"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/x20"
-        android:layout_marginRight="@dimen/x20"
+        android:layout_marginStart="@dimen/x12"
+        android:layout_marginEnd="@dimen/x20"
         android:layout_marginTop="@dimen/x20"
         android:layout_marginBottom="@dimen/x10"
         android:orientation="horizontal">
@@ -33,7 +33,8 @@
             android:layout_height="wrap_content"
             android:text="@string/job"
             android:layout_weight="0"
-            android:layout_marginRight="@dimen/x8"
+            android:layout_marginEnd="@dimen/x8"
+            android:layout_marginStart="@dimen/x8"
             android:textColor="@color/yellow"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
@@ -53,8 +54,8 @@
         android:id="@+id/ll_clientName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/x20"
-        android:layout_marginRight="@dimen/x20"
+        android:layout_marginStart="@dimen/x12"
+        android:layout_marginEnd="@dimen/x20"
         android:layout_marginBottom="@dimen/x10"
         android:orientation="horizontal">
 
@@ -64,7 +65,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/client_name"
-            android:layout_marginRight="@dimen/x8"
+            android:layout_marginEnd="@dimen/x8"
+            android:layout_marginStart="@dimen/x8"
             android:textColor="@color/yellow"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
@@ -194,7 +196,7 @@
             android:maxLines="1"
             android:paddingBottom="@dimen/x10"
             android:paddingTop="@dimen/x10"
-            android:text="Pricing For Additional Jobs"
+            android:text="@string/pricing_for_additional_job"
             android:textColor="@color/text_color"
             android:textSize="@dimen/x15"
             android:textStyle="normal"
@@ -212,7 +214,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/Total"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/x12"
+                android:layout_marginEnd="@dimen/x12"
+                android:layout_marginStart="@dimen/x12"
                 android:textColor="@color/lightBlack"
                 android:textSize="@dimen/x15"
                 app:typeface="Roboto-Regular.ttf"/>

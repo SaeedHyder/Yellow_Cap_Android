@@ -77,11 +77,21 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
                 viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getTitle());
             }
         }
-        if (entity.getTotal().equals("")) {
-            viewHolder.txtAmountText.setText(context.getString(R.string.aed) + " " + entity.getEstimateFrom() + " " + activity.getResources().getString(R.string.to) + " " + entity.getEstimateTo());
-        } else {
-            viewHolder.txtAmountText.setText(context.getString(R.string.aed) + " " + entity.getTotal_amount());
+        if (!preferenceHelper.isLanguageArabic()) {
+            if (entity.getTotal().equals("")) {
+                viewHolder.txtAmountText.setText(context.getString(R.string.aed) + " " + entity.getEstimateFrom() + " " + activity.getResources().getString(R.string.to) + " " + entity.getEstimateTo());
+            } else {
+                viewHolder.txtAmountText.setText(context.getString(R.string.aed) + " " + entity.getTotal_amount());
 
+            }
+        }
+        else{
+            if (entity.getTotal().equals("")) {
+                viewHolder.txtAmountText.setText(entity.getEstimateTo() + " " + activity.getResources().getString(R.string.to) + " " + entity.getEstimateFrom()+" "+context.getString(R.string.aed));
+            } else {
+                viewHolder.txtAmountText.setText(entity.getTotal_amount()+" "+context.getString(R.string.aed));
+
+            }
         }
 
 

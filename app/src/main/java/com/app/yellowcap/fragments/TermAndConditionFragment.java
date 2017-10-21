@@ -21,7 +21,6 @@ import com.app.yellowcap.ui.views.TitleBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,11 +64,12 @@ public class TermAndConditionFragment extends BaseFragment {
         chkRead.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                   /*  prefHelper.setLoginStatus(true);
                     getDockActivity().popBackStackTillEntry(0);*/
-                    getMainActivity().refreshSideMenu();
-                    getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(),"User Home Fragment");
+                    getMainActivity().refreshSideMenuWithnewFragment();
+                    getDockActivity().popBackStackTillEntry(0);
+                    getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(), "User Home Fragment");
                 }
             }
         });
@@ -77,22 +77,21 @@ public class TermAndConditionFragment extends BaseFragment {
     }
 
     private void bindTextview() {
-        Call<ResponseWrapper<StaticPageEnt>> call = webService.getTermandAbout(prefHelper.getUserId(),"term");
+        Call<ResponseWrapper<StaticPageEnt>> call = webService.getTermandAbout(prefHelper.getUserId(), "term");
         call.enqueue(new Callback<ResponseWrapper<StaticPageEnt>>() {
             @Override
             public void onResponse(Call<ResponseWrapper<StaticPageEnt>> call, Response<ResponseWrapper<StaticPageEnt>> response) {
                 if (response.body().getResponse().equals("2000")) {
                     settitle(response.body().getResult().getBody());
-                }
-                else{
-                    UIHelper.showShortToastInCenter(getDockActivity(),response.body().getMessage());
+                } else {
+                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseWrapper<StaticPageEnt>> call, Throwable t) {
                 Log.e("TermAndCondition", t.toString());
-              //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
+                //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
 

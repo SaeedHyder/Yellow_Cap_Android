@@ -180,6 +180,13 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         selectedJobs = new ArrayList<>();
+        if (prefHelper.isLanguageArabic()) {
+            view.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+
+        } else {
+            view.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+
+        }
         if (previousData != null) {
             isEdit = true;
             PARENTID = String.valueOf(previousData.getId());

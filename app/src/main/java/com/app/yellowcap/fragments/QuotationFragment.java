@@ -17,6 +17,7 @@ import com.app.yellowcap.entities.RequestEnt;
 import com.app.yellowcap.entities.ResponseWrapper;
 import com.app.yellowcap.fragments.abstracts.BaseFragment;
 import com.app.yellowcap.global.AppConstants;
+import com.app.yellowcap.helpers.DateHelper;
 import com.app.yellowcap.helpers.DialogHelper;
 import com.app.yellowcap.helpers.InternetHelper;
 import com.app.yellowcap.helpers.UIHelper;
@@ -29,8 +30,6 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.app.yellowcap.R.id.btn_reject;
 
 /**
  * Created by saeedhyder on 5/24/2017.
@@ -124,7 +123,7 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (prefHelper.isLanguageArabic())
-        rootLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            rootLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         else {
             rootLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         }
@@ -150,18 +149,26 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
     private void setData() {
         if (QuotationData != null) {
             txtJobNumber.setText(String.valueOf(QuotationData.getRequestDetail().getId()));
-            if(prefHelper.isLanguageArabic()){
-                txtJobTitle.setText(QuotationData.getRequestDetail().getServiceDetail().getArTitle()+"");
-            }
-            else{
-                txtJobTitle.setText(QuotationData.getRequestDetail().getServiceDetail().getTitle()+"");
+            if (prefHelper.isLanguageArabic()) {
+                txtJobTitle.setText(QuotationData.getRequestDetail().getServiceDetail().getArTitle() + "");
+            } else {
+                txtJobTitle.setText(QuotationData.getRequestDetail().getServiceDetail().getTitle() + "");
             }
 
             txtPaymentMode.setText(QuotationData.getRequestDetail().getPaymentType());
             txtUserAddress.setText(QuotationData.getRequestDetail().getAddress() + " " + QuotationData.getRequestDetail().getFullAddress());
-            txtEstimatedQuote.setText("Between AED " + QuotationData.getRequestDetail().getEstimateFrom()
-                    + " to " + QuotationData.getRequestDetail().getEstimateTo());
-            txtQuotationValid.setText(QuotationData.getRequestDetail().getTime() + " " + QuotationData.getRequestDetail().getDate());
+          /*  txtEstimatedQuote.setText("Between AED " + QuotationData.getRequestDetail().getEstimateFrom()
+                    + " to " + QuotationData.getRequestDetail().getEstimateTo());*/
+            if (!prefHelper.isLanguageArabic()) {
+                txtEstimatedQuote.setText(getDockActivity().getString(R.string.between_aed) + " " + QuotationData.getRequestDetail().getEstimateTo() + " " + getResources().getString(R.string.to) + " " + QuotationData.getRequestDetail().getEstimateFrom());
+            } else {
+                txtEstimatedQuote.setText(getDockActivity().getString(R.string.between) + " " + QuotationData.getRequestDetail().getEstimateFrom() + " " + getResources().getString(R.string.to) + " " + QuotationData.getRequestDetail().getEstimateTo() + " " + getDockActivity().getResources().getString(R.string.aed));
+            }
+            if (!prefHelper.isLanguageArabic()) {
+                txtQuotationValid.setText(DateHelper.dateFormat(QuotationData.getRequestDetail().getDate(), AppConstants.DateFormat_DMY, AppConstants.DateFormat_YMD) + "");
+            } else {
+                txtQuotationValid.setText(QuotationData.getRequestDetail().getDate() + "");
+            }
 
             getMainActivity().titleBar.setSubHeading(QuotationData.getRequestDetail().getServiceDetail().getTitle());
             getMainActivity().titleBar.getTxtTitle().invalidate();
@@ -275,7 +282,6 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
         ButterKnife.bind(this, rootView);
         return rootView;
     }
-
 
 
 }

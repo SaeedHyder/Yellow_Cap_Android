@@ -151,6 +151,7 @@ public class BasePreferenceHelper extends PreferenceHelper {
         //Resources resources = context.getResources();
         DisplayMetrics dm = resources.getDisplayMetrics();
         android.content.res.Configuration conf = resources.getConfiguration();
+//        conf.setLocale(new Locale(lang));
         conf.locale = new Locale(lang);
         resources.updateConfiguration(conf, dm);
         ((MainActivity) activity).restartActivity();

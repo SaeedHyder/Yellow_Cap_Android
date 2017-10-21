@@ -226,8 +226,8 @@
     <string name="amount_quoted">Amount Quoted:</string>
     <string name="technician_name">Technician Name:</string>
     <string name="dummy_name">Al Musa</string>
-    <string name="technician_rating">Technician Rating</string>
-    <string name="amount_paid">Amount Paid</string>
+    <string name="technician_rating">Technician Rating:</string>
+    <string name="amount_paid">Amount Paid:</string>
     <string name="iam_a">Iam a...</string>
     <string name="time_error">Please Select complete time after Arrive time</string>
     <string name="arrive_time_error">Enter Arrive Time</string>
@@ -250,18 +250,20 @@
     <string name="requesr_service_home">Request Service</string>
     <string name="please_enter_the_reason_for_nrefusing_job">Please Enter the Reason for  Refusing Job</string>
     <string name="ok">OK</string>
-    <string name="cancle">Cancle</string>
+    <string name="cancle">Cancel</string>
     <string name="_22_feb_2017_02_30_pm">22 Feb 2017 &#032;&#032;&#032;&#032;02:30 PM</string>
     <string name="App_Name">Yellow Cap</string>
     <string name="valid_code_error">Enter Valid Code</string>
     <string name="profile_pic_error">Select Profile Picture</string>
     <string name="imagelimit_error">You have Reached the limit of 5 Images</string>
     <string name="job_posted_label">Job Posted : </string>
-    <string name="Estimated_Quotation">Estimated Quotation</string>
-    <string name="no_technician_error">No Technician Assign</string>
+    <string name="Estimated_Quotation">Estimated Quotation :</string>
+    <string name="no_technician_error">Not Assigned</string>
     <string name="assignText">We will soon assign you a Technician</string>
     <string name="no_number_tech">0000000000</string>
-    <string name="between_aed">Between AED  </string>
+    <string name="between_aed">Between</string>
+    <string name="between">Between</string>
+
     <string name="select_date_error">Select Date First</string>
     <string name="connection_lost">No Internet Found</string>
     <string name="delete_account">You are about to permanently delete your account. To Sign Up again you will be requested to verify your Contact Details. Do you wish to delete your account?</string>
@@ -279,6 +281,7 @@
     <string name="email_alert_message">A verification code has been send to your Email address</string>
     <string name="addtional_jobs">Additional Jobs</string>
     <string name="to">to</string>
+    <string name="pricing_for_additional_job">Pricing For Additional Jobs</string>
 
 
 </resources>

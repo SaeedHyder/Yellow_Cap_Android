@@ -44,7 +44,8 @@
                     android:id="@+id/txt_jobNumberHeading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/x3"
+                    android:layout_marginEnd="@dimen/x5"
+                    android:layout_marginStart="@dimen/x5"
                     android:text="@string/job_number"
                     android:textColor="@color/lightBlack"
                     android:textSize="14sp"
@@ -75,7 +76,8 @@
                     android:id="@+id/txt_JobTitleHeading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/x3"
+                    android:layout_marginEnd="@dimen/x5"
+                    android:layout_marginStart="@dimen/x5"
                     android:text="@string/Job_Title"
                     android:textColor="@color/lightBlack"
                     android:textSize="@dimen/x14"
@@ -106,7 +108,8 @@
                     android:id="@+id/txt_paymentModeHeading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/x3"
+                    android:layout_marginEnd="@dimen/x5"
+                    android:layout_marginStart="@dimen/x5"
                     android:text="@string/payment_mode"
                     android:textColor="@color/lightBlack"
                     android:textSize="@dimen/x14"
@@ -117,7 +120,7 @@
                     android:id="@+id/txt_paymentMode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="COD,Paypal,Credit Card"
+                    android:text="COD,Paypal"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/x14"
                     app:typeface="Roboto-Regular.ttf" />
@@ -136,7 +139,8 @@
                     android:id="@+id/txt_userAddressHeading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/x3"
+                    android:layout_marginEnd="@dimen/x5"
+                    android:layout_marginStart="@dimen/x5"
                     android:text="@string/User_Address"
                     android:textColor="@color/lightBlack"
                     android:textSize="@dimen/x14"
@@ -147,7 +151,7 @@
                     android:id="@+id/txt_userAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="DubaiMarina,Near Marina"
+                    android:text="DubaiMarina Marina"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/x14"
                     app:typeface="Roboto-Regular.ttf" />
@@ -166,7 +170,8 @@
                     android:id="@+id/txt_quotationValidHeading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/x3"
+                    android:layout_marginEnd="@dimen/x5"
+                    android:layout_marginStart="@dimen/x5"
                     android:text="@string/quotation_valid_till"
                     android:textColor="@color/lightBlack"
                     android:textSize="@dimen/x14"
@@ -178,6 +183,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Interval Managed by admin"
+                    android:maxLines="1"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/x14"
                     app:typeface="Roboto-Regular.ttf" />
@@ -202,16 +208,17 @@
         android:id="@+id/ll_EstimatedQuote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/x85"
-        android:layout_marginEnd="@dimen/x20"
         android:layout_marginBottom="@dimen/x5"
+        android:layout_marginEnd="@dimen/x20"
+        android:layout_marginStart="@dimen/x85"
         android:orientation="horizontal">
 
         <com.app.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_EstimatedQuoteHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/x3"
+            android:layout_marginEnd="@dimen/x5"
+            android:layout_marginStart="@dimen/x5"
             android:text="@string/estimated_quote"
             android:textColor="@color/lightBlack"
             android:textSize="@dimen/x14"
@@ -226,8 +233,6 @@
             android:textColor="@color/gray"
             android:textSize="@dimen/x12"
             app:typeface="Roboto-Regular.ttf" />
-
-
 
 
     </LinearLayout>

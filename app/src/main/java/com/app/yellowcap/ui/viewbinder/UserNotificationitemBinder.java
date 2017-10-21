@@ -105,7 +105,7 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
                             submitFeedback(entity, dialogHelper);
                         }
                     }
-                }, title, message
+                }, title, message,prefhelper
         );
         dialogHelper.setCancelable(true);
         dialogHelper.showDialog();

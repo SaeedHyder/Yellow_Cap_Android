@@ -218,6 +218,16 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
             sideMenuFragment.refreshMenuOption();
         }
     }
+    public void refreshSideMenuWithnewFragment() {
+        sideMenuFragment = SideMenuFragment.newInstance();
+        FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction();
+        transaction.remove(sideMenuFragment).commit();
+        settingSideMenu();
+       /* if (sideMenuFragment != null) {
+            sideMenuFragment.refreshMenuOption();
+        }*/
+    }
 
     private int getSideMenuFrameLayoutId() {
         return R.id.sideMneuFragmentContainer;
@@ -382,7 +392,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         Log.i(TAG, "OnActivityResult");
         Log.i(TAG, "File Path : " + filePath);
         Log.i(TAG, "Chooser Type: " + chooserType);
-
+        setCurrentLocale();
         if (resultCode == RESULT_OK
                 && (requestCode == ChooserType.REQUEST_PICK_PICTURE || requestCode == ChooserType.REQUEST_CAPTURE_PICTURE)) {
             if (imageChooserManager == null) {

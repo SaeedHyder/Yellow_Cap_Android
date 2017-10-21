@@ -8,7 +8,9 @@ import android.widget.LinearLayout;
 
 import com.app.yellowcap.R;
 import com.app.yellowcap.entities.TechInProgressEnt;
+import com.app.yellowcap.global.AppConstants;
 import com.app.yellowcap.helpers.BasePreferenceHelper;
+import com.app.yellowcap.helpers.DateHelper;
 import com.app.yellowcap.ui.viewbinders.abstracts.ViewBinder;
 import com.app.yellowcap.ui.views.AnyTextView;
 import com.app.yellowcap.ui.views.CustomRatingBar;
@@ -46,7 +48,12 @@ public class CompletedJobsBinder extends ViewBinder<TechInProgressEnt> {
             }
         });
         viewHolder.txt_jobNoText.setText(String.valueOf(position + 1));
-        viewHolder.txt_jobCompletedText.setText(entity.getRequest_detail().getDate());
+       // viewHolder.txt_jobCompletedText.setText(entity.getRequest_detail().getDate());
+        if (!prefHelper.isLanguageArabic()) {
+            viewHolder.txt_jobCompletedText.setText(DateHelper.dateFormat(entity.getRequest_detail().getDate(), AppConstants.DateFormat_DMY, AppConstants.DateFormat_YMD) + "");
+        } else {
+            viewHolder.txt_jobCompletedText.setText(entity.getRequest_detail().getDate() + "");
+        }
         if (entity.getRequest_detail().getServics_list().size() > 0) {
             if (prefHelper.isLanguageArabic()) {
                 viewHolder.txt_JobTitleText.setText(entity.getRequest_detail().getServics_list().get(0).getService_detail().getAr_title());

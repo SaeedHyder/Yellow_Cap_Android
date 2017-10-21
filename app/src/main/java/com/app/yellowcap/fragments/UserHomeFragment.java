@@ -140,6 +140,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
 
         mainFrame.setVisibility(View.GONE);
         onNotificationReceived();
+        getMainActivity().refreshSideMenuWithnewFragment();
         if (getMainActivity().isNotification) {
             getMainActivity().isNotification = false;
             getDockActivity().addDockableFragment(UserNotificationsFragment.newInstance(), "UserNotificationsFragment");

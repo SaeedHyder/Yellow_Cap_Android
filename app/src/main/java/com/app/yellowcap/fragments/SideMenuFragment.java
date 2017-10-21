@@ -69,7 +69,7 @@ public class SideMenuFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         if (prefHelper.getUserType().equals("user")) {
             madapter = new ArrayListAdapter<NavigationEnt>(getDockActivity(), new NavigationItemBinder(getDockActivity(), this, prefHelper));
-        } else {
+        } else if (prefHelper.getUserType().equals("technician")) {
             madapterTech = new ArrayListAdapter<NavigationEnt>(getDockActivity(), new NavigationItemBinder(getDockActivity(), this, prefHelper));
 
         }
@@ -91,14 +91,14 @@ public class SideMenuFragment extends BaseFragment {
         if (prefHelper.getUserType().equals("user")) {
             binddataUser();
 
-        } else {
+        } else if (prefHelper.getUserType().equals("technician")) {
             bindDataTech();
 
         }
         if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
             if (prefHelper.getUserType().equals("user")) {
                 getUserProfile();
-            } else {
+            } else if (prefHelper.getUserType().equals("technician")) {
                 getTechProfile();
             }
         }
@@ -269,91 +269,90 @@ public class SideMenuFragment extends BaseFragment {
         navListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                try{
-                if (prefHelper.getUserType().equals("user")) {
-                    if (navigationItemList.get(position).getItem_text().equals(getString(R.string.home))) {
-                        getDockActivity().popBackStackTillEntry(0);
-                        getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
-                    } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.profile))) {
-                        getDockActivity().replaceDockableFragment(UserProfileFragment.newInstance(), "UserProfileFragment");
-                    } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.notifications))) {
-                        getDockActivity().replaceDockableFragment(UserNotificationsFragment.newInstance(), "UserHomeFragment");
-                    } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.my_job))) {
-                        getDockActivity().replaceDockableFragment(UserJobsFragment.newInstance(), "UserjobsFragment");
-                    } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.english))) {
-                        if (prefHelper.isLanguageArabic()) {
-                            prefHelper.putLang(getDockActivity(), "en");
+                try {
+                    if (prefHelper.getUserType().equals("user")) {
+                        if (navigationItemList.get(position).getItem_text().equals(getString(R.string.home))) {
+                            getDockActivity().popBackStackTillEntry(0);
+                            getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
+                        } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.profile))) {
+                            getDockActivity().replaceDockableFragment(UserProfileFragment.newInstance(), "UserProfileFragment");
+                        } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.notifications))) {
+                            getDockActivity().replaceDockableFragment(UserNotificationsFragment.newInstance(), "UserHomeFragment");
+                        } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.my_job))) {
+                            getDockActivity().replaceDockableFragment(UserJobsFragment.newInstance(), "UserjobsFragment");
+                        } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.english))) {
+                            if (prefHelper.isLanguageArabic()) {
+                                prefHelper.putLang(getDockActivity(), "en");
 
-                        } else {
-                            prefHelper.putLang(getDockActivity(), "ar");
+                            } else {
+                                prefHelper.putLang(getDockActivity(), "ar");
+
+                            }
+                        } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.about_app))) {
+                            getDockActivity().replaceDockableFragment(AboutAppFragment.newInstance(), "UserAboutFragment");
+                        } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.logout))) {
+
+                            final DialogHelper deleteAccount = new DialogHelper(getDockActivity());
+                            deleteAccount.deteleAccountDialoge(R.layout.delete_account_dialog, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    logOutService(deleteAccount);
+
+                                }
+                            }, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    deleteAccount.hideDialog();
+                                    getMainActivity().closeDrawer();
+                                }
+                            });
+
+                            deleteAccount.setCancelable(true);
+                            deleteAccount.showDialog();
+
 
                         }
-                    } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.about_app))) {
-                        getDockActivity().replaceDockableFragment(AboutAppFragment.newInstance(), "UserAboutFragment");
-                    } else if (navigationItemList.get(position).getItem_text().equals(getString(R.string.logout))) {
 
-                        final DialogHelper deleteAccount = new DialogHelper(getDockActivity());
-                        deleteAccount.deteleAccountDialoge(R.layout.delete_account_dialog, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                logOutService(deleteAccount);
-
+                    } else {
+                        if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.home))) {
+                            getDockActivity().popBackStackTillEntry(0);
+                            getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
+                        } else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.notifications))) {
+                            getDockActivity().replaceDockableFragment(TechNotificationsFragment.newInstance(), "TechNotificationsFragment");
+                        } else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.profile))) {
+                            getDockActivity().replaceDockableFragment(ProfileFragment.newInstance(), "ProfileFragment");
+                        } else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.New_Jobs))) {
+                            getDockActivity().replaceDockableFragment(NewJobsFragment.newInstance(), "NewJobsFragment");
+                        } else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.english))) {
+                            if (prefHelper.isLanguageArabic()) {
+                                prefHelper.putLang(getDockActivity(), "en");
+                            } else {
+                                prefHelper.putLang(getDockActivity(), "ar");
                             }
-                        }, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                deleteAccount.hideDialog();
-                                getMainActivity().closeDrawer();
-                            }
-                        });
+                        } else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.about_app))) {
+                            getDockActivity().replaceDockableFragment(AboutAppFragment.newInstance(), "AboutFragment");
+                        } else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.logout))) {
+                            final DialogHelper techLogoutDialog = new DialogHelper(getDockActivity());
+                            techLogoutDialog.logoutDialoge(R.layout.logout_technician_dialog, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    techLogout(techLogoutDialog);
+                                }
+                            }, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    techLogoutDialog.hideDialog();
+                                    getMainActivity().closeDrawer();
 
-                        deleteAccount.setCancelable(true);
-                        deleteAccount.showDialog();
+                                }
+                            });
+                            techLogoutDialog.setCancelable(true);
+                            techLogoutDialog.showDialog();
 
-
-                    }
-
-                } else {
-                    if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.home))) {
-                        getDockActivity().popBackStackTillEntry(0);
-                        getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
-                    } else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.notifications))) {
-                        getDockActivity().replaceDockableFragment(TechNotificationsFragment.newInstance(), "TechNotificationsFragment");
-                    } else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.profile))) {
-                        getDockActivity().replaceDockableFragment(ProfileFragment.newInstance(), "ProfileFragment");
-                    } else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.New_Jobs))) {
-                        getDockActivity().replaceDockableFragment(NewJobsFragment.newInstance(), "NewJobsFragment");
-                    } else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.english))) {
-                        if (prefHelper.isLanguageArabic()) {
-                            prefHelper.putLang(getDockActivity(), "en");
-                        } else {
-                            prefHelper.putLang(getDockActivity(), "ar");
                         }
-                    } else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.about_app))) {
-                        getDockActivity().replaceDockableFragment(AboutAppFragment.newInstance(), "AboutFragment");
-                    } else if (navigationItemListTech.get(position).getItem_text().equals(getString(R.string.logout))) {
-                        final DialogHelper techLogoutDialog = new DialogHelper(getDockActivity());
-                        techLogoutDialog.logoutDialoge(R.layout.logout_technician_dialog, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                techLogout(techLogoutDialog);
-                            }
-                        }, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                techLogoutDialog.hideDialog();
-                                getMainActivity().closeDrawer();
-
-                            }
-                        });
-                        techLogoutDialog.setCancelable(true);
-                        techLogoutDialog.showDialog();
 
                     }
-
-                }
-                }
-                catch (Exception e){
+                } catch (Exception e) {
                     refreshMenuOption();
                 }
 
