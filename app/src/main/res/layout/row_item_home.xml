@@ -22,7 +22,7 @@
             android:layout_gravity="center"
             android:src="@drawable/ac" />
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_service_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

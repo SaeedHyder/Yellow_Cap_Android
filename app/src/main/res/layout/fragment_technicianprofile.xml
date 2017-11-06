@@ -41,7 +41,7 @@
             android:orientation="vertical">
 
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/x3"
@@ -52,7 +52,7 @@
                 android:textSize="@dimen/x12"
                 app:typeface="Roboto-Regular.ttf" />
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:id="@+id/edtFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
                 android:alpha="0.6"
                 android:background="@drawable/text" />
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/x3"
@@ -91,7 +91,7 @@
                 android:textSize="@dimen/x12"
                 app:typeface="Roboto-Regular.ttf" />
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:id="@+id/edtLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
                 android:alpha="0.6"
                 android:background="@drawable/text" />
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/x3"
@@ -130,7 +130,7 @@
                 android:textSize="@dimen/x12"
                 app:typeface="Roboto-Regular.ttf" />
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:id="@+id/edtEmailId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -158,7 +158,7 @@
                 android:alpha="0.6"
                 android:background="@drawable/text" />
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/x3"
@@ -169,7 +169,7 @@
                 android:textSize="@dimen/x12"
                 app:typeface="Roboto-Regular.ttf" />
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:id="@+id/edtPhoneNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -197,7 +197,7 @@
                 android:alpha="0.6"
                 android:background="@drawable/text" />
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/x3"
@@ -208,7 +208,7 @@
                 android:textSize="@dimen/x12"
                 app:typeface="Roboto-Regular.ttf" />
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:id="@+id/edtRegistrationType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -236,7 +236,7 @@
                 android:alpha="0.6"
                 android:background="@drawable/text" />
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/x3"
@@ -247,7 +247,7 @@
                 android:textSize="@dimen/x12"
                 app:typeface="Roboto-Regular.ttf" />
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:id="@+id/edtRegDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

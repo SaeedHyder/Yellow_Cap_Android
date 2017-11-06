@@ -27,7 +27,7 @@
             android:src="@drawable/app_icon" />
 
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_problem_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
             android:layout_marginTop="@dimen/x10"
             android:orientation="horizontal">
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:id="@+id/ratename"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                 android:visibility="visible"
                 app:typeface="Roboto-Regular.ttf" />
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:id="@+id/txt_personname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
             android:alpha="0.6"
             android:background="@drawable/line" />
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_arrval_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
             android:alpha="0.6"
             android:background="@drawable/line" />
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_complete_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

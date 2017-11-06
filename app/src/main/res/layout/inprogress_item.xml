@@ -16,7 +16,7 @@
         android:orientation="horizontal">
 
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_jobNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_jobNoText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
         android:orientation="horizontal">
 
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_jobPosted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_jobPostedText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
         android:orientation="horizontal">
 
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_ClientName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_clientNameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
         android:orientation="horizontal">
 
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_JobTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_JobTitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -147,7 +147,7 @@
         android:orientation="horizontal">
 
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_Earning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -157,7 +157,7 @@
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_EarningText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -178,7 +178,7 @@
         android:orientation="horizontal">
 
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_Address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -188,7 +188,7 @@
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_AddressText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -289,7 +289,7 @@
             android:layout_marginRight="@dimen/x20"
             android:orientation="horizontal">
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -310,7 +310,7 @@
 
     </LinearLayout>
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_job1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -322,7 +322,7 @@
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_job2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -334,7 +334,7 @@
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf"/>
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_job3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -356,7 +356,7 @@
             android:orientation="horizontal">
 
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:id="@+id/txt_AddEarning"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -366,7 +366,7 @@
                 android:textSize="@dimen/x15"
                 app:typeface="Roboto-Regular.ttf"/>
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:id="@+id/txt_AddEarningText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -395,7 +395,7 @@
             android:orientation="horizontal">
 
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:id="@+id/txt_TotalEarning"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -406,7 +406,7 @@
                 android:textSize="@dimen/x15"
                 app:typeface="Roboto-Regular.ttf"/>
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:id="@+id/txt_TotalEarningText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

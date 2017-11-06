@@ -34,7 +34,7 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/profile" />
 
-            <com.app.yellowcap.ui.views.AnyEditTextView
+            <com.ingic.yellowcap.ui.views.AnyEditTextView
                 android:id="@+id/edtname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/email" />
 
-            <com.app.yellowcap.ui.views.AnyEditTextView
+            <com.ingic.yellowcap.ui.views.AnyEditTextView
                 android:id="@+id/edtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -129,7 +129,7 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/phone" />
 
-            <com.app.yellowcap.ui.views.AnyEditTextView
+            <com.ingic.yellowcap.ui.views.AnyEditTextView
                 android:id="@+id/edtnumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

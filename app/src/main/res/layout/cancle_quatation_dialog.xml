@@ -26,7 +26,7 @@
             />
 
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
 
 
 
-        <com.app.yellowcap.ui.views.AnyEditTextView
+        <com.ingic.yellowcap.ui.views.AnyEditTextView
             android:id="@+id/ed_msg"
             android:layout_width="match_parent"
             android:layout_height="@dimen/x60"

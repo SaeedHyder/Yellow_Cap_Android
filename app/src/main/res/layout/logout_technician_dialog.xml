@@ -31,7 +31,7 @@
 
 
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_recive"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

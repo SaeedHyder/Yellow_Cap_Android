@@ -20,7 +20,7 @@
             android:background="@drawable/bg"
             android:paddingTop="@dimen/x50" />
 
-        <com.app.yellowcap.ui.views.TitleBar
+        <com.ingic.yellowcap.ui.views.TitleBar
             android:id="@+id/header_main"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

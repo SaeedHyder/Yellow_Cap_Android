@@ -18,7 +18,7 @@
         android:orientation="vertical"
         android:padding="@dimen/x10">
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txtHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             android:textStyle="normal"
             app:typeface="Roboto-Regular.ttf" />
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/notwell_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
             android:orientation="horizontal"
             android:weightSum="2">
 
-            <com.app.yellowcap.ui.views.AnyEditTextView
+            <com.ingic.yellowcap.ui.views.AnyEditTextView
                 android:id="@+id/txt_tip"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -83,7 +83,7 @@
                 android:textStyle="normal"
                 app:typeface="Roboto-Regular.ttf"/>
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:id="@+id/txt2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -113,7 +113,7 @@
             android:orientation="horizontal"
             android:weightSum="2">
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:id="@+id/txt_rate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -128,7 +128,7 @@
                 android:textStyle="bold"
                 app:typeface="Roboto-Regular.ttf" />
 
-            <com.app.yellowcap.ui.views.CustomRatingBar
+            <com.ingic.yellowcap.ui.views.CustomRatingBar
                 android:id="@+id/rbAddRating"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -154,7 +154,7 @@
             android:background="@drawable/square_border"
             android:orientation="horizontal">
 
-            <com.app.yellowcap.ui.views.AnyEditTextView
+            <com.ingic.yellowcap.ui.views.AnyEditTextView
                 android:id="@+id/txt_feedback"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
