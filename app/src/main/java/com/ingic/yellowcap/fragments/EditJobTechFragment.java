@@ -274,6 +274,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
 
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, jobtypearraylist);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         spnJobtype.setAdapter(categoryAdapter);
         if (previousData != null) {
             if (jobcollection.size() > 0) {
@@ -332,6 +333,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
                     jobtype = jobcollection.get(position);
                     if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
                         initJobDescriptionSpinner(jobtype);
+                        initSubJobDescriptionSpinner(jobtype);
                     }
                 }
             }
