@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
-        applicationId "com.app.yellowcap"
+        applicationId "ae.yellowcap"
         minSdkVersion 18
         targetSdkVersion 17
-        versionCode 3
-        versionName "3.0"
+        versionCode 4
+        versionName "4.0"
         // Enabling multidex support.
         multiDexEnabled true
     }
@@ -39,6 +39,7 @@ allprojects {
     repositories {
 
         maven { url 'https://jitpack.io' }
+        google()
     }
 }
 dependencies {

@@ -21,7 +21,7 @@
         android:layout_weight="0.01"
         android:orientation="vertical">
 
-        <com.app.yellowcap.ui.views.PinEntryEditText
+        <com.ingic.yellowcap.ui.views.PinEntryEditText
 
             android:id="@+id/txt_pin_entry"
             android:layout_width="@dimen/x200"

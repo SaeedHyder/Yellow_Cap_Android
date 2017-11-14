@@ -27,7 +27,7 @@
             android:layout_marginRight="@dimen/x40"
             android:src="@drawable/app_icon"
             />
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_recive_req"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

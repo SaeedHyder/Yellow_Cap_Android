@@ -16,7 +16,7 @@
             android:src="@drawable/radio_selected"
             android:scaleType="fitXY"
             android:layout_centerVertical="true"/>
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txt_jobpaymentmethod"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
                 android:src="@drawable/card"
                 android:visibility="visible" />
 
-            <com.app.yellowcap.ui.views.AnyEditTextView
+            <com.ingic.yellowcap.ui.views.AnyEditTextView
                 android:id="@+id/edt_cc_number"
               android:textSize="@dimen/x12"
                 android:layout_width="match_parent"
@@ -101,7 +101,7 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/calendar" />
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:id="@+id/edt_cc_expiredate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -135,7 +135,7 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/cvv" />
 
-            <com.app.yellowcap.ui.views.AnyEditTextView
+            <com.ingic.yellowcap.ui.views.AnyEditTextView
                 android:id="@+id/edt_cc_cvv"
                 android:textSize="@dimen/x12"
                 android:layout_width="match_parent"
@@ -171,7 +171,7 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/profile" />
 
-            <com.app.yellowcap.ui.views.AnyEditTextView
+            <com.ingic.yellowcap.ui.views.AnyEditTextView
                 android:id="@+id/edt_cc_name"
                 android:textSize="@dimen/x12"
                 android:layout_width="match_parent"

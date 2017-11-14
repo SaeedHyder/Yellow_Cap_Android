@@ -49,6 +49,37 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876857879277:android:a9036dbe5bb5afe1",
+        "android_client_info": {
+          "package_name": "ae.yellowcap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "876857879277-7fqvg4o7531fonh6a46e8rfv85m0qen0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6V-kVHXQarfg6PhzOKdXr_R9yWL8RCjQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"

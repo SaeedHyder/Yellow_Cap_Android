@@ -58,7 +58,7 @@
                     android:layout_gravity="center"
                     android:src="@drawable/ac" />
 
-                <com.app.yellowcap.ui.views.AnyTextView
+                <com.ingic.yellowcap.ui.views.AnyTextView
                     android:id="@+id/txt_ac"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -92,7 +92,7 @@
                     android:layout_gravity="center"
                     android:src="@drawable/electrical" />
 
-                <com.app.yellowcap.ui.views.AnyTextView
+                <com.ingic.yellowcap.ui.views.AnyTextView
                     android:id="@+id/txt_electrical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -124,7 +124,7 @@
                     android:layout_gravity="center"
                     android:src="@drawable/plumbing" />
 
-                <com.app.yellowcap.ui.views.AnyTextView
+                <com.ingic.yellowcap.ui.views.AnyTextView
                     android:id="@+id/txt_plumbing"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -168,7 +168,7 @@
                     android:layout_gravity="center"
                     android:src="@drawable/furniture" />
 
-                <com.app.yellowcap.ui.views.AnyTextView
+                <com.ingic.yellowcap.ui.views.AnyTextView
                     android:id="@+id/txt_furniture"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -202,7 +202,7 @@
                     android:layout_gravity="center"
                     android:src="@drawable/pest" />
 
-                <com.app.yellowcap.ui.views.AnyTextView
+                <com.ingic.yellowcap.ui.views.AnyTextView
                     android:id="@+id/txt_pest"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -234,7 +234,7 @@
                     android:layout_gravity="center"
                     android:src="@drawable/cleaning" />
 
-                <com.app.yellowcap.ui.views.AnyTextView
+                <com.ingic.yellowcap.ui.views.AnyTextView
                     android:id="@+id/txt_cleaning"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -275,7 +275,7 @@
 
                     android:src="@drawable/move" />
 
-                <com.app.yellowcap.ui.views.AnyTextView
+                <com.ingic.yellowcap.ui.views.AnyTextView
                     android:id="@+id/txt_move"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -307,7 +307,7 @@
                     android:layout_gravity="center"
                     android:src="@drawable/custom" />
 
-                <com.app.yellowcap.ui.views.AnyTextView
+                <com.ingic.yellowcap.ui.views.AnyTextView
                     android:id="@+id/txt_jobs"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

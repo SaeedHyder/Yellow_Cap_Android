@@ -75,7 +75,7 @@
                 android:layout_marginTop="@dimen/x15"
                 android:src="@drawable/user_main" />
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom|center_horizontal"
@@ -87,7 +87,7 @@
                 android:textStyle="normal"
                 app:typeface="Roboto-Regular.ttf" />
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x10"
@@ -124,7 +124,7 @@
                 android:layout_marginTop="@dimen/x15"
                 android:src="@drawable/technician_main" />
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom|center_horizontal"
@@ -136,7 +136,7 @@
                 android:textStyle="normal"
                 app:typeface="Roboto-Regular.ttf" />
 
-            <com.app.yellowcap.ui.views.AnyTextView
+            <com.ingic.yellowcap.ui.views.AnyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x10"

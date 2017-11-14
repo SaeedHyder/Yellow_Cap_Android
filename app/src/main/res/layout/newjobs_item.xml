@@ -23,7 +23,7 @@
         android:layout_gravity="center_vertical"
         android:src="@drawable/itemlogo" />
 
-    <com.app.yellowcap.ui.views.AnyTextView
+    <com.ingic.yellowcap.ui.views.AnyTextView
         android:id="@+id/txt_jobNotification"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

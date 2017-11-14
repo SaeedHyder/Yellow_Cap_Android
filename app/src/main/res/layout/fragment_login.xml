@@ -38,7 +38,7 @@
 
                 android:src="@drawable/email" />
 
-            <com.app.yellowcap.ui.views.AnyEditTextView
+            <com.ingic.yellowcap.ui.views.AnyEditTextView
                 android:id="@+id/edtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
                 android:src="@drawable/lock" />
 
 
-            <com.app.yellowcap.ui.views.AnyEditTextView
+            <com.ingic.yellowcap.ui.views.AnyEditTextView
                 android:id="@+id/edtPassword"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -116,7 +116,7 @@
             android:alpha="0.6"
             android:background="@drawable/text" />
 
-        <com.app.yellowcap.ui.views.AnyTextView
+        <com.ingic.yellowcap.ui.views.AnyTextView
             android:id="@+id/txtForgotPass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

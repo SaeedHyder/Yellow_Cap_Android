@@ -1,4 +1,4 @@
-package com.app.yellowcap;
+package com.ingic.yellowcap;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
