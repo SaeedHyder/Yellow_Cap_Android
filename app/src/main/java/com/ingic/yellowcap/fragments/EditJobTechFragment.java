@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.google.gson.Gson;
 import com.ingic.yellowcap.R;
 import com.ingic.yellowcap.entities.RequestDetail;
 import com.ingic.yellowcap.entities.ResponseWrapper;
@@ -29,7 +30,6 @@ import com.ingic.yellowcap.ui.views.AnyEditTextView;
 import com.ingic.yellowcap.ui.views.AnySpinner;
 import com.ingic.yellowcap.ui.views.AnyTextView;
 import com.ingic.yellowcap.ui.views.TitleBar;
-import com.google.gson.Gson;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -343,7 +343,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         });
     }
 
-    private void initSubJobDescriptionSpinner(ServiceEnt homeSelectedService){
+    private void initSubJobDescriptionSpinner(ServiceEnt homeSelectedService) {
         if (homeSelectedService != null) {
 
             subjobcollection = new ArrayList<>();
@@ -372,18 +372,25 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
     }
 
     private void setsubJobDescriptionSpinner() {
+        int SelectedIndex = 0;
+        int count = -1;
         final ArrayList<String> jobdescriptionarraylist = new ArrayList<String>();
         for (ServiceEnt item : subjobcollection
                 ) {
-            if (!prefHelper.isLanguageArabic()) {
-                jobdescriptionarraylist.add(item.getTitle());
-            } else {
-                jobdescriptionarraylist.add(item.getArTitle());
+            count++;
+            if (previousData != null && item.getId() == previousData.getCategory_id()){
+                SelectedIndex = count;
             }
+                if (!prefHelper.isLanguageArabic()) {
+                    jobdescriptionarraylist.add(item.getTitle());
+                } else {
+                    jobdescriptionarraylist.add(item.getArTitle());
+                }
         }
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, jobdescriptionarraylist);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnSubJobType.setAdapter(categoryAdapter);
+        spnSubJobType.setSelection(SelectedIndex);
         spnSubJobType.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -400,6 +407,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
             }
         });
     }
+
     private void initJobDescriptionSpinner(ServiceEnt selectedService) {
         if (selectedService != null) {
 
@@ -493,6 +501,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
 
     private void CreateRequest() {
         String serviceID = String.valueOf(jobcollection.get(spnJobtype.getSelectedItemPosition()).getId());
+        String subServiceID = String.valueOf(subjobcollection.get(spnSubJobType.getSelectedItemPosition()).getId());
         StringBuilder sb = new StringBuilder(selectedJobs.size());
         ArrayList<Integer> selectedIDS = new ArrayList<>();
         for (ServiceEnt item : selectedJobs
@@ -505,6 +514,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         if (!isEdit) {
             call = webService.addTechJob(prefHelper.getUserId(),
                     serviceID,
+                    subServiceID,
                     PARENTID,
                     serviceIDS,
                     mTxtAdditionDescription.getText().toString(),
@@ -512,6 +522,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         } else {
             call = webService.editTechJob(prefHelper.getUserId(),
                     serviceID,
+                    subServiceID,
                     PARENTID,
                     serviceIDS,
                     mTxtAdditionDescription.getText().toString(),

@@ -190,6 +190,7 @@ public interface WebService {
     @POST("request/editbytechnician")
     Call<ResponseWrapper> editTechJob(@Field("technician_id") String technician_id,
                                       @Field("service_id") String service_id,
+                                      @Field("category_id") String category_id,
                                       @Field("request_id") String request_id,
                                       @Field("services_ids") String services_ids,
                                       @Field("discription") String discription,
@@ -199,6 +200,7 @@ public interface WebService {
     @POST("request/addbytechnician")
     Call<ResponseWrapper> addTechJob(@Field("technician_id") String technician_id,
                                      @Field("service_id") String service_id,
+                                     @Field("category_id") String category_id,
                                      @Field("parent_id") String parent_id,
                                      @Field("services_ids") String services_ids,
                                      @Field("discription") String discription,
