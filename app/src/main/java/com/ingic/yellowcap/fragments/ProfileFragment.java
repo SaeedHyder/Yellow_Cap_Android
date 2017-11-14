@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.ingic.yellowcap.R;
+import com.ingic.yellowcap.entities.RegistrationResultEnt;
 import com.ingic.yellowcap.entities.ResponseWrapper;
 import com.ingic.yellowcap.entities.TechProfileEnt;
 import com.ingic.yellowcap.fragments.abstracts.BaseFragment;
@@ -84,11 +85,11 @@ public class ProfileFragment extends BaseFragment {
 
     private void getTechProfile() {
         getDockActivity().onLoadingStarted();
-        Call<ResponseWrapper<TechProfileEnt>> call = webService.techProfile(Integer.parseInt(prefHelper.getUserId()));
+        Call<ResponseWrapper<RegistrationResultEnt>> call = webService.techProfile(Integer.parseInt(prefHelper.getUserId()));
 
-        call.enqueue(new Callback<ResponseWrapper<TechProfileEnt>>() {
+        call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
             @Override
-            public void onResponse(Call<ResponseWrapper<TechProfileEnt>> call, Response<ResponseWrapper<TechProfileEnt>> response) {
+            public void onResponse(Call<ResponseWrapper<RegistrationResultEnt>> call, Response<ResponseWrapper<RegistrationResultEnt>> response) {
                 getDockActivity().onLoadingFinished();
                 mainFrame.setVisibility(View.VISIBLE);
                 if (response.body().getResponse().equals("2000")) {
@@ -99,7 +100,7 @@ public class ProfileFragment extends BaseFragment {
             }
 
             @Override
-            public void onFailure(Call<ResponseWrapper<TechProfileEnt>> call, Throwable t) {
+            public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
                 Log.e("EntryCodeFragment", t.toString());
                // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
@@ -107,19 +108,21 @@ public class ProfileFragment extends BaseFragment {
 
     }
 
-    private void setProfileData(TechProfileEnt result) {
-
+    private void setProfileData(RegistrationResultEnt result) {
+        prefHelper.putRegistrationResult(result);
         imageLoader.displayImage(prefHelper.getRegistrationResult().getProfileImage(),CircularImageSharePop);
-        edtFirstName.setText(result.getFirst_name());
-        edtLastName.setText(result.getLast_name());
+        edtFirstName.setText(result.getFirstName());
+        edtLastName.setText(result.getLastName());
         edtEmailId.setText(result.getEmail());
-        edtPhoneNo.setText(result.getPhone_no());
-        edtRegistrationType.setText(result.getRegistration_type());
+        edtPhoneNo.setText(result.getPhoneNo());
+        edtRegistrationType.setText(result.getRegistrationType());
         if (!prefHelper.isLanguageArabic()) {
-            edtRegDate.setText(DateHelper.dateFormat(result.getRegistration_date(), AppConstants.DateFormat_DMY, AppConstants.DateFormat_YMD) + "");
+            edtRegDate.setText(DateHelper.dateFormat(result.getRegistrationDate(), AppConstants.DateFormat_DMY, AppConstants.DateFormat_YMD) + "");
         } else {
-            edtRegDate.setText(result.getRegistration_date() + "");
+            edtRegDate.setText(result.getRegistrationDate() + "");
         }
+        getMainActivity().refreshSideMenuWithnewFragment();
+        getMainActivity().refreshSideMenu();
        // edtRegDate.setText(result.getRegistration_date());
        /* imageLoader.displayImage(prefHelper.getRegistrationResult().getProfileImage(),CircularImageSharePop);
         edtFirstName.setText(prefHelper.getRegistrationResult().getFirstName());

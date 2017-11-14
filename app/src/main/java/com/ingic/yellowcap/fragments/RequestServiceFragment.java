@@ -563,7 +563,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
         for (String item : images
                 ) {
-            if (!item.contains("http://")) {
+            if (!item.contains("https")) {
 
                 File file = new File(item);
                 files.add(MultipartBody.Part.createFormData("images[]",
@@ -808,7 +808,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
     @Override
     public void onDelete(int position) {
-        if (images.get(position).contains("http://")) {
+        if (images.get(position).contains("https")) {
             deleteimages.add(images.get(position));
         }
         images.remove(position);

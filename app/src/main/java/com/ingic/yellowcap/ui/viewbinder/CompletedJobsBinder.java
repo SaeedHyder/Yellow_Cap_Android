@@ -56,13 +56,13 @@ public class CompletedJobsBinder extends ViewBinder<TechInProgressEnt> {
         }
         if (entity.getRequest_detail().getServics_list().size() > 0) {
             if (prefHelper.isLanguageArabic()) {
-                viewHolder.txt_JobTitleText.setText(entity.getRequest_detail().getServics_list().get(0).getService_detail().getAr_title());
+                viewHolder.txt_JobTitleText.setText(entity.getRequest_detail().getServics_list().get(0).getService_detail().getAr_title()+"");
             } else {
-                viewHolder.txt_JobTitleText.setText(entity.getRequest_detail().getServics_list().get(0).getService_detail().getTitle());
+                viewHolder.txt_JobTitleText.setText(entity.getRequest_detail().getServics_list().get(0).getService_detail().getTitle()+"");
             }
         }
         if (entity.getRequest_detail().getUser_detail() != null) {
-            viewHolder.txt_clientNameText.setText(entity.getRequest_detail().getUser_detail().getFull_name());
+            viewHolder.txt_clientNameText.setText(entity.getRequest_detail().getUser_detail().getFull_name()+"");
         }
         if (entity.getRequest_detail().getFeedbackdetail() != null) {
             viewHolder.rbAddRating.setScore(entity.getRequest_detail().getFeedbackdetail().getRate());

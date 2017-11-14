@@ -126,7 +126,8 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
         edtPhoneNo.setText(getNationalPhoneNumber(result.getPhoneNo() + "", PhoneNumberUtil.PhoneNumberFormat.NATIONAL));
         edtLocationgps.setText(result.getAddress());
         edtLocationspecific.setText(result.getFullAddress());
-
+        getMainActivity().refreshSideMenuWithnewFragment();
+        getMainActivity().refreshSideMenu();
     }
 
     private void setlistener() {

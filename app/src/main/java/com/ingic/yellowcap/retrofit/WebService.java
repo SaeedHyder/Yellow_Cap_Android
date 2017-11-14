@@ -168,7 +168,7 @@ public interface WebService {
             @Query("technician_id") Integer technician_id);
 
     @GET("technician/getprofile")
-    Call<ResponseWrapper<TechProfileEnt>> techProfile(
+    Call<ResponseWrapper<RegistrationResultEnt>> techProfile(
             @Query("technician_id") Integer technician_id);
 
 

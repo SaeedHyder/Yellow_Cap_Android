@@ -47,9 +47,9 @@ public class UserCompleteJobsBinder extends ViewBinder<UserComleteJobsEnt> {
         viewHolder.txtJobNoText.setText(String.valueOf(position + 1));
         if (entity.getServicsList().size() > 0) {
             if (preferenceHelper.isLanguageArabic()) {
-                viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getArTitle());
+                viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getArTitle()+"");
             } else {
-                viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getTitle());
+                viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getTitle()+"");
             }
         }
         if (!preferenceHelper.isLanguageArabic()) {

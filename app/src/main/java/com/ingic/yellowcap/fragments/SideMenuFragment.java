@@ -143,11 +143,11 @@ public class SideMenuFragment extends BaseFragment {
     private void getTechProfile() {
         if (prefHelper.isLogin() && prefHelper.getUserType().equals("technician")) {
             getDockActivity().onLoadingStarted();
-            Call<ResponseWrapper<TechProfileEnt>> call = webService.techProfile(Integer.parseInt(prefHelper.getUserId()));
+            Call<ResponseWrapper<RegistrationResultEnt>> call = webService.techProfile(Integer.parseInt(prefHelper.getUserId()));
 
-            call.enqueue(new Callback<ResponseWrapper<TechProfileEnt>>() {
+            call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
                 @Override
-                public void onResponse(Call<ResponseWrapper<TechProfileEnt>> call, Response<ResponseWrapper<TechProfileEnt>> response) {
+                public void onResponse(Call<ResponseWrapper<RegistrationResultEnt>> call, Response<ResponseWrapper<RegistrationResultEnt>> response) {
                     getDockActivity().onLoadingFinished();
                     if (response.body().getResponse().equals("2000")) {
                         setProfileData(response.body().getResult());
@@ -157,7 +157,7 @@ public class SideMenuFragment extends BaseFragment {
                 }
 
                 @Override
-                public void onFailure(Call<ResponseWrapper<TechProfileEnt>> call, Throwable t) {
+                public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
                     Log.e("EntryCodeFragment", t.toString());
                     // UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
                 }
@@ -260,7 +260,7 @@ public class SideMenuFragment extends BaseFragment {
         prefHelper.putRegistrationResult(result);
         Picasso.with(getDockActivity()).load(result.getProfileImage()).into(CircularImageSharePop);
 
-        txtUserName.setText(result.getFullName());
+        txtUserName.setText(result.getFirstName()+" "+result.getLastName());
         txtUseremail.setText(result.getEmail());
 
     }
