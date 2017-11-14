@@ -24,6 +24,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.google.android.gms.location.places.Place;
+import com.google.gson.Gson;
 import com.ingic.yellowcap.R;
 import com.ingic.yellowcap.activities.MainActivity;
 import com.ingic.yellowcap.entities.ImageDetailEnt;
@@ -50,8 +52,6 @@ import com.ingic.yellowcap.ui.views.AnyEditTextView;
 import com.ingic.yellowcap.ui.views.AnySpinner;
 import com.ingic.yellowcap.ui.views.AnyTextView;
 import com.ingic.yellowcap.ui.views.TitleBar;
-import com.google.android.gms.location.places.Place;
-import com.google.gson.Gson;
 import com.jota.autocompletelocation.AutoCompleteLocation;
 
 import org.apache.commons.lang3.StringUtils;
@@ -140,6 +140,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     private UserInProgressEnt previousRequestData;
     private Boolean isEdit = false;
     private ArrayList<String> deleteimages;
+    private Date DateSelected;
 
     public static RequestServiceFragment newInstance() {
         return new RequestServiceFragment();
@@ -194,29 +195,6 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString(preferreddate, btnPreferreddate.getText().toString());
-        outState.putString(preferredtime, btnPreferredtime.getText().toString());
-
-    }
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        if (savedInstanceState != null) {
-            btnPreferredtime.setText(savedInstanceState.getString(preferredtime));
-            btnPreferreddate.setText(savedInstanceState.getString(preferreddate));
-        }
-
-    }
-
-    @Override
-    protected int getLayout() {
-        return R.layout.fragment_request_service;
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_request_service, container, false);
@@ -227,13 +205,27 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     }
 
     @Override
+    protected int getLayout() {
+        return R.layout.fragment_request_service;
+    }
+
+    @Override
+    public void setTitleBar(TitleBar titleBar) {
+        super.setTitleBar(titleBar);
+        getDockActivity().lockDrawer();
+        titleBar.hideButtons();
+        titleBar.showBackButton();
+        titleBar.setSubHeading(getString(R.string.request_setvice));
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         selectedJobs = new ArrayList<>();
         deleteimages = new ArrayList<>();
-        if (prefHelper.isLanguageArabic()){
+        if (prefHelper.isLanguageArabic()) {
             view.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-        }else {
+        } else {
             view.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         }
         setListener();
@@ -252,6 +244,24 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
         setListners();
 
+
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            btnPreferredtime.setText(savedInstanceState.getString(preferredtime));
+            btnPreferreddate.setText(savedInstanceState.getString(preferreddate));
+        }
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(preferreddate, btnPreferreddate.getText().toString());
+        outState.putString(preferredtime, btnPreferredtime.getText().toString());
 
     }
 
@@ -281,7 +291,6 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
         bindSelectedJobview(selectedJobs);
     }
-
 
     private void setListener() {
         btnPreferreddate.setOnClickListener(this);
@@ -433,7 +442,8 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             }
         });
     }
-    private void initSubJobDescriptionSpinner(ServiceEnt homeSelectedService){
+
+    private void initSubJobDescriptionSpinner(ServiceEnt homeSelectedService) {
         if (homeSelectedService != null) {
 
             subjobcollection = new ArrayList<>();
@@ -460,10 +470,17 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
         }
     }
+
     private void setsubJobDescriptionSpinner() {
+        int SelectedIndex = 0;
+        int count = -1;
         final ArrayList<String> jobdescriptionarraylist = new ArrayList<String>();
         for (ServiceEnt item : subjobcollection
                 ) {
+            count++;
+            if (previousRequestData != null && item.getId() == previousRequestData.getCategoryID()) {
+                SelectedIndex = count;
+            }
             if (!prefHelper.isLanguageArabic()) {
                 jobdescriptionarraylist.add(item.getTitle());
             } else {
@@ -473,6 +490,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, jobdescriptionarraylist);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnSubJobType.setAdapter(categoryAdapter);
+        spnSubJobType.setSelection(SelectedIndex);
         spnSubJobType.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -489,6 +507,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             }
         });
     }
+
     private void initJobDescriptionSpinner(ServiceEnt selectedService) {
         if (selectedService != null) {
 
@@ -612,6 +631,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
     private void CreateRequest() {
         String serviceID = String.valueOf(jobcollection.get(spnJobtype.getSelectedItemPosition()).getId());
+        String subServiceID = String.valueOf(subjobcollection.get(spnSubJobType.getSelectedItemPosition()).getId());
         StringBuilder sb = new StringBuilder(selectedJobs.size());
         ArrayList<Integer> selectedIDS = new ArrayList<>();
         for (ServiceEnt item : selectedJobs
@@ -638,6 +658,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             call = webService.createRequest(
                     RequestBody.create(MediaType.parse("text/plain"), prefHelper.getUserId()),
                     RequestBody.create(MediaType.parse("text/plain"), serviceID),
+                    RequestBody.create(MediaType.parse("text/plain"), subServiceID),
                     RequestBody.create(MediaType.parse("text/plain"), serviceIDS),
                     RequestBody.create(MediaType.parse("text/plain"), edtAddtionalJob.getText().toString()),
                     RequestBody.create(MediaType.parse("text/plain"), edtLocationgps.getText().toString()),
@@ -666,6 +687,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                     RequestBody.create(MediaType.parse("text/plain"), prefHelper.getUserId()),
                     RequestBody.create(MediaType.parse("text/plain"), String.valueOf(previousRequestData.getId())),
                     RequestBody.create(MediaType.parse("text/plain"), serviceID),
+                    RequestBody.create(MediaType.parse("text/plain"), subServiceID),
                     RequestBody.create(MediaType.parse("text/plain"), serviceIDS),
                     RequestBody.create(MediaType.parse("text/plain"), edtAddtionalJob.getText().toString()),
                     RequestBody.create(MediaType.parse("text/plain"), edtLocationgps.getText().toString()),
@@ -737,17 +759,6 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         imgCcCheck.setVisibility(View.GONE);
         imgCodCheck.setVisibility(View.VISIBLE);
     }
-
-    @Override
-    public void setTitleBar(TitleBar titleBar) {
-        super.setTitleBar(titleBar);
-        getDockActivity().lockDrawer();
-        titleBar.hideButtons();
-        titleBar.showBackButton();
-        titleBar.setSubHeading(getString(R.string.request_setvice));
-    }
-
-    private Date DateSelected;
 
     private void initDatePicker(final TextView textView) {
         Calendar calendar = Calendar.getInstance();
