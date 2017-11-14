@@ -46,17 +46,12 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
     ExpandableListView elvInprogress;
     private static String assignID;
     SetOrderCounts orderCounts;
-/*<<<<<<< HEAD
-    private ArrayListExpandableAdapter<InProgressParentEnt, InProgressChildEnt> adapter;
-    private ArrayList<InProgressParentEnt> collectionGroup;
-    private ArrayList<InProgressChildEnt> collectionChild ;
-    private ArrayList<InProgressChildEnt> collectionChild1 ;
-=======*/
+
 
     private ArrayListExpandableAdapter<RequestDetail, RequestDetail> adapter;
     private ArrayList<RequestDetail> collectionGroup;
     private ArrayList<RequestDetail> collectionChild ;
-//>>>>>>> 29e8a3f026c4bd0d24fe2c96a2e5c2c96e670704
+
 
     private ArrayList<TechInProgressEnt> userCollection;
     private HashMap<RequestDetail, ArrayList<RequestDetail>> listDataChild;
