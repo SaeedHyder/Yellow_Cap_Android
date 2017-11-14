@@ -1,8 +1,8 @@
 package com.ingic.yellowcap.entities;
 
-import com.ingic.yellowcap.helpers.DateHelper;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.ingic.yellowcap.helpers.DateHelper;
 
 import java.util.List;
 
@@ -50,6 +50,9 @@ public class UserInProgressEnt {
     @SerializedName("user_id")
     @Expose
     private Integer userId;
+    @SerializedName("category_id")
+    @Expose
+    private int CategoryID;
     @SerializedName("message")
     @Expose
     private String message;
@@ -71,6 +74,11 @@ public class UserInProgressEnt {
     @SerializedName("image_detail")
     @Expose
     private List<ImageDetailEnt> imageDetail = null;
+    @SerializedName("total_amount")
+    @Expose
+
+    private String total_amount = "";
+
     public String getTotal_amount() {
         return total_amount;
     }
@@ -79,10 +87,6 @@ public class UserInProgressEnt {
         this.total_amount = total_amount;
     }
 
-    @SerializedName("total_amount")
-    @Expose
-
-    private String total_amount = "";
     public Integer getId() {
         return id;
     }
@@ -244,4 +248,11 @@ public class UserInProgressEnt {
     }
 
 
+    public Integer getCategoryID() {
+        return CategoryID;
+    }
+
+    public void setCategoryID(Integer categoryID) {
+        CategoryID = categoryID;
+    }
 }

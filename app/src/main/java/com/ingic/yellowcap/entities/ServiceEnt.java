@@ -12,7 +12,7 @@ import static com.ingic.yellowcap.helpers.DateHelper.getLocalTimeDate;
 public class ServiceEnt {
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private int id;
     @SerializedName("title")
     @Expose
     private String title;
@@ -49,11 +49,11 @@ public class ServiceEnt {
         setArTitle(arTitle);
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

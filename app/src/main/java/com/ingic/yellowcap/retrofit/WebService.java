@@ -10,7 +10,6 @@ import com.ingic.yellowcap.entities.ResponseWrapper;
 import com.ingic.yellowcap.entities.ServiceEnt;
 import com.ingic.yellowcap.entities.StaticPageEnt;
 import com.ingic.yellowcap.entities.TechInProgressEnt;
-import com.ingic.yellowcap.entities.TechProfileEnt;
 import com.ingic.yellowcap.entities.UserComleteJobsEnt;
 import com.ingic.yellowcap.entities.UserInProgressEnt;
 import com.ingic.yellowcap.entities.countEnt;
@@ -76,6 +75,7 @@ public interface WebService {
 
     @GET("servicechild")
     Call<ResponseWrapper<ArrayList<ServiceEnt>>> getchildServices(@Query("parent_id") String parent_id);
+
     @GET("getCategory")
     Call<ResponseWrapper<ArrayList<ServiceEnt>>> getSubServices(@Query("service_id") String parent_id);
 
@@ -83,6 +83,7 @@ public interface WebService {
     @POST("request/create")
     Call<ResponseWrapper<RequestEnt>> createRequest(@Part("user_id") RequestBody userID,
                                                     @Part("service_id") RequestBody service_id,
+                                                    @Part("category_id") RequestBody category_id,
                                                     @Part("services_ids") RequestBody services_ids,
                                                     @Part("discription") RequestBody discription,
                                                     @Part("address") RequestBody address,
@@ -106,6 +107,7 @@ public interface WebService {
     Call<ResponseWrapper<RequestEnt>> editUserRequest(@Part("user_id") RequestBody userID,
                                                       @Part("request_id") RequestBody request_id,
                                                       @Part("service_id") RequestBody service_id,
+                                                      @Part("category_id") RequestBody category_id,
                                                       @Part("services_ids") RequestBody services_ids,
                                                       @Part("discription") RequestBody discription,
                                                       @Part("address") RequestBody address,
