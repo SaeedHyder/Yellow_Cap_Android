@@ -76,6 +76,8 @@ public interface WebService {
 
     @GET("servicechild")
     Call<ResponseWrapper<ArrayList<ServiceEnt>>> getchildServices(@Query("parent_id") String parent_id);
+    @GET("getCategory")
+    Call<ResponseWrapper<ArrayList<ServiceEnt>>> getSubServices(@Query("service_id") String parent_id);
 
     @Multipart
     @POST("request/create")

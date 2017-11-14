@@ -282,6 +282,7 @@
     <string name="addtional_jobs">Additional Jobs</string>
     <string name="to">to</string>
     <string name="pricing_for_additional_job">Pricing For Additional Jobs</string>
+    <string name="sub_job_type">Select Sub Job Type</string>
 
 
 </resources>

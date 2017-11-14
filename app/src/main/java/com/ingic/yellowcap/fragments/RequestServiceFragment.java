@@ -122,7 +122,8 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     LinearLayout llBtnDate;
     @BindView(R.id.ll_btnTime)
     LinearLayout llBtnTime;
-
+    @BindView(R.id.spn_subjobtype)
+    AnySpinner spnSubJobType;
     private ArrayList<String> images = new ArrayList<>();
     private RecyclerViewAdapterImages mAdapter;
     private ArrayList<ServiceEnt> selectedJobs;
@@ -132,6 +133,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     private ServiceEnt homeSelectedService;
     private ArrayList<ServiceEnt> jobcollection;
     private ArrayList<ServiceEnt> jobChildcollection;
+    private ArrayList<ServiceEnt> subjobcollection;
     private String preferreddate = "preferreddate";
     private String preferredtime = "preferredtime";
     private String predate = "", preTime = "";
@@ -398,12 +400,14 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 jobtype = jobcollection.get(jobtypearraylist.indexOf(homeSelectedService.getArTitle()));
                 if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
                     initJobDescriptionSpinner(jobtype);
+                    initSubJobDescriptionSpinner(jobtype);
                 }
             } else if (jobtypearraylist.contains(homeSelectedService.getTitle())) {
                 spnJobtype.setSelection(jobtypearraylist.indexOf(homeSelectedService.getTitle()));
                 jobtype = jobcollection.get(jobtypearraylist.indexOf(homeSelectedService.getTitle()));
                 if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
                     initJobDescriptionSpinner(jobtype);
+                    initSubJobDescriptionSpinner(jobtype);
                 }
 
             } else {
@@ -411,6 +415,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 jobtype = jobcollection.get(0);
                 if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
                     initJobDescriptionSpinner(jobtype);
+                    initSubJobDescriptionSpinner(jobtype);
                 }
             }
         }
@@ -428,7 +433,62 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             }
         });
     }
+    private void initSubJobDescriptionSpinner(ServiceEnt homeSelectedService){
+        if (homeSelectedService != null) {
 
+            subjobcollection = new ArrayList<>();
+            Call<ResponseWrapper<ArrayList<ServiceEnt>>> call = webService.getSubServices(String.valueOf(homeSelectedService.getId()));
+            call.enqueue(new Callback<ResponseWrapper<ArrayList<ServiceEnt>>>() {
+                @Override
+                public void onResponse(Call<ResponseWrapper<ArrayList<ServiceEnt>>> call, Response<ResponseWrapper<ArrayList<ServiceEnt>>> response) {
+                    if (response.body().getResponse().equals("2000")) {
+                        subjobcollection.clear();
+                        subjobcollection.addAll(response.body().getResult());
+                        setsubJobDescriptionSpinner();
+
+                    } else {
+                        UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseWrapper<ArrayList<ServiceEnt>>> call, Throwable t) {
+                    Log.e("TermAndCondition", t.toString());
+
+                }
+            });
+
+        }
+    }
+    private void setsubJobDescriptionSpinner() {
+        final ArrayList<String> jobdescriptionarraylist = new ArrayList<String>();
+        for (ServiceEnt item : subjobcollection
+                ) {
+            if (!prefHelper.isLanguageArabic()) {
+                jobdescriptionarraylist.add(item.getTitle());
+            } else {
+                jobdescriptionarraylist.add(item.getArTitle());
+            }
+        }
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, jobdescriptionarraylist);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnSubJobType.setAdapter(categoryAdapter);
+        spnSubJobType.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                // bindSelectedJobview(selectedJobs);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+              /*  if (!selectedJobs.contains(jobChildcollection.get(0)))
+                    selectedJobs.add(jobChildcollection.get(0));
+
+                refreshListview();*/
+            }
+        });
+    }
     private void initJobDescriptionSpinner(ServiceEnt selectedService) {
         if (selectedService != null) {
 
