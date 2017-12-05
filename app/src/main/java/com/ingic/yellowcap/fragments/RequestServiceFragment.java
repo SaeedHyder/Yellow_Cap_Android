@@ -631,7 +631,9 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
     private void CreateRequest() {
         String serviceID = String.valueOf(jobcollection.get(spnJobtype.getSelectedItemPosition()).getId());
-        String subServiceID = String.valueOf(subjobcollection.get(spnSubJobType.getSelectedItemPosition()).getId());
+        String subServiceID = "-1";
+        if (!subjobcollection.isEmpty())
+        subServiceID = String.valueOf(subjobcollection.get(spnSubJobType.getSelectedItemPosition()).getId());
         StringBuilder sb = new StringBuilder(selectedJobs.size());
         ArrayList<Integer> selectedIDS = new ArrayList<>();
         for (ServiceEnt item : selectedJobs

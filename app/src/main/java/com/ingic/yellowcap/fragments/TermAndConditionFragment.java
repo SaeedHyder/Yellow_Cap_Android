@@ -43,19 +43,6 @@ public class TermAndConditionFragment extends BaseFragment {
     }
 
     @Override
-    protected int getLayout() {
-        return R.layout.fragment_term_condition;
-    }
-
-    @Override
-    public void setTitleBar(TitleBar titleBar) {
-        super.setTitleBar(titleBar);
-        titleBar.hideButtons();
-        titleBar.showBackButton();
-        titleBar.setSubHeading(getString(R.string.terms_conditons));
-    }
-
-    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
@@ -98,8 +85,10 @@ public class TermAndConditionFragment extends BaseFragment {
     }
 
     private void settitle(String response) {
-        getMainActivity().titleBar.setSubHeading(getString(R.string.terms_conditons));
-        getMainActivity().titleBar.invalidate();
+        if (getMainActivity() != null && getMainActivity().titleBar != null) {
+            getMainActivity().titleBar.setSubHeading(getString(R.string.terms_conditons));
+            getMainActivity().titleBar.invalidate();
+        }
         txtTermCondition.setText(response);
         txtTermCondition.setMovementMethod(new ScrollingMovementMethod());
     }
@@ -110,6 +99,19 @@ public class TermAndConditionFragment extends BaseFragment {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
         return rootView;
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.fragment_term_condition;
+    }
+
+    @Override
+    public void setTitleBar(TitleBar titleBar) {
+        super.setTitleBar(titleBar);
+        titleBar.hideButtons();
+        titleBar.showBackButton();
+        titleBar.setSubHeading(getString(R.string.terms_conditons));
     }
 
 

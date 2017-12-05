@@ -278,5 +278,6 @@
     <string name="email_alert_message">تم إرسال رمز التحقق إلى عنوان بريدك الإلكتروني</string>
     <string name="between">من</string>
     <string name="pricing_for_additional_job">تسعير معلومات اضافية</string>
+    <string name="sub_job_type">حدد نوع الوظيفة الفرعية</string>
 
 </resources>
