@@ -167,17 +167,38 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
     }
 
     @Override
-    protected int getLayout() {
-        return R.layout.fragment_editjob_technician;
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         initListViewAdapter();
         ButterKnife.bind(this, rootView);
         return rootView;
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.fragment_editjob_technician;
+    }
+
+    @Override
+    public void setTitleBar(TitleBar titleBar) {
+        super.setTitleBar(titleBar);
+        titleBar.hideButtons();
+        getDockActivity().lockDrawer();
+        titleBar.showsaveButton(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                    CreateRequest();
+                }
+            }
+        });
+        titleBar.showBackButton();
+        if (isEdit) {
+            titleBar.setSubHeading(getString(R.string.edit_job));
+        } else {
+            titleBar.setSubHeading(getString(R.string.add_job));
+        }
     }
 
     @Override
@@ -380,14 +401,14 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         for (ServiceEnt item : subjobcollection
                 ) {
             count++;
-            if (previousData != null && item.getId() == previousData.getCategory_id()){
+            if (previousData != null && item.getId() == previousData.getCategory_id()) {
                 SelectedIndex = count;
             }
-                if (!prefHelper.isLanguageArabic()) {
-                    jobdescriptionarraylist.add(item.getTitle());
-                } else {
-                    jobdescriptionarraylist.add(item.getArTitle());
-                }
+            if (!prefHelper.isLanguageArabic()) {
+                jobdescriptionarraylist.add(item.getTitle());
+            } else {
+                jobdescriptionarraylist.add(item.getArTitle());
+            }
         }
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, jobdescriptionarraylist);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -503,7 +524,9 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
 
     private void CreateRequest() {
         String serviceID = String.valueOf(jobcollection.get(spnJobtype.getSelectedItemPosition()).getId());
-        String subServiceID = String.valueOf(subjobcollection.get(spnSubJobType.getSelectedItemPosition()).getId());
+        String subServiceID = "-1";
+        if (!subjobcollection.isEmpty())
+            subServiceID = String.valueOf(subjobcollection.get(spnSubJobType.getSelectedItemPosition()).getId());
         StringBuilder sb = new StringBuilder(selectedJobs.size());
         ArrayList<Integer> selectedIDS = new ArrayList<>();
         for (ServiceEnt item : selectedJobs
@@ -559,27 +582,6 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         selectedJobsadapter.notifyDataSetChanged();
         setListViewHeightBasedOnChildren(listViewJobselected);
     }
-
-    @Override
-    public void setTitleBar(TitleBar titleBar) {
-        super.setTitleBar(titleBar);
-        titleBar.hideButtons();
-        getDockActivity().lockDrawer();
-        titleBar.showsaveButton(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                    CreateRequest();
-                }
-            }
-        });
-        titleBar.showBackButton();
-        if (isEdit) {
-            titleBar.setSubHeading(getString(R.string.edit_job));
-        } else {
-            titleBar.setSubHeading(getString(R.string.add_job));
-        }
-    }
  /*   private void initJobTypeSpinner() {
         final List<String> jobtypearraylist = new ArrayList<String>();
         jobtypearraylist.add("Electrical");
@@ -632,7 +634,6 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
             }
         });
     }*/
-
 
     @Override
     public void onDelete(int position) {

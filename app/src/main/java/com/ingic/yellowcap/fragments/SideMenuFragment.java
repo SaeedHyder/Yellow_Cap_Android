@@ -76,10 +76,43 @@ public class SideMenuFragment extends BaseFragment {
 
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
 
     @Override
     protected int getLayout() {
         return R.layout.fragment_sidemenu;
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        TokenUpdater.getInstance().UpdateToken(getDockActivity(), prefHelper.getUserId(), "android", prefHelper.getFirebase_TOKEN());
+
+        LocalBroadcastManager.getInstance(getDockActivity()).registerReceiver(broadcastReceiver,
+                new IntentFilter(AppConstants.REGISTRATION_COMPLETE));
+
+        LocalBroadcastManager.getInstance(getDockActivity()).registerReceiver(broadcastReceiver,
+                new IntentFilter(AppConstants.PUSH_NOTIFICATION));
+
+    }
+
+    @Override
+    public void onPause() {
+        LocalBroadcastManager.getInstance(getDockActivity()).unregisterReceiver(broadcastReceiver);
+        super.onPause();
+    }
+
+    @Override
+    public void setTitleBar(TitleBar titleBar) {
+        super.setTitleBar(titleBar);
+        titleBar.hideTitleBar();
     }
 
     @Override
@@ -178,26 +211,6 @@ public class SideMenuFragment extends BaseFragment {
         updateNotificationsCount = notificationsCount;
     }
 
-    @Override
-    public void onResume() {
-
-        super.onResume();
-        TokenUpdater.getInstance().UpdateToken(getDockActivity(), prefHelper.getUserId(), "android", prefHelper.getFirebase_TOKEN());
-
-        LocalBroadcastManager.getInstance(getDockActivity()).registerReceiver(broadcastReceiver,
-                new IntentFilter(AppConstants.REGISTRATION_COMPLETE));
-
-        LocalBroadcastManager.getInstance(getDockActivity()).registerReceiver(broadcastReceiver,
-                new IntentFilter(AppConstants.PUSH_NOTIFICATION));
-
-    }
-
-    @Override
-    public void onPause() {
-        LocalBroadcastManager.getInstance(getDockActivity()).unregisterReceiver(broadcastReceiver);
-        super.onPause();
-    }
-
     private void onNotificationReceived() {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -232,7 +245,6 @@ public class SideMenuFragment extends BaseFragment {
         };
     }
 
-
     private void getUserProfile() {
         if (prefHelper.isLogin() && prefHelper.getUserType().equals("user")) {
             Call<ResponseWrapper<RegistrationResultEnt>> call = webService.getUserProfile(prefHelper.getUserId());
@@ -259,8 +271,10 @@ public class SideMenuFragment extends BaseFragment {
     private void setProfileData(RegistrationResultEnt result) {
         prefHelper.putRegistrationResult(result);
         Picasso.with(getDockActivity()).load(result.getProfileImage()).into(CircularImageSharePop);
-
-        txtUserName.setText(result.getFirstName()+" "+result.getLastName());
+        if (result.getFirstName() == null || result.getFirstName().equals("")) {
+            txtUserName.setText(result.getFullName());
+        } else
+            txtUserName.setText(result.getFirstName() + " " + result.getLastName());
         txtUseremail.setText(result.getEmail());
 
     }
@@ -414,7 +428,6 @@ public class SideMenuFragment extends BaseFragment {
         }
     }
 
-
     private void binddataUser() {
         navigationItemList.add(new NavigationEnt(R.drawable.home_yellow, R.drawable.home, getString(R.string.home)));
         navigationItemList.add(new NavigationEnt(R.drawable.profile_yellow, R.drawable.profile, getString(R.string.profile)));
@@ -433,20 +446,6 @@ public class SideMenuFragment extends BaseFragment {
         navListview.setAdapter(madapter);
         madapter.addAll(navigationItemList);
         madapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-    @Override
-    public void setTitleBar(TitleBar titleBar) {
-        super.setTitleBar(titleBar);
-        titleBar.hideTitleBar();
     }
 
 }
