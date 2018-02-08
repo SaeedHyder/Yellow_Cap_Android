@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="berlin.volders:badger-0.2.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/badger-0.2.1.aar/ea27bfb9b4a29a14d805b13b160d4612/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/badger-0.2.1.aar/ea27bfb9b4a29a14d805b13b160d4612/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/berlin.volders/badger/0.2.1/646660c0c14fac35b54e77d1f0a99c1e553ccee4/badger-0.2.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
