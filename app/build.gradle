@@ -8,8 +8,8 @@ android {
         applicationId "ae.yellowcap"
         minSdkVersion 18
         targetSdkVersion 17
-        versionCode 5
-        versionName "4.1"
+        versionCode 6
+        versionName "4.2"
         // Enabling multidex support.
         multiDexEnabled true
     }

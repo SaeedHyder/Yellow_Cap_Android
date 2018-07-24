@@ -176,8 +176,8 @@
                 android:id="@+id/ll_Bottombuttons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginRight="@dimen/x10"
+                android:layout_marginLeft="@dimen/x8"
+                android:layout_marginRight="@dimen/x8"
                 android:layout_marginTop="@dimen/x10"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/x10">
@@ -186,9 +186,9 @@
                     android:id="@+id/btn_AddJobbottom"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/x35"
-                    android:layout_marginRight="@dimen/x3"
+                    android:layout_marginRight="@dimen/x2"
                     android:layout_weight="1"
-
+                    android:textSize="@dimen/x13"
                     android:background="@drawable/button_blackbackground"
                     android:text="@string/add_job"
                     android:textColor="@color/white" />
@@ -198,10 +198,11 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/x35"
 
-                    android:layout_marginLeft="@dimen/x3"
+                    android:layout_marginLeft="@dimen/x2"
                     android:layout_weight="1"
                     android:background="@drawable/button_background"
                     android:text="@string/mark_as_completed"
+                    android:textSize="@dimen/x13"
                     android:textColor="@color/white" />
 
             </LinearLayout>

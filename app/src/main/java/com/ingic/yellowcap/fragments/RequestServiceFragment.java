@@ -645,7 +645,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
         for (String item : images
                 ) {
-            if (!item.contains("https")) {
+            if (!item.contains("http")) {
 
                 File file = new File(item);
                 files.add(MultipartBody.Part.createFormData("images[]",

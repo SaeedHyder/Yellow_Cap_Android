@@ -1,288 +1,294 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/CircularImageSharePop"
-        android:layout_width="@dimen/x100"
-        android:layout_height="@dimen/x90"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/x40"
-        android:layout_marginBottom="@dimen/x40"
-
-         />
-
-    <LinearLayout
-        android:id="@+id/ll_textFields"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.01"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x20"
-            android:layout_marginRight="@dimen/x20">
-
-            <ImageView
-                android:id="@+id/img_profile"
-                android:layout_width="@dimen/x20"
-                android:layout_height="@dimen/x20"
-                android:layout_centerVertical="true"
-                android:src="@drawable/profile" />
-
-            <com.ingic.yellowcap.ui.views.AnyEditTextView
-                android:id="@+id/edtname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/x20"
-                android:layout_marginRight="@dimen/x20"
-                android:paddingTop="@dimen/x15"
-                android:paddingBottom="@dimen/x15"
-                android:layout_toEndOf="@+id/img_profile"
-                android:layout_toRightOf="@+id/img_profile"
-                android:background="@android:color/transparent"
-                android:drawablePadding="@dimen/x10"
-                android:hint="@string/enter_full_name"
-                android:imeOptions="actionNext"
-                android:inputType="text"
-                android:maxLength="50"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textColor="@color/dark_grey"
-                android:textSize="@dimen/x14"
-                app:testType="email"
-                app:typeface="Roboto-Regular.ttf" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/x1"
-            android:layout_marginLeft="@dimen/x20"
-            android:layout_marginRight="@dimen/x20"
-            android:alpha="0.6"
-            android:background="@drawable/text" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x20"
-            android:layout_marginRight="@dimen/x20">
-
-            <ImageView
-                android:id="@+id/img_email"
-                android:layout_width="@dimen/x20"
-                android:layout_height="@dimen/x20"
-                android:layout_centerVertical="true"
-                android:src="@drawable/email" />
-
-            <com.ingic.yellowcap.ui.views.AnyEditTextView
-                android:id="@+id/edtnumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/x20"
-                android:layout_marginRight="@dimen/x20"
-                android:paddingTop="@dimen/x15"
-                android:paddingBottom="@dimen/x15"
-                android:layout_toEndOf="@+id/img_email"
-                android:layout_toRightOf="@+id/img_email"
-                android:background="@android:color/transparent"
-                android:drawablePadding="@dimen/x10"
-                android:hint="@string/email"
-                android:imeOptions="actionNext"
-                android:inputType="textEmailAddress"
-                android:maxLength="50"
-                android:singleLine="true"
-                android:textColor="@color/dark_grey"
-                android:textSize="@dimen/x14"
-                app:testType="email"
-                app:typeface="Roboto-Regular.ttf" />
-        </RelativeLayout>
-
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/x1"
-            android:layout_marginLeft="@dimen/x20"
-            android:layout_marginRight="@dimen/x20"
-            android:alpha="0.6"
-            android:background="@drawable/text" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:layout_marginLeft="@dimen/x20"
-            android:layout_marginRight="@dimen/x20">
-
-            <ImageView
-                android:id="@+id/img_phone"
-                android:layout_width="@dimen/x20"
-                android:layout_height="@dimen/x20"
-                android:layout_centerVertical="true"
-                android:src="@drawable/phone" />
-
-            <com.ingic.yellowcap.ui.views.AnyEditTextView
-                android:id="@+id/edtPhoneNo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/x20"
-                android:layout_marginRight="@dimen/x20"
-                android:paddingTop="@dimen/x15"
-                android:paddingBottom="@dimen/x15"
-                android:layout_toEndOf="@+id/img_phone"
-                android:layout_toRightOf="@+id/img_phone"
-                android:background="@android:color/transparent"
-                android:drawablePadding="@dimen/x10"
-                android:hint="@string/phone_number"
-                android:imeOptions="actionNext"
-                android:inputType="number"
-                android:maxLength="50"
-                android:singleLine="true"
-                android:textColor="@color/dark_grey"
-                android:textSize="@dimen/x14"
-                app:typeface="Roboto-Regular.ttf" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/x1"
-            android:layout_marginLeft="@dimen/x20"
-            android:layout_marginRight="@dimen/x20"
-            android:alpha="0.6"
-            android:background="@drawable/text" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x20"
-            android:layout_marginRight="@dimen/x20">
-
-            <ImageView
-                android:id="@+id/img_location_autocomplete"
-                android:layout_width="@dimen/x20"
-                android:layout_height="@dimen/x20"
-                android:layout_centerVertical="true"
-                android:src="@drawable/location_address" />
-
-            <com.jota.autocompletelocation.AutoCompleteLocation
-                android:id="@+id/edt_locationgps"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginRight="@dimen/x20"
-                android:layout_toEndOf="@+id/img_location_autocomplete"
-                android:layout_toLeftOf="@+id/img_gps"
-                android:layout_toRightOf="@+id/img_location_autocomplete"
-                android:layout_toStartOf="@+id/img_gps"
-                android:background="@android:color/transparent"
-                android:gravity="start"
-                android:imeOptions="actionNext"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textSize="@dimen/x14"
-                app:background_layout="@android:color/transparent"
-                app:hint_text="@string/address_1" />
-
-            <ImageView
-                android:id="@+id/img_gps"
-                android:layout_width="@dimen/x20"
-                android:layout_height="@dimen/x20"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/gps" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/x1"
-            android:layout_marginLeft="@dimen/x20"
-            android:layout_marginRight="@dimen/x20"
-
-            android:alpha="0.6"
-            android:background="@drawable/text" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x20"
-            android:layout_marginRight="@dimen/x20">
-
-            <ImageView
-                android:id="@+id/img_location_image"
-                android:layout_width="@dimen/x20"
-                android:layout_height="@dimen/x20"
-                android:layout_centerVertical="true"
-                android:src="@drawable/location"
-                android:visibility="invisible" />
-
-            <com.ingic.yellowcap.ui.views.AnyEditTextView
-                android:id="@+id/edt_locationspecific"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/x15"
-                android:paddingBottom="@dimen/x15"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="@dimen/x20"
-                android:layout_marginRight="@dimen/x20"
-                android:layout_toRightOf="@+id/img_location_image"
-                android:background="@null"
-                android:drawablePadding="@dimen/x10"
-                android:hint="@string/secondAddress"
-                android:imeOptions="actionDone"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textSize="@dimen/x14"
-                app:typeface="Roboto-Regular.ttf" />
-
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/x1"
-            android:layout_marginBottom="@dimen/x15"
-            android:layout_marginLeft="@dimen/x20"
-            android:layout_marginRight="@dimen/x20"
-            android:alpha="0.6"
-            android:background="@drawable/text" />
-
-    </LinearLayout>
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/x20"
-        android:layout_marginRight="@dimen/x20"
-        android:layout_marginBottom="@dimen/x20"
-        android:layout_weight="0.3"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_editcard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/x15"
-            android:background="@drawable/btn_backgroundblack"
-            android:text="@string/edit_card"
-            android:visibility="gone"
-            android:textColor="@color/white" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/CircularImageSharePop"
+            android:layout_width="@dimen/x100"
+            android:layout_height="@dimen/x90"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/x40"
+            android:layout_marginTop="@dimen/x40"
 
-        <Button
-            android:id="@+id/btn_submit"
+            />
+
+        <LinearLayout
+            android:id="@+id/ll_textFields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/x15"
-            android:background="@drawable/button_background"
-            android:text="@string/submit"
-            android:textColor="@color/white" />
+            android:layout_weight="0.01"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20">
+
+                <ImageView
+                    android:id="@+id/img_profile"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/profile" />
+
+                <com.ingic.yellowcap.ui.views.AnyEditTextView
+                    android:id="@+id/edtname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x20"
+                    android:layout_marginRight="@dimen/x20"
+                    android:layout_toEndOf="@+id/img_profile"
+                    android:layout_toRightOf="@+id/img_profile"
+                    android:background="@android:color/transparent"
+                    android:drawablePadding="@dimen/x10"
+                    android:hint="@string/enter_full_name"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:maxLength="50"
+                    android:maxLines="1"
+                    android:paddingBottom="@dimen/x15"
+                    android:paddingTop="@dimen/x15"
+                    android:singleLine="true"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="@dimen/x14"
+                    app:testType="email"
+                    app:typeface="Roboto-Regular.ttf" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+                android:alpha="0.6"
+                android:background="@drawable/text" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20">
+
+                <ImageView
+                    android:id="@+id/img_email"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/email" />
+
+                <com.ingic.yellowcap.ui.views.AnyEditTextView
+                    android:id="@+id/edtnumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x20"
+                    android:layout_marginRight="@dimen/x20"
+                    android:layout_toEndOf="@+id/img_email"
+                    android:layout_toRightOf="@+id/img_email"
+                    android:background="@android:color/transparent"
+                    android:drawablePadding="@dimen/x10"
+                    android:hint="@string/email"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="50"
+                    android:paddingBottom="@dimen/x15"
+                    android:paddingTop="@dimen/x15"
+                    android:singleLine="true"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="@dimen/x14"
+                    app:testType="email"
+                    app:typeface="Roboto-Regular.ttf" />
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+                android:alpha="0.6"
+                android:background="@drawable/text" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20">
+
+                <ImageView
+                    android:id="@+id/img_phone"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/phone" />
+
+                <com.ingic.yellowcap.ui.views.AnyEditTextView
+                    android:id="@+id/edtPhoneNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x20"
+                    android:layout_marginRight="@dimen/x20"
+                    android:layout_toEndOf="@+id/img_phone"
+                    android:layout_toRightOf="@+id/img_phone"
+                    android:background="@android:color/transparent"
+                    android:drawablePadding="@dimen/x10"
+                    android:hint="@string/phone_number"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="50"
+                    android:paddingBottom="@dimen/x15"
+                    android:paddingTop="@dimen/x15"
+                    android:singleLine="true"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="@dimen/x14"
+                    app:typeface="Roboto-Regular.ttf" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+                android:alpha="0.6"
+                android:background="@drawable/text" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20">
+
+                <ImageView
+                    android:id="@+id/img_location_autocomplete"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/location_address" />
+
+                <com.jota.autocompletelocation.AutoCompleteLocation
+                    android:id="@+id/edt_locationgps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x10"
+                    android:layout_marginRight="@dimen/x20"
+                    android:layout_toEndOf="@+id/img_location_autocomplete"
+                    android:layout_toLeftOf="@+id/img_gps"
+                    android:layout_toRightOf="@+id/img_location_autocomplete"
+                    android:layout_toStartOf="@+id/img_gps"
+                    android:background="@android:color/transparent"
+                    android:gravity="start"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textSize="@dimen/x14"
+                    app:background_layout="@android:color/transparent"
+                    app:hint_text="@string/address_1" />
+
+                <ImageView
+                    android:id="@+id/img_gps"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/gps" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+
+                android:alpha="0.6"
+                android:background="@drawable/text" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20">
+
+                <ImageView
+                    android:id="@+id/img_location_image"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/location"
+                    android:visibility="invisible" />
+
+                <com.ingic.yellowcap.ui.views.AnyEditTextView
+                    android:id="@+id/edt_locationspecific"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/x20"
+                    android:layout_marginRight="@dimen/x20"
+                    android:layout_toRightOf="@+id/img_location_image"
+                    android:background="@null"
+                    android:drawablePadding="@dimen/x10"
+                    android:hint="@string/secondAddress"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:paddingBottom="@dimen/x15"
+                    android:paddingTop="@dimen/x15"
+                    android:singleLine="true"
+                    android:textSize="@dimen/x14"
+                    app:typeface="Roboto-Regular.ttf" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginBottom="@dimen/x15"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+                android:alpha="0.6"
+                android:background="@drawable/text" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x20"
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginRight="@dimen/x20"
+            android:layout_weight="0.3"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_editcard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x15"
+                android:background="@drawable/btn_backgroundblack"
+                android:text="@string/edit_card"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x15"
+                android:background="@drawable/button_background"
+                android:text="@string/submit"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
-
-</LinearLayout>
+</ScrollView>

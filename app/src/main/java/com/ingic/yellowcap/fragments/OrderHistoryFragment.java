@@ -98,7 +98,7 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
 
     private void getTechData() {
         imageloader.displayImage(prefHelper.getRegistrationResult().getProfileImage(),mCircularImageSharePop);
-        mTxtUserName.setText(prefHelper.getRegistrationResult().getFullName());
+        mTxtUserName.setText(prefHelper.getRegistrationResult().getFirstName()+" "+prefHelper.getRegistrationResult().getLastName());
         mTxtUserProfession.setText(prefHelper.getRegistrationResult().getRegistrationType());
 
 

@@ -206,7 +206,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
       /*  txtEstimatedQuote.setText(getString(R.string.between_aed) + newJobJson.getRequest_detail().getEstimate_to()
                 + getString(R.string.to) + newJobJson.getRequest_detail().getEstimate_from() + "- " + getString(R.string.cod_short));*/
         if(!prefHelper.isLanguageArabic()){
-            txtEstimatedQuote.setText(getDockActivity().getString(R.string.between_aed) +" "+newJobJson.getRequest_detail().getEstimate_to() +" "+ getResources().getString(R.string.to) +" "+newJobJson.getRequest_detail().getEstimate_from()+ "- " + getString(R.string.cod_short));}
+            txtEstimatedQuote.setText(getDockActivity().getString(R.string.between_aed) +" "+newJobJson.getRequest_detail().getEstimate_from() +"  "+ getResources().getString(R.string.to) +" "+newJobJson.getRequest_detail().getEstimate_to()+ " - " + getString(R.string.cod_short));}
         else
         {
             txtEstimatedQuote.setText(getDockActivity().getString(R.string.between) +" "+ newJobJson.getRequest_detail().getEstimate_from() +" "+ getResources().getString(R.string.to) +" "+newJobJson.getRequest_detail().getEstimate_to()+" "+getDockActivity().getResources().getString(R.string.aed)+ "- " + getString(R.string.cod_short));

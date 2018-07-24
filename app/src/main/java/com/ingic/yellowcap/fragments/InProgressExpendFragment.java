@@ -158,7 +158,7 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
             }
 
         }
-          /*  collectionGroup.addAll(result);
+          /*  collectionGrou p.addAll(result);
 
         //collectionGroup.add(new InProgressParentEnt("re","23-3-17","Al Musa","Plumbing","AED 55.00","Dubai Marina,NearMarina"));
         for(ServiceDetail)

@@ -48,7 +48,7 @@ public class RecyclerViewAdapterImages extends RecyclerView.Adapter<RecyclerView
         final String imagespath = addedImages.get(position);
 
         //Picasso.with(context).load(imagespath).into(holder.img_addedimages);
-        if (imagespath.contains("https")) {
+        if (imagespath.contains("http")) {
             imageLoader.displayImage(imagespath, holder.img_addedimages);
         } else {
             imageLoader.displayImage("file://" + imagespath, holder.img_addedimages);

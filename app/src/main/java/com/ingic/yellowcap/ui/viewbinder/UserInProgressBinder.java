@@ -60,7 +60,7 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
         }
         if (technicianEnt != null && entity.getStatus() == AppConstants.TECH_ACCEPT_ASSIGN_JOB) {
             viewHolder.ivEditBtn.setVisibility(View.GONE);
-            viewHolder.txtTechNameText.setText(technicianEnt.getTechnician_details().getFullName());
+            viewHolder.txtTechNameText.setText(technicianEnt.getTechnician_details().getFirstName()+" "+technicianEnt.getTechnician_details().getLastName());
             viewHolder.txtNumberText.setText(technicianEnt.getTechnician_details().getPhoneNo());
             viewHolder.btnCallUser.setBackground(context.getResources().getDrawable(R.drawable.button_background));
         } else {

@@ -85,7 +85,7 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         if(entity.getUser_detail()!=null)
         parentViewHolder.txtClientNameText.setText(entity.getUser_detail().getFull_name()+"");
         if(!preferenceHelper.isLanguageArabic()){
-        parentViewHolder.txtEstimatedQuotationText.setText(context.getString(R.string.between_aed) +" "+ entity.getEstimate_to() +" "+ view.getContext().getResources().getString(R.string.to) +" "+ entity.getEstimate_from());}
+        parentViewHolder.txtEstimatedQuotationText.setText(context.getString(R.string.between_aed) +" "+ entity.getEstimate_from() +" "+ view.getContext().getResources().getString(R.string.to) +" "+ entity.getEstimate_to());}
         else
         {
             parentViewHolder.txtEstimatedQuotationText.setText(context.getString(R.string.between) +" "+ entity.getEstimate_from() +" "+ view.getContext().getResources().getString(R.string.to) +" "+ entity.getEstimate_to()+" "+context.getResources().getString(R.string.aed));
