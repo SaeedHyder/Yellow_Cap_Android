@@ -231,6 +231,8 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
         });
     }
 
+
+
     private void setHomedata(ArrayList<ServiceEnt> result) {
         if (result.size() > 0) {
             try {

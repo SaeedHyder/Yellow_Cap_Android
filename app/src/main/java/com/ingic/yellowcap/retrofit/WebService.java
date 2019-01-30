@@ -73,6 +73,7 @@ public interface WebService {
     @GET("allservice")
     Call<ResponseWrapper<ArrayList<ServiceEnt>>> getHomeServices();
 
+
     @GET("servicechild")
     Call<ResponseWrapper<ArrayList<ServiceEnt>>> getchildServices(@Query("parent_id") String parent_id);
 
